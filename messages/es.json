@@ -162,13 +162,25 @@
     "price": "Precio de compra",
     "deposit": "Depósito",
     "balance": "Saldo al cierre",
-    "read": "Leer la guía de la Ley 60"
+    "read": "Leer la guía de la Ley 60",
+    "short1": "Mudanza",
+    "short2": "Negocio exterior",
+    "short3": "Residencia principal",
+    "progress": "{n} / {total}",
+    "answers": "Sus respuestas",
+    "matching": "{count, plural, =1 {1 sección publicada} other {# secciones publicadas}}",
+    "editAnswer": "Cambiar la respuesta a {q}"
   },
   "portfolio": {
     "pinned": "En el mapa",
     "unpinned": "Ubicación por anunciar",
     "map": "Mapa estilizado de Puerto Rico con las ubicaciones de ORA World",
-    "select": "Seleccionar {name}"
+    "select": "Seleccionar {name}",
+    "atlantic": "Océano Atlántico",
+    "caribbean": "Mar Caribe",
+    "north": "N",
+    "pinsLabel": "Ubicaciones de ORA World en la isla",
+    "clear": "Quitar selección"
   },
   "faq": {
     "search": "Buscar preguntas",

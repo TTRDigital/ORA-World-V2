@@ -7,14 +7,19 @@ import { Plus } from "@/components/ui/Icons";
 type Item = { id: string; title: string; body: string[] };
 
 /** Accessible accordion (button + region) in one or two columns, hairline under the open item. */
-export function Accordion({ items, columns = 1, dark }: { items: Item[]; columns?: 1 | 2; dark?: boolean }) {
+export function Accordion({ items, columns = 1, dark, stagger }: { items: Item[]; columns?: 1 | 2; dark?: boolean; stagger?: boolean }) {
   const [open, setOpen] = useState<string | null>(null);
   return (
     <ul className={cn("mt-4 grid gap-x-8", columns === 2 && "md:grid-cols-2")}>
-      {items.map((it) => {
+      {items.map((it, i) => {
         const isOpen = open === it.id;
         return (
-          <li key={it.id} className={cn("border-b", dark ? "border-brass-light/25" : "border-travertine-deep")}>
+          <li
+            key={it.id}
+            className={cn("border-b", dark ? "border-brass-light/25" : "border-travertine-deep")}
+            data-reveal={stagger ? "" : undefined}
+            style={stagger ? ({ "--reveal-delay": `${(i % 8) * 60}ms` } as React.CSSProperties) : undefined}
+          >
             <h3 className="font-sans text-base font-semibold">
               <button
                 type="button"
