@@ -80,5 +80,8 @@ export function initReveals(root: ParentNode = document): () => void {
   return () => {
     io.disconnect();
     timers.forEach(clearTimeout);
+    // Release still-pending nodes so a re-run (React StrictMode, navigation) can bind them again.
+    pending.forEach((_, el) => delete el.dataset.revealBound);
+    pending.clear();
   };
 }

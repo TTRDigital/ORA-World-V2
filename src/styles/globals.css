@@ -598,7 +598,9 @@
   }
 }
 .page-in {
-  animation: page-in 700ms var(--ease-out) both;
+  /* "backwards", not "both": a finished "both" keeps an identity transform on the wrapper, which turns it into
+     the containing block for position: fixed descendants and breaks GSAP ScrollTrigger pinning. */
+  animation: page-in 700ms var(--ease-out) backwards;
 }
 @keyframes pulse-ring {
   0% {
