@@ -84,7 +84,10 @@
     "thumbnails": "Renders",
     "showRender": "Show the {label} render",
     "filmPlaying": "The ORA World film is playing silently",
-    "posterAlt": "Tesoro Del Mar"
+    "posterAlt": "Tesoro Del Mar",
+    "filmTitle": "ORA World film",
+    "nowShowing": "Now showing: {label}",
+    "filmFrame": "The film"
   },
   "explorer": {
     "collections": "Collections",
@@ -163,7 +166,13 @@
   },
   "faq": {
     "search": "Search questions",
-    "topics": { "general": "ORA World", "residences": "Residences", "resilience": "Resilience & security", "tax": "Act 60", "buying": "Buying" },
+    "topics": {
+      "general": "ORA World",
+      "residences": "Residences",
+      "resilience": "Resilience & security",
+      "tax": "Act 60",
+      "buying": "Buying"
+    },
     "none": "No question matches. Try another word or ask the team.",
     "all": "All questions",
     "count": "{count, plural, =1 {1 question} other {# questions}}"
@@ -172,11 +181,17 @@
     "gallery": "Sales gallery",
     "video": "Video call",
     "choose": "How would you like to visit?",
+    "galleryNote": "In person at Tesoro Del Mar, Dorado. Address to be confirmed.",
+    "videoNote": "A guided walkthrough of the renders and plans, from anywhere.",
     "details": "Your details",
     "when": "Preferred time",
     "success": "Thank you. The sales team will confirm your {mode} within one business day.",
     "next": "What happens next",
-    "steps": ["A member of the sales team confirms the time by email.", "You receive the current renders and the published facts in advance.", "At the visit you walk through the residences, amenities and the plan library."],
+    "steps": [
+      "A member of the sales team confirms the time by email.",
+      "You receive the current renders and the published facts in advance.",
+      "At the visit you walk through the residences, amenities and the plan library."
+    ],
     "galleryAddress": "Sales gallery address: to be confirmed",
     "booking": "Choose a time",
     "noBooking": "Online scheduling will appear here once the sales calendar is connected. Send your preferred time below."
@@ -190,7 +205,14 @@
     "buyer": "Buyer",
     "broker": "Broker",
     "source": "How did you hear about us?",
-    "sourceOptions": ["Search", "Social media", "Referral", "Press", "Event", "Other"],
+    "sourceOptions": [
+      "Search",
+      "Social media",
+      "Referral",
+      "Press",
+      "Event",
+      "Other"
+    ],
     "licence": "Licence number",
     "brokerage": "Brokerage",
     "client": "Client name",
@@ -242,7 +264,11 @@
     "zoomOut": "Zoom out",
     "reset": "Reset",
     "keyplan": "Keyplan",
-    "status": { "available": "Available", "reserved": "Reserved", "sold": "Sold" },
+    "status": {
+      "available": "Available",
+      "reserved": "Reserved",
+      "sold": "Sold"
+    },
     "interior": "Interior",
     "exterior": "Exterior",
     "bath": "Bathrooms",
@@ -252,7 +278,13 @@
   "gallery": {
     "title": "Gallery",
     "filters": "Filter",
-    "categories": { "exteriors": "Exteriors", "interiors": "Interiors", "amenities": "Amenities", "lifestyle": "Lifestyle", "dorado-waterfalls": "Dorado Waterfalls" },
+    "categories": {
+      "exteriors": "Exteriors",
+      "interiors": "Interiors",
+      "amenities": "Amenities",
+      "lifestyle": "Lifestyle",
+      "dorado-waterfalls": "Dorado Waterfalls"
+    },
     "open": "Open image {n}",
     "lightbox": "Image viewer"
   },
@@ -265,7 +297,13 @@
   "footer": {
     "newsletter": "Updates from Dorado",
     "newsletterText": "Pricing, floor plans and construction news, as they are released.",
-    "groups": { "residences": "Residences", "living": "Living", "place": "Place", "invest": "Invest", "company": "ORA World" },
+    "groups": {
+      "residences": "Residences",
+      "living": "Living",
+      "place": "Place",
+      "invest": "Invest",
+      "company": "ORA World"
+    },
     "legal": "Legal",
     "privacy": "Privacy",
     "terms": "Terms",
@@ -286,14 +324,63 @@
     "home": "Homepage"
   },
   "pages": {
-    "residences": { "title": "Residences", "intro": "Four collections across the tower stack and the villa neighbourhood at Tesoro Del Mar.", "collections": "Collections", "finishes": "Finishes", "gallery": "Gallery", "viewToggle": "View", "grid": "Grid", "single": "Single" },
-    "living": { "title": "Living", "intro": "Amenities, family, pets, wellness and activities, as published by ORA World.", "activities": "Activities", "amenities": "Amenities" },
-    "place": { "title": "Place", "intro": "Dorado, the island and the two projects taking shape on the north coast.", "projects": "Projects", "map": "Map", "gallery": "Gallery", "tour": "Film and VR tour" },
-    "invest": { "title": "Invest", "intro": "Act 60, deposit steps, a payment estimator and the resilience that protects the investment.", "resilience": "Resilience" },
-    "portfolio": { "title": "Portfolio", "intro": "Twelve locations across Puerto Rico, each with its published tagline." },
-    "visit": { "title": "Book a visit", "intro": "The sales gallery or a video call, at a time that suits you." },
-    "faq": { "title": "Questions", "intro": "Everything published so far, searchable." },
-    "press": { "title": "Press", "intro": "Coverage of ORA World." },
-    "compare": { "title": "Compare plans", "intro": "Up to three floor plans side by side." }
+    "residences": {
+      "title": "Residences",
+      "intro": "Four collections across the tower stack and the villa neighbourhood at Tesoro Del Mar.",
+      "collections": "Collections",
+      "finishes": "Finishes",
+      "gallery": "Gallery",
+      "viewToggle": "View",
+      "grid": "Grid",
+      "single": "Single"
+    },
+    "living": {
+      "title": "Living",
+      "intro": "Amenities, family, pets, wellness and activities, as published by ORA World.",
+      "activities": "Activities",
+      "amenities": "Amenities"
+    },
+    "place": {
+      "title": "Place",
+      "intro": "Dorado, the island and the two projects taking shape on the north coast.",
+      "projects": "Projects",
+      "map": "Map",
+      "gallery": "Gallery",
+      "tour": "Film and VR tour"
+    },
+    "invest": {
+      "title": "Invest",
+      "intro": "Act 60, deposit steps, a payment estimator and the resilience that protects the investment.",
+      "resilience": "Resilience"
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "intro": "Twelve locations across Puerto Rico, each with its published tagline."
+    },
+    "visit": {
+      "title": "Book a visit",
+      "intro": "The sales gallery or a video call, at a time that suits you."
+    },
+    "faq": {
+      "title": "Questions",
+      "intro": "Everything published so far, searchable."
+    },
+    "press": {
+      "title": "Press",
+      "intro": "Coverage of ORA World."
+    },
+    "compare": {
+      "title": "Compare plans",
+      "intro": "Up to three floor plans side by side."
+    }
+  },
+  "numbers": {
+    "walk": "Walking distance",
+    "walkTo": "to Balneario Cerro Gordo Beach",
+    "airport": "minutes from the airport",
+    "airportNote": "Luis Muñoz Marín International",
+    "park": "Near a national park",
+    "parkNote": "Scenic jogging and walking paths wind through the adjacent park, with sensory gardens on site.",
+    "published": "Published by ORA World"
   }
 }

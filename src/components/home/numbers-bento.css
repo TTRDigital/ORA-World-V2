@@ -1,0 +1,119 @@
+/* Bento grid areas: 4 columns on desktop, 2 on mobile with the aerial first. */
+.nb-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "aerial aerial"
+    "land land"
+    "apts suites"
+    "amen amen"
+    "beach beach"
+    "airport park";
+}
+@media (min-width: 768px) {
+  .nb-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-areas:
+      "aerial aerial land apts"
+      "aerial aerial suites amen"
+      "beach beach airport park";
+  }
+}
+@media (min-width: 1280px) {
+  .nb-grid {
+    gap: 16px;
+  }
+}
+.nb-aerial {
+  grid-area: aerial;
+}
+.nb-land {
+  grid-area: land;
+}
+.nb-apts {
+  grid-area: apts;
+}
+.nb-suites {
+  grid-area: suites;
+}
+.nb-amen {
+  grid-area: amen;
+}
+.nb-beach {
+  grid-area: beach;
+}
+.nb-airport {
+  grid-area: airport;
+}
+.nb-park {
+  grid-area: park;
+}
+
+/* Airport route line: draws when the card reveals. */
+.nb-route {
+  stroke-dasharray: 6 7;
+  stroke-dashoffset: 320;
+  transition: stroke-dashoffset 2200ms cubic-bezier(0.22, 1, 0.36, 1) 300ms;
+}
+.nb-plane {
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition:
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1) 1700ms,
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1) 1700ms;
+}
+.is-revealed .nb-route {
+  stroke-dashoffset: 0;
+}
+.is-revealed .nb-plane {
+  opacity: 1;
+  transform: none;
+}
+.reduced-motion .nb-route {
+  stroke-dashoffset: 0;
+  transition: none;
+}
+.reduced-motion .nb-plane {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* Walking card: the figure walks in once. */
+.nb-walker {
+  transform: translateX(-12px);
+  opacity: 0;
+  transition:
+    transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) 300ms,
+    opacity 600ms ease 300ms;
+}
+.is-revealed .nb-walker,
+.reduced-motion .nb-walker {
+  transform: none;
+  opacity: 1;
+}
+
+/* Park card: leaves drift gently. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(3deg);
+  }
+}
+.nb-leaf {
+  animation: drift 6s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+.nb-leaf2 {
+  animation-delay: -2s;
+}
+.nb-leaf3 {
+  animation-delay: -4s;
+}
+.reduced-motion .nb-leaf {
+  animation: none;
+}
