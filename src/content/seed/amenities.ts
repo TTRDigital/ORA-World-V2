@@ -1,0 +1,125 @@
+import type { Amenity, Activity } from "../types";
+import { life, tdm } from "./images";
+
+/** Published amenities (oraworld.com/our-amenities) grouped into the five Living categories. */
+export const amenities: Amenity[] = [
+  { slug: "spa", category: "wellness", featured: true, size: "lg", name: { en: "World-class spas", es: "Spas de clase mundial" }, description: { en: "Full-service facilities offering treatments inspired by local and global traditions.", es: "Instalaciones completas con tratamientos inspirados en tradiciones locales y globales." }, image: life.spa },
+  { slug: "infinity-pools", category: "wellness", featured: true, size: "md", name: { en: "Private infinity pools", es: "Piscinas infinitas privadas" }, description: { en: "Secluded pools with breathtaking views.", es: "Piscinas apartadas con vistas impresionantes." }, image: life.poolTerrace },
+  { slug: "fitness", category: "wellness", featured: true, size: "md", name: { en: "Fitness centers", es: "Centros de fitness" }, description: { en: "State-of-the-art equipment, personal trainers and group classes like yoga, Pilates and spin.", es: "Equipos de última generación, entrenadores personales y clases grupales de yoga, pilates y spinning." }, image: life.gym },
+  { slug: "wellness-retreats", category: "wellness", size: "sm", name: { en: "Wellness retreats", es: "Retiros de bienestar" }, description: { en: "Programs focused on mindfulness, nutrition and fitness, with hot tubs and hydrotherapy areas.", es: "Programas de atención plena, nutrición y ejercicio, con jacuzzis y áreas de hidroterapia." }, image: life.running },
+  { slug: "kids-club", category: "family", featured: true, size: "md", name: { en: "Kids' clubs", es: "Clubes infantiles" }, description: { en: "Engaging activities for younger members, from adventure camps to craft workshops.", es: "Actividades para los más pequeños, desde campamentos de aventura hasta talleres creativos." }, image: life.waterpark },
+  { slug: "family-pools", category: "family", featured: true, size: "lg", name: { en: "Family pools", es: "Piscinas familiares" }, description: { en: "Separate pools for families with children.", es: "Piscinas independientes para familias con niños." }, image: life.familyPool },
+  { slug: "game-rooms", category: "family", size: "sm", name: { en: "Game rooms", es: "Salas de juego" }, description: { en: "High-end gaming setups for teens and adults.", es: "Equipos de juego de alta gama para jóvenes y adultos." }, image: life.motherChild },
+  { slug: "education", category: "family", size: "sm", name: { en: "Education partnerships", es: "Alianzas educativas" }, description: { en: "Private schools, tutoring services and creative workshops for every age.", es: "Escuelas privadas, tutorías y talleres creativos para todas las edades." }, image: life.graduation },
+  { slug: "dog-parks", category: "pets", featured: true, size: "lg", name: { en: "Secure dog parks", es: "Parques caninos seguros" }, description: { en: "Expansive, secure outdoor play areas where companions can stretch their legs and mingle.", es: "Amplias áreas de juego al aire libre y seguras donde los compañeros pueden correr y socializar." }, image: life.pets },
+  { slug: "pet-concierge", category: "pets", size: "md", name: { en: "Grooming and pet concierge", es: "Aseo y conserjería para mascotas" }, description: { en: "Grooming stations, daycare, on-demand veterinary care, training sessions and pet-friendly events.", es: "Estaciones de aseo, guardería, atención veterinaria a demanda, adiestramiento y eventos para mascotas." }, image: life.kite },
+  { slug: "beach-club", category: "resort", featured: true, size: "lg", name: { en: "Private beach clubs", es: "Clubes de playa privados" }, description: { en: "Exclusive access to pristine beaches with cabanas and full service.", es: "Acceso exclusivo a playas vírgenes con cabañas y servicio completo." }, image: life.beach },
+  { slug: "dining", category: "resort", featured: true, size: "md", name: { en: "Dining and social spaces", es: "Gastronomía y espacios sociales" }, description: { en: "Fine dining with renowned chefs, private chef services, wine and cigar lounges, rooftop bars and members-only clubhouses.", es: "Alta cocina con chefs reconocidos, chefs privados, salones de vino y puros, bares en azotea y clubes exclusivos para miembros." }, image: life.culinary },
+  { slug: "cinema", category: "resort", size: "sm", name: { en: "Luxury cinemas", es: "Cines de lujo" }, description: { en: "In-residence or community theaters with premium sound and comfort.", es: "Salas de cine privadas o comunitarias con sonido y confort premium." }, image: life.reception },
+  { slug: "courts", category: "resort", size: "sm", name: { en: "Golf, tennis and pickleball", es: "Golf, tenis y pickleball" }, description: { en: "Access to world-class golf courses and professionally maintained courts.", es: "Acceso a campos de golf de clase mundial y canchas mantenidas profesionalmente." }, image: tdm.exteriorGolf },
+  { slug: "transportation", category: "resort", size: "md", name: { en: "Helipads and private charters", es: "Helipuertos y vuelos privados" }, description: { en: "Private helipads, luxury shuttles, valet parking and access to yachts, jets and chauffeur services.", es: "Helipuertos privados, traslados de lujo, valet parking y acceso a yates, jets y servicio de chofer." }, image: life.jet },
+  { slug: "business", category: "resort", size: "sm", name: { en: "Business center", es: "Centro de negocios" }, description: { en: "Meeting rooms with video conferencing, private workspaces, high-speed internet and 24/7 IT support.", es: "Salas de reuniones con videoconferencia, espacios privados de trabajo, internet de alta velocidad y soporte técnico 24/7." }, image: life.shopping },
+  { slug: "eco-trails", category: "eco", featured: true, size: "lg", name: { en: "Eco-trails", es: "Senderos ecológicos" }, description: { en: "Walking paths that integrate with the natural beauty of the surroundings and the adjacent national park.", es: "Senderos que se integran con la belleza natural del entorno y el parque nacional adyacente." }, image: life.rainforest },
+  { slug: "organic-gardens", category: "eco", size: "md", name: { en: "Organic and sensory gardens", es: "Huertos orgánicos y jardines sensoriales" }, description: { en: "On-site gardens providing fresh produce for dining, and sensory gardens along scenic walking paths.", es: "Huertos en el lugar que abastecen los restaurantes, y jardines sensoriales a lo largo de paseos escénicos." }, image: life.adventure },
+  { slug: "solar", category: "eco", size: "sm", name: { en: "Solar and battery backup", es: "Energía solar y baterías" }, description: { en: "Solar panels and battery storage for sustainable, reliable energy, with natural ventilation and daylight by design.", es: "Paneles solares y baterías para una energía sostenible y fiable, con ventilación natural y luz de día por diseño." }, image: tdm.aerialForest },
+];
+
+/** Published activities (oraworld.com/activities), as tabs on the Living page. */
+export const activities: Activity[] = [
+  {
+    slug: "sport-fitness",
+    group: { en: "Sport & fitness", es: "Deporte y fitness" },
+    image: life.running,
+    items: [
+      { name: { en: "Golf", es: "Golf" }, description: { en: "Access to championship golf courses with lessons from PGA professionals.", es: "Acceso a campos de golf de campeonato con clases de profesionales de la PGA." } },
+      { name: { en: "Tennis and pickleball", es: "Tenis y pickleball" }, description: { en: "Professionally maintained courts with coaching sessions.", es: "Canchas mantenidas profesionalmente con sesiones de entrenamiento." } },
+      { name: { en: "Personal fitness training", es: "Entrenamiento personal" }, description: { en: "One-on-one sessions with elite personal trainers.", es: "Sesiones individuales con entrenadores de élite." } },
+      { name: { en: "Yoga and meditation", es: "Yoga y meditación" }, description: { en: "Outdoor yoga on the beach or in wellness centers.", es: "Yoga al aire libre en la playa o en los centros de bienestar." } },
+      { name: { en: "Cycling and running trails", es: "Senderos para ciclismo y running" }, description: { en: "Scenic paths through lush landscapes.", es: "Rutas escénicas entre paisajes exuberantes." } },
+      { name: { en: "Beach volleyball", es: "Voleibol de playa" }, description: { en: "Private courts with organized matches or casual play.", es: "Canchas privadas con partidos organizados o juego casual." } },
+      { name: { en: "Archery and shooting ranges", es: "Tiro con arco y campos de tiro" }, description: { en: "Safe and guided experiences for members.", es: "Experiencias seguras y guiadas para miembros." } },
+      { name: { en: "Rock climbing and bouldering", es: "Escalada y búlder" }, description: { en: "Indoor walls and natural climbing experiences.", es: "Muros interiores y escalada en roca natural." } },
+    ],
+  },
+  {
+    slug: "water",
+    group: { en: "Water sport & adventures", es: "Deportes acuáticos y aventuras" },
+    image: life.surf,
+    items: [
+      { name: { en: "Scuba diving and snorkeling", es: "Buceo y esnórquel" }, description: { en: "Explore coral reefs with certified guides.", es: "Explore arrecifes de coral con guías certificados." } },
+      { name: { en: "Sailing and yacht charters", es: "Vela y alquiler de yates" }, description: { en: "Private yacht rentals for day trips or sunset cruises.", es: "Yates privados para excursiones de día o cruceros al atardecer." } },
+      { name: { en: "Jet skiing and parasailing", es: "Motos acuáticas y parasailing" }, description: { en: "Thrill-seeking water sports with professional oversight.", es: "Deportes acuáticos de adrenalina con supervisión profesional." } },
+      { name: { en: "Kayaking and paddleboarding", es: "Kayak y paddleboard" }, description: { en: "Calm waters perfect for exploring lagoons and coastlines.", es: "Aguas tranquilas ideales para explorar lagunas y costas." } },
+      { name: { en: "Deep-sea fishing", es: "Pesca de altura" }, description: { en: "Guided fishing tours for enthusiasts.", es: "Excursiones de pesca guiadas para aficionados." } },
+      { name: { en: "Surfing, windsurfing and kiteboarding", es: "Surf, windsurf y kiteboarding" }, description: { en: "Lessons for beginners or prime spots for experienced riders.", es: "Clases para principiantes o spots de primera para expertos." } },
+      { name: { en: "Swimming with marine life", es: "Nadar con vida marina" }, description: { en: "Organized excursions to interact with dolphins or sea turtles.", es: "Excursiones organizadas para interactuar con delfines o tortugas marinas." } },
+      { name: { en: "Eco-friendly boat tours", es: "Paseos en barco ecológicos" }, description: { en: "Solar-powered or eco-friendly cruises through mangroves and marine reserves.", es: "Cruceros solares o ecológicos por manglares y reservas marinas." } },
+    ],
+  },
+  {
+    slug: "culinary",
+    group: { en: "Culinary & cultural", es: "Gastronomía y cultura" },
+    image: life.culinary,
+    items: [
+      { name: { en: "Cooking classes", es: "Clases de cocina" }, description: { en: "Learn to prepare local Caribbean dishes with renowned chefs.", es: "Aprenda a preparar platos caribeños con chefs reconocidos." } },
+      { name: { en: "Wine and rum tastings", es: "Catas de vino y ron" }, description: { en: "Guided tastings of local and international selections.", es: "Catas guiadas de selecciones locales e internacionales." } },
+      { name: { en: "Farm-to-table dinners", es: "Cenas de la huerta a la mesa" }, description: { en: "Exclusive dining experiences featuring local organic produce.", es: "Cenas exclusivas con productos orgánicos locales." } },
+      { name: { en: "Caribbean cultural nights", es: "Noches culturales caribeñas" }, description: { en: "Live music, dance and food celebrating local traditions.", es: "Música en vivo, baile y gastronomía que celebran las tradiciones locales." } },
+      { name: { en: "Street food tours", es: "Rutas de comida callejera" }, description: { en: "Curated tours of local food markets and hidden culinary gems.", es: "Recorridos por mercados locales y joyas gastronómicas escondidas." } },
+      { name: { en: "Artisan workshops", es: "Talleres artesanales" }, description: { en: "Pottery, painting or weaving classes with local artists.", es: "Clases de cerámica, pintura o tejido con artistas locales." } },
+      { name: { en: "Salsa and bachata dancing", es: "Salsa y bachata" }, description: { en: "Learn or refine your skills with professional instructors.", es: "Aprenda o perfeccione su baile con instructores profesionales." } },
+      { name: { en: "Private dining", es: "Cenas privadas" }, description: { en: "Personal chefs create bespoke meals for special occasions.", es: "Chefs personales crean menús a medida para ocasiones especiales." } },
+    ],
+  },
+  {
+    slug: "entertainment",
+    group: { en: "Entertainment & leisure", es: "Entretenimiento y ocio" },
+    image: life.reception,
+    items: [
+      { name: { en: "Outdoor movie nights", es: "Noches de cine al aire libre" }, description: { en: "Under-the-stars screenings with luxury seating.", es: "Proyecciones bajo las estrellas con asientos de lujo." } },
+      { name: { en: "Live music and performances", es: "Música y espectáculos en vivo" }, description: { en: "Concerts, jazz nights and cultural shows.", es: "Conciertos, noches de jazz y espectáculos culturales." } },
+      { name: { en: "Exclusive parties and galas", es: "Fiestas y galas exclusivas" }, description: { en: "Themed events for members to socialize and network.", es: "Eventos temáticos para que los miembros socialicen." } },
+      { name: { en: "Stargazing nights", es: "Noches de observación de estrellas" }, description: { en: "Guided experiences with telescopes and astronomy experts.", es: "Experiencias guiadas con telescopios y expertos en astronomía." } },
+      { name: { en: "Art galleries and exhibits", es: "Galerías y exposiciones de arte" }, description: { en: "Curated collections of local and international art.", es: "Colecciones de arte local e internacional." } },
+      { name: { en: "Wellness retreats", es: "Retiros de bienestar" }, description: { en: "Weekend retreats focused on relaxation, yoga and mindfulness.", es: "Retiros de fin de semana centrados en el descanso, el yoga y la atención plena." } },
+    ],
+  },
+  {
+    slug: "adventure",
+    group: { en: "Adventure & exploration", es: "Aventura y exploración" },
+    image: life.atv,
+    items: [
+      { name: { en: "Hiking tours", es: "Senderismo guiado" }, description: { en: "Guided treks through rainforests or mountainous terrain.", es: "Caminatas guiadas por bosques tropicales o terreno montañoso." } },
+      { name: { en: "Ziplining", es: "Tirolesa" }, description: { en: "Thrilling rides through tropical canopies.", es: "Recorridos emocionantes entre el dosel tropical." } },
+      { name: { en: "ATV and jeep safaris", es: "Safaris en ATV y jeep" }, description: { en: "Explore rugged terrains in style.", es: "Explore terrenos escarpados con estilo." } },
+      { name: { en: "Hot air balloon rides", es: "Paseos en globo" }, description: { en: "Breathtaking views of the Caribbean landscape.", es: "Vistas impresionantes del paisaje caribeño." } },
+      { name: { en: "Caving and exploration", es: "Espeleología y exploración" }, description: { en: "Guided tours of natural caves and geological wonders.", es: "Visitas guiadas a cuevas naturales y maravillas geológicas." } },
+      { name: { en: "Island hopping", es: "Salto entre islas" }, description: { en: "Private tours to nearby islands.", es: "Excursiones privadas a islas cercanas." } },
+    ],
+  },
+  {
+    slug: "family",
+    group: { en: "Family-friendly", es: "En familia" },
+    image: life.kite,
+    items: [
+      { name: { en: "Kids' adventure camps", es: "Campamentos de aventura infantiles" }, description: { en: "Fun and educational programs for children.", es: "Programas divertidos y educativos para niños." } },
+      { name: { en: "Family movie screenings", es: "Cine en familia" }, description: { en: "Outdoor or indoor showings for all ages.", es: "Proyecciones al aire libre o en sala para todas las edades." } },
+      { name: { en: "Interactive marine encounters", es: "Encuentros marinos interactivos" }, description: { en: "Safe and exciting activities for kids to learn about marine life.", es: "Actividades seguras y emocionantes para que los niños conozcan la vida marina." } },
+      { name: { en: "Craft workshops for kids", es: "Talleres creativos para niños" }, description: { en: "Arts and crafts activities with local themes.", es: "Manualidades con temas locales." } },
+      { name: { en: "Treasure hunts", es: "Búsquedas del tesoro" }, description: { en: "Family-friendly exploration games.", es: "Juegos de exploración para toda la familia." } },
+    ],
+  },
+  {
+    slug: "services",
+    group: { en: "Medical, education & services", es: "Salud, educación y servicios" },
+    image: life.graduation,
+    items: [
+      { name: { en: "Private health clinics and telemedicine", es: "Clínicas privadas y telemedicina" }, description: { en: "On-site or nearby clinics with personalized care, and 24/7 virtual consultations.", es: "Clínicas en el lugar o cercanas con atención personalizada, y consultas virtuales 24/7." } },
+      { name: { en: "Specialist and emergency access", es: "Acceso a especialistas y emergencias" }, description: { en: "Partnerships with top medical professionals and priority agreements with nearby hospitals.", es: "Alianzas con profesionales médicos de primer nivel y acuerdos prioritarios con hospitales cercanos." } },
+      { name: { en: "Private schools and tutoring", es: "Escuelas privadas y tutorías" }, description: { en: "Partnerships with top-tier international schools offering bilingual curriculums, and on-demand tutors.", es: "Alianzas con escuelas internacionales de primer nivel con currículos bilingües, y tutores a demanda." } },
+      { name: { en: "Luxury boutiques and personal shopping", es: "Boutiques de lujo y personal shopper" }, description: { en: "On-site or nearby access to international luxury brands, pop-ups and concierge shopping.", es: "Acceso en el lugar o cercano a marcas de lujo internacionales, pop-ups y compras con conserjería." } },
+      { name: { en: "Childcare, event planning and property management", es: "Cuidado infantil, eventos y administración" }, description: { en: "Vetted childcare, full-service event support and maintenance for absentee owners.", es: "Cuidado infantil verificado, apoyo integral para eventos y mantenimiento para propietarios ausentes." } },
+      { name: { en: "Grocery and essentials delivery", es: "Entrega de víveres y esenciales" }, description: { en: "Premium delivery service for food, wine and other essentials.", es: "Servicio premium de entrega de alimentos, vino y otros esenciales." } },
+    ],
+  },
+];

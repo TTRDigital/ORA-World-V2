@@ -1,0 +1,322 @@
+{
+  "balcony-detail": {
+    "src": "/images/client/balcony-detail.jpg",
+    "width": 1920,
+    "height": 1080
+  },
+  "ceiba": {
+    "src": "/images/client/ceiba.jpg",
+    "width": 2560,
+    "height": 1372
+  },
+  "coastal-aerial": {
+    "src": "/images/client/coastal-aerial.jpg",
+    "width": 2560,
+    "height": 1441
+  },
+  "dw-exterior-1": {
+    "src": "/images/client/dw-exterior-1.jpg",
+    "width": 2000,
+    "height": 1126
+  },
+  "dw-exterior-2": {
+    "src": "/images/client/dw-exterior-2.jpg",
+    "width": 1600,
+    "height": 900
+  },
+  "dw-exterior-3": {
+    "src": "/images/client/dw-exterior-3.jpg",
+    "width": 1600,
+    "height": 900
+  },
+  "dw-exterior-4": {
+    "src": "/images/client/dw-exterior-4.jpg",
+    "width": 1600,
+    "height": 900
+  },
+  "dw-interior-1": {
+    "src": "/images/client/dw-interior-1.jpg",
+    "width": 2489,
+    "height": 1400
+  },
+  "dw-interior-12": {
+    "src": "/images/client/dw-interior-12.jpg",
+    "width": 2500,
+    "height": 1407
+  },
+  "dw-interior-15": {
+    "src": "/images/client/dw-interior-15.jpg",
+    "width": 2000,
+    "height": 1125
+  },
+  "dw-interior-16": {
+    "src": "/images/client/dw-interior-16.jpg",
+    "width": 2000,
+    "height": 1125
+  },
+  "dw-interior-3": {
+    "src": "/images/client/dw-interior-3.jpg",
+    "width": 2000,
+    "height": 1125
+  },
+  "dw-interior-4": {
+    "src": "/images/client/dw-interior-4.jpg",
+    "width": 2489,
+    "height": 1400
+  },
+  "dw-interior-9": {
+    "src": "/images/client/dw-interior-9.jpg",
+    "width": 2489,
+    "height": 1400
+  },
+  "guayama": {
+    "src": "/images/client/guayama.jpg",
+    "width": 2000,
+    "height": 1125
+  },
+  "life-adventure": {
+    "src": "/images/client/life-adventure.jpg",
+    "width": 2560,
+    "height": 2765
+  },
+  "life-atv": {
+    "src": "/images/client/life-atv.jpg",
+    "width": 976,
+    "height": 1343
+  },
+  "life-beach": {
+    "src": "/images/client/life-beach.jpg",
+    "width": 2560,
+    "height": 1064
+  },
+  "life-culinary": {
+    "src": "/images/client/life-culinary.jpg",
+    "width": 2560,
+    "height": 1734
+  },
+  "life-family-pool": {
+    "src": "/images/client/life-family-pool.jpg",
+    "width": 976,
+    "height": 1343
+  },
+  "life-graduation": {
+    "src": "/images/client/life-graduation.jpg",
+    "width": 2560,
+    "height": 2031
+  },
+  "life-gym": {
+    "src": "/images/client/life-gym.jpg",
+    "width": 1668,
+    "height": 2304
+  },
+  "life-jet": {
+    "src": "/images/client/life-jet.jpg",
+    "width": 1674,
+    "height": 2304
+  },
+  "life-kite": {
+    "src": "/images/client/life-kite.jpg",
+    "width": 2560,
+    "height": 2032
+  },
+  "life-mother-child": {
+    "src": "/images/client/life-mother-child.jpg",
+    "width": 2560,
+    "height": 2011
+  },
+  "life-pets": {
+    "src": "/images/client/life-pets.jpg",
+    "width": 2560,
+    "height": 1063
+  },
+  "life-pool-terrace": {
+    "src": "/images/client/life-pool-terrace.jpg",
+    "width": 1366,
+    "height": 2304
+  },
+  "life-rainforest": {
+    "src": "/images/client/life-rainforest.jpg",
+    "width": 980,
+    "height": 1345
+  },
+  "life-reception": {
+    "src": "/images/client/life-reception.jpg",
+    "width": 1567,
+    "height": 2160
+  },
+  "life-running": {
+    "src": "/images/client/life-running.jpg",
+    "width": 2560,
+    "height": 2151
+  },
+  "life-sailing": {
+    "src": "/images/client/life-sailing.jpg",
+    "width": 1365,
+    "height": 768
+  },
+  "life-shopping": {
+    "src": "/images/client/life-shopping.jpg",
+    "width": 2560,
+    "height": 2011
+  },
+  "life-spa": {
+    "src": "/images/client/life-spa.jpg",
+    "width": 1431,
+    "height": 2160
+  },
+  "life-surf": {
+    "src": "/images/client/life-surf.jpg",
+    "width": 1962,
+    "height": 2304
+  },
+  "life-toast": {
+    "src": "/images/client/life-toast.jpg",
+    "width": 800,
+    "height": 1250
+  },
+  "life-waterpark": {
+    "src": "/images/client/life-waterpark.jpg",
+    "width": 2470,
+    "height": 2304
+  },
+  "loiza-countryside": {
+    "src": "/images/client/loiza-countryside.jpg",
+    "width": 1600,
+    "height": 900
+  },
+  "loiza-ocean": {
+    "src": "/images/client/loiza-ocean.jpg",
+    "width": 1600,
+    "height": 900
+  },
+  "loiza-river-city": {
+    "src": "/images/client/loiza-river-city.jpg",
+    "width": 1800,
+    "height": 1013
+  },
+  "naguabo-bay": {
+    "src": "/images/client/naguabo-bay.jpg",
+    "width": 2000,
+    "height": 1126
+  },
+  "naguabo": {
+    "src": "/images/client/naguabo.jpg",
+    "width": 1997,
+    "height": 1124
+  },
+  "tdm-aerial-001": {
+    "src": "/images/client/tdm-aerial-001.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-aerial-002": {
+    "src": "/images/client/tdm-aerial-002.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-aerial-003": {
+    "src": "/images/client/tdm-aerial-003.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-aerial-004": {
+    "src": "/images/client/tdm-aerial-004.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-apt-bedroom-2": {
+    "src": "/images/client/tdm-apt-bedroom-2.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-apt-living-003": {
+    "src": "/images/client/tdm-apt-living-003.jpg",
+    "width": 2560,
+    "height": 1441
+  },
+  "tdm-apt-living-004": {
+    "src": "/images/client/tdm-apt-living-004.jpg",
+    "width": 2560,
+    "height": 1441
+  },
+  "tdm-apt-master-bath-001": {
+    "src": "/images/client/tdm-apt-master-bath-001.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-apt-master-bath-002": {
+    "src": "/images/client/tdm-apt-master-bath-002.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-apt-master-bedroom": {
+    "src": "/images/client/tdm-apt-master-bedroom.jpg",
+    "width": 2560,
+    "height": 1441
+  },
+  "tdm-apt-study": {
+    "src": "/images/client/tdm-apt-study.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-exterior-golf": {
+    "src": "/images/client/tdm-exterior-golf.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-exterior-pull": {
+    "src": "/images/client/tdm-exterior-pull.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-exterior-road": {
+    "src": "/images/client/tdm-exterior-road.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-foyer-001": {
+    "src": "/images/client/tdm-foyer-001.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-foyer-002": {
+    "src": "/images/client/tdm-foyer-002.jpg",
+    "width": 2560,
+    "height": 1441
+  },
+  "tdm-foyer-004": {
+    "src": "/images/client/tdm-foyer-004.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-foyer-005": {
+    "src": "/images/client/tdm-foyer-005.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-hotel-210": {
+    "src": "/images/client/tdm-hotel-210.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-penthouse-001": {
+    "src": "/images/client/tdm-penthouse-001.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-penthouse-002": {
+    "src": "/images/client/tdm-penthouse-002.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "tdm-penthouse-003": {
+    "src": "/images/client/tdm-penthouse-003.jpg",
+    "width": 2560,
+    "height": 1440
+  },
+  "the-top": {
+    "src": "/images/client/the-top.jpg",
+    "width": 2100,
+    "height": 1182
+  }
+}

@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+.env*.local
+.env
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+test-results
+playwright-report
+reports/lighthouse
+/assets-source/images/**/*.jpg
+/assets-source/images/**/*.jpeg
+/assets-source/images/**/*.png
+!/assets-source/images/**/.gitkeep
+.DS_Store

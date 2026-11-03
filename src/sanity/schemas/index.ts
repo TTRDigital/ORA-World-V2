@@ -1,0 +1,53 @@
+import { localeString, localeText, localeParagraphs } from "./objects/locale";
+import { figure } from "./objects/figure";
+import { stat, hotspot, room, factRow, section, islandPlace } from "./objects/misc";
+import { siteSettings, homePage } from "./documents/singletons";
+import {
+  project,
+  collection,
+  floorPlan,
+  amenity,
+  activity,
+  galleryImage,
+  teamMember,
+  pointOfInterest,
+  faq,
+  pressArticle,
+  investmentStep,
+  incentive,
+  portfolioLocation,
+  page,
+  lead,
+  redirect,
+} from "./documents/content";
+
+export const schemaTypes = [
+  localeString,
+  localeText,
+  localeParagraphs,
+  figure,
+  stat,
+  hotspot,
+  room,
+  factRow,
+  section,
+  islandPlace,
+  siteSettings,
+  homePage,
+  project,
+  collection,
+  floorPlan,
+  amenity,
+  activity,
+  galleryImage,
+  teamMember,
+  pointOfInterest,
+  faq,
+  pressArticle,
+  investmentStep,
+  incentive,
+  portfolioLocation,
+  page,
+  lead,
+  redirect,
+];
