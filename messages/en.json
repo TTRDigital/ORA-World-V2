@@ -124,7 +124,8 @@
     "familyTitle": "Family-centered living",
     "petsTitle": "Happy homes for all",
     "openTile": "Open {name}",
-    "allLiving": "Everything on the Living page"
+    "allLiving": "Everything on the Living page",
+    "filterLabel": "Filter by category"
   },
   "island": {
     "proximity": "Proximity from Tesoro Del Mar",
@@ -134,13 +135,18 @@
     "approx": "Approximate, to be confirmed",
     "mapTitle": "Dorado and the island",
     "mapClosed": "Map not loaded. Opens MapLibre with OpenFreeMap tiles.",
-    "site": "Tesoro Del Mar"
+    "site": "Tesoro Del Mar",
+    "dragHint": "Drag, swipe or use the arrow keys",
+    "railLabel": "Places around Dorado",
+    "zoomDorado": "Dorado",
+    "zoomIsland": "Whole island"
   },
   "compare": {
     "feature": "Feature",
     "applies": "Applies",
     "showAll": "Show every row",
-    "showDiff": "Only differences"
+    "showDiff": "Only differences",
+    "rows": "{count, plural, =1 {1 row} other {# rows}}"
   },
   "invest": {
     "q1": "Are you relocating to Puerto Rico?",

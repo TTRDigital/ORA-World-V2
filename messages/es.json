@@ -124,7 +124,8 @@
     "familyTitle": "Vida centrada en la familia",
     "petsTitle": "Hogares felices para todos",
     "openTile": "Abrir {name}",
-    "allLiving": "Todo en la página Vida diaria"
+    "allLiving": "Todo en la página Vida diaria",
+    "filterLabel": "Filtrar por categoría"
   },
   "island": {
     "proximity": "Distancias desde Tesoro Del Mar",
@@ -134,13 +135,18 @@
     "approx": "Aproximado, por confirmar",
     "mapTitle": "Dorado y la isla",
     "mapClosed": "Mapa sin cargar. Abre MapLibre con teselas de OpenFreeMap.",
-    "site": "Tesoro Del Mar"
+    "site": "Tesoro Del Mar",
+    "dragHint": "Arrastre, deslice o use las flechas del teclado",
+    "railLabel": "Lugares alrededor de Dorado",
+    "zoomDorado": "Dorado",
+    "zoomIsland": "Toda la isla"
   },
   "compare": {
     "feature": "Característica",
     "applies": "Aplica",
     "showAll": "Mostrar todas las filas",
-    "showDiff": "Solo diferencias"
+    "showDiff": "Solo diferencias",
+    "rows": "{count, plural, =1 {1 fila} other {# filas}}"
   },
   "invest": {
     "q1": "¿Se está mudando a Puerto Rico?",
