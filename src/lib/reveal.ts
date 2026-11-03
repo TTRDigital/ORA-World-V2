@@ -20,7 +20,8 @@ export function initReveals(root: ParentNode = document): () => void {
   const showCounter = (el: HTMLElement) => {
     const target = Number(el.dataset.counter);
     const locale = document.documentElement.lang === "es" ? "es-PR" : "en-US";
-    const fmt = (v: number) => `${el.dataset.prefix ?? ""}${new Intl.NumberFormat(locale).format(Math.round(v))}${el.dataset.suffix ?? ""}`;
+    const fmt = (v: number) =>
+      `${el.dataset.prefix ?? ""}${new Intl.NumberFormat(locale).format(Math.round(v))}${el.dataset.suffix ?? ""}`;
     if (reduced || !Number.isFinite(target)) {
       el.textContent = fmt(target);
       return;
@@ -80,5 +81,8 @@ export function initReveals(root: ParentNode = document): () => void {
   return () => {
     io.disconnect();
     timers.forEach(clearTimeout);
+    // Nodes still pending can be re-bound by the next init (React strict mode re-runs effects).
+    pending.forEach((_, el) => delete el.dataset.revealBound);
+    pending.clear();
   };
 }
