@@ -121,7 +121,8 @@
     "familyTitle": "Vida centrada en la familia",
     "petsTitle": "Hogares felices para todos",
     "openTile": "Abrir {name}",
-    "allLiving": "Todo en la página Vida diaria"
+    "allLiving": "Todo en la página Vida diaria",
+    "filterLabel": "Filtrar por categoría"
   },
   "island": {
     "proximity": "Distancias desde Tesoro Del Mar",
@@ -131,13 +132,18 @@
     "approx": "Aproximado, por confirmar",
     "mapTitle": "Dorado y la isla",
     "mapClosed": "Mapa sin cargar. Abre MapLibre con teselas de OpenFreeMap.",
-    "site": "Tesoro Del Mar"
+    "site": "Tesoro Del Mar",
+    "dragHint": "Arrastre, deslice o use las flechas del teclado",
+    "railLabel": "Lugares alrededor de Dorado",
+    "zoomDorado": "Dorado",
+    "zoomIsland": "Toda la isla"
   },
   "compare": {
     "feature": "Característica",
     "applies": "Aplica",
     "showAll": "Mostrar todas las filas",
-    "showDiff": "Solo diferencias"
+    "showDiff": "Solo diferencias",
+    "rows": "{count, plural, =1 {1 fila} other {# filas}}"
   },
   "invest": {
     "q1": "¿Se está mudando a Puerto Rico?",
@@ -163,7 +169,13 @@
   },
   "faq": {
     "search": "Buscar preguntas",
-    "topics": { "general": "ORA World", "residences": "Residencias", "resilience": "Resiliencia y seguridad", "tax": "Ley 60", "buying": "Compra" },
+    "topics": {
+      "general": "ORA World",
+      "residences": "Residencias",
+      "resilience": "Resiliencia y seguridad",
+      "tax": "Ley 60",
+      "buying": "Compra"
+    },
     "none": "Ninguna pregunta coincide. Pruebe otra palabra o consulte al equipo.",
     "all": "Todas las preguntas",
     "count": "{count, plural, =1 {1 pregunta} other {# preguntas}}"
@@ -176,7 +188,11 @@
     "when": "Horario preferido",
     "success": "Gracias. El equipo de ventas confirmará su {mode} en un día hábil.",
     "next": "Qué sigue",
-    "steps": ["Un miembro del equipo de ventas confirma la hora por correo.", "Recibe por adelantado los renders actuales y los datos publicados.", "En la visita recorre las residencias, las amenidades y la biblioteca de planos."],
+    "steps": [
+      "Un miembro del equipo de ventas confirma la hora por correo.",
+      "Recibe por adelantado los renders actuales y los datos publicados.",
+      "En la visita recorre las residencias, las amenidades y la biblioteca de planos."
+    ],
     "galleryAddress": "Dirección de la galería de ventas: por confirmar",
     "booking": "Elija un horario",
     "noBooking": "La agenda en línea aparecerá aquí cuando se conecte el calendario de ventas. Indique abajo su horario preferido."
@@ -190,7 +206,14 @@
     "buyer": "Comprador",
     "broker": "Corredor",
     "source": "¿Cómo supo de nosotros?",
-    "sourceOptions": ["Búsqueda", "Redes sociales", "Referido", "Prensa", "Evento", "Otro"],
+    "sourceOptions": [
+      "Búsqueda",
+      "Redes sociales",
+      "Referido",
+      "Prensa",
+      "Evento",
+      "Otro"
+    ],
     "licence": "Número de licencia",
     "brokerage": "Agencia",
     "client": "Nombre del cliente",
@@ -242,7 +265,11 @@
     "zoomOut": "Alejar",
     "reset": "Restablecer",
     "keyplan": "Plano clave",
-    "status": { "available": "Disponible", "reserved": "Reservado", "sold": "Vendido" },
+    "status": {
+      "available": "Disponible",
+      "reserved": "Reservado",
+      "sold": "Vendido"
+    },
     "interior": "Interior",
     "exterior": "Exterior",
     "bath": "Baños",
@@ -252,7 +279,13 @@
   "gallery": {
     "title": "Galería",
     "filters": "Filtrar",
-    "categories": { "exteriors": "Exteriores", "interiors": "Interiores", "amenities": "Amenidades", "lifestyle": "Estilo de vida", "dorado-waterfalls": "Dorado Waterfalls" },
+    "categories": {
+      "exteriors": "Exteriores",
+      "interiors": "Interiores",
+      "amenities": "Amenidades",
+      "lifestyle": "Estilo de vida",
+      "dorado-waterfalls": "Dorado Waterfalls"
+    },
     "open": "Abrir imagen {n}",
     "lightbox": "Visor de imágenes"
   },
@@ -265,7 +298,13 @@
   "footer": {
     "newsletter": "Novedades desde Dorado",
     "newsletterText": "Precios, planos y noticias de obra, en cuanto se publiquen.",
-    "groups": { "residences": "Residencias", "living": "Vida diaria", "place": "El lugar", "invest": "Invertir", "company": "ORA World" },
+    "groups": {
+      "residences": "Residencias",
+      "living": "Vida diaria",
+      "place": "El lugar",
+      "invest": "Invertir",
+      "company": "ORA World"
+    },
     "legal": "Legal",
     "privacy": "Privacidad",
     "terms": "Términos",
@@ -286,14 +325,54 @@
     "home": "Inicio"
   },
   "pages": {
-    "residences": { "title": "Residencias", "intro": "Cuatro colecciones a lo largo de la torre y el vecindario de villas de Tesoro Del Mar.", "collections": "Colecciones", "finishes": "Acabados", "gallery": "Galería", "viewToggle": "Vista", "grid": "Cuadrícula", "single": "Individual" },
-    "living": { "title": "Vida diaria", "intro": "Amenidades, familia, mascotas, bienestar y actividades, tal como las publica ORA World.", "activities": "Actividades", "amenities": "Amenidades" },
-    "place": { "title": "El lugar", "intro": "Dorado, la isla y los dos proyectos que toman forma en la costa norte.", "projects": "Proyectos", "map": "Mapa", "gallery": "Galería", "tour": "Película y tour VR" },
-    "invest": { "title": "Invertir", "intro": "La Ley 60, los pasos del depósito, un estimador de pagos y la resiliencia que protege la inversión.", "resilience": "Resiliencia" },
-    "portfolio": { "title": "Portafolio", "intro": "Doce ubicaciones en Puerto Rico, cada una con su lema publicado." },
-    "visit": { "title": "Reserve una visita", "intro": "La galería de ventas o una videollamada, en el horario que le convenga." },
-    "faq": { "title": "Preguntas", "intro": "Todo lo publicado hasta ahora, con buscador." },
-    "press": { "title": "Prensa", "intro": "Cobertura de ORA World." },
-    "compare": { "title": "Comparar planos", "intro": "Hasta tres planos, lado a lado." }
+    "residences": {
+      "title": "Residencias",
+      "intro": "Cuatro colecciones a lo largo de la torre y el vecindario de villas de Tesoro Del Mar.",
+      "collections": "Colecciones",
+      "finishes": "Acabados",
+      "gallery": "Galería",
+      "viewToggle": "Vista",
+      "grid": "Cuadrícula",
+      "single": "Individual"
+    },
+    "living": {
+      "title": "Vida diaria",
+      "intro": "Amenidades, familia, mascotas, bienestar y actividades, tal como las publica ORA World.",
+      "activities": "Actividades",
+      "amenities": "Amenidades"
+    },
+    "place": {
+      "title": "El lugar",
+      "intro": "Dorado, la isla y los dos proyectos que toman forma en la costa norte.",
+      "projects": "Proyectos",
+      "map": "Mapa",
+      "gallery": "Galería",
+      "tour": "Película y tour VR"
+    },
+    "invest": {
+      "title": "Invertir",
+      "intro": "La Ley 60, los pasos del depósito, un estimador de pagos y la resiliencia que protege la inversión.",
+      "resilience": "Resiliencia"
+    },
+    "portfolio": {
+      "title": "Portafolio",
+      "intro": "Doce ubicaciones en Puerto Rico, cada una con su lema publicado."
+    },
+    "visit": {
+      "title": "Reserve una visita",
+      "intro": "La galería de ventas o una videollamada, en el horario que le convenga."
+    },
+    "faq": {
+      "title": "Preguntas",
+      "intro": "Todo lo publicado hasta ahora, con buscador."
+    },
+    "press": {
+      "title": "Prensa",
+      "intro": "Cobertura de ORA World."
+    },
+    "compare": {
+      "title": "Comparar planos",
+      "intro": "Hasta tres planos, lado a lado."
+    }
   }
 }
