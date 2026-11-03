@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import type { Faq } from "@/content/types";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,25 @@ import { Accordion } from "./Accordion";
 const TOPICS = ["general", "residences", "resilience", "tax", "buying"] as const;
 
 /** Search across every question with topic chips. Used on the homepage, the FAQ page and Ask ORA. */
-export function FaqSearch({ faqs, columns = 2, compact, initialTopic, limit }: { faqs: Faq[]; columns?: 1 | 2; compact?: boolean; initialTopic?: string; limit?: number }) {
+export function FaqSearch({
+  faqs,
+  columns = 2,
+  compact,
+  initialTopic,
+  limit,
+  featured,
+  stagger,
+}: {
+  faqs: Faq[];
+  columns?: 1 | 2;
+  compact?: boolean;
+  initialTopic?: string;
+  limit?: number;
+  /** Slugs shown by default (in this order) until the visitor searches or picks a topic. */
+  featured?: string[];
+  /** Reveal the accordion items with a stagger (homepage). */
+  stagger?: boolean;
+}) {
   const t = useTranslations("faq");
   const locale = useLocale() as "en" | "es";
   const [query, setQuery] = useState("");
@@ -18,9 +36,16 @@ export function FaqSearch({ faqs, columns = 2, compact, initialTopic, limit }: {
   const id = useId();
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
+    if (!q && topic === "all" && featured?.length) {
+      return featured.map((s) => faqs.find((f) => f.slug === s)).filter((f): f is Faq => Boolean(f));
+    }
     return faqs.filter((f) => (topic === "all" || f.topic === topic) && (!q || `${f.question[locale]} ${f.answer[locale].join(" ")}`.toLowerCase().includes(q))).slice(0, limit ?? 100);
-  }, [faqs, query, topic, locale, limit]);
+  }, [faqs, query, topic, locale, limit, featured]);
   const counts = useMemo(() => Object.fromEntries(TOPICS.map((k) => [k, faqs.filter((f) => f.topic === k).length])), [faqs]);
+  useEffect(() => {
+    // Items mounted after the initial scan (a new search) register their reveal themselves.
+    if (stagger) window.dispatchEvent(new Event("ora2:reveal"));
+  }, [results, stagger]);
 
   return (
     <div>
@@ -47,7 +72,7 @@ export function FaqSearch({ faqs, columns = 2, compact, initialTopic, limit }: {
       {results.length === 0 ? (
         <p className="body mt-4">{t("none")}</p>
       ) : (
-        <Accordion items={results.map((f) => ({ id: f.slug, title: f.question[locale], body: f.answer[locale] }))} columns={columns} />
+        <Accordion items={results.map((f) => ({ id: f.slug, title: f.question[locale], body: f.answer[locale] }))} columns={columns} stagger={stagger} />
       )}
     </div>
   );

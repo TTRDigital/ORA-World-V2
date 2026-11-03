@@ -153,13 +153,25 @@
     "price": "Purchase price",
     "deposit": "Deposit",
     "balance": "Balance at closing",
-    "read": "Read the Act 60 explainer"
+    "read": "Read the Act 60 explainer",
+    "short1": "Relocating",
+    "short2": "Business abroad",
+    "short3": "Primary residence",
+    "progress": "{n} / {total}",
+    "answers": "Your answers",
+    "matching": "{count, plural, =1 {1 published section} other {# published sections}}",
+    "editAnswer": "Change the answer to {q}"
   },
   "portfolio": {
     "pinned": "On the map",
     "unpinned": "Location to be announced",
     "map": "Stylised map of Puerto Rico with ORA World locations",
-    "select": "Select {name}"
+    "select": "Select {name}",
+    "atlantic": "Atlantic Ocean",
+    "caribbean": "Caribbean Sea",
+    "north": "N",
+    "pinsLabel": "ORA World locations on the island",
+    "clear": "Clear selection"
   },
   "faq": {
     "search": "Search questions",
