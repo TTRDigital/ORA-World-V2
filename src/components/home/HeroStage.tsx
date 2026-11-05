@@ -55,9 +55,19 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, fi
         idle = w.requestIdleCallback(() => setMount(true), { timeout: 3000 });
       else timer = window.setTimeout(() => setMount(true), 1500);
     };
-    if (document.readyState === "complete") go();
+    // Phones: the YouTube player is about 1.1 MB of script, so it waits for the visitor's first touch, scroll or
+    // key press instead of loading during start-up. The poster render shows until then. Self-hosted loops are light.
+    const phone = !selfHosted && window.matchMedia("(max-width: 767px), (pointer: coarse)").matches;
+    const events = ["pointerdown", "touchstart", "wheel", "keydown"] as const;
+    const onFirst = () => {
+      events.forEach((e) => window.removeEventListener(e, onFirst));
+      go();
+    };
+    if (phone) events.forEach((e) => window.addEventListener(e, onFirst, { once: true, passive: true }));
+    else if (document.readyState === "complete") go();
     else window.addEventListener("load", go, { once: true });
     return () => {
+      events.forEach((e) => window.removeEventListener(e, onFirst));
       window.removeEventListener("load", go);
       if (idle && "cancelIdleCallback" in window) window.cancelIdleCallback(idle);
       clearTimeout(timer);
@@ -154,7 +164,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, fi
       <div
         className="frame frame-lg relative"
         style={{ aspectRatio: "16/10" }}
-        data-reveal="image"
+        data-hero-image
         data-focal={poster.focal}
         data-film-state={playing ? "playing" : "poster"}
       >
@@ -164,6 +174,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, fi
           alt={poster.alt[locale] || poster.alt.en}
           fill
           priority
+          fetchPriority="high"
           sizes="(max-width: 1023px) calc(100vw - 24px), 56vw"
           quality={80}
           className={cn(

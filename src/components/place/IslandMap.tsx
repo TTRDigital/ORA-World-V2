@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +37,14 @@ export function IslandMap({
   className?: string;
 }) {
   const t = useTranslations("portfolio");
+  // Phones: open the drag rail centred on the north-coast cluster (Dorado to Loíza), where most pins are,
+  // instead of on the empty west coast. Sets scrollLeft on the rail only, never the window.
+  const railRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail || rail.scrollWidth <= rail.clientWidth) return;
+    rail.scrollLeft = rail.scrollWidth * 0.6 - rail.clientWidth / 2;
+  }, []);
   // Municipality clusters: index within the cluster decides the fan-out offset.
   const clusterIndex = new Map<string, number>();
   const counters = new Map<string, number>();
@@ -56,8 +65,9 @@ export function IslandMap({
   return (
     <div className={cn("relative min-w-0 max-w-full overflow-hidden rounded-[20px] md:overflow-visible md:rounded-[24px]", className)} data-testid="island-map">
       {/* On phones the island is a 760px-wide drag rail; the fade hints there is more to the right */}
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 rounded-r-[20px] bg-gradient-to-l from-[#dbe7ea] to-transparent md:hidden" />
-    <div className="no-scrollbar overflow-x-auto overscroll-x-contain rounded-[20px] bg-[#dbe7ea] md:overflow-visible md:rounded-[24px]">
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 rounded-r-[20px] bg-gradient-to-l from-[#dbe7ea] to-transparent md:hidden" />
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 rounded-l-[20px] bg-gradient-to-r from-[#dbe7ea] to-transparent md:hidden" />
+    <div ref={railRef} className="no-scrollbar overflow-x-auto overscroll-x-contain rounded-[20px] bg-[#dbe7ea] md:overflow-visible md:rounded-[24px]">
     <div className="group relative min-w-[760px] md:min-w-0" data-reveal>
       <svg viewBox="0 0 1000 420" className="block h-auto w-full" role="img" aria-label={t("map")}>
         <defs>

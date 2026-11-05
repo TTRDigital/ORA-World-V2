@@ -48,7 +48,7 @@ export async function Hero({ locale }: { locale: Locale }) {
         className="panel panel-basalt on-dark order-2 flex min-w-0 flex-col justify-between px-6 py-8 md:px-10 md:py-12 lg:order-1 lg:col-span-5"
       >
         <div>
-          <p className="label mb-4" data-reveal>
+          <p className="label mb-4" data-hero-rise>
             Dorado · Puerto Rico
           </p>
           <h1 id="hero-title" className="display-xl max-w-[12ch] lg:max-w-none">
@@ -56,7 +56,7 @@ export async function Hero({ locale }: { locale: Locale }) {
               <span key={i} className="inline-block whitespace-pre">
                 <span
                   className={w.accent ? "accent inline-block" : "inline-block"}
-                  data-reveal
+                  data-hero-rise
                   style={{ "--reveal-delay": `${80 + i * 60}ms` } as React.CSSProperties}
                 >
                   {w.text}
@@ -66,14 +66,14 @@ export async function Hero({ locale }: { locale: Locale }) {
           </h1>
           <p
             className="statement mt-6 text-bone/85"
-            data-reveal
+            data-hero-rise
             style={{ "--reveal-delay": `${120 + words.length * 60}ms` } as React.CSSProperties}
           >
             {tr(h.line, locale)}
           </p>
           <div
             className="mt-8 flex flex-wrap gap-3"
-            data-reveal
+            data-hero-rise
             style={{ "--reveal-delay": `${200 + words.length * 60}ms` } as React.CSSProperties}
           >
             <Link
@@ -91,7 +91,7 @@ export async function Hero({ locale }: { locale: Locale }) {
         {/* Four stat chips, labelled Tesoro Del Mar. */}
         <div
           className="mt-10 lg:mt-12"
-          data-reveal
+          data-hero-rise
           style={{ "--reveal-delay": `${280 + words.length * 60}ms` } as React.CSSProperties}
         >
           <p className="label mb-3">{tr(h.statsLabel, locale)}</p>

@@ -1,0 +1,105 @@
+# ORA World v2
+
+A second, fully revamped website for ORA World: luxury, eco-conscious residences in Dorado, Puerto Rico.
+Same palette and the same official 2026 logos as v1. Everything else is new: structure, navigation,
+typography (Fraunces + Plus Jakarta Sans), shape language and twelve interactive homepage modules.
+
+- Design system, contrast table and the per-section wow checklist: [`DESIGN.md`](./DESIGN.md)
+- Sitemap and where every v1 item now lives: [`docs/STRUCTURE.md`](./docs/STRUCTURE.md)
+- Everything still needing real data from the client: [`CONTENT-TODO.md`](./CONTENT-TODO.md)
+- Screenshots of every homepage module and every page at 1440 and 390: [`reports/screenshots/`](./reports/screenshots/)
+
+Next.js 16 App Router (TypeScript strict) · Tailwind v4 tokens · next-intl EN/ES (`/en`, `/es`) · Sanity with an
+embedded Studio at `/studio` · GSAP ScrollTrigger + Lenis · MapLibre GL (OpenFreeMap) · React Hook Form + Zod.
+
+## Quick start
+
+```bash
+pnpm install
+```
+
+```bash
+pnpm images:fetch && pnpm images:build
+```
+
+```bash
+pnpm dev
+```
+
+Without a Sanity project the whole site renders from the typed seed in `src/content/seed/`.
+`pnpm images:fetch` downloads the client's renders from oraworld.com into `assets-source/` (git-ignored);
+the optimised files in `public/images/client/` are committed, so the fetch is only needed to rebuild them.
+
+## Scripts
+
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` · `pnpm build` · `pnpm start` | Dev server, production build, production server |
+| `pnpm typecheck` · `pnpm lint` · `pnpm format` | `tsc --noEmit`, ESLint, Prettier |
+| `pnpm test:e2e` | Playwright at 1440 and 390: shell, image audit, axe accessibility (set `BASE_URL` or it starts `pnpm start`) |
+| `pnpm lighthouse /en /en/residences` | Lighthouse mobile + desktop, JSON in `reports/lighthouse/` |
+| `pnpm images:fetch` · `pnpm images:build` | Download the client's renders; optimise them (no blur data) and write `src/content/images.json` |
+| `node scripts/brand-build.mjs` | Trim and export the official logos and icons |
+| `node scripts/screenshots.mjs <dir> /en ...` | Full-page screenshots at 1440 and 390 |
+| `node scripts/sections.mjs <dir> /en "#hero" ...` | Per-module screenshots at 1440 and 390 |
+| `pnpm seed` | Push the seed into the ORA2 Sanity dataset (images uploaded once, stable ids) |
+
+## Environment
+
+All keys are in `.env.example`; none are needed for a local build.
+
+- **Sanity uses the `ORA2_` prefix on purpose.** The build environment also holds `NEXT_PUBLIC_SANITY_*` for an
+  unrelated site; v2 never reads or writes it. Set `NEXT_PUBLIC_ORA2_SANITY_PROJECT_ID`, `NEXT_PUBLIC_ORA2_SANITY_DATASET`,
+  `ORA2_SANITY_WRITE_TOKEN` and `ORA2_SANITY_REVALIDATE_SECRET`, then run `pnpm seed`.
+- `NEXT_PUBLIC_SITE_ENV=staging` (default) sends `X-Robots-Tag: noindex` and disallows crawling. Set `production` to index.
+  No staging-only UI exists on the page.
+- Contact channels (`NEXT_PUBLIC_ORA2_PHONE`, `_WHATSAPP`, `_EMAIL`) and the booking link stay hidden until set.
+- Leads: `CRM_WEBHOOK_URL` (+ `CRM_WEBHOOK_SECRET`), Turnstile keys, Resend behind `EMAIL_ENABLED`, optional Upstash.
+- Analytics: `NEXT_PUBLIC_GTM_ID` or `NEXT_PUBLIC_GA4_ID`, loaded only after consent (Consent Mode v2).
+
+## Deploy (Vercel)
+
+1. Import the repository into the TTR Vercel team as its own project; `vercel.json` pins pnpm and cache headers.
+2. Add the environment variables above. Keep `NEXT_PUBLIC_SITE_ENV=staging` on staging.
+3. Deploy. For production set `NEXT_PUBLIC_SITE_ENV=production` and the real `NEXT_PUBLIC_SITE_URL`.
+
+No Vercel token was available in the build environment, so the Vercel project and the staging deployment are a
+manual step for the TTR team.
+
+## How the client's feedback is enforced in code
+
+- **Interactive modules:** every homepage module has something to do. See the wow checklist in `DESIGN.md`.
+- **No tower cropping:** every `ImageRef` requires a `focal` (CSS object-position); the Sanity figure requires a hotspot.
+- **No blur:** no LQIP anywhere; WebP only at quality 80. The image audit fails on any `data:image`, any cover image
+  without a focal point, any original narrower than 1.5× its displayed width, and any `sizes` slot smaller than the
+  real rendered width.
+- **Hero film:** poster first with high fetch priority; YouTube mounts after load + idle on desktop and on the
+  visitor's first touch on phones (the player is about 1.1 MB); captions unloaded for 20 s after play; chrome hidden
+  by a 130% oversized, pointer-less iframe; a self-hosted loop replaces YouTube when set.
+- **Nothing unfinished:** unknown numbers read "To be confirmed"; press, unnamed team members and placeholder
+  modules stay hidden.
+
+## QA status (production build, 5 November 2026)
+
+- `pnpm typecheck`, `pnpm lint` and `pnpm build` are clean.
+- Playwright: **66 passed, 2 skipped** (device-specific tests skip on the other viewport), desktop 1440 and mobile 390.
+  Covers the nav pill compacting, the bottom sheet, the language switch and its remembered choice, Ask ORA tabs by keyboard,
+  the home staying at the top after load, redirects, robots, sitemap, noindex and CSP headers, the lead and
+  newsletter APIs, the image audit on thirteen pages and axe on thirteen pages (zero serious or critical violations).
+- Lighthouse 13, simulated throttling, local production server. SEO reads 69 only because staging deliberately
+  sends `noindex`; it is not a defect.
+
+| Page | Mobile perf | Desktop perf | Accessibility | Best practices | CLS |
+| --- | --- | --- | --- | --- | --- |
+| `/en` | 67 | 97 | 100 | 100 / 96 | 0 |
+| `/en/residences` | 81 | 99 | 100 | 100 | 0 |
+| `/en/living` | 78 | 99 | 100 | 100 | 0 |
+| `/en/place/tesoro-del-mar` | 80 | 96 | 100 | 100 | 0 |
+| `/en/invest` | 81 | 99 | 99 | 100 | 0 |
+| `/en/visit` | 82 | 99 | 100 | 100 | 0 |
+
+Desktop beats the 85 target on every page. **Mobile misses the 90 target** (67–82). The observed LCP on the
+simulated phone is about 1.3 s (hero poster: 21 ms first byte, 206 ms load), but Lighthouse's slow-4G model charges
+the variable Fraunces files (two files, about 270 KB, required by the opsz and SOFT type spec) and the twelve-module
+homepage's JavaScript against it. The remaining levers are client decisions: drop Fraunces' variable axes for static
+weights (roughly +8–10 points), or split the homepage into fewer modules above the fold.

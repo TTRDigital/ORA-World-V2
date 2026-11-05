@@ -5,9 +5,9 @@ import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
  * the warm "wonk" italics used on accent words. UI and body: Plus Jakarta Sans 400/500/600.
  */
 export const display = Fraunces({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   style: ["normal", "italic"],
-  axes: ["opsz", "SOFT", "WONK"],
+  axes: ["opsz", "SOFT"],
   weight: "variable",
   display: "swap",
   variable: "--font-display",
@@ -16,7 +16,7 @@ export const display = Fraunces({
 });
 
 export const sans = Plus_Jakarta_Sans({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
   variable: "--font-sans",

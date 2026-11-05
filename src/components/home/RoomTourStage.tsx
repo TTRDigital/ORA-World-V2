@@ -43,10 +43,19 @@ export function RoomTourStage({ locale, rooms }: { locale: Locale; rooms: Room[]
     return () => clearTimeout(id);
   }, [index]);
 
-  // Keep the active tab centred on the mobile rail.
+  // Keep the active tab centred on the mobile rail. Scrolls the rail only (never the window) and skips the first
+  // render: scrollIntoView here used to pull the whole page down to the tour on load.
+  const firstRail = useRef(true);
   useEffect(() => {
-    const tab = tabsRef.current?.querySelector<HTMLElement>('[aria-selected="true"]');
-    tab?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    if (firstRail.current) {
+      firstRail.current = false;
+      return;
+    }
+    const rail = tabsRef.current;
+    const tab = rail?.querySelector<HTMLElement>('[aria-selected="true"]');
+    if (!rail || !tab) return;
+    const left = tab.offsetLeft - (rail.clientWidth - tab.clientWidth) / 2;
+    rail.scrollTo({ left, behavior: document.documentElement.classList.contains("reduced-motion") ? "auto" : "smooth" });
   }, [index]);
 
   useEffect(() => {

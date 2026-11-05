@@ -586,16 +586,39 @@
   }
 }
 
-/* Page transition: the incoming panel slides up 24px with a fade */
+/* Page transition: the incoming panel slides up 24px. Transform only, so first paint (and LCP) is never held
+   back by an opacity fade waiting on the animation. */
 @keyframes page-in {
   from {
-    opacity: 0;
     transform: translateY(24px);
   }
   to {
-    opacity: 1;
     transform: none;
   }
+}
+/* Above-the-fold hero content rises in with CSS alone (no JavaScript reveal, nothing pre-hidden). */
+@keyframes hero-rise {
+  from {
+    transform: translateY(16px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes hero-settle {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: none;
+  }
+}
+[data-hero-rise] {
+  animation: hero-rise 900ms var(--ease-out) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+[data-hero-image] img {
+  animation: hero-settle 1400ms var(--ease-out) both;
 }
 .page-in {
   /* "backwards", not "both": a finished "both" keeps an identity transform on the wrapper, which turns it into

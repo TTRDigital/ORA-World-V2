@@ -27,13 +27,15 @@ export function Picture({ image, locale, sizes, priority, className, imgClassNam
     <div
       className={cn("frame", rounded === "lg" && "frame-lg", rounded === "none" && "rounded-none", className)}
       style={fill ? { aspectRatio: ratio } : undefined}
-      data-reveal={reveal ? "image" : undefined}
+      // Priority (above-the-fold) images are never pre-hidden: they settle with CSS alone so LCP is not held back.
+      data-reveal={reveal && !priority ? "image" : undefined}
+      data-hero-image={priority ? "" : undefined}
       data-focal={image.focal}
     >
       {fill ? (
-        <Image src={image.src} alt={alt} fill sizes={sizes} quality={80} priority={priority} loading={priority ? "eager" : undefined} className={cn("object-cover", imgClassName)} style={{ objectPosition: image.focal }} />
+        <Image src={image.src} alt={alt} fill sizes={sizes} quality={80} priority={priority} fetchPriority={priority ? "high" : undefined} loading={priority ? "eager" : undefined} className={cn("object-cover", imgClassName)} style={{ objectPosition: image.focal }} />
       ) : (
-        <Image src={image.src} alt={alt} width={image.width} height={image.height} sizes={sizes} quality={80} priority={priority} className={imgClassName} style={{ objectPosition: image.focal }} />
+        <Image src={image.src} alt={alt} width={image.width} height={image.height} sizes={sizes} quality={80} priority={priority} fetchPriority={priority ? "high" : undefined} className={imgClassName} style={{ objectPosition: image.focal }} />
       )}
     </div>
   );

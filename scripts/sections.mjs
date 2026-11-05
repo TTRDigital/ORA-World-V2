@@ -28,7 +28,7 @@ for (const v of views) {
   await page.goto(base + route, { waitUntil: "load", timeout: 60000 });
   await page.evaluate(() => localStorage.setItem("ora2_consent", "denied"));
   // Fixed chrome (nav pill, skip link, Ask ORA, consent) would otherwise be stamped into element captures.
-  await page.addStyleTag({ content: "header, a[href='#main'], [aria-haspopup='dialog'], [aria-label='Cookie consent'] { visibility: hidden !important; }" });
+  await page.addStyleTag({ content: "body > header, a[href='#main'], [aria-haspopup='dialog'], [aria-label='Cookie consent'] { visibility: hidden !important; }" });
   for (const sel of selectors.length ? selectors : ["main"]) {
     const el = page.locator(sel).first();
     await el.scrollIntoViewIfNeeded();

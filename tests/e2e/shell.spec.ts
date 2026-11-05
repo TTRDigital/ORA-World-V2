@@ -67,6 +67,13 @@ test.describe("shell", () => {
     await expect(dialog).toBeHidden();
   });
 
+  test("home stays at the top after load (no component scrolls the window)", async ({ page }) => {
+    await page.goto("/en", { waitUntil: "load" });
+    await page.locator("html:not(.no-js)").waitFor();
+    await page.waitForTimeout(2500);
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  });
+
   test("redirects, robots, sitemap, noindex and CSP headers", async ({ request }) => {
     const r = await request.get("/en/our-residences", { maxRedirects: 0 });
     expect(r.status()).toBe(308);
