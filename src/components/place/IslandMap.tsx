@@ -19,7 +19,8 @@ export const ISLAND_PATH =
 const VIEQUES = "M820.8 248.0 L858.5 233.1 L905.7 228.2 L952.8 240.6 L962.3 253.0 L924.5 262.9 L872.6 262.9 L830.2 257.9 Z";
 const CULEBRA = "M934.0 143.8 L962.3 141.4 L981.1 153.8 L967.0 163.7 L943.4 161.2 Z";
 
-const FAN: Record<number, [number, number]> = { 0: [0, 0], 1: [-18, 12], 2: [18, 12], 3: [0, 24] };
+// Wide enough that clustered pins (Dorado, Loíza) never overlap below the 24px target minimum at phone scale.
+const FAN: Record<number, [number, number]> = { 0: [0, 0], 1: [-30, 12], 2: [30, 24], 3: [0, 36] };
 
 export function IslandMap({
   pins,
@@ -64,9 +65,7 @@ export function IslandMap({
 
   return (
     <div className={cn("relative min-w-0 max-w-full overflow-hidden rounded-[20px] md:overflow-visible md:rounded-[24px]", className)} data-testid="island-map">
-      {/* On phones the island is a 760px-wide drag rail; the fade hints there is more to the right */}
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 rounded-r-[20px] bg-gradient-to-l from-[#dbe7ea] to-transparent md:hidden" />
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 rounded-l-[20px] bg-gradient-to-r from-[#dbe7ea] to-transparent md:hidden" />
+      {/* On phones the island is a 760px-wide drag rail, opened on the pins. No edge fades: they washed labels below AA. */}
     <div ref={railRef} className="no-scrollbar overflow-x-auto overscroll-x-contain rounded-[20px] bg-[#dbe7ea] md:overflow-visible md:rounded-[24px]">
     <div className="group relative min-w-[760px] md:min-w-0" data-reveal>
       <svg viewBox="0 0 1000 420" className="block h-auto w-full" role="img" aria-label={t("map")}>
