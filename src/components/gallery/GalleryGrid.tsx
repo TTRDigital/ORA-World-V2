@@ -28,7 +28,7 @@ export function GalleryGrid({ images, locale }: { images: GalleryImage[]; locale
       <ul className="mt-6 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>li]:mb-4 [&>li]:break-inside-avoid" data-testid="gallery">
         {list.map((g, i) => (
           <li key={g.id} data-reveal style={{ "--reveal-delay": `${(i % 9) * 40}ms` } as React.CSSProperties}>
-            <button type="button" onClick={() => setOpen(i)} aria-label={t("open", { n: i + 1 })} className="card lift ambient-zoom block w-full overflow-hidden text-left">
+            <button type="button" onClick={() => setOpen(i)} aria-label={`${g.caption[locale]} · ${t("open", { n: i + 1 })}`} className="card lift ambient-zoom block w-full overflow-hidden text-left">
               <Picture image={g.image} locale={locale} ratio={g.image.width / g.image.height > 1.3 ? "16/10" : "4/5"} rounded="none" reveal={false} sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw" />
               <span className="small block px-4 py-3 text-charcoal-soft">{g.caption[locale]}</span>
             </button>

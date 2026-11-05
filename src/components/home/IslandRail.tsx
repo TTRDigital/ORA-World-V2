@@ -53,7 +53,8 @@ export function IslandRail({ locale, places, pois }: { locale: Locale; places: R
       const d = (r.left + r.width / 2 - centre) / rect.width; // -0.5 … 0.5
       const a = Math.min(1, Math.abs(d) * 2);
       card.style.transform = reduced ? "" : `translateY(${(a * 12).toFixed(1)}px) rotate(${(d * 2).toFixed(2)}deg) scale(${(1 - a * 0.035).toFixed(3)})`;
-      card.style.opacity = reduced ? "" : `${1 - a * 0.18}`;
+      // The off-centre fade stays shallow so text on edge cards keeps AA contrast.
+      card.style.opacity = reduced ? "" : `${1 - a * 0.04}`;
     });
     setEdges({ start: rail.scrollLeft < 8, end: rail.scrollLeft + rail.clientWidth > rail.scrollWidth - 8 });
   }, []);
@@ -204,7 +205,7 @@ export function IslandRail({ locale, places, pois }: { locale: Locale; places: R
                   <div className="p-4 md:p-5">
                     <div className="flex items-baseline justify-between gap-3">
                       <h3 className="display-s">{place.name}</h3>
-                      <span className="numeral text-[22px] text-brass">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="numeral text-[22px] text-brass-ink">{String(i + 1).padStart(2, "0")}</span>
                     </div>
                     <p className="body mt-2 text-[15px] text-charcoal-soft">{place.text}</p>
                     {time && (

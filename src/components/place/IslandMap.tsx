@@ -11,8 +11,12 @@ export type MapPin = { slug: string; name: string; x: number; y: number; municip
  * (Dorado, Loíza) fan out so none overlap. The outline draws itself the first time it enters view and pins
  * drop in with a stagger.
  */
+/** Traced from approximate coastline coordinates (equirectangular, lon −67.32…−65.20, lat 18.62…17.78). */
 export const ISLAND_PATH =
-  "M110 60 C220 36 360 28 500 30 C640 30 780 36 880 70 C925 85 948 125 946 170 C944 210 935 245 898 268 C850 295 760 330 650 372 C540 385 420 384 300 374 C200 366 120 376 65 368 C42 330 48 250 62 170 C70 120 85 85 110 60 Z";
+  "M75.5 57.0 C81.0 53.3 97.5 52.5 108.5 52.1 C119.5 51.7 128.1 52.5 141.5 54.6 C154.9 56.6 173.0 62.4 188.7 64.5 C204.4 66.5 220.1 66.1 235.8 67.0 C251.6 67.8 267.3 69.9 283.0 69.4 C298.7 69.0 316.8 65.3 330.2 64.5 C343.6 63.7 351.4 64.1 363.2 64.5 C375.0 64.9 388.4 67.0 400.9 67.0 C413.5 67.0 426.1 64.1 438.7 64.5 C451.3 64.9 467.0 68.2 476.4 69.4 C485.9 70.7 487.4 70.7 495.3 71.9 C503.1 73.2 514.2 76.5 523.6 76.9 C533.0 77.3 543.2 74.8 551.9 74.4 C560.5 74.0 566.8 73.2 575.5 74.4 C584.1 75.6 592.8 80.2 603.8 81.8 C614.8 83.5 628.9 83.5 641.5 84.3 C654.1 85.1 666.7 84.3 679.2 86.8 C691.8 89.3 705.2 94.7 717.0 99.2 C728.8 103.7 739.0 109.9 750.0 114.1 C761.0 118.2 774.4 119.9 783.0 124.0 C791.7 128.1 799.5 133.1 801.9 138.9 C804.2 144.7 796.4 151.3 797.2 158.7 C798.0 166.2 809.0 176.9 806.6 183.5 C804.2 190.1 790.1 193.4 783.0 198.4 C775.9 203.4 770.4 206.7 764.2 213.3 C757.9 219.9 751.6 229.0 745.3 238.1 C739.0 247.2 732.7 258.7 726.4 267.8 C720.1 276.9 715.4 285.2 707.5 292.6 C699.7 300.1 689.5 307.9 679.2 312.5 C669.0 317.0 657.2 318.3 646.2 319.9 C635.2 321.6 625.8 320.3 613.2 322.4 C600.6 324.5 584.9 329.8 570.8 332.3 C556.6 334.8 543.2 336.9 528.3 337.3 C513.4 337.7 495.3 336.0 481.1 334.8 C467.0 333.6 456.8 331.9 443.4 329.8 C430.0 327.8 415.1 324.5 400.9 322.4 C386.8 320.3 370.3 318.3 358.5 317.4 C346.7 316.6 341.2 317.4 330.2 317.4 C319.2 317.4 305.8 318.3 292.5 317.4 C279.1 316.6 264.2 310.4 250.0 312.5 C235.8 314.5 220.9 326.5 207.5 329.8 C194.2 333.1 183.2 332.7 169.8 332.3 C156.4 331.9 139.9 326.9 127.4 327.4 C114.8 327.8 105.3 332.3 94.3 334.8 C83.3 337.3 67.6 345.1 61.3 342.2 C55.0 339.3 55.8 325.7 56.6 317.4 C57.4 309.2 63.7 302.6 66.0 292.6 C68.4 282.7 70.0 269.5 70.8 257.9 C71.5 246.3 71.5 233.9 70.8 223.2 C70.0 212.5 71.5 204.2 66.0 193.4 C60.5 182.7 44.8 169.5 37.7 158.7 C30.7 148.0 22.0 137.2 23.6 129.0 C25.2 120.7 40.1 114.9 47.2 109.1 C54.2 103.3 61.3 100.0 66.0 94.2 C70.8 88.5 73.9 80.6 75.5 74.4 C77.0 68.2 70.0 60.8 75.5 57.0 Z";
+
+const VIEQUES = "M820.8 248.0 L858.5 233.1 L905.7 228.2 L952.8 240.6 L962.3 253.0 L924.5 262.9 L872.6 262.9 L830.2 257.9 Z";
+const CULEBRA = "M934.0 143.8 L962.3 141.4 L981.1 153.8 L967.0 163.7 L943.4 161.2 Z";
 
 const FAN: Record<number, [number, number]> = { 0: [0, 0], 1: [-18, 12], 2: [18, 12], 3: [0, 24] };
 
@@ -77,13 +81,13 @@ export function IslandMap({
           className="[stroke-dashoffset:1000] transition-[stroke-dashoffset] duration-[2200ms] [transition-timing-function:var(--ease-out)] group-[.is-revealed]:[stroke-dashoffset:0]"
         />
         {/* Vieques and Culebra */}
-        <ellipse cx="972" cy="300" rx="22" ry="8" fill="#E3D9C8" stroke="#A8864F" strokeWidth="1.5" />
-        <ellipse cx="962" cy="122" rx="10" ry="7" fill="#E3D9C8" stroke="#A8864F" strokeWidth="1.5" />
+        <path d={VIEQUES} fill="#E3D9C8" stroke="#A8864F" strokeWidth="1.5" />
+        <path d={CULEBRA} fill="#E3D9C8" stroke="#A8864F" strokeWidth="1.5" />
         {/* Sea labels and compass */}
-        <text x="500" y="26" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="13" fontWeight="600" fill="#2C6A82" letterSpacing="0.5">
+        <text x="420" y="30" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="13" fontWeight="600" fill="#2C6A82" letterSpacing="0.5">
           {t("atlantic")}
         </text>
-        <text x="420" y="410" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="13" fontWeight="600" fill="#2C6A82" letterSpacing="0.5">
+        <text x="380" y="380" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="13" fontWeight="600" fill="#2C6A82" letterSpacing="0.5">
           {t("caribbean")}
         </text>
         <g transform="translate(40 40)" fill="#2C6A82" fontFamily="var(--font-sans)" fontSize="12" fontWeight="600">

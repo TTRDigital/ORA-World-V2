@@ -155,7 +155,7 @@ export function DialStage({ locale, features }: { locale: Locale; features: Resi
                 <span className={cn("block h-full w-full origin-top bg-brass transition-transform duration-700 [transition-timing-function:var(--ease-out)]", active ? "scale-y-100" : "scale-y-0")} />
               </span>
               <div className="flex items-baseline gap-3">
-                <span className={cn("numeral text-[26px] transition-colors", active ? "text-brass-ink" : "text-travertine-deep")}>{String(i + 1).padStart(2, "0")}</span>
+                <span className={cn("numeral text-[26px] transition-colors", active ? "text-brass-ink" : "text-charcoal-soft")}>{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="display-s">{t(f.title, locale)}</h3>
               </div>
               <ul className="mt-3 space-y-1.5 text-[15px] text-charcoal-soft">

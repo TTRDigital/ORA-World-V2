@@ -155,7 +155,7 @@ export async function Numbers({ locale }: { locale: Locale }) {
           </span>
           <span className="mt-1 block text-[14px] leading-snug text-charcoal-soft">
             {t("airport")}
-            <span className="block text-[12px] text-charcoal-soft/80">{t("airportNote")}</span>
+            <span className="block text-[12px] text-charcoal-soft">{t("airportNote")}</span>
           </span>
         </div>
 

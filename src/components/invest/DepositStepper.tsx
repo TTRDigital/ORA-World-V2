@@ -36,7 +36,9 @@ export function DepositStepper({ steps, locale }: { steps: InvestmentStep[]; loc
                 <span className="visually-hidden">{`${i + 1}. `}</span>
                 {tl(s.title, locale)}
               </h3>
-              <span className="tabular text-[15px] font-semibold text-brass-ink">{s.percent == null ? <Tbc /> : `${s.percent}%`}</span>
+              {(s.placeholder || s.percent != null) && (
+                <span className="tabular text-[15px] font-semibold text-brass-ink">{s.percent == null ? <Tbc /> : `${s.percent}%`}</span>
+              )}
             </div>
             <p className="body mt-1 text-[15px] text-charcoal-soft">{tl(s.detail, locale)}</p>
             <p className="label mt-2">{tl(s.when, locale)}</p>

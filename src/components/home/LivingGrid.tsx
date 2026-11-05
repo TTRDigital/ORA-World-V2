@@ -115,7 +115,8 @@ export function LivingGrid({ locale, tiles, family, pets }: { locale: Locale; ti
   useEffect(() => () => window.clearTimeout(leaveTimer.current), []);
 
   const tileSizes = (size: LivingTile["size"]) =>
-    size === "lg" ? "(max-width: 768px) 92vw, (max-width: 1280px) 46vw, 680px" : "(max-width: 768px) 45vw, (max-width: 1280px) 22vw, 330px";
+    // Matches the rendered tile: 2 columns below md (lg spans both), 4 columns above, capped by the panel width.
+    size === "lg" ? "(max-width: 767px) 86vw, (max-width: 1440px) 46vw, 660px" : "(max-width: 767px) 42vw, (max-width: 1440px) 23vw, 330px";
 
   return (
     <div>
@@ -165,9 +166,10 @@ function Tile({ tile, locale, sizes, onOpen, label, tabIndex }: { tile: LivingTi
       onClick={onOpen}
       aria-label={label || undefined}
       tabIndex={tabIndex}
-      className="card lift ambient-zoom group relative block h-full w-full overflow-hidden rounded-[20px] bg-travertine text-left"
+      className={cn("card lift ambient-zoom group relative block h-full w-full overflow-hidden rounded-[20px] bg-travertine text-left", tile.size === "lg" ? "aspect-[16/9]" : "aspect-[4/3]")}
     >
-      <Picture image={tile.image} locale={locale} sizes={sizes} ratio={tile.size === "lg" ? "16/9" : "4/3"} reveal={false} rounded="none" className="h-full rounded-none" />
+      {/* The frame fills the tile, so a tile stretched by a taller row never over-zooms its photo. */}
+      <Picture image={tile.image} locale={locale} sizes={sizes} ratio="auto" reveal={false} rounded="none" className="absolute inset-0 h-full w-full rounded-none" />
       <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-basalt/75 via-basalt/20 to-transparent" />
       <span className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3 md:p-4">
         <span className="text-[15px] leading-tight font-semibold text-bone md:text-[17px]">{tile.name}</span>

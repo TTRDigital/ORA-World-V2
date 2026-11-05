@@ -65,7 +65,7 @@ export function Consent() {
         </>
       )}
       {choice === "unset" && (
-        <div role="region" aria-label="Cookie consent" className="fade-in fixed inset-x-3 bottom-3 z-[70] mx-auto max-w-3xl rounded-2xl bg-basalt px-4 py-3 text-bone shadow-lift md:inset-x-auto md:left-1/2 md:w-[min(720px,calc(100%-24px))] md:-translate-x-1/2">
+        <div role="region" aria-label="Cookie consent" className="fade-in fixed inset-x-3 bottom-[calc(max(0.75rem,env(safe-area-inset-bottom))+3.75rem)] z-[70] mx-auto max-w-3xl md:bottom-5 rounded-2xl bg-basalt px-4 py-3 text-bone shadow-lift md:inset-x-auto md:left-1/2 md:w-[min(720px,calc(100%-24px))] md:-translate-x-1/2">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <p className="small flex-1 basis-60 text-bone/85">
               {t("text")}{" "}

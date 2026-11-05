@@ -27,8 +27,13 @@ test.describe("shell", () => {
   test("nav pill compacts on scroll down and expands on scroll up", async ({ page, isMobile }) => {
     test.skip(isMobile, "desktop pill only");
     await page.goto("/en");
+    // Wait for hydration (MotionInit removes .no-js), otherwise the wheel scrolls before the header listens.
+    await page.locator("html:not(.no-js)").waitFor();
+    await page.waitForTimeout(500);
     await expect(page.locator("header nav").getByRole("link", { name: "Residences" })).toBeVisible();
-    await page.mouse.wheel(0, 1200);
+    await page.mouse.wheel(0, 600);
+    await page.waitForTimeout(300);
+    await page.mouse.wheel(0, 600);
     await page.waitForTimeout(400);
     await expect(page.locator("header nav").getByRole("link", { name: "Residences" })).toBeHidden();
     await page.mouse.wheel(0, -400);

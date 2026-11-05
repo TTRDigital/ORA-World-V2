@@ -10,7 +10,8 @@ export function pageMetadata(opts: { locale: Locale; path: string; title: string
   const canonical = `${SITE_URL}${pathFor(opts.locale, opts.path)}`;
   const og = opts.image || `${SITE_URL}/api/og?title=${encodeURIComponent(opts.title)}&locale=${opts.locale}`;
   return {
-    title: opts.title,
+    // The home page shares the layout's segment, where the title template does not apply.
+    title: opts.path === "/" ? { absolute: `ORA World · ${opts.title}` } : opts.title,
     description: opts.description,
     alternates: {
       canonical,
