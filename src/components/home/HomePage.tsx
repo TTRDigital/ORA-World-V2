@@ -1,15 +1,36 @@
 import type { Locale } from "@/content/types";
-import { getHome } from "@/lib/content";
-import { Headline } from "@/components/ui/Headline";
-import { t } from "@/lib/localize";
+import { Hero } from "./Hero";
+import { Numbers } from "./Numbers";
+import { Explorer } from "./Explorer";
+import { RoomTour } from "./RoomTour";
+import { ResilienceDial } from "./ResilienceDial";
+import { LivingBento } from "./LivingBento";
+import { Island } from "./Island";
+import { CompareProjects } from "./CompareProjects";
+import { Invest } from "./Invest";
+import { Portfolio } from "./Portfolio";
+import { HomeFaq } from "./HomeFaq";
+import { VisitCta } from "./VisitCta";
 
-/** Placeholder assembly until the thirteen modules land (replaced in the homepage phase). */
-export async function HomePage({ locale }: { locale: Locale }) {
-  const home = await getHome();
+/**
+ * The homepage: twelve modular, interactive panels in the brief's order (the footer is the thirteenth).
+ * Each module reads its own content, hides itself when disabled or still a placeholder, and no two share a layout.
+ */
+export function HomePage({ locale }: { locale: Locale }) {
   return (
-    <section className="panel panel-bone container-x section-y">
-      <Headline as="h1" size="xl" text={t(home.hero.headline, locale)} />
-      <p className="statement mt-6">{t(home.hero.line, locale)}</p>
-    </section>
+    <div className="flex flex-col gap-3">
+      <Hero locale={locale} />
+      <Numbers locale={locale} />
+      <Explorer locale={locale} />
+      <RoomTour locale={locale} />
+      <ResilienceDial locale={locale} />
+      <LivingBento locale={locale} />
+      <Island locale={locale} />
+      <CompareProjects locale={locale} />
+      <Invest locale={locale} />
+      <Portfolio locale={locale} />
+      <HomeFaq locale={locale} />
+      <VisitCta locale={locale} />
+    </div>
   );
 }

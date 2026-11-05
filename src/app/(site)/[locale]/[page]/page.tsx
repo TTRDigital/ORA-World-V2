@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getPage, getPages, getSiteSettings } from "@/lib/content";
+import { getPage, getSiteSettings } from "@/lib/content";
 import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
 import { t, tp } from "@/lib/localize";
 import type { Locale } from "@/content/types";

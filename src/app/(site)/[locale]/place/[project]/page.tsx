@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getProject, getProjects } from "@/lib/content";
+import { getPois, getProject, getProjects } from "@/lib/content";
 import { pageMetadata, JsonLd, breadcrumbLd, placeLd } from "@/lib/seo";
 import { t, tp } from "@/lib/localize";
 import { SITE_URL } from "@/lib/utils";
@@ -12,6 +12,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Picture } from "@/components/ui/Picture";
 import { RenderCarousel } from "@/components/place/RenderCarousel";
 import { MapLoader } from "@/components/map/MapLoader";
+import type { RailPoi } from "@/components/home/IslandRail";
 import { Tbc } from "@/components/ui/Tbc";
 import { Check } from "@/components/ui/Icons";
 import { Headline } from "@/components/ui/Headline";
@@ -33,7 +34,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
   setRequestLocale(locale);
   const project = await getProject(slug);
   if (!project) notFound();
-  const [tn, tc] = await Promise.all([getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" })]);
+  const [tn, tc, pois] = await Promise.all([getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" }), getPois()]);
+  const poiList: RailPoi[] = pois.map((p) => ({ slug: p.slug, name: t(p.name, locale), category: p.category, lat: p.lat, lng: p.lng, minutes: p.walkMinutes ?? p.driveMinutes, mode: p.walkMinutes ? "walk" : "drive", confirmed: p.confirmed, note: p.note ? t(p.note, locale) : null }));
   const crumbs = [{ name: "ORA World", path: "/" }, { name: tn("place"), path: "/place" }, { name: t(project.name, locale), path: `/place/${project.slug}` }];
   return (
     <div className="flex flex-col gap-3">
@@ -79,7 +81,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
       {project.lat && project.lng && (
         <section className="panel panel-travertine container-x section-y" aria-label={tn("place")}>
           <p className="label mb-3">{t(project.location, locale)}</p>
-          <MapLoader lat={project.lat} lng={project.lng} ratio="16/9" />
+          <MapLoader site={{ lat: project.lat, lng: project.lng, name: t(project.name, locale) }} pois={poiList} />
         </section>
       )}
     </div>

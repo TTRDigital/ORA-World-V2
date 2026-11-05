@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useSyncExternalStore, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { isRegistered, setRegistered } from "@/lib/registration";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
@@ -13,13 +13,14 @@ import { Lock } from "@/components/ui/Icons";
 export function RegistrationGate({ children, consentText, preview }: { children: ReactNode; consentText: string; preview?: ReactNode }) {
   const t = useTranslations("gate");
   const tf = useTranslations("form");
-  const [state, setState] = useState<"deciding" | "locked" | "open">("deciding");
-  useEffect(() => {
-    setState(isRegistered() ? "open" : "locked");
-    const on = () => setState("open");
-    window.addEventListener("ora2:registered", on);
-    return () => window.removeEventListener("ora2:registered", on);
-  }, []);
+  const state = useSyncExternalStore(
+    (cb) => {
+      window.addEventListener("ora2:registered", cb);
+      return () => window.removeEventListener("ora2:registered", cb);
+    },
+    () => (isRegistered() ? "open" : "locked"),
+    () => "deciding" as const,
+  );
   if (state === "open") return <>{children}</>;
   return (
     <div className="grid gap-6 lg:grid-cols-12" data-testid="gate">
