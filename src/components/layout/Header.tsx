@@ -75,7 +75,15 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
           )}
         >
           <Link href="/" aria-label={t("home")} className="flex items-center rounded-full py-1 pr-2">
-            <Logo height={44} priority />
+            <Logo
+              height={76}
+              priority
+              responsive
+              className={cn(
+                "logo-lift transition-[height] duration-500 [transition-timing-function:var(--ease-out)]",
+                compact ? "h-[54px] md:h-[60px]" : "h-[58px] md:h-[68px] lg:h-[76px]",
+              )}
+            />
           </Link>
           <ul className={cn("hidden items-center gap-1 lg:flex", compact && "lg:hidden")}>
             {primaryNav.map((item) => (

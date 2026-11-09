@@ -101,7 +101,7 @@ export function DialStage({ locale, features }: { locale: Locale; features: Resi
       `}</style>
 
       {/* Mobile: sticky progress track under the nav */}
-      <div className="sticky top-[88px] z-20 -mx-4 rounded-2xl bg-travertine px-4 py-3 shadow-[0_12px_24px_-16px_rgb(28_27_25/0.45)] lg:hidden">
+      <div className="sticky top-[100px] z-20 -mx-4 rounded-2xl bg-travertine px-4 py-3 shadow-[0_12px_24px_-16px_rgb(28_27_25/0.45)] lg:hidden">
         <div className="flex items-center gap-3">
           <span
             aria-hidden
@@ -136,7 +136,7 @@ export function DialStage({ locale, features }: { locale: Locale; features: Resi
       {/* Dial: CSS sticky on desktop, so the circle stays in view for the whole section while the nine cards
           scroll past, then leaves with the section. (The column stretches to the cards' height.) */}
       <div className="hidden lg:col-span-5 lg:block">
-        <div ref={dialRef} className="sticky top-[max(112px,calc(50vh-250px))] flex flex-col items-center">
+        <div ref={dialRef} className="sticky top-[max(124px,calc(50vh-250px))] flex flex-col items-center">
           <div className="relative w-full max-w-[520px]">
             <svg viewBox="-80 -40 560 480" className="h-auto w-full" role="img" aria-label={announce}>
               {features.map((f, i) => (

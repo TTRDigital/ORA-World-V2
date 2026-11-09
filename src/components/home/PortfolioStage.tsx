@@ -97,7 +97,9 @@ export function PortfolioStage({ items }: { items: PortfolioCard[] }) {
                         </g>
                       )}
                     </svg>
-                    <Image src="/brand/ora-world-logo-gold.png" alt="" width={44} height={31} className="absolute top-3 right-3" style={{ width: 44, height: "auto" }} />
+                    <span className="absolute top-3 right-3 rounded-2xl bg-bone/92 p-2 shadow-lift">
+                      <Image src="/brand/ora-world-logo-gold.png" alt="" width={72} height={51} style={{ width: 72, height: "auto" }} />
+                    </span>
                     <span className="absolute bottom-3 left-3 rounded-full bg-bone/90 px-2.5 py-1 text-[11px] font-semibold text-brass-ink">{t("renderTbc")}</span>
                   </div>
                 )}

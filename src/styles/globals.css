@@ -877,3 +877,9 @@ html.lenis body {
 .reduced-motion .tower-hint-avatar {
   animation: none;
 }
+
+/* Logo legibility: the gold lockup's pale leaves and thin wordmark sit on bone and glass, so a soft shadow edge
+   keeps it readable without recolouring the official artwork. */
+.logo-lift {
+  filter: drop-shadow(0 1px 1px rgb(28 27 25 / 0.22)) drop-shadow(0 0 6px rgb(255 255 255 / 0.35));
+}

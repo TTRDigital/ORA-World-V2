@@ -33,7 +33,7 @@ export function Footer({ settings, showPress }: { settings: SiteSettings; showPr
       </div>
       <div className="grid gap-10 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <Logo variant="white" height={96} />
+          <Logo variant="white" height={150} responsive className="h-[120px] md:h-[136px] lg:h-[150px]" />
           <p className="label mt-8">{t("footer.newsletter")}</p>
           <p className="small mt-1 mb-4 max-w-sm text-bone/70">{t("footer.newsletterText")}</p>
           <NewsletterForm dark />

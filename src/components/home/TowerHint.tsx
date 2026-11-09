@@ -60,8 +60,8 @@ export function TowerHint({ text, active }: { text: string; active: boolean }) {
     >
       {/* Avatar + typed bubble, top of the tower area */}
       <div className="absolute top-0 left-1/2 flex -translate-x-1/2 items-center gap-2 lg:left-[58%]">
-        <span className="tower-hint-avatar relative inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-bone shadow-lift ring-2 ring-brass/60">
-          <Image src="/brand/ora-world-logo-gold.png" alt="" width={34} height={24} className="h-6 w-auto" />
+        <span className="tower-hint-avatar relative inline-flex size-14 shrink-0 items-center justify-center rounded-full bg-bone shadow-lift ring-2 ring-brass/60">
+          <Image src="/brand/ora-world-logo-gold.png" alt="" width={57} height={40} className="logo-lift h-10 w-auto" />
         </span>
         <span className="relative min-h-9 rounded-2xl rounded-bl-md bg-basalt px-3.5 py-2 text-[13px] font-semibold whitespace-nowrap text-bone shadow-lift">
           {reduced ? text : typed}
