@@ -176,7 +176,11 @@
     "progress": "{n} / {total}",
     "answers": "Sus respuestas",
     "matching": "{count, plural, =1 {1 sección publicada} other {# secciones publicadas}}",
-    "editAnswer": "Cambiar la respuesta a {q}"
+    "editAnswer": "Cambiar la respuesta a {q}",
+    "previewTitle": "Secciones a las que apuntan sus respuestas",
+    "previewOn": "(apunta aquí)",
+    "previewOff": "(todavía no)",
+    "depositShare": "Depósito"
   },
   "portfolio": {
     "pinned": "En el mapa",
@@ -187,7 +191,8 @@
     "caribbean": "Mar Caribe",
     "north": "N",
     "pinsLabel": "Ubicaciones de ORA World en la isla",
-    "clear": "Quitar selección"
+    "clear": "Quitar selección",
+    "renderTbc": "Render por confirmar"
   },
   "faq": {
     "search": "Buscar preguntas",
@@ -200,7 +205,14 @@
     },
     "none": "Ninguna pregunta coincide. Pruebe otra palabra o consulte al equipo.",
     "all": "Todas las preguntas",
-    "count": "{count, plural, =1 {1 pregunta} other {# preguntas}}"
+    "count": "{count, plural, =1 {1 pregunta} other {# preguntas}}",
+    "searchLong": "Busque entre todas las preguntas publicadas",
+    "topicsLabel": "Explorar por tema",
+    "popular": "Preguntas frecuentes",
+    "emptyTitle": "Aún no hay nada publicado sobre eso",
+    "askOra": "Pregunte al equipo",
+    "bookVisit": "Reserve una visita",
+    "stillCurious": "¿Le queda alguna duda? El equipo responde en persona."
   },
   "visit": {
     "gallery": "Galería de ventas",
@@ -335,7 +347,13 @@
     "accessibility": "Accesibilidad",
     "disclaimer": "Aviso legal",
     "equalHousing": "Igualdad de oportunidades de vivienda",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "closing": "Más allá de lo *esperado*",
+    "closingLine": "Comunidades concebidas con esmero donde la longevidad, el lujo y la naturaleza conviven en perfecta armonía.",
+    "address": "Tesoro Del Mar · Dorado, Vega Alta, Puerto Rico 00692",
+    "top": "Volver arriba",
+    "ask": "Pregunte al equipo",
+    "book": "Reserve una visita"
   },
   "consent": {
     "text": "Usamos cookies analíticas con su consentimiento para entender cómo se usa el sitio.",
@@ -397,7 +415,26 @@
     "compare": {
       "title": "Comparar planos",
       "intro": "Hasta tres planos, lado a lado."
-    }
+    },
+    "facts": {
+      "framework": "Marco",
+      "enacted": "Promulgada",
+      "residency": "Residencia, en general",
+      "residencyValue": "183 días",
+      "deposits": "Depósitos",
+      "locations": "Ubicaciones",
+      "municipalities": "Municipios",
+      "projectPages": "Páginas de proyecto",
+      "revealed": "Por revelar",
+      "ways": "Formas de visitar",
+      "ways2": "Galería o video",
+      "gallery": "Galería de ventas",
+      "hours": "Horario",
+      "questions": "Preguntas",
+      "topics": "Temas",
+      "languages": "Idiomas"
+    },
+    "placeLine": "Dorado · Puerto Rico"
   },
   "numbers": {
     "walk": "A pie",

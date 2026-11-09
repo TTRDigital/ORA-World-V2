@@ -23,11 +23,21 @@ export default async function InvestPage({ params }: { params: Promise<{ locale:
   const { locale } = await params;
   setRequestLocale(locale);
   const [home, incentives, steps, ti, tn, tv, tc] = await Promise.all([getHome(), getIncentives(), getInvestmentSteps(), getTranslations({ locale, namespace: "pages.invest" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "invest" }), getTranslations({ locale, namespace: "common" })]);
+  const tf = await getTranslations({ locale, namespace: "pages.facts" });
+  const tpg = await getTranslations({ locale, namespace: "pages" });
+  const tcm = await getTranslations({ locale, namespace: "common" });
+  // Published Act 60 facts (oraworld.com/tax-incentive); deposits are not published.
+  const facts = [
+    { label: tf("framework"), value: "Act 60" },
+    { label: tf("enacted"), value: "2019" },
+    { label: tf("residency"), value: tf("residencyValue") },
+    { label: tf("deposits"), value: tcm("tbc") },
+  ];
   const sections = incentives.map((s) => ({ slug: s.slug, title: t(s.title, locale), summary: t(s.summary, locale), body: tp(s.body, locale), tags: s.tags as string[] }));
   return (
     <div className="flex flex-col gap-3">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("invest"), path: "/invest" }])} />
-      <PageHero locale={locale} label={t(home.invest.label, locale)} headline={ti("title")} intro={ti("intro")} image={tdm.exteriorGolf}>
+      <PageHero locale={locale} label={t(home.invest.label, locale)} headline={ti("title")} intro={ti("intro")} image={tdm.exteriorGolf} place={tpg("placeLine")} facts={facts}>
         <Link href="/visit" className="pill pill-brass">{tc("talkToAdvisor")}</Link>
       </PageHero>
       <section className="panel panel-travertine container-x section-y" aria-label={t(home.invest.headline, locale).replace(/\*/g, "")}>

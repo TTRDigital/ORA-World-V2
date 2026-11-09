@@ -19,10 +19,18 @@ export default async function VisitPage({ params }: { params: Promise<{ locale: 
   setRequestLocale(locale);
   const [settings, tv, tn] = await Promise.all([getSiteSettings(), getTranslations({ locale, namespace: "pages.visit" }), getTranslations({ locale, namespace: "nav" })]);
   const address = settings.salesGalleryAddress?.[locale] ?? null;
+  const tf = await getTranslations({ locale, namespace: "pages.facts" });
+  const tpg = await getTranslations({ locale, namespace: "pages" });
+  const tcm = await getTranslations({ locale, namespace: "common" });
+  const facts = [
+    { label: tf("ways"), value: tf("ways2") },
+    { label: tf("gallery"), value: "Dorado" },
+    { label: tf("hours"), value: settings.hours?.[locale] ?? tcm("tbc") },
+  ];
   return (
     <div className="flex flex-col gap-3">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("visit"), path: "/visit" }])} />
-      <PageHero locale={locale} label={tn("contact")} headline={tv("title")} intro={tv("intro")} image={tdm.foyerReception} />
+      <PageHero locale={locale} label={tn("contact")} headline={tv("title")} intro={tv("intro")} image={tdm.foyerReception} place={tpg("placeLine")} facts={facts} />
       <section className="panel panel-travertine container-x section-y" aria-label={tv("title")}>
         <VisitJourney bookingUrl={settings.bookingUrl} consentText={settings.consentText[locale]} galleryAddress={address} />
       </section>

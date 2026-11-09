@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Accordion } from "@/components/faq/Accordion";
-import { ArrowLeft } from "@/components/ui/Icons";
+import { ArrowLeft, Check } from "@/components/ui/Icons";
 
 export type OrientationSection = { slug: string; title: string; summary: string; body: string[]; tags: string[] };
 type Answer = "yes" | "no" | "unsure";
@@ -129,12 +129,46 @@ export function Orientation({ sections }: { sections: OrientationSection[] }) {
               })}
             </div>
             {step > 0 && (
-              <div className="mt-8 flex items-center gap-3">
+              <div className="mt-6 flex items-center gap-3">
                 <button type="button" onClick={() => go(step - 1)} className="pill pill-ghost min-h-10 gap-1 px-4">
                   <ArrowLeft width={16} height={16} /> {tc("back")}
                 </button>
               </div>
             )}
+            {/* Live preview: the published explainer sections light up as the answers point to them.
+                It only shows which sections to read; it never says anyone qualifies. */}
+            <div className="mt-7 rounded-[18px] bg-bone-deep p-4 md:p-5" data-testid="orientation-preview">
+              <div className="flex items-baseline justify-between gap-3">
+                <p className="label">{t("previewTitle")}</p>
+                <p className="small tabular text-charcoal-soft" aria-live="polite">{t("matching", { count: matches.length })}</p>
+              </div>
+              <ul className="mt-3 grid gap-1.5 sm:grid-cols-2">
+                {sections.map((sec) => {
+                  const on = matches.includes(sec);
+                  return (
+                    <li
+                      key={sec.slug}
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-xl px-3 py-2 text-[14px] transition-[background-color,color,opacity] duration-500",
+                        on ? "bg-bone text-charcoal" : "text-charcoal-soft",
+                      )}
+                    >
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "inline-flex size-5 shrink-0 items-center justify-center rounded-full transition-colors duration-500",
+                          on ? "bg-brass text-basalt" : "ring-1 ring-travertine-deep",
+                        )}
+                      >
+                        {on && <Check width={12} height={12} />}
+                      </span>
+                      <span className={cn(on ? "font-semibold" : "")}>{sec.title}</span>
+                      <span className="visually-hidden">{on ? t("previewOn") : t("previewOff")}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </>
         ) : (
           <>

@@ -775,5 +775,47 @@ html.lenis body {
   animation: hero-live 1.8s var(--ease-out) infinite;
 }
 .reduced-motion .hero-live-dot {
+/* depth-pass C */
+/* Footer closing band: a slow brass light that drifts across the basalt card (static under reduced motion). */
+.footer-band::before {
+  content: "";
+  position: absolute;
+  inset: -40% -10% auto auto;
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(212 185 135 / 0.16), transparent);
+  pointer-events: none;
+  animation: footer-glow 14s ease-in-out infinite alternate;
+}
+@keyframes footer-glow {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-30%, 25%);
+  }
+}
+/* Portfolio brand card pin: a soft breathing ring; the card tag dot glows while its card is active. */
+.brand-pin-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: brand-pin 2.8s var(--ease-out) infinite;
+}
+@keyframes brand-pin {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.brand-pin-dot {
+  box-shadow: 0 0 0 4px rgb(168 134 79 / 0.25);
+}
+.reduced-motion .footer-band::before,
+.reduced-motion .brand-pin-ring {
   animation: none;
 }

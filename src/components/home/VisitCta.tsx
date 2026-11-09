@@ -17,6 +17,8 @@ export async function VisitCta({ locale }: { locale: Locale }) {
   const v = home.visit;
   if (!v.enabled) return null;
   const tc = await getTranslations({ locale, namespace: "common" });
+  const tv = await getTranslations({ locale, namespace: "visit" });
+  const steps = tv.raw("steps") as string[];
   const alt = v.image.alt[locale] || v.image.alt.en;
 
   return (
@@ -44,6 +46,8 @@ export async function VisitCta({ locale }: { locale: Locale }) {
           }}
           aria-hidden
         />
+        {/* Desktop: a left-side scrim so the label, headline and steps read over the bright greens. */}
+        <div className="absolute inset-0 hidden lg:block" style={{ background: "linear-gradient(to right, rgb(28 27 25 / .62), rgb(28 27 25 / .2) 48%, transparent 62%)" }} aria-hidden />
         <p className="legal absolute top-4 right-4 rounded-full bg-basalt/50 px-3 py-1 text-bone/80">
           {tc("rendering")}
         </p>
@@ -58,7 +62,7 @@ export async function VisitCta({ locale }: { locale: Locale }) {
       </div>
 
       {/* Desktop grid over the image; mobile the card flows under the frame. */}
-      <div className="relative z-10 grid lg:min-h-[640px] lg:grid-cols-12 lg:items-end lg:gap-8 lg:px-10 lg:py-10">
+      <div className="relative z-10 grid lg:min-h-[700px] lg:grid-cols-12 lg:items-end lg:gap-8 lg:px-10 lg:py-10">
         <div data-tone="dark" className="on-dark max-lg:sr-only lg:col-span-6 lg:self-end lg:pb-2">
           <p className="label mb-3" data-reveal>
             {tr(v.label, locale)}
@@ -73,6 +77,20 @@ export async function VisitCta({ locale }: { locale: Locale }) {
           >
             {tr(v.text, locale)}
           </p>
+          {/* What happens after booking, as published on the visit page: three numbered steps on frosted glass. */}
+          <div className="mt-6 max-w-[520px] rounded-[20px] bg-basalt/45 p-4 backdrop-blur-md" data-reveal style={{ "--reveal-delay": "220ms" } as React.CSSProperties}>
+            <p className="label mb-3">{tv("next")}</p>
+            <ol className="grid gap-2.5">
+              {steps.map((st, i) => (
+                <li key={st} className="flex items-start gap-3 text-[14px] leading-snug text-bone/90">
+                  <span className="numeral flex size-7 shrink-0 items-center justify-center rounded-full bg-brass-light/15 text-[13px] text-brass-light" aria-hidden>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="pt-1">{st}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
         <div
           className="-mt-12 px-3 lg:col-span-5 lg:col-start-8 lg:mt-0 lg:self-center lg:px-0"
@@ -84,6 +102,20 @@ export async function VisitCta({ locale }: { locale: Locale }) {
               {tr(v.text, locale)}
             </p>
             <VisitForm consentText={settings.consentText[locale]} submitLabel={tr(v.label, locale)} />
+          </div>
+          {/* Phones: the same three steps follow the card as a compact list. */}
+          <div className="mt-4 rounded-[20px] bg-bone-deep p-4 lg:hidden">
+            <p className="label mb-3">{tv("next")}</p>
+            <ol className="grid gap-2.5">
+              {steps.map((st, i) => (
+                <li key={st} className="flex items-start gap-3 text-[14px] leading-snug text-charcoal">
+                  <span className="numeral flex size-7 shrink-0 items-center justify-center rounded-full bg-bone text-[13px] text-brass-ink" aria-hidden>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="pt-1">{st}</span>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </div>
