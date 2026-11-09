@@ -15,6 +15,9 @@ console.log(`gold lockup trimmed to ${meta.width}×${meta.height}`);
 await sharp(trimmed).resize({ width: 1200 }).png({ compressionLevel: 9 }).toFile("public/brand/ora-world-logo-gold.png");
 await sharp(trimmed).resize({ width: 1200 }).webp({ quality: 90, alphaQuality: 100 }).toFile("public/brand/ora-world-logo-gold.webp");
 await copyFile("assets-source/brand/ora_world_white_transparent.svg", "public/brand/ora-world-logo-white.svg");
+// White lockup trimmed to its edges (the SVG has wide side padding), same 1200px width as the gold one.
+const white = await sharp("assets-source/brand/ora_world_white_transparent.svg", { density: 144 }).trim({ threshold: 10 }).png().toBuffer();
+await sharp(white).resize({ width: 1200 }).png({ compressionLevel: 9 }).toFile("public/brand/ora-world-logo-white.png");
 await mkdir("src/app", { recursive: true });
 await sharp("assets-source/brand/ORA-WORLD-favicon.png").resize(512, 512).png().toFile("src/app/icon.png");
 await sharp("assets-source/brand/ORA-WORLD-favicon.png").resize(180, 180).png().toFile("src/app/apple-icon.png");
