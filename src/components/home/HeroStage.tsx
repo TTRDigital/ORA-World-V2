@@ -237,6 +237,17 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, fi
             style={{ objectPosition: th.image.focal }}
           />
         ))}
+        {/* Now showing: names the film or the selected render, so the state is obvious at a glance. */}
+        <p
+          aria-hidden="true"
+          className="pointer-events-none absolute top-3 left-3 inline-flex items-center gap-2 rounded-full bg-basalt/60 px-3 py-1.5 text-[12px] font-semibold text-bone backdrop-blur-sm md:top-4 md:left-4 md:text-[13px]"
+        >
+          <span className={cn("relative inline-flex size-2 rounded-full", showFilm ? "bg-brass-light" : "bg-bone/70")}>
+            {showFilm && <span className="hero-live-dot absolute inset-0 rounded-full bg-brass-light" />}
+          </span>
+          <span key={current ? current.label : "film"} className="fade-in">{current ? current.label : filmLabel}</span>
+          {current && <span className="text-bone/60">· {active + 1}/{thumbnails.length}</span>}
+        </p>
         {/* Resume film pill appears over a paused render. */}
         <div
           className={cn(
@@ -263,7 +274,17 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, fi
       <div
         role="group"
         aria-label={t("thumbnails")}
-        className="no-scrollbar -mx-1 flex gap-3 overflow-x-auto px-1 pb-1 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0"
+        onKeyDown={(e) => {
+          if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+          const buttons = Array.from(e.currentTarget.querySelectorAll<HTMLButtonElement>("button"));
+          const i = buttons.indexOf(document.activeElement as HTMLButtonElement);
+          if (i < 0) return;
+          e.preventDefault();
+          const next = buttons[(i + (e.key === "ArrowRight" ? 1 : buttons.length - 1)) % buttons.length];
+          next.focus();
+          next.scrollIntoView({ block: "nearest", inline: "nearest" });
+        }}
+        className="no-scrollbar -mx-1 flex gap-3 overflow-x-auto px-1 pt-1 pb-1 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0"
       >
         <button
           type="button"
@@ -275,7 +296,10 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, fi
           )}
         >
           <span
-            className="frame relative block w-full overflow-hidden rounded-[16px] bg-basalt-soft"
+            className={cn(
+              "frame relative block w-full overflow-hidden rounded-[16px] bg-basalt-soft ring-offset-2 ring-offset-bone-deep transition-[box-shadow,opacity] duration-300",
+              showFilm ? "ring-2 ring-brass" : "opacity-75 group-hover:opacity-100",
+            )}
             style={{ aspectRatio: "16/10" }}
           >
             <Image
@@ -312,7 +336,10 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, fi
             className="group relative w-[31vw] shrink-0 snap-start rounded-[16px] text-left lg:w-auto"
           >
             <span
-              className="frame relative block w-full overflow-hidden rounded-[16px]"
+              className={cn(
+                "frame relative block w-full overflow-hidden rounded-[16px] ring-offset-2 ring-offset-bone-deep transition-[box-shadow,opacity] duration-300",
+                active === i ? "ring-2 ring-brass" : "opacity-75 group-hover:opacity-100",
+              )}
               style={{ aspectRatio: "16/10" }}
             >
               <Image

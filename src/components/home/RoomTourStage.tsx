@@ -160,7 +160,7 @@ export function RoomTourStage({ locale, rooms }: { locale: Locale; rooms: Room[]
                 type="button"
                 aria-label={tx("hotspot", { title })}
                 aria-expanded={open}
-                aria-controls={`spot-${room.slug}-${i}`}
+                aria-controls={`spot-${room.slug}-${i} spot-m-${room.slug}-${i}`}
                 onClick={() => setOpenSpot(open ? null : i)}
                 className={cn(
                   "pointer-events-auto absolute -mt-[22px] -ml-[22px] flex size-11 items-center justify-center rounded-full transition-[opacity,transform] duration-500 [transition-timing-function:var(--ease-out)]",
@@ -177,7 +177,7 @@ export function RoomTourStage({ locale, rooms }: { locale: Locale; rooms: Room[]
                 role="group"
                 aria-label={title}
                 hidden={!open}
-                className="fade-in pointer-events-auto absolute inset-x-3 bottom-3 z-10 rounded-2xl bg-bone p-4 text-charcoal shadow-lift sm:inset-x-auto sm:bottom-auto sm:w-[260px] sm:top-[var(--spot-top,auto)] sm:right-[var(--spot-right,auto)] sm:bottom-[var(--spot-bottom,auto)] sm:left-[var(--spot-left,auto)]"
+                className="fade-in pointer-events-auto absolute z-10 hidden w-[260px] rounded-2xl bg-bone p-4 text-charcoal shadow-lift sm:block sm:top-[var(--spot-top,auto)] sm:right-[var(--spot-right,auto)] sm:bottom-[var(--spot-bottom,auto)] sm:left-[var(--spot-left,auto)]"
                 style={{
                   ...(flipX ? { ["--spot-right" as string]: `calc(${100 - h.x}% + 14px)` } : { ["--spot-left" as string]: `calc(${h.x}% + 14px)` }),
                   ...(flipY ? { ["--spot-bottom" as string]: `calc(${100 - h.y}% + 14px)` } : { ["--spot-top" as string]: `calc(${h.y}% + 14px)` }),
@@ -208,6 +208,59 @@ export function RoomTourStage({ locale, rooms }: { locale: Locale; rooms: Room[]
       <p className="visually-hidden" aria-live="polite">
         {tx("room", { n: index + 1, total, name: t(room.name, locale) })}
       </p>
+
+      {/* Phones: the open detail sits below the image, so it never covers a hotspot. */}
+      {room.hotspots.map((h, i) =>
+        openSpot === i ? (
+          <div key={`m-${room.slug}-${i}`} id={`spot-m-${room.slug}-${i}`} role="group" aria-label={t(h.title, locale)} className="fade-in mt-3 rounded-2xl bg-bone p-4 text-charcoal sm:hidden">
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-[15px] font-semibold">{t(h.title, locale)}</p>
+              <button type="button" onClick={() => setOpenSpot(null)} aria-label={tc("close")} className="-mt-1 -mr-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full hover:bg-bone-deep">
+                <Close width={14} height={14} />
+              </button>
+            </div>
+            <p className="small mt-1 text-charcoal-soft">{t(h.text, locale)}</p>
+          </div>
+        ) : null,
+      )}
+
+      {/* Caption bar: this room, its published details as chips, and a peek at the next room. */}
+      <div className="mt-4 grid gap-4 md:mt-5 md:grid-cols-[1fr_auto] md:items-end">
+        <div key={room.slug} className="fade-in min-w-0">
+          <p className="label">{tx("inThisRoom")}</p>
+          <h3 className="display-s mt-1 text-bone">{t(room.name, locale)}</h3>
+          <div role="group" aria-label={tx("details")} className="mt-3 flex flex-wrap gap-2">
+            {room.hotspots.map((h, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-pressed={openSpot === i}
+                onClick={() => setOpenSpot(openSpot === i ? null : i)}
+                className="chip min-h-9 gap-2"
+              >
+                <span aria-hidden className={cn("size-1.5 rounded-full", openSpot === i ? "bg-basalt" : "bg-brass-light")} />
+                {t(h.title, locale)}
+              </button>
+            ))}
+          </div>
+        </div>
+        {total > 1 && (
+          <button
+            type="button"
+            onClick={() => go(index + 1)}
+            className="group flex items-center gap-3 rounded-[18px] bg-basalt-soft p-2 pr-4 text-left ring-1 ring-brass-light/15 transition-colors hover:ring-brass-light/40"
+          >
+            <span className="relative block h-[60px] w-[96px] shrink-0 overflow-hidden rounded-[12px] bg-travertine">
+              <Picture image={rooms[(index + 1) % total].image} locale={locale} sizes="96px" reveal={false} rounded="none" ratio="8/5" className="absolute inset-0 h-full w-full rounded-none" imgClassName="transition-transform duration-700 group-hover:scale-105" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[12px] text-bone/70">{tx("next")}</span>
+              <span className="block truncate text-[15px] font-semibold text-bone">{t(rooms[(index + 1) % total].name, locale)}</span>
+            </span>
+            <ArrowRight className="ml-1 shrink-0 text-brass-light transition-transform duration-300 group-hover:translate-x-1" />
+          </button>
+        )}
+      </div>
 
       {/* Rail */}
       <div className="mt-4 flex items-center gap-3 md:mt-6">

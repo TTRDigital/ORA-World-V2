@@ -117,3 +117,27 @@
 .reduced-motion .nb-leaf {
   animation: none;
 }
+
+/* Depth pass: the detail rule under each counter draws in from the left once revealed. */
+.nb-detail {
+  position: relative;
+}
+.nb-counter .nb-detail {
+  border-top-color: transparent;
+}
+.nb-counter .nb-detail::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-travertine-deep);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1) 600ms;
+}
+.nb-counter.is-revealed .nb-detail::before,
+.reduced-motion .nb-counter .nb-detail::before {
+  transform: none;
+}
