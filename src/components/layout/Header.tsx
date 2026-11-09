@@ -8,6 +8,7 @@ import { Logo } from "./Logo";
 import { LanguageToggle } from "./LanguageToggle";
 import { primaryNav } from "./nav";
 import { Menu } from "@/components/ui/Icons";
+import { TextRoll } from "@/components/vendor/skiper-ui/skiper58";
 import { MobileSheet, type MenuTile } from "./MobileSheet";
 
 /**
@@ -59,12 +60,15 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
           <ul className={cn("hidden items-center gap-1 lg:flex", compact && "lg:hidden")}>
             {primaryNav.map((item) => (
               <li key={item.key}>
+                {/* Skiper UI TextRoll: letters roll on hover. The roll is aria-hidden (every letter renders twice),
+                    so the link's accessible name comes from aria-label. */}
                 <Link
                   href={item.href}
+                  aria-label={t(item.key)}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn("hairline inline-flex min-h-10 items-center px-3 text-[14px] font-semibold text-charcoal transition-colors hover:text-brass-ink", isActive(item.href) && "is-active text-brass-ink")}
                 >
-                  {t(item.key)}
+                  <TextRoll>{t(item.key)}</TextRoll>
                 </Link>
               </li>
             ))}

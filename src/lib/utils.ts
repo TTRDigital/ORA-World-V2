@@ -1,6 +1,8 @@
 import clsx, { type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-export const cn = (...inputs: ClassValue[]) => clsx(inputs);
+/** clsx + tailwind-merge, the signature the vendored registry components expect. */
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export function formatNumber(n: number, locale: string) {
   return new Intl.NumberFormat(locale === "es" ? "es-PR" : "en-US").format(n);

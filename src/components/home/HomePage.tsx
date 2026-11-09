@@ -4,6 +4,7 @@ import { Numbers } from "./Numbers";
 import { Explorer } from "./Explorer";
 import { RoomTour } from "./RoomTour";
 import { ResilienceDial } from "./ResilienceDial";
+import { RenderGallery } from "./RenderGallery";
 import { LivingBento } from "./LivingBento";
 import { Island } from "./Island";
 import { CompareProjects } from "./CompareProjects";
@@ -13,7 +14,7 @@ import { HomeFaq } from "./HomeFaq";
 import { VisitCta } from "./VisitCta";
 
 /**
- * The homepage: twelve modular, interactive panels in the brief's order (the footer is the thirteenth).
+ * The homepage: thirteen modular, interactive panels in the brief's order (the footer is the thirteenth).
  * Each module reads its own content, hides itself when disabled or still a placeholder, and no two share a layout.
  */
 export function HomePage({ locale }: { locale: Locale }) {
@@ -24,6 +25,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <Explorer locale={locale} />
       <RoomTour locale={locale} />
       <ResilienceDial locale={locale} />
+      <RenderGallery locale={locale} />
       <LivingBento locale={locale} />
       <Island locale={locale} />
       <CompareProjects locale={locale} />

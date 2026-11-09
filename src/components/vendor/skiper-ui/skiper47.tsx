@@ -1,0 +1,157 @@
+// Source: https://skiper-ui.com/registry/skiper47.json
+"use client";
+
+import { motion } from "framer-motion";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import React from "react";
+import { A11y, Autoplay, EffectCoverflow, Keyboard, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css";
+
+import { cn } from "@/lib/utils";
+
+/*
+ * Adapted for ORA World v2: the demo wrapper and its third-party illustrations were removed. Slides take
+ * optimised image URLs (next/image getImageProps) plus a focal point, the A11y and Keyboard modules make the
+ * pagination real, labelled buttons, and slide styling is left to the caller's wrapper.
+ */
+
+const Carousel_001 = ({
+  images,
+  className,
+  showPagination = false,
+  showNavigation = false,
+  loop = true,
+  autoplay = false,
+  spaceBetween = 40,
+  labels,
+}: {
+  images: { src: string; alt: string; srcSet?: string; sizes?: string; objectPosition?: string }[];
+  className?: string;
+  showPagination?: boolean;
+  showNavigation?: boolean;
+  loop?: boolean;
+  autoplay?: boolean;
+  spaceBetween?: number;
+  /** Accessible labels for the A11y module (localised by the caller). */
+  labels?: { prev: string; next: string; slide: string; bullet: string; carousel: string };
+}) => {
+  const css = `
+  .Carousal_001 {
+    padding-bottom: 50px !important;
+  }
+  `;
+  return (
+    <motion.div
+      initial={{ opacity: 0, translateY: 20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{
+        duration: 0.3,
+        delay: 0.5,
+      }}
+      className={cn("relative w-full", className)}
+    >
+      <style>{css}</style>
+
+      <Swiper
+        spaceBetween={spaceBetween}
+        autoplay={
+          autoplay
+            ? {
+                delay: 1500,
+                disableOnInteraction: false,
+              }
+            : false
+        }
+        effect="coverflow"
+        grabCursor={true}
+        centeredSlides={true}
+        loop={loop}
+        slidesPerView={1.25}
+        breakpoints={{ 768: { slidesPerView: 1.8 }, 1200: { slidesPerView: 2.43 } }}
+        keyboard={{ enabled: true, onlyInViewport: true }}
+        a11y={{
+          enabled: true,
+          prevSlideMessage: labels?.prev,
+          nextSlideMessage: labels?.next,
+          slideLabelMessage: labels?.slide ?? "{{index}} / {{slidesLength}}",
+          paginationBulletMessage: labels?.bullet ?? "Go to slide {{index}}",
+          containerMessage: labels?.carousel,
+        }}
+        coverflowEffect={{
+          rotate: 0,
+          slideShadows: false,
+          stretch: 0,
+          depth: 100,
+          modifier: 2.5,
+        }}
+        pagination={
+          showPagination
+            ? {
+                clickable: true,
+              }
+            : false
+        }
+        navigation={
+          showNavigation
+            ? {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }
+            : false
+        }
+        className="Carousal_001"
+        modules={[EffectCoverflow, Autoplay, Pagination, Navigation, A11y, Keyboard]}
+      >
+        {images.map((image, index) => (
+          <SwiperSlide key={index} className="!h-[320px] w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element -- optimised URLs come from getImageProps */}
+            <img
+              className="h-full w-full object-cover"
+              src={image.src}
+              srcSet={image.srcSet}
+              sizes={image.sizes}
+              alt={image.alt}
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+              style={{ objectPosition: image.objectPosition }}
+            />
+          </SwiperSlide>
+        ))}
+        {showNavigation && (
+          <div>
+            <div className="swiper-button-next after:hidden">
+              <ChevronRightIcon className="h-6 w-6 text-white" />
+            </div>
+            <div className="swiper-button-prev after:hidden">
+              <ChevronLeftIcon className="h-6 w-6 text-white" />
+            </div>
+          </div>
+        )}
+      </Swiper>
+    </motion.div>
+  );
+};
+
+export { Carousel_001 };
+
+/**
+ * Skiper 47 Carousel_001 — React + Swiper
+ * Built with Swiper.js - Read docs to learn more https://swiperjs.com/
+ * Illustrations by AarzooAly - https://x.com/AarzooAly
+ *
+ * License & Usage:
+ * - Free to use and modify in both personal and commercial projects.
+ * - Attribution to Skiper UI is required when using the free version.
+ * - No attribution required with Skiper UI Pro.
+ *
+ * Feedback and contributions are welcome.
+ *
+ * Author: @gurvinder-singh02
+ * Website: https://gxuri.me
+ * Twitter: https://x.com/Gur__vi
+ */

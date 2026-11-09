@@ -1,8 +1,9 @@
 import { getTranslations } from "next-intl/server";
+import StatsCounter from "@/components/vendor/vengeance-ui/stats-counter";
 import type { Locale } from "@/content/types";
 import { getHome, getPois } from "@/lib/content";
 import { t as tr } from "@/lib/localize";
-import { formatNumber, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Module } from "@/components/ui/Module";
 import { Picture } from "@/components/ui/Picture";
 import "./numbers-bento.css";
@@ -51,16 +52,17 @@ export async function Numbers({ locale }: { locale: Locale }) {
             data-reveal
             style={delay(1 + i)}
           >
-            <span
-              className="numeral text-[34px] text-brass-ink md:text-[40px] xl:text-[52px]"
-              data-counter={s.value ?? undefined}
-              data-prefix={s.prefix}
-              data-suffix={s.suffix}
-            >
-              {s.value == null
-                ? tc("tbc")
-                : `${s.prefix ?? ""}${formatNumber(s.value, locale)}${s.suffix ?? ""}`}
-            </span>
+            {s.value == null ? (
+              <span className="numeral text-[34px] text-brass-ink md:text-[40px] xl:text-[52px]">{tc("tbc")}</span>
+            ) : (
+              <StatsCounter
+                value={s.value}
+                prefix={s.prefix}
+                suffix={s.suffix}
+                locale={locale === "es" ? "es-PR" : "en-US"}
+                className="numeral text-[34px] text-brass-ink md:text-[40px] xl:text-[52px]"
+              />
+            )}
             <span className="mt-3 block text-[14px] leading-snug text-charcoal-soft">
               {tr(s.label, locale)}
             </span>
@@ -146,12 +148,7 @@ export async function Numbers({ locale }: { locale: Locale }) {
             </g>
           </svg>
           <span className="mt-[60px] flex items-baseline gap-2">
-            <span
-              className="numeral text-[34px] text-brass-ink md:text-[40px]"
-              data-counter={airport?.driveMinutes ?? 30}
-            >
-              {formatNumber(airport?.driveMinutes ?? 30, locale)}
-            </span>
+            <StatsCounter value={airport?.driveMinutes ?? 30} locale={locale === "es" ? "es-PR" : "en-US"} className="numeral text-[34px] text-brass-ink md:text-[40px]" />
           </span>
           <span className="mt-1 block text-[14px] leading-snug text-charcoal-soft">
             {t("airport")}

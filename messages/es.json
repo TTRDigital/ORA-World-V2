@@ -400,5 +400,25 @@
     "park": "Junto a un parque nacional",
     "parkNote": "Senderos escénicos para correr y caminar recorren el parque adyacente, con jardines sensoriales en el lugar.",
     "published": "Publicado por ORA World"
+  },
+  "renders": {
+    "label": "Los renders",
+    "headline": "Recorra *Tesoro Del Mar*",
+    "intro": "Llegada, vestíbulo, residencias y el penthouse, tal como se representaron para el cliente. Haga clic en una imagen lateral o use las flechas para girar el carrusel.",
+    "carousel": "Renders de Tesoro Del Mar, carrusel 3D",
+    "previous": "Render anterior",
+    "next": "Render siguiente",
+    "show": "Mostrar {title}",
+    "slide": "Render {n}: {title}",
+    "open": "Abrir la galería completa",
+    "count": "{n} de {total}"
+  },
+  "galleryCarousel": {
+    "label": "Renders destacados",
+    "carousel": "Carrusel de renders destacados",
+    "prev": "Render anterior",
+    "next": "Render siguiente",
+    "slide": "Render {{index}} de {{slidesLength}}",
+    "bullet": "Ir al render {{index}}"
   }
 }

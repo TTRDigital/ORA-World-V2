@@ -1,8 +1,9 @@
+import StatsCounter from "@/components/vendor/vengeance-ui/stats-counter";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/content/types";
 import { getHome, getSiteSettings } from "@/lib/content";
 import { t as tr } from "@/lib/localize";
-import { splitAccent, formatNumber } from "@/lib/utils";
+import { splitAccent } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
 import { HeroStage } from "./HeroStage";
 import { WatchFilmButton } from "./WatchFilmButton";
@@ -104,16 +105,18 @@ export async function Hero({ locale }: { locale: Locale }) {
                 key={tr(s.label, locale)}
                 className="rounded-[18px] bg-basalt-soft px-4 py-3 ring-1 ring-brass-light/15"
               >
-                <span
-                  className="numeral block text-[28px] text-brass-light md:text-[32px]"
-                  data-counter={s.value ?? undefined}
-                  data-prefix={s.prefix}
-                  data-suffix={s.suffix}
-                >
-                  {s.value == null
-                    ? ""
-                    : `${s.prefix ?? ""}${formatNumber(s.value, locale)}${s.suffix ?? ""}`}
-                </span>
+                {/* Vengeance UI stats-counter: real value on the server, counts up once in view. */}
+                {s.value == null ? (
+                  <span className="numeral block text-[28px] text-brass-light md:text-[32px]" />
+                ) : (
+                  <StatsCounter
+                    value={s.value}
+                    prefix={s.prefix}
+                    suffix={s.suffix}
+                    locale={locale === "es" ? "es-PR" : "en-US"}
+                    className="numeral block text-[28px] text-brass-light md:text-[32px]"
+                  />
+                )}
                 <span className="mt-1 block text-[13px] leading-tight text-bone/70">
                   {tr(s.label, locale)}
                 </span>

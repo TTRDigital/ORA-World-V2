@@ -400,5 +400,25 @@
     "park": "Near a national park",
     "parkNote": "Scenic jogging and walking paths wind through the adjacent park, with sensory gardens on site.",
     "published": "Published by ORA World"
+  },
+  "renders": {
+    "label": "The renders",
+    "headline": "Walk through *Tesoro Del Mar*",
+    "intro": "Arrival, lobby, residences and the penthouse, as rendered for the client. Click a side image or use the arrow keys to turn the carousel.",
+    "carousel": "Tesoro Del Mar renders, 3D carousel",
+    "previous": "Previous render",
+    "next": "Next render",
+    "show": "Show {title}",
+    "slide": "Render {n}: {title}",
+    "open": "Open the full gallery",
+    "count": "{n} of {total}"
+  },
+  "galleryCarousel": {
+    "label": "Featured renders",
+    "carousel": "Featured renders carousel",
+    "prev": "Previous render",
+    "next": "Next render",
+    "slide": "Render {{index}} of {{slidesLength}}",
+    "bullet": "Go to render {{index}}"
   }
 }
