@@ -34,10 +34,11 @@ test.describe("vendored components and the desktop menu", () => {
     await page.goto("/en");
     const region = page.getByRole("region", { name: /3D carousel/i });
     await region.scrollIntoViewIfNeeded();
-    const count = page.locator("#renders").getByText(/of 09/);
-    await expect(count).toHaveText("05 of 09");
+    // The polite live region announces "NN of 09: <render title>".
+    const count = page.locator("#renders [aria-live=polite]").filter({ hasText: /of 09/ });
+    await expect(count).toHaveText(/^05 of 09/);
     await region.getByRole("button", { name: "Next render" }).click();
-    await expect(count).toHaveText("06 of 09");
+    await expect(count).toHaveText(/^06 of 09/);
     const dot = region.getByRole("button", { name: /^Render 1:/ });
     const box = await dot.boundingBox();
     expect(box && box.height >= 24 && box.width >= 24).toBeTruthy();
