@@ -13,66 +13,33 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(link.locator("[aria-hidden=true]").first()).toBeAttached();
   });
 
-  test("3D render carousel opens on the middle slide and turns", async ({ page }) => {
+  test("home follows the Cipriani layout: banner, eight numbered sections, living card rails", async ({ page }) => {
     await page.goto("/en");
-    const region = page.getByRole("region", { name: /3D carousel/i });
-    await region.scrollIntoViewIfNeeded();
-    // The polite live region announces "NN of 09: <render title>".
-    const count = page.locator("#renders [aria-live=polite]").filter({ hasText: /of 09/ });
-    await expect(count).toHaveText(/^05 of 09/);
-    await region.getByRole("button", { name: "Next render" }).click();
-    await expect(count).toHaveText(/^06 of 09/);
-    const dot = region.getByRole("button", { name: /^Render 1:/ });
-    const box = await dot.boundingBox();
-    expect(box && box.height >= 24 && box.width >= 24).toBeTruthy();
-  });
-
-  test("home: one video banner, then the 360° virtual tour, which loads only on click", async ({ page }) => {
-    await page.goto("/en");
-    const order = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).slice(0, 3).map((s) => s.id));
-    expect(order.slice(0, 2)).toEqual(["hero", "virtual-tour"]);
-    await expect(page.locator("#hero h1")).toBeVisible();
-    await expect(page.locator("#hero img, #hero iframe, #hero video").first()).toBeAttached();
+    await page.locator("html:not(.no-js)").waitFor();
+    const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
+    expect(ids).toEqual(["hero", "virtual-tour", "amenities", "residences", "penthouse", "floor-plans", "charters", "location", "contact"]);
+    await expect(page.locator("#hero h1")).toHaveText(/a life to treasure/i);
+    // The 360° tour loads only on click.
     const tour = page.getByTestId("home-vr-tour");
     await expect(tour.locator("iframe")).toHaveCount(0);
     await tour.getByRole("button").click();
     await expect(tour.locator("iframe")).toHaveAttribute("src", /kuula\.co/);
+    // Card rail: the next arrow scrolls the row.
+    const rail = page.locator("#residences [aria-roledescription=carousel]");
+    await rail.scrollIntoViewIfNeeded();
+    const track = rail.locator("ul").first();
+    const before = await track.evaluate((el) => el.scrollLeft);
+    await rail.getByRole("button", { name: "Next" }).click();
+    await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);
+    // Phase 1 pricing and the real floor plans.
+    await expect(page.locator("#floor-plans")).toContainText("$2,250");
+    await expect(page.locator("#floor-plans a[href*='/residences/plans/residence-501']")).toHaveCount(1);
   });
 
   test("counters render real values in the server HTML", async ({ request }) => {
     const html = await (await request.get("/en")).text();
     expect(html).toContain("65,500");
     expect(html).toContain("335,995");
-  });
-
-  test("room tour sticks while scrolling, scroll changes the room, and a tab click scrolls to its room", async ({ page }) => {
-    await page.goto("/en");
-    await page.locator("html:not(.no-js)").waitFor();
-    const tab = (name: string) => page.locator("#rooms").getByRole("tab", { name });
-    // Scroll positions inside the sticky runway: a fraction f of the travel after the stage first sticks.
-    const at = (f: number) =>
-      page.evaluate((f) => {
-        const sticky = document.querySelector<HTMLElement>("#rooms .sticky")!;
-        const runway = sticky.parentElement!;
-        const travel = runway.offsetHeight - sticky.offsetHeight;
-        const y = runway.getBoundingClientRect().top + scrollY - parseFloat(getComputedStyle(sticky).top) + travel * f;
-        document.documentElement.style.scrollBehavior = "auto";
-        window.scrollTo(0, y);
-        document.documentElement.style.scrollBehavior = "";
-        return y;
-      }, f);
-    const stageTop = () => page.evaluate(() => Math.round(document.querySelector("#rooms [aria-roledescription=carousel]")!.getBoundingClientRect().top));
-    await at(0.05);
-    await expect(tab(/Foyer/)).toHaveAttribute("aria-selected", "true");
-    const stuck = await stageTop();
-    await at(0.6);
-    await expect(tab(/Bath/)).toHaveAttribute("aria-selected", "true");
-    expect(Math.abs((await stageTop()) - stuck)).toBeLessThan(4);
-    const before = await at(0.3);
-    await page.waitForTimeout(300);
-    await tab(/Penthouse/).click();
-    await expect(tab(/Penthouse/)).toHaveAttribute("aria-selected", "true");
-    await expect.poll(() => page.evaluate(() => scrollY), { timeout: 4000 }).toBeGreaterThan(before);
   });
 
   test("gallery coverflow carousel has labelled, clickable pagination", async ({ page }) => {

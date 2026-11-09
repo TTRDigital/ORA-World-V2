@@ -12,11 +12,11 @@ import { TextRoll } from "@/components/vendor/skiper-ui/skiper58";
 import { MobileSheet, type MenuTile } from "./MobileSheet";
 
 /**
- * Solid full-width bar fixed to the top, the same on every scroll position (client feedback: simple, professional,
- * like idealdentalsolutions.com). Logo left; links, language and "Book a visit" right. Below lg: logo and the menu
- * button, which opens the sheet. Height: 76px phones, 88px desktop (main's top padding matches).
+ * Floating dark bar (client reference: theresidencesatcipriani.com), the same on every scroll position: logo, tracked
+ * capitals navigation, the sales line, EN | ES and a gold "Get price list". Below lg: logo, price list and the menu.
+ * Height 72px phones / 80px desktop, 12px from the top; main's top padding matches.
  */
-export function Header({ tiles }: { tiles: MenuTile[] }) {
+export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | null }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -30,43 +30,54 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  // Only the most specific match is active, so /residences/plans lights "Floor plans", not "Residences" as well.
+  const activeHref = primaryNav
+    .map((i) => i.href as string)
+    .filter((h) => pathname === h || pathname.startsWith(`${h}/`))
+    .sort((a, b) => b.length - a.length)[0];
+  const isActive = (href: string) => href === activeHref;
 
   return (
     <>
-      <header
-        className={cn(
-          "fixed inset-x-0 top-0 z-[60] border-b bg-bone/97 backdrop-blur-md transition-[box-shadow,border-color] duration-300",
-          scrolled ? "border-travertine-deep shadow-[0_8px_24px_-18px_rgb(28_27_25/0.4)]" : "border-transparent",
-        )}
-      >
-        <nav aria-label="Primary" className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between gap-4 px-4 md:px-8 lg:h-[88px] lg:px-12">
+      <header className="pointer-events-none fixed inset-x-0 top-3 z-[60] px-3 lg:px-6">
+        <nav
+          aria-label="Primary"
+          className={cn(
+            "pointer-events-auto mx-auto flex h-[72px] max-w-[1400px] items-center justify-between gap-3 rounded-full bg-basalt/95 pr-2 pl-4 text-bone backdrop-blur-md transition-shadow duration-300 lg:h-[80px] lg:pr-3 lg:pl-7",
+            scrolled ? "shadow-[0_14px_34px_-16px_rgb(0_0_0/0.55)]" : "shadow-[0_10px_26px_-18px_rgb(0_0_0/0.45)]",
+          )}
+        >
           <Link href="/" aria-label={t("home")} className="flex shrink-0 items-center">
-            <Logo height={64} priority responsive className="logo-lift h-[56px] lg:h-[64px]" />
+            <Logo height={64} priority responsive className="h-[54px] lg:h-[64px]" />
           </Link>
-          <div className="flex items-center gap-1 lg:gap-2">
-            <ul className="hidden items-center lg:flex">
-              {primaryNav.map((item) => (
-                <li key={item.key}>
-                  {/* Skiper UI TextRoll: letters roll on hover. The roll is aria-hidden (every letter renders twice),
-                      so the link's accessible name comes from aria-label. */}
-                  <Link
-                    href={item.href}
-                    aria-label={t(item.key)}
-                    aria-current={isActive(item.href) ? "page" : undefined}
-                    className={cn(
-                      "hairline inline-flex min-h-11 items-center px-3 text-[15px] font-semibold tracking-[0.02em] text-charcoal uppercase transition-colors hover:text-brass-ink xl:px-4",
-                      isActive(item.href) && "is-active text-brass-ink",
-                    )}
-                  >
-                    <TextRoll>{t(item.key)}</TextRoll>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <LanguageToggle className="mx-2 hidden lg:flex" />
-            <Link href="/visit" className="pill pill-brass hidden min-h-11 sm:inline-flex" data-track="cta_book_visit" data-track-label="header">
-              {t("visit")}
+          <ul className="hidden items-center lg:flex">
+            {primaryNav.map((item) => (
+              <li key={item.key}>
+                {/* Skiper UI TextRoll: letters roll on hover. The roll is aria-hidden (every letter renders twice),
+                    so the link's accessible name comes from aria-label. */}
+                <Link
+                  href={item.href}
+                  aria-label={t(item.key)}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={cn(
+                    "inline-flex min-h-11 items-center px-3 text-[12px] font-semibold tracking-[0.22em] uppercase transition-colors hover:text-brass-light xl:px-4",
+                    isActive(item.href) ? "text-brass-light" : "text-bone/85",
+                  )}
+                >
+                  <TextRoll>{t(item.key)}</TextRoll>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center gap-2 lg:gap-3">
+            {phone && (
+              <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="hidden text-[13px] font-semibold tracking-[0.08em] text-bone/90 hover:text-brass-light xl:inline">
+                {phone}
+              </a>
+            )}
+            <LanguageToggle dark className="hidden rounded-full px-3 py-1.5 ring-1 ring-bone/20 lg:flex" />
+            <Link href="/#contact" className="cta min-h-11 px-4 text-[11px] sm:px-5" data-track="cta_price_list" data-track-label="header">
+              {t("priceList")}
             </Link>
             <button
               type="button"
@@ -74,7 +85,7 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={t("openMenu")}
-              className="inline-flex size-11 items-center justify-center rounded-full bg-bone-deep text-charcoal lg:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-bone lg:hidden"
             >
               <Menu />
             </button>

@@ -24,13 +24,11 @@ export function PlanCompare({ plans, locale }: { plans: FloorPlan[]; locale: Loc
   }
   const rows: { label: string; cell: (p: FloorPlan) => React.ReactNode }[] = [
     { label: tp("bedrooms"), cell: (p) => p.bedrooms },
-    { label: tp("bath"), cell: (p) => p.bathrooms },
+    { label: tp("bath"), cell: (p) => `${p.bathrooms}${p.powder ? ` + ${p.powder} ${tp("powderShort")}` : ""}` },
     { label: tp("interior"), cell: (p) => (p.interiorSqFt ? `${p.interiorSqFt.toLocaleString()} sq ft` : <Tbc />) },
     { label: tp("exterior"), cell: (p) => (p.exteriorSqFt ? `${p.exteriorSqFt.toLocaleString()} sq ft` : <Tbc />) },
-    { label: tp("orientation"), cell: (p) => p.orientation },
-    { label: tp("building"), cell: (p) => p.building },
+    { label: tp("building"), cell: (p) => `${p.building}${p.floors ? ` · ${tp("floors")} ${p.floors}` : ""}` },
     { label: tp("status.available").replace(/.*/, locale === "es" ? "Estado" : "Status"), cell: (p) => tp(`status.${p.status}`) },
-    { label: locale === "es" ? "Desde" : "From", cell: (p) => (p.fromPrice ? `$${p.fromPrice.toLocaleString()}` : <Tbc />) },
   ];
   return (
     <div className="overflow-x-auto">

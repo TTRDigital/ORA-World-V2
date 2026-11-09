@@ -38,7 +38,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: L
   const crumbs = [{ name: "ORA World", path: "/" }, { name: tn("residences"), path: "/residences" }, { name: tp("title"), path: "/residences/plans" }, { name: t(plan.name, locale), path: `/residences/plans/${plan.slug}` }];
   const kp = plan.keyplanPosition;
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, crumbs)} />
       <section className="panel panel-bone container-x pb-10 md:pb-14">
         <Breadcrumbs locale={locale} items={crumbs} />
@@ -86,9 +86,9 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: L
               <dl className="card tabular grid grid-cols-2 gap-3 p-5 text-[15px]">
                 <dt className="text-charcoal-soft">{tp("interior")}</dt><dd className="font-semibold">{plan.interiorSqFt ? `${plan.interiorSqFt.toLocaleString()} sq ft` : <Tbc />}</dd>
                 <dt className="text-charcoal-soft">{tp("exterior")}</dt><dd className="font-semibold">{plan.exteriorSqFt ? `${plan.exteriorSqFt.toLocaleString()} sq ft` : <Tbc />}</dd>
-                <dt className="text-charcoal-soft">{tp("orientation")}</dt><dd className="font-semibold">{plan.orientation}</dd>
-                <dt className="text-charcoal-soft">{tp("building")}</dt><dd className="font-semibold">{plan.building}{plan.floors ? ` · ${plan.floors}` : ""}</dd>
-                <dt className="text-charcoal-soft">{locale === "es" ? "Desde" : "From"}</dt><dd className="font-semibold">{plan.fromPrice ? `$${plan.fromPrice.toLocaleString()}` : <Tbc />}</dd>
+                <dt className="text-charcoal-soft">{tp("bedrooms")}</dt><dd className="font-semibold">{plan.bedrooms}</dd>
+                <dt className="text-charcoal-soft">{tp("bath")}</dt><dd className="font-semibold">{plan.bathrooms}{plan.powder ? ` + ${plan.powder} ${tp("powderShort")}` : ""}</dd>
+                <dt className="text-charcoal-soft">{tp("building")}</dt><dd className="font-semibold">{plan.building}{plan.floors ? ` · ${tp("floors")} ${plan.floors}` : ""}</dd>
                 <dt className="text-charcoal-soft">{locale === "es" ? "Estado" : "Status"}</dt><dd className="font-semibold">{tp(`status.${plan.status}`)}</dd>
               </dl>
               <ul className="card grid gap-2 p-5 text-[15px]">

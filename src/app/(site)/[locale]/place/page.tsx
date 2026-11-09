@@ -23,7 +23,7 @@ export default async function PlacePage({ params }: { params: Promise<{ locale: 
   setRequestLocale(locale);
   const [projects, tpg, tn, tc] = await Promise.all([getProjects(), getTranslations({ locale, namespace: "pages.place" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" })]);
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("place"), path: "/place" }])} />
       <PageHero locale={locale} label="Dorado · Puerto Rico" headline={tpg("title")} intro={tpg("intro")} image={tdm.aerialCoast}>
         <Link href="/place/gallery" className="pill pill-ghost">{tpg("gallery")}</Link>

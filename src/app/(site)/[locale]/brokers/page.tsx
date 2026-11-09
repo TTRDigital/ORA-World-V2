@@ -22,7 +22,7 @@ export default async function BrokersPage({ params }: { params: Promise<{ locale
   if (!doc) return null;
   const steps = locale === "es" ? ["Registre su licencia y a su cliente", "El equipo de ventas confirma por correo", "Reciba precios y planos en primicia"] : ["Register your licence and your client", "The sales team confirms by email", "Receive pricing and plans first"];
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("brokers"), path: "/brokers" }])} />
       <PageHero locale={locale} label={tn("brokers")} headline={t(doc.title, locale)} intro={t(doc.intro, locale)} image={doc.hero} />
       <section className="panel panel-travertine container-x section-y" aria-label={t(doc.title, locale)}>

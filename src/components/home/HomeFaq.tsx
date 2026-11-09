@@ -16,7 +16,7 @@ export async function HomeFaq({ locale }: { locale: Locale }) {
   const featured = m.slugs.filter((s) => faqs.some((f) => f.slug === s));
   const featuredFaqs = featured.map((s) => faqs.find((f) => f.slug === s)!);
   return (
-    <Module id="faq" tone="bone" label={t(m.label, locale)} headline={t(m.headline, locale)}>
+    <Module id="faq" tone="travertine" label={t(m.label, locale)} headline={t(m.headline, locale)}>
       <JsonLd data={faqLd(featuredFaqs.map((f) => ({ q: t(f.question, locale), a: tp(f.answer, locale).join(" ") })))} />
       <FaqSearch faqs={faqs} columns={2} featured={featured} stagger variant="centre" />
       <div className="mt-8 flex justify-center md:justify-start" data-reveal>

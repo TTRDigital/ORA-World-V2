@@ -20,7 +20,7 @@ export default async function LivingPage({ params }: { params: Promise<{ locale:
   setRequestLocale(locale);
   const [activities, tl, tn, tc] = await Promise.all([getActivities(), getTranslations({ locale, namespace: "pages.living" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" })]);
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("living"), path: "/living" }])} />
       <PageHero locale={locale} label="ORA World" headline={tl("title")} intro={tl("intro")} image={life.poolTerrace}>
         <Link href="/visit" className="pill pill-brass">{tc("bookVisit")}</Link>

@@ -22,7 +22,7 @@ export default async function PressPage({ params }: { params: Promise<{ locale: 
   const [press, tn] = await Promise.all([getPress(), getTranslations({ locale, namespace: "pages.press" })]);
   if (press.length === 0) notFound();
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <PageHero locale={locale} label="ORA World" headline={tn("title")} intro={tn("intro")} compact />
       <section className="panel panel-travertine container-x section-y">
         <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

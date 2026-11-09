@@ -30,7 +30,8 @@
     "gallery": "Gallery",
     "tour": "Film and VR tour",
     "plans": "Floor plans",
-    "compare": "Compare"
+    "compare": "Compare",
+    "priceList": "Get price list"
   },
   "ask": {
     "open": "Ask ORA",
@@ -333,13 +334,16 @@
     "status": {
       "available": "Available",
       "reserved": "Reserved",
-      "sold": "Sold"
+      "sold": "Sold",
+      "inquire": "Ask for availability"
     },
     "interior": "Interior",
     "exterior": "Exterior",
     "bath": "Bathrooms",
     "empty": "Nothing in the shortlist yet. Add up to three plans from the library.",
-    "none": "No plan matches those filters."
+    "none": "No plan matches those filters.",
+    "floors": "Floors",
+    "powderShort": "powder"
   },
   "gallery": {
     "title": "Gallery",
@@ -539,5 +543,12 @@
     "label": "Private charters",
     "headline": "Private flights to Puerto Rico and home again",
     "cta": "Ask about private charters"
+  },
+  "homeAmenities": {
+    "label": "Amenities",
+    "headline": "Over 65,000 sq ft of amenities",
+    "intro": "Indoor and outdoor amenities designed around longevity and quality of life, from a members-only clubhouse to a private beach club.",
+    "also": "Also at Tesoro Del Mar",
+    "more": "All amenities"
   }
 }

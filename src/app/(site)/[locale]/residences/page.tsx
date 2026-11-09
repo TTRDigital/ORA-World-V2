@@ -24,7 +24,7 @@ export default async function ResidencesPage({ params }: { params: Promise<{ loc
   const [collections, tr, tn, tc] = await Promise.all([getCollections(), getTranslations({ locale, namespace: "pages.residences" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" })]);
   const te = await getTranslations({ locale, namespace: "explorer" });
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={[breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("residences"), path: "/residences" }]), residenceLd(locale, "Tesoro Del Mar", tr("intro"), `${SITE_URL}${tdm.exteriorPull.src}`)]} />
       <PageHero locale={locale} label="Tesoro Del Mar" headline={tr("title")} intro={tr("intro")} image={tdm.aptLiving2}>
         <Link href="/residences/plans" className="pill pill-brass">{tc("viewPlans")}</Link>

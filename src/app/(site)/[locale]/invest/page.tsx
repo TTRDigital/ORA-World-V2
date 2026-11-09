@@ -35,7 +35,7 @@ export default async function InvestPage({ params }: { params: Promise<{ locale:
   ];
   const sections = incentives.map((s) => ({ slug: s.slug, title: t(s.title, locale), summary: t(s.summary, locale), body: tp(s.body, locale), tags: s.tags as string[] }));
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("invest"), path: "/invest" }])} />
       <PageHero locale={locale} label={t(home.invest.label, locale)} headline={ti("title")} intro={ti("intro")} image={tdm.exteriorGolf} place={tpg("placeLine")} facts={facts}>
         <Link href="/visit" className="pill pill-brass">{tc("talkToAdvisor")}</Link>

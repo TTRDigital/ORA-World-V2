@@ -36,3 +36,71 @@ export const charters = {
     { en: "About 30 minutes from San Juan's international airport", es: "A unos 30 minutos del aeropuerto internacional de San Juan" },
   ] as L[],
 };
+
+/** Homepage amenities, from the TDM Brochure's "Exceptional amenities" lists (p5–p7). Six groups and a short list. */
+export const amenityGroups: { key: string; title: L; text: L; image: "gym" | "golf" | "coast" | "lounge" | "study" | "entrance" }[] = [
+  {
+    key: "clubhouse",
+    title: { en: "The Clubhouse", es: "El Clubhouse" },
+    text: {
+      en: "An on-premises, members-only club with 14,000 sq ft of social and productivity spaces: café, bakery and corner store, a fine-dining restaurant and rooftop pool bar.",
+      es: "Un club privado para miembros con 14,000 pies² de espacios sociales y de trabajo: café, panadería y tienda, un restaurante de alta cocina y bar en la piscina de la azotea.",
+    },
+    image: "lounge",
+  },
+  {
+    key: "wellness",
+    title: { en: "Wellness", es: "Bienestar" },
+    text: {
+      en: "A state-of-the-art fitness center and pilates studio, a spa for massage, treatments and salon services, and an outdoor yoga terrace.",
+      es: "Un gimnasio de última generación y estudio de pilates, un spa para masajes, tratamientos y salón, y una terraza de yoga al aire libre.",
+    },
+    image: "gym",
+  },
+  {
+    key: "pool",
+    title: { en: "Pool and putting course", es: "Piscina y campo de putting" },
+    text: {
+      en: "An outdoor resort-style pool with sundeck and poolside bar beside a next-generation 18-hole putting course.",
+      es: "Una piscina estilo resort con solárium y bar junto a un campo de putting de 18 hoyos de nueva generación.",
+    },
+    image: "golf",
+  },
+  {
+    key: "beach",
+    title: { en: "Beach club and slipway", es: "Club de playa y rampa" },
+    text: {
+      en: "A beach club with food and beverage service, reached by the walking path or golf cart, and a slipway for easy boat launching.",
+      es: "Un club de playa con servicio de comida y bebida, al que se llega por el sendero o en carrito de golf, y una rampa para botar embarcaciones.",
+    },
+    image: "coast",
+  },
+  {
+    key: "work",
+    title: { en: "Work", es: "Trabajo" },
+    text: {
+      en: "A business center with conference rooms, reservable private offices, a coffee bar, high-speed Wifi and IT services available 24/7.",
+      es: "Un centro de negocios con salas de conferencias, oficinas privadas reservables, coffee bar, Wifi de alta velocidad y servicios de TI 24/7.",
+    },
+    image: "study",
+  },
+  {
+    key: "arrival",
+    title: { en: "Arrival and service", es: "Llegada y servicio" },
+    text: {
+      en: "A porte-cochère with a private residential lobby attended 24/7, valet and self-parking, and a luxury house car and golf cart service.",
+      es: "Un pórtico con vestíbulo residencial privado atendido 24/7, valet y estacionamiento propio, y servicio de auto de la casa y carrito de golf.",
+    },
+    image: "entrance",
+  },
+];
+
+export const amenityExtras: L[] = [
+  { en: "Tennis courts", es: "Canchas de tenis" },
+  { en: "Half basketball court", es: "Media cancha de baloncesto" },
+  { en: "Beach volleyball and beach tennis", es: "Voleibol y tenis de playa" },
+  { en: "Programmable golf simulator and lounge", es: "Simulador de golf programable y salón" },
+  { en: "Two-mile walking path through landscaped gardens", es: "Sendero de dos millas entre jardines" },
+  { en: "Resident lounge with curated art and bar service", es: "Salón de residentes con arte y servicio de bar" },
+  { en: "Private, secure climate-controlled storage", es: "Almacenamiento privado, seguro y climatizado" },
+];

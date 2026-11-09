@@ -1,4 +1,4 @@
-import type { Collection, FloorPlan } from "../types";
+import type { Collection, FloorPlan, L } from "../types";
 import { tdm, life } from "./images";
 
 /**
@@ -28,18 +28,19 @@ export const collections: Collection[] = [
       { en: "Floating staircase and double-height salon", es: "Escalera flotante y salón de doble altura" },
       { en: "Wrap-around cantilevered terraces", es: "Terrazas envolventes en voladizo" },
       { en: "Ocean views from the principal rooms", es: "Vistas al mar desde las estancias principales" },
+      { en: "Two levels on floor 18 with a private elevator", es: "Dos niveles en el piso 18 con ascensor privado" },
     ],
     finishes: [
       { group: { en: "Living spaces", es: "Espacios de estar" }, items: [{ en: "Stone, wood and brushed metals", es: "Piedra, madera y metales cepillados" }, { en: "Floor-to-ceiling glazing", es: "Acristalamiento de piso a techo" }] },
     ],
     specs: [
-      { label: { en: "Bedrooms", es: "Habitaciones" }, value: null },
-      { label: { en: "Size", es: "Tamaño" }, value: null },
-      { label: { en: "From", es: "Desde" }, value: null },
+      { label: { en: "Bedrooms", es: "Habitaciones" }, value: { en: "6 + 8 baths", es: "6 + 8 baños" } },
+      { label: { en: "Interior", es: "Interior" }, value: { en: "9,807 sq ft", es: "9,807 pies²" } },
+      { label: { en: "Terraces", es: "Terrazas" }, value: { en: "11,475 sq ft", es: "11,475 pies²" } },
     ],
     bands: [0, 1],
     views: ["ocean"],
-    bedroomOptions: [],
+    bedroomOptions: [6],
   },
   {
     slug: "residences",
@@ -64,19 +65,21 @@ export const collections: Collection[] = [
       { en: "Private terraces that become daily sanctuaries", es: "Terrazas privadas que se convierten en santuarios diarios" },
       { en: "Ocean or garden views from every principal room", es: "Vistas al mar o al jardín desde cada estancia principal" },
       { en: "Open-concept living and dining", es: "Sala y comedor de concepto abierto" },
+      { en: "10' ceilings and motorized shades in every room", es: "Techos de 10 pies y cortinas motorizadas en cada habitación" },
     ],
     finishes: [
-      { group: { en: "Living spaces", es: "Espacios de estar" }, items: [{ en: "Floor-to-ceiling glazing", es: "Acristalamiento de piso a techo" }, { en: "Stone, wood and brushed metals", es: "Piedra, madera y metales cepillados" }, { en: "Eco-friendly finishes", es: "Acabados ecológicos" }] },
-      { group: { en: "Kitchens and baths", es: "Cocinas y baños" }, items: [{ en: "Natural stone surfaces", es: "Superficies de piedra natural" }, { en: "Cabinetry and appliance brands to be confirmed", es: "Marcas de gabinetes y electrodomésticos por confirmar" }] },
+      { group: { en: "Living spaces", es: "Espacios de estar" }, items: [{ en: "Floor-to-ceiling glazing", es: "Acristalamiento de piso a techo" }, { en: "Stone, wood and brushed metals", es: "Piedra, madera y metales cepillados" }, { en: "Eco-friendly finishes", es: "Acabados ecológicos" }, { en: "Large-format porcelain tile throughout", es: "Porcelanato de gran formato en toda la residencia" }] },
+      { group: { en: "Kitchens", es: "Cocinas" }, items: [{ en: "Custom Italian cabinetry by Scavolini", es: "Gabinetes italianos a medida de Scavolini" }, { en: "Integrated Gaggenau appliance suite with built-in coffee machine", es: "Electrodomésticos integrados Gaggenau con cafetera empotrada" }, { en: "Quartzite countertops and backsplashes", es: "Encimeras y salpicaderos de cuarcita" }, { en: "Dornbracht fixtures", es: "Grifería Dornbracht" }] },
+      { group: { en: "Home systems", es: "Sistemas del hogar" }, items: [{ en: "Crestron Home smart home technology", es: "Tecnología de hogar inteligente Crestron Home" }, { en: "Lutron motorized window shades", es: "Cortinas motorizadas Lutron" }, { en: "Mitsubishi Electric multi-split air", es: "Aire multi-split Mitsubishi Electric" }, { en: "Walk-in closets with Rimadesio built-ins", es: "Vestidores con muebles Rimadesio" }] },
     ],
     specs: [
-      { label: { en: "Bedrooms", es: "Habitaciones" }, value: null },
-      { label: { en: "Size", es: "Tamaño" }, value: null },
-      { label: { en: "From", es: "Desde" }, value: null },
+      { label: { en: "Bedrooms", es: "Habitaciones" }, value: { en: "1 to 6", es: "1 a 6" } },
+      { label: { en: "Interior", es: "Interior" }, value: { en: "942–4,666 sq ft", es: "942–4,666 pies²" } },
+      { label: { en: "From", es: "Desde" }, value: { en: "$2,000 / sq ft", es: "$2,000 / pie²" } },
     ],
     bands: [2, 3, 4, 5, 6, 7],
     views: ["ocean", "garden"],
-    bedroomOptions: [],
+    bedroomOptions: [1, 2, 3, 4, 6],
   },
   {
     slug: "villas",
@@ -144,40 +147,99 @@ export const collections: Collection[] = [
   },
 ];
 
+const PLANS_PDF = "https://storage.googleapis.com/msgsndr/h3BreqRip5vgBRyV1wRf/media/6969467ce125ef29bd593468.pdf";
+const OCEAN: L = { en: "Ocean view with wrap-around terrace", es: "Vista al mar con terraza envolvente" };
+const CEIL: L = { en: "10' ceilings", es: "Techos de 10 pies" };
+const ELEV: L = { en: "Private elevator", es: "Ascensor privado" };
+const also = (u: string[]): L => ({ en: `Same layout: ${u.join(", ")}`, es: `Misma distribución: ${u.join(", ")}` });
+
 /**
- * Illustrative floor plans. No plans are public, so these schematic SVG drawings exercise the filters,
- * the gate, the comparison and the keyplan. Every one is flagged placeholder and labelled as such.
+ * Phase 1 floor plans (Tower 1, floors 5–18), transcribed from the sales team's "TESORO DEL MAR DORADO" PDF.
+ * One entry per distinct layout; the image is that layout's page from the PDF and the PDF link opens on it.
+ * Figures are as printed on the representative unit's page (floors 5, 7, 10, 11, 13, 16, 17, 18). On floors 6, 8,
+ * 9, 12, 14 and 15 (and 1101, 1104) the PDF repeats the interior figure as "exterior"; those misprints are not used.
+ * No availability or unit prices are published, so status is "inquire" and fromPrice stays null.
  */
-const plan = (
-  p: Omit<FloorPlan, "image" | "keyplan" | "keyplanPosition" | "pdf" | "placeholder"> & { kp: [number, number, number, number] },
-): FloorPlan => ({
-  ...p,
+const plan = (p: {
+  unit: string;
+  page: number;
+  collection: string;
+  bedrooms: number;
+  bathrooms: number;
+  powder?: number;
+  interiorSqFt: number;
+  exteriorSqFt: number | null;
+  floors: string;
+  ocean: boolean;
+  units: string[];
+  highlights?: L[];
+  name?: L;
+}): FloorPlan => ({
+  slug: p.unit === "ph" ? "penthouse" : `residence-${p.unit}`,
+  name: p.name ?? { en: `Residence ${p.unit}`, es: `Residencia ${p.unit}` },
+  collection: p.collection,
+  bedrooms: p.bedrooms,
+  bathrooms: p.bathrooms,
+  powder: p.powder,
+  interiorSqFt: p.interiorSqFt,
+  exteriorSqFt: p.exteriorSqFt,
+  orientation: null,
+  view: p.ocean ? OCEAN : null,
+  building: "Tower 1",
+  floors: p.floors,
+  status: "inquire",
+  fromPrice: null,
   image: {
-    src: `/images/plans/${p.slug}.svg`,
-    width: 1200,
-    height: 900,
+    src: `/images/plans/tdm/plan-${p.unit}.jpg`,
+    width: 2200,
+    height: 1700,
     focal: "50% 50%",
-    alt: { en: `Illustrative floor plan ${p.name.en}`, es: `Plano ilustrativo ${p.name.es}` },
-    placeholder: true,
+    alt: {
+      en: `Phase 1 floor plan, ${p.name?.en ?? `residence ${p.unit}`}: ${p.bedrooms} bedrooms, ${p.interiorSqFt.toLocaleString("en-US")} sq ft interior`,
+      es: `Plano de la Fase 1, ${p.name?.es ?? `residencia ${p.unit}`}: ${p.bedrooms} dormitorios, ${p.interiorSqFt.toLocaleString("en-US")} pies cuadrados interiores`,
+    },
   },
-  keyplan: {
-    src: `/images/plans/keyplan.svg`,
-    width: 800,
-    height: 800,
-    focal: "50% 50%",
-    alt: { en: "Keyplan of the building level", es: "Plano clave del nivel" },
-    placeholder: true,
-  },
-  keyplanPosition: { x: p.kp[0], y: p.kp[1], w: p.kp[2], h: p.kp[3] },
-  pdf: null,
-  placeholder: true,
+  keyplan: null,
+  keyplanPosition: null,
+  pdf: `${PLANS_PDF}#page=${p.page}`,
+  highlights: [CEIL, ...(p.ocean ? [OCEAN] : []), ...(p.highlights ?? []), also(p.units)],
+  units: p.units,
+  placeholder: false,
 });
 
+const den: L = { en: "Den (148 sq ft)", es: "Estudio (148 pies cuadrados)" };
+const wine: L = { en: "Wine cellar", es: "Cava de vinos" };
+const twoBalconies: L = { en: "Two balconies", es: "Dos balcones" };
+const chef: L = { en: "Chef's kitchen", es: "Cocina de chef" };
+
 export const floorPlans: FloorPlan[] = [
-  plan({ slug: "residence-a1", name: { en: "Residence A1", es: "Residencia A1" }, collection: "residences", bedrooms: 1, bathrooms: 1.5, interiorSqFt: null, exteriorSqFt: null, orientation: "N", view: { en: "Ocean", es: "Mar" }, building: "Tower I", floors: null, status: "available", fromPrice: null, highlights: [{ en: "Corner exposure", es: "Esquina" }, { en: "Terrace off the living room", es: "Terraza desde la sala" }], kp: [8, 10, 28, 32] }),
-  plan({ slug: "residence-b1", name: { en: "Residence B1", es: "Residencia B1" }, collection: "residences", bedrooms: 2, bathrooms: 2, interiorSqFt: null, exteriorSqFt: null, orientation: "NE", view: { en: "Ocean and garden", es: "Mar y jardín" }, building: "Tower I", floors: null, status: "available", fromPrice: null, highlights: [{ en: "Split-bedroom layout", es: "Habitaciones separadas" }], kp: [38, 10, 30, 32] }),
-  plan({ slug: "residence-b2", name: { en: "Residence B2", es: "Residencia B2" }, collection: "residences", bedrooms: 2, bathrooms: 2.5, interiorSqFt: null, exteriorSqFt: null, orientation: "S", view: { en: "Garden and mountains", es: "Jardín y montañas" }, building: "Tower II", floors: null, status: "reserved", fromPrice: null, highlights: [{ en: "Den convertible to study", es: "Estudio convertible" }], kp: [70, 10, 22, 32] }),
-  plan({ slug: "residence-c1", name: { en: "Residence C1", es: "Residencia C1" }, collection: "residences", bedrooms: 3, bathrooms: 3.5, interiorSqFt: null, exteriorSqFt: null, orientation: "NW", view: { en: "Ocean", es: "Mar" }, building: "Tower II", floors: null, status: "available", fromPrice: null, highlights: [{ en: "Two terraces", es: "Dos terrazas" }], kp: [8, 56, 40, 34] }),
-  plan({ slug: "villa-v1", name: { en: "Villa V1", es: "Villa V1" }, collection: "villas", bedrooms: 4, bathrooms: 4.5, interiorSqFt: null, exteriorSqFt: null, orientation: "E", view: { en: "Garden", es: "Jardín" }, building: "Villas", floors: "2", status: "available", fromPrice: null, highlights: [{ en: "Private pool", es: "Piscina privada" }], kp: [52, 56, 40, 34] }),
-  plan({ slug: "penthouse-ph1", name: { en: "Penthouse PH1", es: "Penthouse PH1" }, collection: "penthouses", bedrooms: 4, bathrooms: 5.5, interiorSqFt: null, exteriorSqFt: null, orientation: "N", view: { en: "Panoramic ocean", es: "Mar panorámico" }, building: "Tower I", floors: null, status: "available", fromPrice: null, highlights: [{ en: "Wrap-around terrace", es: "Terraza envolvente" }, { en: "Full floor", es: "Planta completa" }], kp: [8, 10, 84, 80] }),
+  plan({ unit: "501", page: 2, collection: "residences", bedrooms: 2, bathrooms: 2, interiorSqFt: 990, exteriorSqFt: 112, floors: "5–6", ocean: false, units: ["508", "601", "608"] }),
+  plan({ unit: "502", page: 3, collection: "residences", bedrooms: 2, bathrooms: 2, interiorSqFt: 942, exteriorSqFt: 435, floors: "5–6", ocean: true, units: ["507 (944 sq ft)", "602", "607"] }),
+  plan({ unit: "503", page: 4, collection: "residences", bedrooms: 1, bathrooms: 2, interiorSqFt: 1104, exteriorSqFt: 232, floors: "5–6", ocean: true, units: ["506", "603", "606"], highlights: [den, ELEV] }),
+  plan({ unit: "504", page: 5, collection: "residences", bedrooms: 2, bathrooms: 2, powder: 1, interiorSqFt: 1393, exteriorSqFt: 181, floors: "5–6", ocean: true, units: ["505", "604", "605"], highlights: [ELEV, wine] }),
+  plan({ unit: "701", page: 18, collection: "residences", bedrooms: 2, bathrooms: 2, powder: 1, interiorSqFt: 1522, exteriorSqFt: 408, floors: "7–9", ocean: true, units: ["706 (1,520 sq ft)", "801", "806", "901", "906"], highlights: [ELEV, twoBalconies] }),
+  plan({ unit: "702", page: 19, collection: "residences", bedrooms: 2, bathrooms: 2, powder: 1, interiorSqFt: 1410, exteriorSqFt: 367, floors: "7–9", ocean: true, units: ["705", "802", "805", "902", "905"], highlights: [ELEV] }),
+  plan({ unit: "703", page: 20, collection: "residences", bedrooms: 2, bathrooms: 2, powder: 1, interiorSqFt: 1586, exteriorSqFt: 184, floors: "7–9", ocean: true, units: ["704", "803", "804", "903", "904"], highlights: [ELEV] }),
+  plan({ unit: "1001", page: 36, collection: "residences", bedrooms: 3, bathrooms: 3, powder: 1, interiorSqFt: 2147, exteriorSqFt: 551, floors: "10–12", ocean: true, units: ["1004", "1101", "1104", "1201", "1204"], highlights: [ELEV, twoBalconies, wine] }),
+  plan({ unit: "1002", page: 37, collection: "residences", bedrooms: 3, bathrooms: 3, powder: 1, interiorSqFt: 2477, exteriorSqFt: 408, floors: "10", ocean: true, units: ["1003 (2,478 sq ft)"], highlights: [ELEV, wine] }),
+  plan({ unit: "1102", page: 41, collection: "residences", bedrooms: 3, bathrooms: 3, powder: 1, interiorSqFt: 2477, exteriorSqFt: 408, floors: "11–12", ocean: true, units: ["1103 (2,478 sq ft)", "1202", "1203"], highlights: [ELEV] }),
+  plan({ unit: "1301", page: 48, collection: "residences", bedrooms: 4, bathrooms: 4, powder: 1, interiorSqFt: 3061, exteriorSqFt: 776, floors: "13–15", ocean: true, units: ["1303", "1401", "1403", "1501", "1503"], highlights: [ELEV, twoBalconies, wine] }),
+  plan({ unit: "1302", page: 49, collection: "residences", bedrooms: 4, bathrooms: 4, powder: 1, interiorSqFt: 3289, exteriorSqFt: 368, floors: "13–15", ocean: true, units: ["1402", "1502"], highlights: [ELEV] }),
+  plan({ unit: "1601", page: 57, collection: "residences", bedrooms: 6, bathrooms: 6, powder: 1, interiorSqFt: 4663, exteriorSqFt: 959, floors: "16", ocean: true, units: ["1602 (960 sq ft exterior)"], highlights: [ELEV, twoBalconies, wine] }),
+  plan({ unit: "1701", page: 59, collection: "residences", bedrooms: 6, bathrooms: 6, powder: 1, interiorSqFt: 4666, exteriorSqFt: 959, floors: "17", ocean: true, units: ["1702 (960 sq ft exterior)"], highlights: [ELEV, chef, wine] }),
+  plan({
+    unit: "ph",
+    name: { en: "The Penthouse", es: "El Penthouse" },
+    page: 61,
+    collection: "penthouses",
+    bedrooms: 6,
+    bathrooms: 8,
+    powder: 2,
+    interiorSqFt: 9807,
+    exteriorSqFt: 11475,
+    floors: "18 (two levels)",
+    ocean: true,
+    units: ["one residence, floor 18"],
+    highlights: [ELEV, chef, { en: "Gym, two studies and recreation areas", es: "Gimnasio, dos estudios y áreas recreativas" }],
+  }),
 ];

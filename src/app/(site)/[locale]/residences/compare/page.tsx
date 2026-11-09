@@ -17,7 +17,7 @@ export default async function ComparePage({ params }: { params: Promise<{ locale
   setRequestLocale(locale);
   const [plans, tn] = await Promise.all([getFloorPlans(), getTranslations({ locale, namespace: "pages.compare" })]);
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <PageHero locale={locale} label={locale === "es" ? "Residencias" : "Residences"} headline={tn("title")} intro={tn("intro")} compact />
       <section className="panel panel-travertine container-x section-y" aria-label={tn("title")}>
         <PlanCompare plans={plans} locale={locale} />

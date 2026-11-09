@@ -24,7 +24,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ locale
     .slice(0, 10)
     .map((g) => optimisedImage(g.image, locale, "(max-width: 767px) 80vw, (max-width: 1199px) 55vw, 560px"));
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("place"), path: "/place" }, { name: tg("title"), path: "/place/gallery" }])} />
       <PageHero locale={locale} label={tn("place")} headline={tg("title")} intro={locale === "es" ? "Cada imagen es una representación conceptual del artista, con su punto focal para que las torres nunca se recorten." : "Every image is an artist's conceptual rendering, each with a focal point so the towers are never cropped."} compact />
       <section className="panel panel-bone overflow-hidden py-10 md:py-14" aria-label={tfc("label")}>

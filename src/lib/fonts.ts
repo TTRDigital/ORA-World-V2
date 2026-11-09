@@ -1,10 +1,18 @@
-import { Urbanist } from "next/font/google";
+import { Cormorant_Garamond, Urbanist } from "next/font/google";
 
 /**
- * Urbanist for everything (client feedback: use the typeface and sizes of idealdentalsolutions.com). One variable
- * file with italics; headings at 600, body at 400. `display` and `sans` stay two exports so the layout and CSS keep
- * their two variables, but both point at the same face (CSS maps --font-display to --font-sans).
+ * Client direction (Cipriani Residences reference): a classic serif for headings, set in capitals with generous
+ * letter-spacing, over a clean sans for everything else. Headings: Cormorant Garamond. Body and UI: Urbanist
+ * (the face the client liked on idealdentalsolutions.com).
  */
+export const display = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-display",
+});
+
 export const sans = Urbanist({
   subsets: ["latin"],
   style: ["normal", "italic"],
@@ -12,5 +20,3 @@ export const sans = Urbanist({
   display: "swap",
   variable: "--font-sans",
 });
-
-export const display = sans;

@@ -12,7 +12,7 @@ export async function PrivateCharters({ locale }: { locale: Locale }) {
   const tx = await getTranslations({ locale, namespace: "charters" });
   return (
     <section id="charters" aria-labelledby="charters-title" data-tone="dark" className="panel panel-basalt on-dark container-x section-y">
-      <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
+      <div className="mx-auto grid max-w-[1200px] items-center gap-8 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-5">
           <Picture image={life.jet} locale={locale} ratio="4/5" sizes="(max-width: 1023px) calc(100vw - 56px), 520px" />
         </div>

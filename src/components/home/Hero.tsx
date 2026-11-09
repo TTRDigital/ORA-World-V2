@@ -1,64 +1,63 @@
 import type { Locale } from "@/content/types";
 import { getHome, getSiteSettings } from "@/lib/content";
 import { t as tr } from "@/lib/localize";
-import { splitAccent } from "@/lib/utils";
+import { cip } from "@/content/seed/homeCip";
 import { Link } from "@/i18n/navigation";
+import { ArrowRight } from "@/components/ui/Icons";
 import { HeroStage } from "./HeroStage";
 import { WatchFilmButton } from "./WatchFilmButton";
 
 /**
- * Module 1, Hero (client feedback, modelled on idealdentalsolutions.com): the film edge to edge directly under the
- * header, one headline and two buttons in the lower-left corner over a soft gradient. Nothing else.
+ * Hero (client reference: theresidencesatcipriani.com): the film full screen behind the floating header, a soft
+ * dark veil, the brochure's line "A life to treasure" in serif capitals, centred, with three gold buttons; the
+ * brochure, floor plans and film sit quietly at the bottom.
  */
 export async function Hero({ locale }: { locale: Locale }) {
   const [home, settings] = await Promise.all([getHome(), getSiteSettings()]);
   const h = home.hero;
   if (!h.enabled) return null;
-
-  // Per-word staggered reveal; the accent word keeps its italic.
-  const words = splitAccent(tr(h.headline, locale)).flatMap((part) =>
-    part.text
-      .split(/(\s+)/)
-      .filter((w) => w.trim().length > 0)
-      .map((w) => ({ text: w, accent: part.accent })),
-  );
-
-  const rise = (i: number) => ({ "--reveal-delay": `${i}ms` }) as React.CSSProperties;
+  const es = locale === "es";
 
   return (
     <section
       id="hero"
       aria-labelledby="hero-title"
       data-tone="dark"
-      className="on-dark relative isolate -mx-[var(--gutter)] -mt-[var(--gutter)] flex h-[calc(100svh-76px)] max-h-[860px] min-h-[480px] flex-col justify-end overflow-hidden bg-basalt md:h-[min(56.25vw,calc(100svh-76px))] lg:h-[min(56.25vw,calc(100svh-88px))]"
+      className="on-dark relative isolate -mt-[96px] flex h-[100svh] min-h-[560px] flex-col items-center justify-center overflow-hidden bg-basalt px-5 text-center lg:-mt-[104px]"
     >
-      <HeroStage
-        locale={locale}
-        youtubeId={settings.filmYoutubeId}
-        mp4={settings.filmMp4}
-        webm={settings.filmWebm}
-        poster={settings.filmPoster}
-      />
-      {/* Legibility only where the copy sits: lower left. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-basalt/75 via-basalt/15 to-transparent" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-basalt/40 via-transparent to-transparent md:block" />
+      <HeroStage locale={locale} youtubeId={settings.filmYoutubeId} mp4={settings.filmMp4} webm={settings.filmWebm} poster={settings.filmPoster} />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-basalt/45" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-basalt/60 to-transparent" />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 pb-10 md:px-8 md:pb-14 lg:px-12 lg:pb-16">
-        <h1 id="hero-title" className="display-xl max-w-[20ch] text-bone">
-          {words.map((w, i) => (
-            <span key={i} className="inline-block whitespace-pre">
-              <span className={w.accent ? "accent inline-block" : "inline-block"} data-hero-rise style={rise(80 + i * 60)}>
-                {w.text}
-              </span>{" "}
-            </span>
-          ))}
+      <div className="relative z-10 mx-auto max-w-[1100px] pt-16">
+        <p className="text-[11px] font-semibold tracking-[0.32em] text-bone/85 uppercase" data-hero-rise>
+          {tr(cip.hero.sub, locale)}
+        </p>
+        <h1 id="hero-title" className="display-xl mt-5 text-bone" data-hero-rise style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
+          {tr(cip.hero.title, locale)}
         </h1>
-        <div className="mt-6 flex flex-wrap items-center gap-3" data-hero-rise style={rise(160 + words.length * 60)}>
-          <Link href="/visit" className="pill pill-brass min-h-12 px-6" data-track="cta_book_visit" data-track-label="hero">
-            {tr(h.ctaPrimary, locale)}
+        <div className="mt-9 flex flex-wrap justify-center gap-3" data-hero-rise style={{ "--reveal-delay": "260ms" } as React.CSSProperties}>
+          <a href="#contact" className="cta" data-track="cta_price_list" data-track-label="hero">
+            {es ? "Lista de precios" : "Get price list"} <ArrowRight width={14} height={14} />
+          </a>
+          <Link href="/visit" className="cta" data-track="cta_book_visit" data-track-label="hero">
+            {tr(h.ctaPrimary, locale)} <ArrowRight width={14} height={14} />
           </Link>
-          <WatchFilmButton label={tr(h.ctaFilm, locale)} />
+          {settings.brochureUrl && (
+            <a href={settings.brochureUrl} target="_blank" rel="noopener" className="cta" data-track="brochure_pdf" data-track-label="hero">
+              {es ? "Folleto" : "Get brochure"} <ArrowRight width={14} height={14} />
+            </a>
+          )}
         </div>
+      </div>
+
+      <div className="absolute right-5 bottom-6 z-10 hidden gap-3 md:flex lg:right-8 lg:bottom-8">
+        <WatchFilmButton label={tr(h.ctaFilm, locale)} />
+        {settings.floorPlansUrl && (
+          <a href={settings.floorPlansUrl} target="_blank" rel="noopener" className="cta cta-ghost text-bone" data-track="floor_plans_pdf" data-track-label="hero">
+            {es ? "Planos" : "Get floor plans"} <ArrowRight width={14} height={14} />
+          </a>
+        )}
       </div>
     </section>
   );

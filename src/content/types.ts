@@ -80,7 +80,7 @@ export interface Collection {
 }
 
 export type Orientation = "N" | "NE" | "E" | "SE" | "S" | "SW" | "W" | "NW";
-export type PlanStatus = "available" | "reserved" | "sold";
+export type PlanStatus = "available" | "reserved" | "sold" | "inquire";
 
 export interface FloorPlan {
   slug: string;
@@ -88,10 +88,12 @@ export interface FloorPlan {
   collection: string;
   bedrooms: number;
   bathrooms: number;
+  /** Half baths, printed as "POWDER" on the Phase 1 plans. */
+  powder?: number;
   interiorSqFt: number | null;
   exteriorSqFt: number | null;
-  orientation: Orientation;
-  view: L;
+  orientation: Orientation | null;
+  view: L | null;
   building: string;
   floors: string | null;
   status: PlanStatus;
@@ -102,6 +104,8 @@ export interface FloorPlan {
   pdf: string | null;
   highlights: L[];
   placeholder?: boolean;
+  /** Unit numbers sharing this layout, as printed on the Phase 1 plans. */
+  units?: string[];
 }
 
 export type AmenityCategory = "wellness" | "family" | "pets" | "resort" | "eco";

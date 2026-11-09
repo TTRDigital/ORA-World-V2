@@ -28,7 +28,7 @@ export default async function VisitPage({ params }: { params: Promise<{ locale: 
     { label: tf("hours"), value: settings.hours?.[locale] ?? tcm("tbc") },
   ];
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("visit"), path: "/visit" }])} />
       <PageHero locale={locale} label={tn("contact")} headline={tv("title")} intro={tv("intro")} image={tdm.foyerReception} place={tpg("placeLine")} facts={facts} />
       <section className="panel panel-travertine container-x section-y" aria-label={tv("title")}>

@@ -38,7 +38,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
   const poiList: RailPoi[] = pois.map((p) => ({ slug: p.slug, name: t(p.name, locale), category: p.category, lat: p.lat, lng: p.lng, minutes: p.walkMinutes ?? p.driveMinutes, mode: p.walkMinutes ? "walk" : "drive", confirmed: p.confirmed, note: p.note ? t(p.note, locale) : null }));
   const crumbs = [{ name: "ORA World", path: "/" }, { name: tn("place"), path: "/place" }, { name: t(project.name, locale), path: `/place/${project.slug}` }];
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={[breadcrumbLd(locale, crumbs), placeLd(locale, t(project.name, locale), t(project.tagline, locale), `/place/${project.slug}`, `${SITE_URL}${project.hero.src}`, project.lat, project.lng)]} />
       <PageHero locale={locale} label={t(project.location, locale)} headline={t(project.name, locale)} intro={t(project.tagline, locale)} image={project.hero}>
         <Link href="/visit" className="pill pill-brass">{tc("bookVisit")}</Link>

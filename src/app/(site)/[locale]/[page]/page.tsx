@@ -33,7 +33,7 @@ export default async function GenericPage({ params }: { params: Promise<{ locale
   const sections = doc.sections.map((s, i) => ({ ...s, id: `s-${i + 1}`, title: t(s.title, locale) }));
   const isForm = page === "careers";
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: t(doc.title, locale), path: `/${page}` }])} />
       <PageHero locale={locale} label={tn("home")} headline={t(doc.title, locale)} intro={t(doc.intro, locale)} image={doc.hero} compact={!doc.hero} />
       <section className="panel panel-travertine container-x section-y" aria-label={t(doc.title, locale)}>

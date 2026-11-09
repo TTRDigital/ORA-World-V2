@@ -30,7 +30,8 @@
     "gallery": "Galería",
     "tour": "Película y tour VR",
     "plans": "Planos",
-    "compare": "Comparar"
+    "compare": "Comparar",
+    "priceList": "Lista de precios"
   },
   "ask": {
     "open": "Pregunte a ORA",
@@ -333,13 +334,16 @@
     "status": {
       "available": "Disponible",
       "reserved": "Reservado",
-      "sold": "Vendido"
+      "sold": "Vendido",
+      "inquire": "Consulte disponibilidad"
     },
     "interior": "Interior",
     "exterior": "Exterior",
     "bath": "Baños",
     "empty": "Aún no hay favoritos. Añada hasta tres planos desde la biblioteca.",
-    "none": "Ningún plano coincide con esos filtros."
+    "none": "Ningún plano coincide con esos filtros.",
+    "floors": "Pisos",
+    "powderShort": "medio baño"
   },
   "gallery": {
     "title": "Galería",
@@ -539,5 +543,12 @@
     "label": "Vuelos chárter privados",
     "headline": "Vuelos privados a Puerto Rico y de regreso",
     "cta": "Pregunte por los vuelos chárter"
+  },
+  "homeAmenities": {
+    "label": "Amenidades",
+    "headline": "Más de 65,000 pies² de amenidades",
+    "intro": "Amenidades interiores y exteriores pensadas para la longevidad y la calidad de vida, desde un clubhouse privado hasta un club de playa.",
+    "also": "También en Tesoro Del Mar",
+    "more": "Todas las amenidades"
   }
 }

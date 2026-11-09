@@ -126,8 +126,8 @@ export const home: HomeContent = {
       es: "Apartamentos contemporáneos y villas de lujo, un nivel de penthouse y 42 suites de hotel en el centro de la comunidad. Pase el cursor o toque una franja de la torre para explorar cada colección.",
     },
     note: {
-      en: "The floor mapping is illustrative until the client confirms it. Bedrooms, sizes and prices read \"To be confirmed\" until published.",
-      es: "La distribución por pisos es ilustrativa hasta que el cliente la confirme. Habitaciones, tamaños y precios aparecen como \"Por confirmar\" hasta su publicación.",
+      en: "The tower drawing is illustrative. Phase 1 residences are on floors 5 to 17 of Tower 1, with the two-level penthouse on floor 18; see the floor plans for every layout.",
+      es: "El dibujo de la torre es ilustrativo. Las residencias de la Fase 1 están en los pisos 5 al 17 de la Torre 1, con el penthouse de dos niveles en el piso 18; vea los planos para cada distribución.",
     },
   },
   rooms: {

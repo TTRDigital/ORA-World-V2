@@ -11,7 +11,7 @@ export default async function PressArticle({ params }: { params: Promise<{ local
   const article = (await getPress()).find((a) => a.slug === slug);
   if (!article) notFound();
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <PageHero locale={locale} label={`${article.outlet} · ${article.date}`} headline={t(article.title, locale)} intro={t(article.excerpt, locale)} image={article.image ?? undefined} />
       <section className="panel panel-travertine container-x section-y">
         <div className="card mx-auto max-w-3xl p-6 md:p-10">

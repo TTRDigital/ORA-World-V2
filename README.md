@@ -38,8 +38,14 @@ the optimised files in `public/images/client/` are committed, so the fetch is on
   prospect email and live in `src/content/seed/sales.ts`. The floor plan PDF, project presentation PDF and booking
   page are linked by their direct URLs (`src/content/seed/site.ts`). The email's own links are per-recipient
   tracked redirects and must never be published.
-- **Cleaner, calmer site:** Urbanist at the reference sizes, one video banner, a fixed plain header, a short
-  homepage without the island rail, project comparison or portfolio, and subtle scroll motion only.
+- **Layout after theresidencesatcipriani.com** (client: "simple will win"): a full-screen film banner, then eight
+  sections in one repeated layout (`src/components/cip/CipSection.tsx`): numbered eyebrow, Cormorant Garamond
+  capitals, a short line, a few bullets, one gold button, and a swipeable row of cards whose pictures slowly drift
+  while on screen (`CardRail`, `AliveImage`; a card plays a looping clip if given a `video`). Dark floating header with
+  the sales line and "Get price list"; phones get a fixed "Get brochure / Get floor plans" bar. Copy lives in
+  `src/content/seed/homeCip.ts` (brochure and prospect email wording only).
+- **Real Phase 1 floor plans:** 15 layouts (60 residences, floors 5–18) transcribed from the floor plan PDF, each with
+  its page image and a link to that page of the PDF (`src/content/seed/collections.ts`).
 
 ## Third-party UI components (Skiper UI, Vengeance UI)
 

@@ -164,8 +164,8 @@ export function LivingGrid({
   const tileSizes = (size: LivingTile["size"]) =>
     // Matches the rendered tile: 2 columns below md (lg spans both), 4 columns above, capped by the panel width.
     size === "lg"
-      ? "(max-width: 767px) 86vw, (max-width: 1440px) 46vw, 660px"
-      : "(max-width: 767px) 42vw, (max-width: 1440px) 23vw, 330px";
+      ? "(max-width: 767px) 100vw, (max-width: 1440px) 50vw, 660px"
+      : "(max-width: 767px) 50vw, (max-width: 1440px) 25vw, 330px";
 
   return (
     <div>

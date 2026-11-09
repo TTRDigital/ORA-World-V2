@@ -18,7 +18,7 @@ export default async function TourPage({ params }: { params: Promise<{ locale: L
   setRequestLocale(locale);
   const [settings, tt, tn] = await Promise.all([getSiteSettings(), getTranslations({ locale, namespace: "tour" }), getTranslations({ locale, namespace: "nav" })]);
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("place"), path: "/place" }, { name: tt("title"), path: "/place/tour" }])} />
       <PageHero locale={locale} label={tn("place")} headline={tt("title")} intro={tt("tourNote")} compact />
       <section className="panel panel-basalt on-dark container-x section-y" data-tone="dark" aria-label={tt("title")}>

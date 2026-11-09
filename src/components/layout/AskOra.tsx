@@ -67,7 +67,7 @@ export function AskOra({ faqs, phone, whatsapp, consentText }: { faqs: Faq[]; ph
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="pill pill-basalt fixed right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-[65] min-h-12 gap-2 pl-4 shadow-lift md:right-5 md:bottom-5"
+        className="pill pill-basalt fixed right-3 bottom-[calc(76px+env(safe-area-inset-bottom))] z-[65] min-h-12 gap-2 pl-4 shadow-lift md:right-5 lg:bottom-5"
         data-track="ask_ora_open"
       >
         <Chat className="text-brass-light" />

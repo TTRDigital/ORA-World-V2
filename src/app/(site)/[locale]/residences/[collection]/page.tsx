@@ -38,7 +38,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ loc
   const pos = all.findIndex((x) => x.slug === c.slug);
   const nextC = all.length > 1 ? all[(pos + 1) % all.length] : null;
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("residences"), path: "/residences" }, { name: t(c.name, locale), path: `/residences/${c.slug}` }])} />
       <PageHero locale={locale} label={tr("collections")} headline={t(c.name, locale)} intro={t(c.tagline, locale)} image={c.image}>
         <Link href="/residences/plans" className="pill pill-brass">{tc("viewPlans")}</Link>
