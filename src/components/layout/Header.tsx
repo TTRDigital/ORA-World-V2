@@ -23,16 +23,36 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
   const [overHero, setOverHero] = useState(true);
 
   useEffect(() => {
-    let last = window.scrollY;
+    // Direction is decided on travel, not per frame. Smooth scrolling (Lenis) moves 0–1px on many frames, and the
+    // old per-frame test (y > last) flipped the pill open and shut on every such frame: the visible "blink".
+    // Now the pill compacts only after 12px of continuous downward travel past 120px, expands after 12px upward
+    // (or near the top), and otherwise keeps its state.
+    const THRESHOLD = 12;
+    let anchor = window.scrollY;
+    let direction: 1 | -1 | 0 = 0;
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
         const y = window.scrollY;
-        setCompact(y > 120 && y > last);
         setOverHero(y < 80);
-        last = y;
+        if (y <= 120) {
+          setCompact(false);
+          anchor = y;
+          direction = 0;
+        } else {
+          const delta = y - anchor;
+          const dir = delta > 0 ? 1 : delta < 0 ? -1 : 0;
+          if (dir !== 0 && dir !== direction) {
+            // Direction changed: measure travel from the turning point.
+            direction = dir;
+            anchor = y;
+          } else if (Math.abs(delta) >= THRESHOLD) {
+            setCompact(direction === 1);
+            anchor = y;
+          }
+        }
         ticking = false;
       });
     };
