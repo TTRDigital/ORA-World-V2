@@ -775,6 +775,9 @@ html.lenis body {
   animation: hero-live 1.8s var(--ease-out) infinite;
 }
 .reduced-motion .hero-live-dot {
+  animation: none;
+}
+
 /* depth-pass C */
 /* Footer closing band: a slow brass light that drifts across the basalt card (static under reduced motion). */
 .footer-band::before {
