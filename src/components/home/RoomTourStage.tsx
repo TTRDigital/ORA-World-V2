@@ -188,7 +188,7 @@ export function RoomTourStage({ locale, rooms }: { locale: Locale; rooms: Room[]
     <div ref={runwayRef} className="relative mx-auto max-w-[1240px]">
       <div
         ref={stickyRef}
-        className="sticky top-[100px] grid grid-cols-[minmax(0,1fr)] gap-4 md:top-[118px] lg:grid-cols-[minmax(0,1fr)_200px] lg:items-center lg:gap-10 xl:grid-cols-[minmax(0,1fr)_230px]"
+        className="sticky top-[88px] grid grid-cols-[minmax(0,1fr)] gap-4 lg:top-[100px] lg:grid-cols-[minmax(0,1fr)_200px] lg:items-center lg:gap-10 xl:grid-cols-[minmax(0,1fr)_230px]"
       >
         <div className="min-w-0">
           {/* Stage */}

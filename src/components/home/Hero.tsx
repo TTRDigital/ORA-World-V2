@@ -7,9 +7,8 @@ import { HeroStage } from "./HeroStage";
 import { WatchFilmButton } from "./WatchFilmButton";
 
 /**
- * Module 1, Hero: one banner, the film (client feedback: the split panel + film stage was too busy; one section,
- * the video as the banner). The film covers a rounded full-width panel; a basalt gradient carries the label,
- * headline, one factual line, two pills and a quiet row of four published figures.
+ * Module 1, Hero (client feedback, modelled on idealdentalsolutions.com): the film edge to edge directly under the
+ * header, one headline and two buttons in the lower-left corner over a soft gradient. Nothing else.
  */
 export async function Hero({ locale }: { locale: Locale }) {
   const [home, settings] = await Promise.all([getHome(), getSiteSettings()]);
@@ -31,7 +30,7 @@ export async function Hero({ locale }: { locale: Locale }) {
       id="hero"
       aria-labelledby="hero-title"
       data-tone="dark"
-      className="panel on-dark relative isolate flex h-[calc(100svh-150px)] max-h-[940px] min-h-[520px] flex-col justify-end bg-basalt md:h-[calc(100svh-166px)] lg:h-[calc(100svh-184px)] lg:min-h-[520px]"
+      className="on-dark relative isolate -mx-[var(--gutter)] -mt-[var(--gutter)] flex h-[calc(100svh-76px)] max-h-[860px] min-h-[480px] flex-col justify-end overflow-hidden bg-basalt md:h-[min(56.25vw,calc(100svh-76px))] lg:h-[min(56.25vw,calc(100svh-88px))]"
     >
       <HeroStage
         locale={locale}
@@ -40,15 +39,12 @@ export async function Hero({ locale }: { locale: Locale }) {
         webm={settings.filmWebm}
         poster={settings.filmPoster}
       />
-      {/* Legibility: darker at the bottom and on the left, where the copy sits; the film stays clear above. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-basalt/90 via-basalt/35 to-basalt/5" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-basalt/55 via-basalt/10 to-transparent md:block" />
+      {/* Legibility only where the copy sits: lower left. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-basalt/75 via-basalt/15 to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-basalt/40 via-transparent to-transparent md:block" />
 
-      <div className="relative z-10 px-6 pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16">
-        <p className="label mb-4" data-hero-rise>
-          Dorado · Puerto Rico
-        </p>
-        <h1 id="hero-title" className="display-xl max-w-[13ch] text-bone">
+      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 pb-10 md:px-8 md:pb-14 lg:px-12 lg:pb-16">
+        <h1 id="hero-title" className="display-xl max-w-[20ch] text-bone">
           {words.map((w, i) => (
             <span key={i} className="inline-block whitespace-pre">
               <span className={w.accent ? "accent inline-block" : "inline-block"} data-hero-rise style={rise(80 + i * 60)}>
@@ -57,16 +53,12 @@ export async function Hero({ locale }: { locale: Locale }) {
             </span>
           ))}
         </h1>
-        <p className="statement mt-5 max-w-[46ch] text-bone/90 max-md:text-[18px]" data-hero-rise style={rise(120 + words.length * 60)}>
-          {tr(h.line, locale)}
-        </p>
-        <div className="mt-7 flex flex-wrap gap-3" data-hero-rise style={rise(200 + words.length * 60)}>
+        <div className="mt-6 flex flex-wrap items-center gap-3" data-hero-rise style={rise(160 + words.length * 60)}>
           <Link href="/visit" className="pill pill-brass min-h-12 px-6" data-track="cta_book_visit" data-track-label="hero">
             {tr(h.ctaPrimary, locale)}
           </Link>
           <WatchFilmButton label={tr(h.ctaFilm, locale)} />
         </div>
-
       </div>
     </section>
   );

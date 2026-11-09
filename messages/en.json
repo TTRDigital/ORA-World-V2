@@ -505,5 +505,14 @@
     "next": "Next render",
     "slide": "Render {{index}} of {{slidesLength}}",
     "bullet": "Go to render {{index}}"
+  },
+  "homeTour": {
+    "label": "Virtual tour",
+    "headline": "Step inside ORA World in 360°",
+    "intro": "Walk the ORA World 360° collection from anywhere: look around every space at your own pace, on screen or in VR.",
+    "start": "Start the 360° tour",
+    "note": "The tour loads from kuula.co when you start it.",
+    "frameTitle": "ORA World 360° virtual tour",
+    "more": "Open the tour page with the film"
   }
 }

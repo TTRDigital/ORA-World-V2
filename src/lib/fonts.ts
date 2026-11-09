@@ -1,23 +1,16 @@
-import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import { Urbanist } from "next/font/google";
 
 /**
- * Display: Fraunces variable. opsz 72–144 and weight 300–400 are set in CSS; the SOFT axis (50) gives
- * the warm "wonk" italics used on accent words. UI and body: Plus Jakarta Sans 400/500/600.
+ * Urbanist for everything (client feedback: use the typeface and sizes of idealdentalsolutions.com). One variable
+ * file with italics; headings at 600, body at 400. `display` and `sans` stay two exports so the layout and CSS keep
+ * their two variables, but both point at the same face (CSS maps --font-display to --font-sans).
  */
-export const display = Fraunces({
+export const sans = Urbanist({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  axes: ["opsz", "SOFT"],
   weight: "variable",
-  display: "swap",
-  variable: "--font-display",
-  adjustFontFallback: false,
-  fallback: ["Georgia", "Times New Roman", "serif"],
-});
-
-export const sans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
   display: "swap",
   variable: "--font-sans",
 });
+
+export const display = sans;

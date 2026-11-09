@@ -1,5 +1,6 @@
 import type { Locale } from "@/content/types";
 import { Hero } from "./Hero";
+import { HomeTour } from "./HomeTour";
 import { Numbers } from "./Numbers";
 import { Explorer } from "./Explorer";
 import { RoomTour } from "./RoomTour";
@@ -21,6 +22,7 @@ export function HomePage({ locale }: { locale: Locale }) {
   return (
     <div className="flex flex-col gap-3">
       <Hero locale={locale} />
+      <HomeTour locale={locale} />
       <Numbers locale={locale} />
       <Explorer locale={locale} />
       <RoomTour locale={locale} />

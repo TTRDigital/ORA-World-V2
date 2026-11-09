@@ -12,9 +12,9 @@ import { TextRoll } from "@/components/vendor/skiper-ui/skiper58";
 import { MobileSheet, type MenuTile } from "./MobileSheet";
 
 /**
- * Fixed bar, 12px from the top, the same on every scroll position (client feedback: it should not shrink or change
- * while scrolling; simple and professional). Desktop: logo, links, language and "Book a visit". Below lg: logo,
- * "Book a visit" (from sm) and the menu button, which opens the sheet.
+ * Solid full-width bar fixed to the top, the same on every scroll position (client feedback: simple, professional,
+ * like idealdentalsolutions.com). Logo left; links, language and "Book a visit" right. Below lg: logo and the menu
+ * button, which opens the sheet. Height: 76px phones, 88px desktop (main's top padding matches).
  */
 export function Header({ tiles }: { tiles: MenuTile[] }) {
   const t = useTranslations("nav");
@@ -34,53 +34,38 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-3 z-[60] flex justify-center px-3">
-        <nav
-          aria-label="Primary"
-          className={cn(
-            "pointer-events-auto flex w-full max-w-[1240px] items-center justify-between gap-2 rounded-full bg-bone/95 py-2 pr-2 pl-2 backdrop-blur-md transition-shadow duration-300 md:pl-3 lg:pr-2.5 lg:pl-4",
-            scrolled ? "shadow-[0_10px_30px_-14px_rgb(28_27_25/0.35)]" : "shadow-[0_6px_20px_-14px_rgb(28_27_25/0.2)]",
-          )}
-        >
-          <Link
-            href="/"
-            aria-label={t("home")}
-            className="flex shrink-0 items-center rounded-full px-2 py-1 md:px-4 lg:px-6"
-          >
-            <Logo
-              height={76}
-              priority
-              responsive
-              className="logo-lift h-[58px] md:h-[68px] lg:h-[76px]"
-            />
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-[60] border-b bg-bone/97 backdrop-blur-md transition-[box-shadow,border-color] duration-300",
+          scrolled ? "border-travertine-deep shadow-[0_8px_24px_-18px_rgb(28_27_25/0.4)]" : "border-transparent",
+        )}
+      >
+        <nav aria-label="Primary" className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between gap-4 px-4 md:px-8 lg:h-[88px] lg:px-12">
+          <Link href="/" aria-label={t("home")} className="flex shrink-0 items-center">
+            <Logo height={64} priority responsive className="logo-lift h-[56px] lg:h-[64px]" />
           </Link>
-          <ul className="hidden items-center gap-1 lg:flex xl:gap-3">
-            {primaryNav.map((item) => (
-              <li key={item.key}>
-                {/* Skiper UI TextRoll: letters roll on hover. The roll is aria-hidden (every letter renders twice),
-                    so the link's accessible name comes from aria-label. */}
-                <Link
-                  href={item.href}
-                  aria-label={t(item.key)}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                  className={cn(
-                    "hairline inline-flex min-h-10 items-center px-3 text-[14px] font-semibold text-charcoal transition-colors hover:text-brass-ink",
-                    isActive(item.href) && "is-active text-brass-ink",
-                  )}
-                >
-                  <TextRoll>{t(item.key)}</TextRoll>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="flex shrink-0 items-center gap-2">
-            <LanguageToggle className="mr-2 hidden lg:flex" />
-            <Link
-              href="/visit"
-              className="pill pill-brass hidden min-h-11 sm:inline-flex"
-              data-track="cta_book_visit"
-              data-track-label="header"
-            >
+          <div className="flex items-center gap-1 lg:gap-2">
+            <ul className="hidden items-center lg:flex">
+              {primaryNav.map((item) => (
+                <li key={item.key}>
+                  {/* Skiper UI TextRoll: letters roll on hover. The roll is aria-hidden (every letter renders twice),
+                      so the link's accessible name comes from aria-label. */}
+                  <Link
+                    href={item.href}
+                    aria-label={t(item.key)}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                    className={cn(
+                      "hairline inline-flex min-h-11 items-center px-3 text-[15px] font-semibold tracking-[0.02em] text-charcoal uppercase transition-colors hover:text-brass-ink xl:px-4",
+                      isActive(item.href) && "is-active text-brass-ink",
+                    )}
+                  >
+                    <TextRoll>{t(item.key)}</TextRoll>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <LanguageToggle className="mx-2 hidden lg:flex" />
+            <Link href="/visit" className="pill pill-brass hidden min-h-11 sm:inline-flex" data-track="cta_book_visit" data-track-label="header">
               {t("visit")}
             </Link>
             <button

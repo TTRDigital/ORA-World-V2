@@ -2,7 +2,7 @@
 
 A second, fully revamped website for ORA World: luxury, eco-conscious residences in Dorado, Puerto Rico.
 Same palette and the same official 2026 logos as v1. Everything else is new: structure, navigation,
-typography (Fraunces + Plus Jakarta Sans), shape language and twelve interactive homepage modules.
+typography (Urbanist, sized to the client's reference), shape language and twelve interactive homepage modules.
 
 - Design system, contrast table and the per-section wow checklist: [`DESIGN.md`](./DESIGN.md)
 - Sitemap and where every v1 item now lives: [`docs/STRUCTURE.md`](./docs/STRUCTURE.md)

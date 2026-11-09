@@ -38,13 +38,14 @@
   --dur-reveal: 800ms;
 
   /* Type (fluid between 390 and 1440). Statement paragraphs cap at 30px; display at three lines. */
-  --text-display-xl: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem); /* 40 → 72 */
-  --text-display-l: clamp(2rem, 1.4rem + 2.4vw, 3.5rem); /* 32 → 56 */
-  --text-display-m: clamp(1.625rem, 1.3rem + 1.3vw, 2.5rem); /* 26 → 40 */
-  --text-display-s: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem); /* 20 → 26 */
-  --text-statement: clamp(1.25rem, 1rem + 0.9vw, 1.875rem); /* 20 → 30 */
-  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); /* 17 → 20 */
-  --text-body: 1.0625rem; /* 17 */
+  /* Scale matched to the client's reference (idealdentalsolutions.com: h1 34, h2 24, h3 20, body 16). */
+  --text-display-xl: clamp(1.875rem, 1.65rem + 0.9vw, 2.375rem); /* 30 → 38 */
+  --text-display-l: clamp(1.5rem, 1.38rem + 0.5vw, 1.875rem); /* 24 → 30 */
+  --text-display-m: clamp(1.25rem, 1.16rem + 0.38vw, 1.5rem); /* 20 → 24 */
+  --text-display-s: clamp(1.125rem, 1.07rem + 0.24vw, 1.25rem); /* 18 → 20 */
+  --text-statement: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem); /* 17 → 19 */
+  --text-lead: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem); /* 16 → 17 */
+  --text-body: 1rem; /* 16 */
   --text-small: 0.875rem;
   --text-label: 0.8125rem; /* 13 */
   --text-legal: 0.6875rem; /* 11 */
@@ -69,7 +70,7 @@
   --color-palm-light: var(--color-palm-light);
   --color-white: var(--color-white);
 
-  --font-display: var(--font-display), Georgia, serif;
+  --font-display: var(--font-sans), system-ui, sans-serif;
   --font-sans: var(--font-sans), system-ui, sans-serif;
 
   --radius-card: var(--radius-card);
@@ -103,11 +104,6 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
-  }
-  @media (min-width: 1024px) {
-    html {
-      font-size: 17px;
-    }
   }
   body {
     min-height: 100dvh;
@@ -143,9 +139,9 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 350;
-    letter-spacing: -0.01em;
-    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.15;
     text-wrap: balance;
     font-variation-settings:
       "opsz" 96,
@@ -173,9 +169,9 @@
   .display-xl {
     font-family: var(--font-display);
     font-size: var(--text-display-xl);
-    font-weight: 330;
-    line-height: 1.02;
-    letter-spacing: -0.015em;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
     font-variation-settings:
       "opsz" 144,
       "SOFT" 40,
@@ -184,9 +180,9 @@
   .display-l {
     font-family: var(--font-display);
     font-size: var(--text-display-l);
-    font-weight: 340;
-    line-height: 1.05;
-    letter-spacing: -0.012em;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
     font-variation-settings:
       "opsz" 120,
       "SOFT" 40,
@@ -195,8 +191,8 @@
   .display-m {
     font-family: var(--font-display);
     font-size: var(--text-display-m);
-    font-weight: 360;
-    line-height: 1.1;
+    font-weight: 600;
+    line-height: 1.25;
     font-variation-settings:
       "opsz" 96,
       "SOFT" 30,
@@ -205,8 +201,8 @@
   .display-s {
     font-family: var(--font-display);
     font-size: var(--text-display-s);
-    font-weight: 400;
-    line-height: 1.2;
+    font-weight: 600;
+    line-height: 1.35;
     font-variation-settings:
       "opsz" 72,
       "SOFT" 30,
@@ -214,8 +210,8 @@
   }
   /* The warm italic accent word: Fraunces SOFT 50 + WONK */
   .accent {
-    font-style: italic;
-    font-weight: 330;
+    font-style: normal;
+    font-weight: inherit;
     color: var(--color-brass-ink);
     font-variation-settings:
       "opsz" 144,
@@ -228,9 +224,9 @@
   }
   .statement {
     font-size: var(--text-statement);
-    line-height: 1.4;
+    line-height: 1.6;
     font-weight: 400;
-    max-width: 34ch;
+    max-width: 52ch;
   }
   .lead {
     font-size: var(--text-lead);
@@ -263,7 +259,7 @@
   }
   .numeral {
     font-family: var(--font-display);
-    font-weight: 380;
+    font-weight: 600;
     font-variant-numeric: lining-nums tabular-nums;
     letter-spacing: -0.02em;
     line-height: 1;

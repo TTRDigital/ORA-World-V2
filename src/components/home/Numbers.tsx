@@ -79,14 +79,14 @@ export async function Numbers({ locale }: { locale: Locale }) {
             </svg>
             <div>
             {s.value == null ? (
-              <span className="numeral text-[34px] text-brass-ink md:text-[40px] xl:text-[52px]">{tc("tbc")}</span>
+              <span className="numeral text-[28px] text-brass-ink md:text-[30px] xl:text-[34px]">{tc("tbc")}</span>
             ) : (
               <StatsCounter
                 value={s.value}
                 prefix={s.prefix}
                 suffix={s.suffix}
                 locale={locale === "es" ? "es-PR" : "en-US"}
-                className="numeral text-[34px] text-brass-ink md:text-[40px] xl:text-[52px]"
+                className="numeral text-[28px] text-brass-ink md:text-[30px] xl:text-[34px]"
               />
             )}
             <span className="mt-1 block text-[14px] leading-snug text-charcoal-soft">
@@ -182,7 +182,7 @@ export async function Numbers({ locale }: { locale: Locale }) {
             </g>
           </svg>
           <span className="mt-[60px] flex items-baseline gap-2">
-            <StatsCounter value={airport?.driveMinutes ?? 30} locale={locale === "es" ? "es-PR" : "en-US"} className="numeral text-[34px] text-brass-ink md:text-[40px]" />
+            <StatsCounter value={airport?.driveMinutes ?? 30} locale={locale === "es" ? "es-PR" : "en-US"} className="numeral text-[28px] text-brass-ink md:text-[30px]" />
           </span>
           <span className="mt-1 block text-[14px] leading-snug text-charcoal-soft">
             {t("airport")}

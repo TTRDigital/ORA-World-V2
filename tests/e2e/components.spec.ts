@@ -27,6 +27,18 @@ test.describe("vendored components and the desktop menu", () => {
     expect(box && box.height >= 24 && box.width >= 24).toBeTruthy();
   });
 
+  test("home: one video banner, then the 360° virtual tour, which loads only on click", async ({ page }) => {
+    await page.goto("/en");
+    const order = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).slice(0, 3).map((s) => s.id));
+    expect(order.slice(0, 2)).toEqual(["hero", "virtual-tour"]);
+    await expect(page.locator("#hero h1")).toBeVisible();
+    await expect(page.locator("#hero img, #hero iframe, #hero video").first()).toBeAttached();
+    const tour = page.getByTestId("home-vr-tour");
+    await expect(tour.locator("iframe")).toHaveCount(0);
+    await tour.getByRole("button").click();
+    await expect(tour.locator("iframe")).toHaveAttribute("src", /kuula\.co/);
+  });
+
   test("counters render real values in the server HTML", async ({ request }) => {
     const html = await (await request.get("/en")).text();
     expect(html).toContain("65,500");
