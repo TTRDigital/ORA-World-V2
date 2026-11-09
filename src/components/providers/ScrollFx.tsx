@@ -81,7 +81,7 @@ export function ScrollFx() {
           const e = 1 - Math.pow(1 - enter, 2);
           const scale = 0.9 + 0.1 * e - 0.05 * exit;
           el.style.transform = `translate3d(0,${((1 - e) * rise).toFixed(1)}px,0) scale(${scale.toFixed(4)})`;
-          el.style.opacity = exit > 0 ? (1 - exit * 0.45).toFixed(3) : "";
+          el.style.opacity = exit > 0 ? (1 - exit * 0.25).toFixed(3) : "";
         }
       }
     };

@@ -18,7 +18,10 @@ const views = [
   { name: "mobile", viewport: { width: 390, height: 844 }, scale: 2, mobile: true },
 ];
 for (const v of views) {
+  // Documentation captures show every section at rest: scroll-linked motion (ScrollFx, reveals) is off under
+  // reduced motion, so a stitched full-page or element capture never freezes a section mid-transition.
   const ctx = await browser.newContext({
+    reducedMotion: "reduce",
     viewport: v.viewport,
     deviceScaleFactor: v.scale,
     isMobile: v.mobile,
