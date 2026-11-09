@@ -55,7 +55,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <NextIntlClientProvider>
           <SkipLink />
           <Header tiles={tiles} />
-          <main id="main" className="pt-[108px] md:pt-[120px] lg:pt-[128px]">
+          <main id="main" className="pt-[126px] md:pt-[142px] lg:pt-[160px]">
             <PageTransition>{children}</PageTransition>
           </main>
           <Footer settings={settings} showPress={press.length > 0} />
