@@ -82,11 +82,32 @@ export function PortfolioStage({ items }: { items: PortfolioCard[] }) {
                 ) : it.image ? (
                   <Picture image={it.image} locale={locale} sizes="(min-width: 1024px) 24vw, 46vw" ratio="16/10" rounded="none" className="ambient-zoom" />
                 ) : (
-                  <div className="relative flex items-center justify-center bg-travertine" style={{ aspectRatio: "16/10" }}>
-                    <Image src="/brand/ora-world-logo-gold.png" alt="" width={96} height={68} className="opacity-70" style={{ width: 96, height: "auto" }} />
+                  /* No published render yet: a brand card that places the location on the island instead. */
+                  <div
+                    className="relative overflow-hidden bg-[radial-gradient(120%_90%_at_70%_20%,var(--color-bone)_0%,var(--color-travertine)_70%)]"
+                    style={{ aspectRatio: "16/10" }}
+                    data-testid="brand-card"
+                  >
+                    <svg viewBox="0 0 1000 420" className="absolute inset-x-[8%] top-[18%] h-auto w-[84%]" aria-hidden>
+                      <path d={ISLAND_PATH} fill="var(--color-bone)" stroke="var(--color-brass)" strokeWidth="3" opacity="0.9" />
+                      {it.pin && (
+                        <g transform={`translate(${it.pin.x * 10} ${it.pin.y * 4.2})`}>
+                          <circle r="34" fill="var(--color-brass)" opacity="0.18" className="brand-pin-ring" />
+                          <circle r="13" fill="var(--color-brass)" />
+                        </g>
+                      )}
+                    </svg>
+                    <Image src="/brand/ora-world-logo-gold.png" alt="" width={44} height={31} className="absolute top-3 right-3" style={{ width: 44, height: "auto" }} />
+                    <span className="absolute bottom-3 left-3 rounded-full bg-bone/90 px-2.5 py-1 text-[11px] font-semibold text-brass-ink">{t("renderTbc")}</span>
                   </div>
                 )}
                 <div className="flex flex-1 flex-col p-3.5 md:p-4">
+                  {it.pin && (
+                    <p className="mb-1 flex items-center gap-1 text-[12px] font-semibold text-brass-ink">
+                      <span aria-hidden className={cn("size-1.5 rounded-full bg-brass", (active || hovered === it.slug) && "brand-pin-dot")} />
+                      {it.pin.municipality}
+                    </p>
+                  )}
                   <h3 className={cn("display-s", dark && "text-bone")}>{it.name}</h3>
                   <p className={cn("small mt-1 flex-1", dark ? "text-bone/70" : "text-charcoal-soft")}>{it.tagline}</p>
                   <div className="mt-3 flex flex-wrap items-center gap-2">

@@ -18,7 +18,7 @@ export async function HomeFaq({ locale }: { locale: Locale }) {
   return (
     <Module id="faq" tone="bone" label={t(m.label, locale)} headline={t(m.headline, locale)}>
       <JsonLd data={faqLd(featuredFaqs.map((f) => ({ q: t(f.question, locale), a: tp(f.answer, locale).join(" ") })))} />
-      <FaqSearch faqs={faqs} columns={2} featured={featured} stagger />
+      <FaqSearch faqs={faqs} columns={2} featured={featured} stagger variant="centre" />
       <div className="mt-8 flex justify-center md:justify-start" data-reveal>
         <Link href="/faq" className="pill pill-ghost min-h-12 gap-1">
           {tf("all")} <ArrowRight width={16} height={16} />

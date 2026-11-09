@@ -5,6 +5,8 @@ import { LanguageToggle } from "./LanguageToggle";
 import { footerGroups } from "./nav";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import type { SiteSettings } from "@/content/types";
+import { Headline } from "@/components/ui/Headline";
+import { FooterAsk, BackToTop } from "./FooterActions";
 
 /** Basalt rounded panel: white logo, newsletter, five nav groups, language, legal notice at 11px, EHO, sponsor. */
 export function Footer({ settings, showPress }: { settings: SiteSettings; showPress: boolean }) {
@@ -12,6 +14,23 @@ export function Footer({ settings, showPress }: { settings: SiteSettings; showPr
   const locale = useLocale() as "en" | "es";
   return (
     <footer data-tone="dark" className="panel panel-basalt on-dark container-x mt-3 py-12 md:py-16">
+      {/* Closing band: the client's published line, the address, and the two ways to continue. */}
+      <div className="footer-band relative mb-12 grid gap-6 overflow-hidden rounded-[24px] bg-basalt-soft p-6 md:mb-14 md:p-10 lg:grid-cols-12 lg:items-end">
+        <div className="lg:col-span-7">
+          <Headline as="p" text={t("footer.closing")} size="l" className="text-bone" />
+          <p className="mt-4 max-w-[52ch] text-[17px] leading-relaxed text-bone/75">{t("footer.closingLine")}</p>
+          <p className="mt-5 flex items-center gap-2 text-[13px] font-semibold text-brass-light">
+            <span aria-hidden className="inline-block size-1.5 rounded-full bg-brass-light" />
+            {t("footer.address")}
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
+          <Link href="/visit" className="pill pill-brass min-h-12 px-6" data-track="cta_book_visit" data-track-label="footer">
+            {t("footer.book")}
+          </Link>
+          <FooterAsk label={t("footer.ask")} />
+        </div>
+      </div>
       <div className="grid gap-10 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <Logo variant="white" height={96} />
@@ -51,7 +70,10 @@ export function Footer({ settings, showPress }: { settings: SiteSettings; showPr
           <li><Link href="/accessibility" className="hover:text-bone">{t("footer.accessibility")}</Link></li>
           <li><Link href="/legal-disclaimer" className="hover:text-bone">{t("footer.disclaimer")}</Link></li>
         </ul>
-        <LanguageToggle dark />
+        <div className="flex items-center gap-4">
+          <LanguageToggle dark />
+          <BackToTop label={t("footer.top")} />
+        </div>
       </div>
       <p className="legal mt-6 max-w-5xl text-bone/60">{settings.legalNotice}</p>
       <p className="legal mt-2 text-bone/60">{settings.renderingNotice[locale]}</p>

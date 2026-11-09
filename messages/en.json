@@ -169,7 +169,11 @@
     "progress": "{n} / {total}",
     "answers": "Your answers",
     "matching": "{count, plural, =1 {1 published section} other {# published sections}}",
-    "editAnswer": "Change the answer to {q}"
+    "editAnswer": "Change the answer to {q}",
+    "previewTitle": "Sections your answers point to",
+    "previewOn": "(points here)",
+    "previewOff": "(not yet)",
+    "depositShare": "Deposit"
   },
   "portfolio": {
     "pinned": "On the map",
@@ -180,7 +184,8 @@
     "caribbean": "Caribbean Sea",
     "north": "N",
     "pinsLabel": "ORA World locations on the island",
-    "clear": "Clear selection"
+    "clear": "Clear selection",
+    "renderTbc": "Render to be confirmed"
   },
   "faq": {
     "search": "Search questions",
@@ -193,7 +198,14 @@
     },
     "none": "No question matches. Try another word or ask the team.",
     "all": "All questions",
-    "count": "{count, plural, =1 {1 question} other {# questions}}"
+    "count": "{count, plural, =1 {1 question} other {# questions}}",
+    "searchLong": "Search every published question",
+    "topicsLabel": "Browse by topic",
+    "popular": "Popular questions",
+    "emptyTitle": "Nothing published on that yet",
+    "askOra": "Ask the team",
+    "bookVisit": "Book a visit",
+    "stillCurious": "Still curious? The team answers in person."
   },
   "visit": {
     "gallery": "Sales gallery",
@@ -328,7 +340,13 @@
     "accessibility": "Accessibility",
     "disclaimer": "Legal disclaimer",
     "equalHousing": "Equal Housing Opportunity",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "closing": "*Beyond* expectations",
+    "closingLine": "Thoughtfully crafted communities where longevity, luxury, and nature exist in perfect harmony.",
+    "address": "Tesoro Del Mar · Dorado, Vega Alta, Puerto Rico 00692",
+    "top": "Back to top",
+    "ask": "Ask the team",
+    "book": "Book a visit"
   },
   "consent": {
     "text": "We use analytics cookies with your consent to understand how the site is used.",
@@ -390,7 +408,26 @@
     "compare": {
       "title": "Compare plans",
       "intro": "Up to three floor plans side by side."
-    }
+    },
+    "facts": {
+      "framework": "Framework",
+      "enacted": "Enacted",
+      "residency": "Residency, generally",
+      "residencyValue": "183 days",
+      "deposits": "Deposits",
+      "locations": "Locations",
+      "municipalities": "Municipalities",
+      "projectPages": "Project pages",
+      "revealed": "To be revealed",
+      "ways": "Ways to visit",
+      "ways2": "Gallery or video",
+      "gallery": "Sales gallery",
+      "hours": "Hours",
+      "questions": "Questions",
+      "topics": "Topics",
+      "languages": "Languages"
+    },
+    "placeLine": "Dorado · Puerto Rico"
   },
   "numbers": {
     "walk": "Walking distance",

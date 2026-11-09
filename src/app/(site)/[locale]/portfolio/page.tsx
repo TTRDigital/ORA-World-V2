@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getTeam } from "@/lib/content";
+import { getPortfolio, getTeam } from "@/lib/content";
 import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
 import { t, tp } from "@/lib/localize";
 import type { Locale } from "@/content/types";
@@ -19,11 +19,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 export default async function PortfolioPage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [team, tpf, tn, tc] = await Promise.all([getTeam(), getTranslations({ locale, namespace: "pages.portfolio" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" })]);
+  const [team, portfolio, tpf, tn, tc] = await Promise.all([getTeam(), getPortfolio(), getTranslations({ locale, namespace: "pages.portfolio" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" })]);
+  const tf = await getTranslations({ locale, namespace: "pages.facts" });
+  const tpg = await getTranslations({ locale, namespace: "pages" });
+  // Counted from the published portfolio list, nothing invented.
+  const facts = [
+    { label: tf("locations"), value: String(portfolio.length) },
+    { label: tf("municipalities"), value: String(new Set(portfolio.filter((l) => l.pin).map((l) => l.pin!.municipality)).size) },
+    { label: tf("projectPages"), value: String(portfolio.filter((l) => l.href).length) },
+    { label: tf("revealed"), value: String(portfolio.filter((l) => !l.revealed).length) },
+  ];
   return (
     <div className="flex flex-col gap-3">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("portfolio"), path: "/portfolio" }])} />
-      <PageHero locale={locale} label="ORA World" headline={tpf("title")} intro={tpf("intro")} image={places.coastalAerial}>
+      <PageHero locale={locale} label="ORA World" headline={tpf("title")} intro={tpf("intro")} image={places.coastalAerial} place={tpg("placeLine")} facts={facts}>
         <Link href="/visit" className="pill pill-brass">{tc("bookVisit")}</Link>
       </PageHero>
       <Portfolio locale={locale} />
