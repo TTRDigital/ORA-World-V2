@@ -17,7 +17,7 @@ import { usePathname } from "next/navigation";
  *    in place as they scroll in; the motion is tied to scroll position, so it reverses when scrolling back up.
  *    data-fly-order staggers blocks within a group.
  *
- * Off under reduced motion. Sections holding a pinned element (the resilience dial) skip the section transform,
+ * Off under reduced motion. Sections holding a pinned or sticky element (the resilience dial, the room tour) skip the section transform,
  * because a transformed ancestor would break the pin. While a dialog has the page scroll-locked, every
  * transform is cleared so fixed overlays inside sections position correctly.
  */
@@ -94,7 +94,7 @@ export function ScrollFx() {
           continue;
         }
         // Sections
-        if (locked || el.querySelector(".pin-spacer") || el.id === "resilience") {
+        if (locked || el.querySelector(".pin-spacer") || el.id === "resilience" || el.id === "rooms") {
           el.style.transform = "";
           el.style.opacity = "";
           continue;

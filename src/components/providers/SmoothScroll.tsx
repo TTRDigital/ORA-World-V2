@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { lenisRef } from "@/lib/smooth-scroll";
 
 /** Lenis smooth scroll on desktop pointers only; off on touch and under reduced motion. */
 export function SmoothScroll() {
@@ -17,6 +18,7 @@ export function SmoothScroll() {
       const instance = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
       instance.on("scroll", () => ScrollTrigger.update());
       lenis = instance;
+      lenisRef.current = instance;
       const loop = (t: number) => {
         lenis?.raf(t);
         raf = requestAnimationFrame(loop);
@@ -27,6 +29,7 @@ export function SmoothScroll() {
       cancelled = true;
       cancelAnimationFrame(raf);
       lenis?.destroy();
+      lenisRef.current = null;
     };
   }, []);
   return null;

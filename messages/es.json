@@ -110,7 +110,7 @@
   "rooms": {
     "rail": "Espacios",
     "hotspot": "Detalle: {title}",
-    "dragHint": "Arrastre, deslice o use las flechas del teclado",
+    "dragHint": "Desplácese, arrastre o elija un espacio",
     "room": "Espacio {n} de {total}: {name}",
     "inThisRoom": "En este espacio",
     "details": "Detalles de este espacio",

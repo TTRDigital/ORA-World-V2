@@ -110,7 +110,7 @@
   "rooms": {
     "rail": "Rooms",
     "hotspot": "Detail: {title}",
-    "dragHint": "Drag, swipe or use the arrow keys",
+    "dragHint": "Scroll, drag or pick a room",
     "room": "Room {n} of {total}: {name}",
     "inThisRoom": "In this room",
     "details": "Details in this room",

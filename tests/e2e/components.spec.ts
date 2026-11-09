@@ -50,6 +50,36 @@ test.describe("vendored components and the desktop menu", () => {
     expect(html).toContain("335,995");
   });
 
+  test("room tour sticks while scrolling, scroll changes the room, and a tab click scrolls to its room", async ({ page }) => {
+    await page.goto("/en");
+    await page.locator("html:not(.no-js)").waitFor();
+    const tab = (name: string) => page.locator("#rooms").getByRole("tab", { name });
+    // Scroll positions inside the sticky runway: a fraction f of the travel after the stage first sticks.
+    const at = (f: number) =>
+      page.evaluate((f) => {
+        const sticky = document.querySelector<HTMLElement>("#rooms .sticky")!;
+        const runway = sticky.parentElement!;
+        const travel = runway.offsetHeight - sticky.offsetHeight;
+        const y = runway.getBoundingClientRect().top + scrollY - parseFloat(getComputedStyle(sticky).top) + travel * f;
+        document.documentElement.style.scrollBehavior = "auto";
+        window.scrollTo(0, y);
+        document.documentElement.style.scrollBehavior = "";
+        return y;
+      }, f);
+    const stageTop = () => page.evaluate(() => Math.round(document.querySelector("#rooms [aria-roledescription=carousel]")!.getBoundingClientRect().top));
+    await at(0.05);
+    await expect(tab(/Foyer/)).toHaveAttribute("aria-selected", "true");
+    const stuck = await stageTop();
+    await at(0.6);
+    await expect(tab(/Bath/)).toHaveAttribute("aria-selected", "true");
+    expect(Math.abs((await stageTop()) - stuck)).toBeLessThan(4);
+    const before = await at(0.3);
+    await page.waitForTimeout(300);
+    await tab(/Penthouse/).click();
+    await expect(tab(/Penthouse/)).toHaveAttribute("aria-selected", "true");
+    await expect.poll(() => page.evaluate(() => scrollY), { timeout: 4000 }).toBeGreaterThan(before);
+  });
+
   test("gallery coverflow carousel has labelled, clickable pagination", async ({ page }) => {
     await page.goto("/en/place/gallery");
     const carousel = page.getByTestId("featured-carousel");
