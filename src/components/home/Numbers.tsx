@@ -9,6 +9,16 @@ import { Picture } from "@/components/ui/Picture";
 import "./numbers-bento.css";
 
 const areas = ["nb-land", "nb-apts", "nb-suites", "nb-amen"] as const;
+/** One published detail per counter (oraworld.com/tesoro-del-mar), in the same order as home.numbers.stats. */
+const details = ["landDetail", "aptsDetail", "suitesDetail", "amenDetail"] as const;
+
+/** Brass hairline icons: site plan, tower, key, leaf. */
+const icons: React.ReactNode[] = [
+  <path key="land" d="M4 18 L12 6 L20 18 Z M8 18 L12 12 L16 18" />,
+  <path key="apts" d="M8 21 V5 C8 4 9 3 10 3 H14 C15 3 16 4 16 5 V21 M6 21 H18 M10 7 H14 M10 11 H14 M10 15 H14" />,
+  <path key="suites" d="M14 4 A4 4 0 1 1 14 12 A4 4 0 0 1 14 4 Z M11 11 L4 18 L6 20 M7 15 L9 17" />,
+  <path key="amen" d="M12 21 C12 13 15 8 20 5 C20 12 17 17 12 21 Z M12 21 C12 15 9 11 4 9 C4 15 7 19 12 21" />,
+];
 
 /**
  * Module 2, Tesoro Del Mar in numbers: a bento grid. Aerial render, four counters that animate once,
@@ -48,10 +58,23 @@ export async function Numbers({ locale }: { locale: Locale }) {
         {n.stats.map((s, i) => (
           <div
             key={areas[i]}
-            className={cn(areas[i], "card lift flex min-h-[132px] flex-col justify-between p-5")}
+            className={cn(areas[i], "card lift nb-counter relative flex flex-col p-5 md:min-h-[132px] md:justify-between")}
             data-reveal
             style={delay(1 + i)}
           >
+            <svg
+              className="absolute top-4 right-4 size-6 text-brass md:size-7"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              {icons[i]}
+            </svg>
+            <div>
             {s.value == null ? (
               <span className="numeral text-[34px] text-brass-ink md:text-[40px] xl:text-[52px]">{tc("tbc")}</span>
             ) : (
@@ -63,9 +86,15 @@ export async function Numbers({ locale }: { locale: Locale }) {
                 className="numeral text-[34px] text-brass-ink md:text-[40px] xl:text-[52px]"
               />
             )}
-            <span className="mt-3 block text-[14px] leading-snug text-charcoal-soft">
+            <span className="mt-1 block text-[14px] leading-snug text-charcoal-soft">
               {tr(s.label, locale)}
             </span>
+            </div>
+            {details[i] && (
+              <span className="nb-detail mt-3 block border-t border-travertine-deep/70 pt-2 text-[12.5px] leading-snug text-charcoal-soft">
+                {t(details[i])}
+              </span>
+            )}
           </div>
         ))}
 

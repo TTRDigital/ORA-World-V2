@@ -101,13 +101,20 @@
     "specs": "Especificaciones",
     "towerLabel": "Torre ilustrativa, seleccione una franja",
     "band": "Franja de {name}",
-    "noMatch": "Ninguna colección coincide con esos filtros todavía. Las opciones de habitaciones no están publicadas; el filtro se ampliará cuando el cliente las confirme."
+    "noMatch": "Ninguna colección coincide con esos filtros todavía. Las opciones de habitaciones no están publicadas; el filtro se ampliará cuando el cliente las confirme.",
+    "renderCount": "{count, plural, =1 {1 render} other {# renders}}",
+    "otherCollections": "Colecciones",
+    "nextCollection": "Siguiente colección"
   },
   "rooms": {
     "rail": "Espacios",
     "hotspot": "Detalle: {title}",
     "dragHint": "Arrastre, deslice o use las flechas del teclado",
-    "room": "Espacio {n} de {total}: {name}"
+    "room": "Espacio {n} de {total}: {name}",
+    "inThisRoom": "En este espacio",
+    "details": "Detalles de este espacio",
+    "next": "Siguiente espacio",
+    "nextRoom": "Siguiente espacio: {name}"
   },
   "dial": {
     "progress": "{done} de {total} características a la vista",
@@ -399,7 +406,11 @@
     "airportNote": "Internacional Luis Muñoz Marín",
     "park": "Junto a un parque nacional",
     "parkNote": "Senderos escénicos para correr y caminar recorren el parque adyacente, con jardines sensoriales en el lugar.",
-    "published": "Publicado por ORA World"
+    "published": "Publicado por ORA World",
+    "landDetail": "Parte del desarrollo de 10 acres",
+    "aptsDetail": "Junto a villas de lujo",
+    "suitesDetail": "En el hotel boutique del centro de la comunidad",
+    "amenDetail": "Clubhouse, canchas, gimnasio y senderos para correr"
   },
   "renders": {
     "label": "Los renders",

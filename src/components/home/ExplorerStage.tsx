@@ -95,7 +95,7 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
       </div>
 
       {/* Tower stack */}
-      <div className="lg:col-span-5">
+      <div className="min-w-0 lg:col-span-5">
         <div className="flex justify-center lg:justify-start">
           <TowerStack
             collections={stack}
@@ -109,6 +109,21 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
             ariaLabel={tx("towerLabel")}
           />
         </div>
+        {/* Phones: the drawn bands are small, so the collections are also a row of chips. */}
+        <div role="group" aria-label={tx("collections")} className="no-scrollbar -mx-1 mt-3 flex gap-2 overflow-x-auto px-1 pb-1 lg:hidden">
+          {stack.map((c) => (
+            <button
+              key={c.slug}
+              type="button"
+              className="chip shrink-0"
+              aria-pressed={effectiveSelected === c.slug}
+              disabled={!matching.has(c.slug)}
+              onClick={() => setSelected(c.slug)}
+            >
+              {c.name}
+            </button>
+          ))}
+        </div>
         <p className="small mt-2 max-w-md italic text-charcoal-soft">{note}</p>
         <p className="visually-hidden" aria-live="polite">
           {active ? t(active.name, locale) : ""}
@@ -116,7 +131,7 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
       </div>
 
       {/* Side card: right on desktop, a sheet-like card below the stack on mobile */}
-      <div className="lg:col-span-7">
+      <div className="min-w-0 lg:col-span-7">
         <div className="card relative overflow-hidden rounded-t-[28px] rounded-b-[20px] bg-bone shadow-[0_-12px_40px_-24px_rgb(28_27_25/0.25)] lg:rounded-[24px] lg:shadow-none">
           <div className="mx-auto mt-3 h-1.5 w-12 rounded-full bg-travertine-deep lg:hidden" aria-hidden />
           {none || !active ? (

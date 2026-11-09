@@ -9,11 +9,12 @@ import type { Locale } from "@/content/types";
 import { routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { PageHero } from "@/components/ui/PageHero";
+import { Picture } from "@/components/ui/Picture";
 import { CollectionGallery } from "@/components/residences/CollectionGallery";
 import { PlanCard } from "@/components/plans/PlanCard";
 import { ShortlistBar } from "@/components/plans/ShortlistBar";
 import { Tbc } from "@/components/ui/Tbc";
-import { Check } from "@/components/ui/Icons";
+import { ArrowRight, Check } from "@/components/ui/Icons";
 
 export async function generateStaticParams() {
   const cs = await getCollections();
@@ -32,8 +33,10 @@ export default async function CollectionPage({ params }: { params: Promise<{ loc
   setRequestLocale(locale);
   const c = await getCollection(slug);
   if (!c) notFound();
-  const [plans, tr, tn, tc, te] = await Promise.all([getFloorPlans(), getTranslations({ locale, namespace: "pages.residences" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" }), getTranslations({ locale, namespace: "explorer" })]);
+  const [all, plans, tr, tn, tc, te] = await Promise.all([getCollections(), getFloorPlans(), getTranslations({ locale, namespace: "pages.residences" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" }), getTranslations({ locale, namespace: "explorer" })]);
   const own = plans.filter((p) => p.collection === c.slug);
+  const pos = all.findIndex((x) => x.slug === c.slug);
+  const nextC = all.length > 1 ? all[(pos + 1) % all.length] : null;
   return (
     <div className="flex flex-col gap-3">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("residences"), path: "/residences" }, { name: t(c.name, locale), path: `/residences/${c.slug}` }])} />
@@ -41,6 +44,23 @@ export default async function CollectionPage({ params }: { params: Promise<{ loc
         <Link href="/residences/plans" className="pill pill-brass">{tc("viewPlans")}</Link>
         <Link href="/visit" className="pill pill-ghost">{tc("bookVisit")}</Link>
       </PageHero>
+      {/* Collection switcher: every collection one tap away, the current one marked. */}
+      <nav aria-label={te("otherCollections")} className="panel panel-bone container-x py-4">
+        <ul className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1">
+          {all.map((x, n) => (
+            <li key={x.slug} className="shrink-0">
+              <Link
+                href={`/residences/${x.slug}`}
+                aria-current={x.slug === c.slug ? "page" : undefined}
+                className={x.slug === c.slug ? "chip is-active min-h-11 gap-2" : "chip min-h-11 gap-2"}
+              >
+                <span className="numeral text-[15px] opacity-70">{String(n + 1).padStart(2, "0")}</span>
+                {t(x.name, locale)}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
       <section className="panel panel-travertine container-x section-y" aria-label={tr("gallery")}>
         <CollectionGallery images={c.gallery} locale={locale} label={t(c.name, locale)} />
       </section>
@@ -102,6 +122,23 @@ export default async function CollectionPage({ params }: { params: Promise<{ loc
           </ul>
           <ShortlistBar />
         </section>
+      )}
+      {nextC && (
+        <Link href={`/residences/${nextC.slug}`} className="panel panel-basalt on-dark group container-x grid gap-6 py-8 md:grid-cols-[1fr_auto] md:items-center md:py-10" data-tone="dark">
+          <span>
+            <span className="label block">{te("nextCollection")}</span>
+            <span className="display-m mt-2 block text-bone">{t(nextC.name, locale)}</span>
+            <span className="small mt-1 block text-bone/75">{t(nextC.tagline, locale)}</span>
+          </span>
+          <span className="flex items-center gap-4">
+            <span className="relative block h-[96px] w-[154px] overflow-hidden rounded-[16px] md:h-[120px] md:w-[192px]">
+              <Picture image={nextC.image} locale={locale} ratio="8/5" rounded="none" reveal={false} sizes="(max-width: 767px) 154px, 192px" className="absolute inset-0 h-full w-full rounded-none" imgClassName="transition-transform duration-700 group-hover:scale-105" />
+            </span>
+            <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-brass text-basalt transition-transform duration-500 group-hover:translate-x-1">
+              <ArrowRight />
+            </span>
+          </span>
+        </Link>
       )}
     </div>
   );

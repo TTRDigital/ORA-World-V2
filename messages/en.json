@@ -101,13 +101,20 @@
     "specs": "Specifications",
     "towerLabel": "Illustrative tower stack, select a band",
     "band": "{name} band",
-    "noMatch": "No collection matches those filters yet. Bedroom options are not published, so the filter widens as the client confirms them."
+    "noMatch": "No collection matches those filters yet. Bedroom options are not published, so the filter widens as the client confirms them.",
+    "renderCount": "{count, plural, =1 {1 render} other {# renders}}",
+    "otherCollections": "Collections",
+    "nextCollection": "Next collection"
   },
   "rooms": {
     "rail": "Rooms",
     "hotspot": "Detail: {title}",
     "dragHint": "Drag, swipe or use the arrow keys",
-    "room": "Room {n} of {total}: {name}"
+    "room": "Room {n} of {total}: {name}",
+    "inThisRoom": "In this room",
+    "details": "Details in this room",
+    "next": "Next room",
+    "nextRoom": "Next room: {name}"
   },
   "dial": {
     "progress": "{done} of {total} features in view",
@@ -399,7 +406,11 @@
     "airportNote": "Luis Muñoz Marín International",
     "park": "Near a national park",
     "parkNote": "Scenic jogging and walking paths wind through the adjacent park, with sensory gardens on site.",
-    "published": "Published by ORA World"
+    "published": "Published by ORA World",
+    "landDetail": "Part of the 10-acre development",
+    "aptsDetail": "Alongside luxurious villas",
+    "suitesDetail": "In the boutique hotel at the community hub",
+    "amenDetail": "Clubhouse, courts, fitness center and jogging paths"
   },
   "renders": {
     "label": "The renders",
