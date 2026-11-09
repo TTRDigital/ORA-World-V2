@@ -107,7 +107,7 @@ export function AskOra({ faqs, phone, whatsapp, consentText }: { faqs: Faq[]; ph
               {(phone || whatsapp) && (
                 <div role="tabpanel" id="ask-panel-call" aria-labelledby="ask-tab-call" hidden={tab !== "call"} className="grid gap-3">
                   {phone && (
-                    <a href={`tel:${phone.replace(/\s/g, "")}`} className="pill pill-basalt min-h-12">
+                    <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="pill pill-basalt min-h-12">
                       {t("callNow")} {phone}
                     </a>
                   )}

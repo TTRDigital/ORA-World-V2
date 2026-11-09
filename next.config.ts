@@ -17,7 +17,7 @@ const csp = [
   "font-src 'self' data:",
   "media-src 'self' blob: https://cdn.sanity.io",
   "connect-src 'self' https://*.api.sanity.io https://cdn.sanity.io https://*.sanity.io wss://*.api.sanity.io https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://tiles.openfreemap.org https://*.openfreemap.org https://challenges.cloudflare.com",
-  "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com https://kuula.co https://*.kuula.co https://calendly.com https://*.calendly.com https://cal.com https://*.cal.com https://challenges.cloudflare.com https://www.googletagmanager.com",
+  "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com https://kuula.co https://*.kuula.co https://calendly.com https://*.calendly.com https://cal.com https://*.cal.com https://api.leadconnectorhq.com https://link.msgsndr.com https://challenges.cloudflare.com https://www.googletagmanager.com",
   "worker-src 'self' blob:",
   "form-action 'self'",
   "upgrade-insecure-requests",

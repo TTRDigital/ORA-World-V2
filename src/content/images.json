@@ -259,6 +259,16 @@
     "width": 2560,
     "height": 1440
   },
+  "tdm-bedroom-ocean": {
+    "src": "/images/client/tdm-bedroom-ocean.jpg",
+    "width": 2400,
+    "height": 1350
+  },
+  "tdm-entrance": {
+    "src": "/images/client/tdm-entrance.jpg",
+    "width": 2254,
+    "height": 2250
+  },
   "tdm-exterior-golf": {
     "src": "/images/client/tdm-exterior-golf.jpg",
     "width": 2560,
@@ -294,10 +304,30 @@
     "width": 2560,
     "height": 1440
   },
+  "tdm-gym": {
+    "src": "/images/client/tdm-gym.jpg",
+    "width": 2400,
+    "height": 1351
+  },
   "tdm-hotel-210": {
     "src": "/images/client/tdm-hotel-210.jpg",
     "width": 2560,
     "height": 1440
+  },
+  "tdm-kitchen-dining": {
+    "src": "/images/client/tdm-kitchen-dining.jpg",
+    "width": 2400,
+    "height": 1351
+  },
+  "tdm-kitchen-wine": {
+    "src": "/images/client/tdm-kitchen-wine.jpg",
+    "width": 2400,
+    "height": 1351
+  },
+  "tdm-master-suite": {
+    "src": "/images/client/tdm-master-suite.jpg",
+    "width": 2400,
+    "height": 1350
   },
   "tdm-penthouse-001": {
     "src": "/images/client/tdm-penthouse-001.jpg",
@@ -313,6 +343,16 @@
     "src": "/images/client/tdm-penthouse-003.jpg",
     "width": 2560,
     "height": 1440
+  },
+  "tdm-powder-room": {
+    "src": "/images/client/tdm-powder-room.jpg",
+    "width": 2400,
+    "height": 1351
+  },
+  "tdm-vanity": {
+    "src": "/images/client/tdm-vanity.jpg",
+    "width": 2400,
+    "height": 1350
   },
   "the-top": {
     "src": "/images/client/the-top.jpg",

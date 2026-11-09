@@ -7,8 +7,8 @@ import { usePathname } from "next/navigation";
  * Scroll-linked motion for whole sections (transform and opacity only, one rAF per frame, active only while
  * elements are near the viewport):
  *
- *  - Sections: every panel in <main> and the footer rises (140px desktop, 72px phones) and scales up from 0.9 over
- *    most of a viewport of scroll as it enters, and settles back (scale 0.95, a touch of fade) as it leaves the top, so the page reads as stacked cards. At rest the
+ *  - Sections: every panel in <main> and the footer rises a little (48px desktop, 24px phones) as it enters. Kept
+ *    deliberately calm after client feedback that the site felt busy. At rest the
  *    transform is removed entirely, so nothing becomes a containing block for fixed children.
  *  - Image parallax: frames whose focal point sits below 30% drift ±4% inside a 1.12 scale (6% overscan each
  *    side), so travel never exceeds the overscan. Top-anchored renders (the towers, focal y ≤ 30%) stay still so
@@ -27,7 +27,7 @@ export function ScrollFx() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const html = document.documentElement;
     const mobile = window.matchMedia("(max-width: 767px)").matches;
-    const rise = mobile ? 72 : 140;
+    const rise = mobile ? 24 : 48;
 
     const sections = Array.from(document.querySelectorAll<HTMLElement>("main section.panel, main > div > div > section.panel, body > footer.panel, footer.panel")).filter(
       (el, i, all) => all.indexOf(el) === i && !el.parentElement?.closest("section.panel"),
@@ -78,12 +78,12 @@ export function ScrollFx() {
           }
           const e = 1 - Math.pow(1 - p, 2);
           const far = 1 - e;
-          const dist = mobile ? 110 : 240;
+          // Calm, professional travel (client feedback: "too busy"): a short slide, no tilt, barely any scale.
+          const dist = mobile ? 36 : 72;
           const dir = el.dataset.fly;
           const dx = dir === "left" ? -dist : dir === "right" ? dist : 0;
-          const dy = dir === "up" ? dist * 0.7 : dist * 0.12;
-          const rot = dir === "left" ? -4 : dir === "right" ? 4 : 0;
-          el.style.transform = `translate3d(${(dx * far).toFixed(1)}px,${(dy * far).toFixed(1)}px,0) rotate(${(rot * far).toFixed(2)}deg) scale(${(0.86 + 0.14 * e).toFixed(4)})`;
+          const dy = dir === "up" ? dist * 0.6 : 0;
+          el.style.transform = `translate3d(${(dx * far).toFixed(1)}px,${(dy * far).toFixed(1)}px,0) scale(${(0.97 + 0.03 * e).toFixed(4)})`;
           continue;
         }
         if (el.dataset.marquee !== undefined) {
@@ -106,10 +106,10 @@ export function ScrollFx() {
           el.style.transform = "";
           el.style.opacity = "";
         } else {
+          // A short rise as a section enters; no scale and no fade on the way out.
           const e = 1 - Math.pow(1 - enter, 2);
-          const scale = 0.9 + 0.1 * e - 0.05 * exit;
-          el.style.transform = `translate3d(0,${((1 - e) * rise).toFixed(1)}px,0) scale(${scale.toFixed(4)})`;
-          el.style.opacity = exit > 0 ? (1 - exit * 0.25).toFixed(3) : "";
+          el.style.transform = exit > 0 ? "" : `translate3d(0,${((1 - e) * rise).toFixed(1)}px,0)`;
+          el.style.opacity = "";
         }
       }
     };

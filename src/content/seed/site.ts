@@ -6,8 +6,8 @@ export const LEGAL_NOTICE =
   "This advertisement is not an offering. It is a solicitation of interest in the advertised property. No offering of the advertised units can be made and no deposits can be accepted, or reservations, binding or non - binding, can be made until an offering plan is filed with the New York State Department of Law. This advertisement is made pursuant to Cooperative Policy Statement No. 1, issued by the New York State Department of Law. Attorney General File No.: CP25-0047. Sponsor: TRPbuildco LLC Sponsor's Address: Tesoro Del Mar Dorado, Vega Alta, Puerto Rico 00692";
 
 export const siteSettings: SiteSettings = {
-  // Not published anywhere public. Read from env on the server when provided; the UI hides empty channels.
-  phone: process.env.NEXT_PUBLIC_ORA2_PHONE || null,
+  // The sales line from the client's prospect email (ORA World, (786) 981-4648). Env overrides it.
+  phone: process.env.NEXT_PUBLIC_ORA2_PHONE || "(786) 981-4648",
   whatsapp: process.env.NEXT_PUBLIC_ORA2_WHATSAPP || null,
   email: process.env.NEXT_PUBLIC_ORA2_EMAIL || null,
   salesGalleryName: { en: "ORA World sales gallery", es: "Galería de ventas ORA World" },
@@ -20,13 +20,17 @@ export const siteSettings: SiteSettings = {
     es: "Todas las imágenes de esta página son representaciones artísticas.",
   },
   sponsor: { en: "Sponsor: TRPbuildco LLC", es: "Patrocinador: TRPbuildco LLC" },
-  bookingUrl: process.env.NEXT_PUBLIC_ORA2_BOOKING_URL || null,
+  // Direct URLs behind the links in the sales team's prospect email. The email's own links are per-recipient
+  // tracked redirects (each encodes one contact's CRM id), so they must never be published on the site.
+  bookingUrl: process.env.NEXT_PUBLIC_ORA2_BOOKING_URL || "https://api.leadconnectorhq.com/widget/booking/JUG4VeLgsVqoi9ZyLmiO",
   vrTourUrl: "https://kuula.co/share/collection/7Zt7D?logo=1&info=0&fs=1&vr=1&thumbs=2&margin=10&alpha=0.60",
-  filmYoutubeId: "HkIPZ9pGezA",
+  filmYoutubeId: "HkIPZ9pGezA", // "Live Beyond Limits | ORA World Puerto Rico"
+  introFilmYoutubeId: "eFoje0U7u8w", // "Welcome to ORA World", the short film the sales team sends to prospects
   filmMp4: null,
   filmWebm: null,
   filmPoster: tdm.exteriorPull,
-  brochureUrl: null,
+  brochureUrl: "https://storage.googleapis.com/msgsndr/h3BreqRip5vgBRyV1wRf/media/695d8cb8d5b48359a2d3104e.pdf",
+  floorPlansUrl: "https://storage.googleapis.com/msgsndr/h3BreqRip5vgBRyV1wRf/media/6969467ce125ef29bd593468.pdf",
   brokerKitUrl: null,
   consentText: {
     en: "By submitting this form you agree that ORA World and its sales representatives may contact you by phone, email and text message (including by automated means) about your inquiry. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to opt out at any time.",

@@ -6,7 +6,7 @@ import type { GalleryImage, Locale } from "@/content/types";
 import { Picture } from "@/components/ui/Picture";
 import { Lightbox } from "./Lightbox";
 
-const CATS = ["exteriors", "interiors", "amenities", "lifestyle", "dorado-waterfalls"] as const;
+const CATS = ["exteriors", "interiors", "amenities"] as const;
 
 /** Masonry (CSS columns) with filter chips and a keyboard lightbox. Tower renders stay 16:10, never cropped from the top. */
 export function GalleryGrid({ images, locale }: { images: GalleryImage[]; locale: Locale }) {

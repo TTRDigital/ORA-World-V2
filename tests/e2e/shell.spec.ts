@@ -62,7 +62,9 @@ test.describe("shell", () => {
     await expect(dialog.getByRole("button", { name: /hurricanes and earthquakes/i })).toBeVisible();
     await dialog.getByRole("tab", { name: "Quick questions" }).focus();
     await page.keyboard.press("ArrowRight");
-    await expect(dialog.getByRole("tab", { name: "Book a visit" })).toHaveAttribute("aria-selected", "true");
+    // The next tab is "Call" now that the sales line is published, otherwise "Book a visit".
+    await expect(dialog.getByRole("tab").nth(1)).toHaveAttribute("aria-selected", "true");
+    await expect(dialog.getByRole("link", { name: /\(786\) 981-4648/ })).toHaveAttribute("href", "tel:7869814648");
     await page.keyboard.press("Escape");
     await expect(dialog).toBeHidden();
   });

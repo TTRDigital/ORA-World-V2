@@ -189,6 +189,15 @@ export const tdm = {
     },
     R,
   ),
+  /* Tesoro Del Mar brochure (TDM Brochure PDF, sent to prospects by the sales team) */
+  entrance: img("tdm-entrance", "50% 45%", { en: "The arrival drive and canopy entrance of Tesoro Del Mar", es: "La entrada y el pórtico de llegada de Tesoro Del Mar" }, R),
+  gym: img("tdm-gym", "50% 50%", { en: "The Tesoro Del Mar fitness center with garden views", es: "El gimnasio de Tesoro Del Mar con vista al jardín" }, R),
+  kitchenDining: img("tdm-kitchen-dining", "50% 50%", { en: "Open kitchen and dining room in a Tesoro Del Mar residence", es: "Cocina abierta y comedor en una residencia de Tesoro Del Mar" }, R),
+  kitchenWine: img("tdm-kitchen-wine", "50% 50%", { en: "Kitchen with a glass wine wall and dining table", es: "Cocina con cava de vidrio y mesa de comedor" }, R),
+  masterSuite: img("tdm-master-suite", "50% 50%", { en: "Primary suite with a sculpted headboard wall", es: "Suite principal con cabecero escultórico" }, R),
+  vanity: img("tdm-vanity", "50% 50%", { en: "Primary bathroom with a double vanity in marble", es: "Baño principal con doble lavabo en mármol" }, R),
+  bedroomOcean: img("tdm-bedroom-ocean", "50% 50%", { en: "Bedroom with floor-to-ceiling glass facing the ocean", es: "Dormitorio con ventanal de piso a techo frente al mar" }, R),
+  powderRoom: img("tdm-powder-room", "50% 50%", { en: "Powder room in warm wood and stone", es: "Medio baño en madera cálida y piedra" }, R),
 };
 
 /* ---- Dorado Waterfalls (oraworld.com) ---- */

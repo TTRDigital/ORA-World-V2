@@ -508,11 +508,36 @@
   },
   "homeTour": {
     "label": "Recorrido virtual",
-    "headline": "Entre a ORA World en 360°",
-    "intro": "Recorra la colección 360° de ORA World desde cualquier lugar: mire cada espacio a su ritmo, en pantalla o en realidad virtual.",
+    "headline": "Entre a ORA World",
+    "intro": "Recorra la colección 360° de ORA World a su ritmo, o vea la película corta sobre la comunidad y su enfoque en la salud y el bienestar de los propietarios.",
     "start": "Iniciar el recorrido 360°",
     "note": "El recorrido se carga desde kuula.co cuando lo inicia.",
     "frameTitle": "Recorrido virtual 360° de ORA World",
-    "more": "Abrir la página del recorrido con la película"
+    "more": "Abrir la página del recorrido con la película",
+    "views": "Recorrido o película",
+    "tabTour": "Recorrido 360°",
+    "tabFilm": "Bienvenido a ORA World",
+    "play": "Ver la película",
+    "filmTitle": "Bienvenido a ORA World, película",
+    "filmNote": "Una película corta sobre la comunidad residencial ORA World. Se carga desde YouTube cuando la reproduce."
+  },
+  "pricing": {
+    "headline": "Precios iniciales de preconstrucción",
+    "intro": "Precio promedio de la Fase 1 en Tesoro Del Mar, por nivel. Los precios subirán en fases posteriores.",
+    "tiers": "Precio por pie cuadrado",
+    "lower": "Unidades bajas",
+    "average": "Promedio",
+    "higher": "Unidades altas",
+    "perSqFt": "por pie cuadrado",
+    "included": "Cada residencia",
+    "plans": "Planos de la Fase 1",
+    "presentation": "Presentación del proyecto",
+    "pdfNote": "Ambos se abren en PDF.",
+    "book": "Agende una llamada con nuestro agente, Reza"
+  },
+  "charters": {
+    "label": "Vuelos chárter privados",
+    "headline": "Vuelos privados a Puerto Rico y de regreso",
+    "cta": "Pregunte por los vuelos chárter"
   }
 }

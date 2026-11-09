@@ -36,11 +36,15 @@ export interface SiteSettings {
   bookingUrl: string | null;
   vrTourUrl: string;
   filmYoutubeId: string | null;
+  /** Short ORA World film the sales team sends to prospects. */
+  introFilmYoutubeId: string | null;
   /** Self-hosted loop that replaces YouTube when set. */
   filmMp4: string | null;
   filmWebm: string | null;
   filmPoster: ImageRef;
   brochureUrl: string | null;
+  /** Phase 1 floor plans PDF (subject to change), as sent to prospects by the sales team. */
+  floorPlansUrl: string | null;
   brokerKitUrl: string | null;
   consentText: L;
   siteLat: number;

@@ -30,6 +30,17 @@ Without a Sanity project the whole site renders from the typed seed in `src/cont
 `pnpm images:fetch` downloads the client's renders from oraworld.com into `assets-source/` (git-ignored);
 the optimised files in `public/images/client/` are committed, so the fetch is only needed to rebuild them.
 
+## Client decisions in force (November 2026)
+
+- **Only Tesoro Del Mar is on sale.** `ON_SALE` in `src/lib/content.ts` filters every project list; `/portfolio`
+  redirects to `/place/tesoro-del-mar`; the other projects' data and components stay in the repo for later.
+- **Sales facts** (pricing per sq ft, what every residence includes, private charters) come from the sales team's
+  prospect email and live in `src/content/seed/sales.ts`. The floor plan PDF, project presentation PDF and booking
+  page are linked by their direct URLs (`src/content/seed/site.ts`). The email's own links are per-recipient
+  tracked redirects and must never be published.
+- **Cleaner, calmer site:** Urbanist at the reference sizes, one video banner, a fixed plain header, a short
+  homepage without the island rail, project comparison or portfolio, and subtle scroll motion only.
+
 ## Third-party UI components (Skiper UI, Vengeance UI)
 
 Some components come from two shadcn-style registries. They are vendored as source code in

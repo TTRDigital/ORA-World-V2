@@ -61,6 +61,9 @@ export const getSiteSettings = cache(() =>
       whatsapp: (r.whatsapp as string) || seed.siteSettings.whatsapp,
       email: (r.email as string) || seed.siteSettings.email,
       bookingUrl: (r.bookingUrl as string) || seed.siteSettings.bookingUrl,
+      brochureUrl: (r.brochureUrl as string) || seed.siteSettings.brochureUrl,
+      floorPlansUrl: (r.floorPlansUrl as string) || seed.siteSettings.floorPlansUrl,
+      introFilmYoutubeId: (r.introFilmYoutubeId as string) || seed.siteSettings.introFilmYoutubeId,
       filmPoster: fig(r.filmPoster, seed.siteSettings.filmPoster),
     };
   }),
@@ -104,13 +107,18 @@ export const getHome = cache(() =>
   }),
 );
 
-export const getProjects = cache(() =>
-  fetchOr<Project[]>(q.projectsQ, seed.projects, (raw) =>
-    (raw as Rec[]).map((p, i) => {
-      const f = seed.projects.find((x) => x.slug === p.slug) ?? seed.projects[i] ?? seed.projects[0];
-      return { ...f, ...(p as Partial<Project>), hero: fig(p.hero, f.hero), gallery: figs(p.gallery, f.gallery), sections: mapSections(p.sections, f.sections) } as Project;
-    }),
-  ),
+/** Client decision (sales): only Tesoro Del Mar is on sale, so every other project stays off the site for now. */
+export const ON_SALE = ["tesoro-del-mar"] as const;
+
+export const getProjects = cache(async () =>
+  (
+    await fetchOr<Project[]>(q.projectsQ, seed.projects, (raw) =>
+      (raw as Rec[]).map((p, i) => {
+        const f = seed.projects.find((x) => x.slug === p.slug) ?? seed.projects[i] ?? seed.projects[0];
+        return { ...f, ...(p as Partial<Project>), hero: fig(p.hero, f.hero), gallery: figs(p.gallery, f.gallery), sections: mapSections(p.sections, f.sections) } as Project;
+      }),
+    )
+  ).filter((p) => (ON_SALE as readonly string[]).includes(p.slug)),
 );
 export const getProject = cache(async (slug: string) => (await getProjects()).find((p) => p.slug === slug) ?? null);
 
@@ -144,10 +152,12 @@ export const getActivities = cache(() =>
     (raw as Rec[]).map((a, i) => ({ ...(seed.activities[i] ?? seed.activities[0]), ...(a as Partial<Activity>), image: fig(a.image, seed.activities[i]?.image ?? seed.activities[0].image) }) as Activity),
   ),
 );
-export const getGallery = cache(() =>
-  fetchOr<GalleryImage[]>(q.galleryQ, seed.galleryImages, (raw) =>
-    (raw as Rec[]).map((g, i) => ({ ...(g as Partial<GalleryImage>), image: fig(g.image, seed.galleryImages[i]?.image ?? seed.galleryImages[0].image) }) as GalleryImage),
-  ),
+export const getGallery = cache(async () =>
+  (
+    await fetchOr<GalleryImage[]>(q.galleryQ, seed.galleryImages, (raw) =>
+      (raw as Rec[]).map((g, i) => ({ ...(g as Partial<GalleryImage>), image: fig(g.image, seed.galleryImages[i]?.image ?? seed.galleryImages[0].image) }) as GalleryImage),
+    )
+  ).filter((g) => g.category !== "dorado-waterfalls" && g.category !== "lifestyle"),
 );
 export const getTeam = cache(() =>
   fetchOr<TeamMember[]>(q.teamQ, seed.team, (raw) =>

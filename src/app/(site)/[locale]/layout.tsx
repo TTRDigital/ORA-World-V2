@@ -6,7 +6,7 @@ import { routing } from "@/i18n/routing";
 import { display, sans } from "@/lib/fonts";
 import { SITE_URL, IS_PROD } from "@/lib/utils";
 import { getFaqs, getPress, getSiteSettings } from "@/lib/content";
-import { tdm, life } from "@/content/seed/images";
+import { tdm } from "@/content/seed/images";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
@@ -44,10 +44,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const [settings, faqs, press] = await Promise.all([getSiteSettings(), getFaqs(), getPress()]);
   const tiles = [
     { key: "residences" as const, href: "/residences", image: tdm.aptLiving },
-    { key: "living" as const, href: "/living", image: life.poolTerrace },
+    { key: "living" as const, href: "/living", image: tdm.gym },
     { key: "place" as const, href: "/place", image: tdm.aerialCoast },
     { key: "invest" as const, href: "/invest", image: tdm.exteriorGolf },
-    { key: "portfolio" as const, href: "/portfolio", image: tdm.exteriorRoad },
+    { key: "plans" as const, href: "/residences/plans", image: tdm.kitchenDining },
   ];
   return (
     <html lang={locale} className={`${display.variable} ${sans.variable} no-js`} suppressHydrationWarning>

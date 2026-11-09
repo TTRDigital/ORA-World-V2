@@ -508,11 +508,36 @@
   },
   "homeTour": {
     "label": "Virtual tour",
-    "headline": "Step inside ORA World in 360°",
-    "intro": "Walk the ORA World 360° collection from anywhere: look around every space at your own pace, on screen or in VR.",
+    "headline": "Step inside ORA World",
+    "intro": "Walk the ORA World 360° collection at your own pace, or watch the short film about the resort community and its focus on the health and wellness of owners.",
     "start": "Start the 360° tour",
     "note": "The tour loads from kuula.co when you start it.",
     "frameTitle": "ORA World 360° virtual tour",
-    "more": "Open the tour page with the film"
+    "more": "Open the tour page with the film",
+    "views": "Tour or film",
+    "tabTour": "360° tour",
+    "tabFilm": "Welcome to ORA World",
+    "play": "Play the film",
+    "filmTitle": "Welcome to ORA World, film",
+    "filmNote": "A short film about the ORA World resort community. It loads from YouTube when you play it."
+  },
+  "pricing": {
+    "headline": "Early pre-construction pricing",
+    "intro": "Average pricing for Phase 1 at Tesoro Del Mar, by floor. Pricing will rise in later phases.",
+    "tiers": "Price per square foot",
+    "lower": "Lower units",
+    "average": "Average",
+    "higher": "Higher units",
+    "perSqFt": "per sq ft",
+    "included": "Every residence",
+    "plans": "Phase 1 floor plans",
+    "presentation": "Project presentation",
+    "pdfNote": "Both open as PDFs.",
+    "book": "Book a follow-up call with our agent, Reza"
+  },
+  "charters": {
+    "label": "Private charters",
+    "headline": "Private flights to Puerto Rico and home again",
+    "cta": "Ask about private charters"
   }
 }

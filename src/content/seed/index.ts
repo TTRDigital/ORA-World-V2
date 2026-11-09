@@ -10,3 +10,4 @@ export { incentives, investmentSteps } from "./invest";
 export { pages, team, press } from "./pages";
 export { redirects } from "./redirects";
 export { tdm, dw, life, places } from "./images";
+export { pricing, ownerHighlights, charters } from "./sales";

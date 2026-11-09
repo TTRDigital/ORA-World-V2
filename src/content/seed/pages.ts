@@ -12,8 +12,8 @@ export const pages: GenericPage[] = [
       {
         title: { en: "Hospitality at the hub", es: "Hospitalidad en el centro" },
         body: {
-          en: ["Tesoro Del Mar's community hub includes a state-of-the-art clubhouse and a boutique hotel with 42 suites, ensuring exceptional hospitality and recreational facilities. Dorado Waterfalls pairs its clubhouse with a 60-suite hotel.", "Hotel operator, brand partnership and investment structure: to be confirmed by ORA World."],
-          es: ["El centro de Tesoro Del Mar incluye un clubhouse de última generación y un hotel boutique con 42 suites, garantizando hospitalidad y espacios recreativos excepcionales. Dorado Waterfalls combina su clubhouse con un hotel de 60 suites.", "Operador hotelero, alianza de marca y estructura de inversión: por confirmar por ORA World."],
+          en: ["Tesoro Del Mar's community hub includes a state-of-the-art clubhouse and a boutique hotel with 42 suites, ensuring exceptional hospitality and recreational facilities.", "Hotel operator, brand partnership and investment structure: to be confirmed by ORA World."],
+          es: ["El centro de Tesoro Del Mar incluye un clubhouse de última generación y un hotel boutique con 42 suites, garantizando hospitalidad y espacios recreativos excepcionales.", "Operador hotelero, alianza de marca y estructura de inversión: por confirmar por ORA World."],
         },
         image: tdm.hotelSuite,
       },

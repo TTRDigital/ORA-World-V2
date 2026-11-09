@@ -38,7 +38,7 @@ export default async function VisitPage({ params }: { params: Promise<{ locale: 
         <dl className="grid gap-4 sm:grid-cols-3 text-[15px]">
           <div className="card p-5"><dt className="label mb-1">{settings.salesGalleryName[locale]}</dt><dd>{address ?? <Tbc />}</dd></div>
           <div className="card p-5"><dt className="label mb-1">{locale === "es" ? "Horario" : "Hours"}</dt><dd>{settings.hours?.[locale] ?? <Tbc />}</dd></div>
-          <div className="card p-5"><dt className="label mb-1">{locale === "es" ? "Teléfono y correo" : "Phone and email"}</dt><dd>{settings.phone || settings.email ? <>{settings.phone && <a href={`tel:${settings.phone}`} className="block">{settings.phone}</a>}{settings.email && <a href={`mailto:${settings.email}`} className="block">{settings.email}</a>}</> : <Tbc />}</dd></div>
+          <div className="card p-5"><dt className="label mb-1">{locale === "es" ? "Teléfono y correo" : "Phone and email"}</dt><dd>{settings.phone || settings.email ? <>{settings.phone && <a href={`tel:${settings.phone.replace(/[^\d+]/g, "")}`} className="block">{settings.phone}</a>}{settings.email && <a href={`mailto:${settings.email}`} className="block">{settings.email}</a>}</> : <Tbc />}</dd></div>
         </dl>
       </section>
     </div>

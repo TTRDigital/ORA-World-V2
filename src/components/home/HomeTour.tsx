@@ -14,7 +14,7 @@ export async function HomeTour({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: "homeTour" });
   return (
     <Module id="virtual-tour" tone="basalt" label={t("label")} headline={t("headline")} intro={t("intro")}>
-      <HomeTourStage vrUrl={settings.vrTourUrl} poster={tdm.penthouseDining} locale={locale} />
+      <HomeTourStage vrUrl={settings.vrTourUrl} filmId={settings.introFilmYoutubeId} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} />
       <Link href="/place/tour" className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-brass-light hover:text-bone">
         {t("more")} <ArrowRight width={16} height={16} />
       </Link>
