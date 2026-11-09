@@ -586,6 +586,47 @@
   }
 }
 
+/* Scroll-linked section motion (ScrollFx). Sections are transformed from the top-centre so they rise like cards. */
+[data-fx-section] {
+  transform-origin: 50% 0%;
+  will-change: transform;
+}
+.lenis-stopped [data-fx-section] {
+  transform: none !important;
+  opacity: 1 !important;
+}
+/* Clamped parallax: 1.12 scale gives 6% overscan each side; ScrollFx moves --py within ±4%. */
+.fx-parallax img {
+  transform: translate3d(0, var(--py, 0), 0) scale(1.12) !important;
+  transition: none !important;
+  will-change: transform;
+}
+/* Word-by-word headline reveal: each word rises inside its own mask once the header is revealed. */
+.words-reveal .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.words-reveal .wi {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 900ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms + 120ms);
+}
+.is-revealed .words-reveal .wi,
+.no-js .words-reveal .wi,
+.reduced-motion .words-reveal .wi {
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .words-reveal .wi,
+  .fx-parallax img {
+    transform: none !important;
+  }
+}
+
 /* Page transition: the incoming panel slides up 24px. Transform only, so first paint (and LCP) is never held
    back by an opacity fade waiting on the animation. */
 @keyframes page-in {

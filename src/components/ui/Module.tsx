@@ -34,7 +34,7 @@ export function Module({ id, tone = "bone", label, headline, intro, children, cl
             )}
             {headline && (
               <div data-reveal style={{ "--reveal-delay": "80ms" } as React.CSSProperties}>
-                <Headline id={`${id}-title`} text={headline} size={headlineSize} />
+                <Headline id={`${id}-title`} text={headline} size={headlineSize} words />
               </div>
             )}
           </div>

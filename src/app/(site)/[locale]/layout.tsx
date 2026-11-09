@@ -12,6 +12,7 @@ import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { AskOra } from "@/components/layout/AskOra";
 import { MotionInit } from "@/components/providers/MotionInit";
+import { ScrollFx } from "@/components/providers/ScrollFx";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { Consent } from "@/components/providers/Consent";
 import { TrackClicks } from "@/components/providers/TrackClicks";
@@ -61,6 +62,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <AskOra faqs={faqs} phone={settings.phone} whatsapp={settings.whatsapp} consentText={settings.consentText[locale as "en" | "es"]} />
           <Consent />
           <MotionInit />
+          <ScrollFx />
           <SmoothScroll />
           <TrackClicks />
         </NextIntlClientProvider>
