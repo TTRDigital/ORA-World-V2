@@ -104,7 +104,8 @@
     "noMatch": "Ninguna colección coincide con esos filtros todavía. Las opciones de habitaciones no están publicadas; el filtro se ampliará cuando el cliente las confirme.",
     "renderCount": "{count, plural, =1 {1 render} other {# renders}}",
     "otherCollections": "Colecciones",
-    "nextCollection": "Siguiente colección"
+    "nextCollection": "Siguiente colección",
+    "hint": "Toque un piso para elegir su altura"
   },
   "rooms": {
     "rail": "Espacios",
@@ -270,7 +271,14 @@
     "buyer": "Comprador",
     "broker": "Corredor",
     "source": "¿Cómo supo de nosotros?",
-    "sourceOptions": ["Búsqueda", "Redes sociales", "Referido", "Prensa", "Evento", "Otro"],
+    "sourceOptions": [
+      "Búsqueda",
+      "Redes sociales",
+      "Referido",
+      "Prensa",
+      "Evento",
+      "Otro"
+    ],
     "licence": "Número de licencia",
     "brokerage": "Agencia",
     "client": "Nombre del cliente",

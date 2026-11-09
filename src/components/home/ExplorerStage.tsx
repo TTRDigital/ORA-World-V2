@@ -9,6 +9,7 @@ import { Picture } from "@/components/ui/Picture";
 import { Tbc } from "@/components/ui/Tbc";
 import { Check, ArrowRight } from "@/components/ui/Icons";
 import { TowerStack } from "./TowerStack";
+import { TowerHint } from "./TowerHint";
 
 const BEDROOMS = ["any", "1", "2", "3", "4+"] as const;
 const VIEWS = ["ocean", "garden", "mountain"] as const;
@@ -19,6 +20,8 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
   const tc = useTranslations("common");
   const [selected, setSelected] = useState(collections[0]?.slug ?? "");
   const [hovered, setHovered] = useState<string | null>(null);
+  // The animated guide over the tower shows until the first hover, tap or pick.
+  const [interacted, setInteracted] = useState(false);
   const [bedrooms, setBedrooms] = useState<(typeof BEDROOMS)[number]>("any");
   const [view, setView] = useState<View | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -94,17 +97,24 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
         </div>
       </div>
 
-      {/* Tower stack */}
+      {/* Tower stack, with the animated guide until the visitor interacts */}
       <div className="min-w-0 lg:col-span-5">
-        <div className="flex justify-center lg:justify-start">
+        <div className="relative flex justify-center pt-14 lg:justify-start" onPointerDown={() => setInteracted(true)}>
+          <TowerHint text={tx("hint")} active={!interacted} />
           <TowerStack
             collections={stack}
             selected={effectiveSelected}
             matching={matching}
             revealed={revealed}
             reduced={reduced}
-            onSelect={setSelected}
-            onHover={setHovered}
+            onSelect={(v) => {
+              setInteracted(true);
+              setSelected(v);
+            }}
+            onHover={(v) => {
+              if (v) setInteracted(true);
+              setHovered(v);
+            }}
             bandLabel={(name) => tx("band", { name })}
             ariaLabel={tx("towerLabel")}
           />

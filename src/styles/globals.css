@@ -828,3 +828,52 @@ html.lenis body {
 [data-tone="dark"] .chip:not(.is-active):not([aria-pressed="true"]) .count {
   color: rgb(247 243 236 / 0.7);
 }
+
+/* round 3: animated guide over the explorer tower (TowerHint) */
+@keyframes tower-hint-move {
+  0% { left: 86%; top: 96%; opacity: 0; }
+  10% { opacity: 1; }
+  40% { left: var(--hint-x, 50%); top: 50%; }
+  48% { transform: scale(0.82); }
+  54% { transform: scale(1); }
+  78% { left: var(--hint-x, 50%); top: 50%; opacity: 1; }
+  100% { left: 86%; top: 96%; opacity: 0; }
+}
+@keyframes tower-hint-ripple {
+  0%, 44% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+  50% { opacity: 1; }
+  70%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.8); }
+}
+@keyframes tower-hint-caret {
+  50% { opacity: 0; }
+}
+@keyframes tower-hint-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.tower-hint-pointer {
+  --hint-x: 50%;
+  left: var(--hint-x);
+  top: 50%;
+  animation: tower-hint-move 4.2s var(--ease-out) infinite;
+}
+@media (min-width: 1024px) {
+  .tower-hint-pointer {
+    --hint-x: 40%;
+  }
+}
+.tower-hint-ripple {
+  animation: tower-hint-ripple 4.2s var(--ease-out) infinite;
+}
+.tower-hint-caret {
+  animation: tower-hint-caret 0.9s steps(1) infinite;
+}
+.tower-hint-avatar {
+  animation: tower-hint-bob 2.4s ease-in-out infinite;
+}
+.reduced-motion .tower-hint-pointer,
+.reduced-motion .tower-hint-ripple,
+.reduced-motion .tower-hint-caret,
+.reduced-motion .tower-hint-avatar {
+  animation: none;
+}

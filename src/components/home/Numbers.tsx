@@ -42,6 +42,7 @@ export async function Numbers({ locale }: { locale: Locale }) {
         <div
           className={cn("nb-aerial", "card lift ambient-zoom overflow-hidden")}
           data-reveal
+          data-fly="left"
           style={delay(0)}
         >
           <Picture
@@ -60,6 +61,8 @@ export async function Numbers({ locale }: { locale: Locale }) {
             key={areas[i]}
             className={cn(areas[i], "card lift nb-counter relative flex flex-col p-5 md:min-h-[132px] md:justify-between")}
             data-reveal
+            data-fly="right"
+            data-fly-order={i}
             style={delay(1 + i)}
           >
             <svg
@@ -99,7 +102,7 @@ export async function Numbers({ locale }: { locale: Locale }) {
         ))}
 
         {/* (c) Beach */}
-        <div className={cn("nb-beach", "card lift relative overflow-hidden")} data-reveal style={delay(5)}>
+        <div className={cn("nb-beach", "card lift relative overflow-hidden")} data-reveal data-fly="left" data-fly-order={1} style={delay(5)}>
           <div className="relative" style={{ aspectRatio: "16/7" }}>
             <Picture
               image={n.beach}
@@ -152,6 +155,8 @@ export async function Numbers({ locale }: { locale: Locale }) {
         <div
           className={cn("nb-airport", "card lift relative flex flex-col justify-between overflow-hidden p-5")}
           data-reveal
+          data-fly="up"
+          data-fly-order={2}
           style={delay(6)}
         >
           <svg
@@ -193,6 +198,8 @@ export async function Numbers({ locale }: { locale: Locale }) {
           )}
           style={{ ...delay(7), background: "var(--color-palm)" }}
           data-reveal
+          data-fly="right"
+          data-fly-order={3}
         >
           <svg
             className="absolute -top-2 -right-3 h-[88px] w-[88px] text-palm-light"

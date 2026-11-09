@@ -104,7 +104,8 @@
     "noMatch": "No collection matches those filters yet. Bedroom options are not published, so the filter widens as the client confirms them.",
     "renderCount": "{count, plural, =1 {1 render} other {# renders}}",
     "otherCollections": "Collections",
-    "nextCollection": "Next collection"
+    "nextCollection": "Next collection",
+    "hint": "Tap a floor to choose your altitude"
   },
   "rooms": {
     "rail": "Rooms",
@@ -270,7 +271,14 @@
     "buyer": "Buyer",
     "broker": "Broker",
     "source": "How did you hear about us?",
-    "sourceOptions": ["Search", "Social media", "Referral", "Press", "Event", "Other"],
+    "sourceOptions": [
+      "Search",
+      "Social media",
+      "Referral",
+      "Press",
+      "Event",
+      "Other"
+    ],
     "licence": "Licence number",
     "brokerage": "Brokerage",
     "client": "Client name",

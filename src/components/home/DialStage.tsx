@@ -66,17 +66,6 @@ export function DialStage({ locale, features }: { locale: Locale; features: Resi
   const filled = inView.size ? Math.max(...inView) + 1 : 0;
   const latest = filled ? features[filled - 1] : null;
   const current = filled - 1;
-  // Jump to a feature's card (user-initiated only; never on load).
-  const goTo = (i: number) => {
-    const el = cardRefs.current[i];
-    if (!el) return;
-    const reducedMotion = document.documentElement.classList.contains("reduced-motion");
-    window.scrollTo({
-      top: el.getBoundingClientRect().top + window.scrollY - 140,
-      behavior: reducedMotion ? "auto" : "smooth",
-    });
-    el.querySelector<HTMLElement>("h3")?.focus({ preventScroll: true });
-  };
   // The completion ring animates once (forwards) each time the dial reaches nine.
   const pulsed = filled === total;
 
@@ -100,35 +89,6 @@ export function DialStage({ locale, features }: { locale: Locale; features: Resi
     cardRefs.current.forEach((el) => el && io.observe(el));
     return () => io.disconnect();
   }, [features]);
-
-  // Pin the dial on desktop while the cards scroll past (never under reduced motion).
-  useEffect(() => {
-    let mm: { revert: () => void } | null = null;
-    let cancelled = false;
-    (async () => {
-      const { gsap, ScrollTrigger } = await import("@/lib/gsap");
-      if (cancelled || !gridRef.current || !dialRef.current || !cardsRef.current) return;
-      const media = gsap.matchMedia();
-      mm = media;
-      media.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
-        if (document.documentElement.classList.contains("reduced-motion")) return;
-        const st = ScrollTrigger.create({
-          trigger: cardsRef.current,
-          start: "top 112px",
-          end: () => `bottom ${(dialRef.current?.offsetHeight ?? 0) + 112}px`,
-          pin: dialRef.current,
-          pinSpacing: false,
-          invalidateOnRefresh: true,
-        });
-        return () => st.kill();
-      });
-      ScrollTrigger.refresh();
-    })();
-    return () => {
-      cancelled = true;
-      mm?.revert();
-    };
-  }, []);
 
   const announce = filled === total ? tx("complete") : tx("progress", { done: filled, total });
 
@@ -173,9 +133,10 @@ export function DialStage({ locale, features }: { locale: Locale; features: Resi
         </p>
       </div>
 
-      {/* Dial (pinned on desktop) */}
+      {/* Dial: CSS sticky on desktop, so the circle stays in view for the whole section while the nine cards
+          scroll past, then leaves with the section. (The column stretches to the cards' height.) */}
       <div className="hidden lg:col-span-5 lg:block">
-        <div ref={dialRef} className="flex flex-col items-center">
+        <div ref={dialRef} className="sticky top-[max(112px,calc(50vh-250px))] flex flex-col items-center">
           <div className="relative w-full max-w-[520px]">
             <svg viewBox="-80 -40 560 480" className="h-auto w-full" role="img" aria-label={announce}>
               {features.map((f, i) => (
@@ -267,30 +228,6 @@ export function DialStage({ locale, features }: { locale: Locale; features: Resi
               </p>
             </div>
           </div>
-          {/* Jump grid: one icon per feature; passed features in brass, the current one ringed. */}
-          <ul className="mt-2 grid w-full max-w-[420px] grid-cols-3 gap-2" aria-label={tx("jump")}>
-            {features.map((f, i) => (
-              <li key={`j-${f.slug}`}>
-                <button
-                  type="button"
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    "flex min-h-11 w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-[12px] font-semibold transition-[background-color,color,box-shadow] duration-500",
-                    i === current
-                      ? "bg-basalt text-bone shadow-lift"
-                      : i < filled
-                        ? "bg-bone text-brass-ink"
-                        : "bg-bone/60 text-charcoal-soft hover:bg-bone",
-                  )}
-                >
-                  <Glyph slug={f.slug} className="size-[18px] shrink-0" />
-                  <span className="truncate">{t(f.short, locale)}</span>
-                  {/* The full title after the visible short label, so the name starts with what is seen. */}
-                  <span className="visually-hidden">, {t(f.title, locale)}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
 

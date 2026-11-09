@@ -13,7 +13,9 @@ import { usePathname } from "next/navigation";
  *  - Image parallax: frames whose focal point sits below 30% drift ±4% inside a 1.12 scale (6% overscan each
  *    side), so travel never exceeds the overscan. Top-anchored renders (the towers, focal y ≤ 30%) stay still so
  *    their tops never crop. Small thumbnails and carousels are skipped.
- *  - Marquee: [data-marquee] tracks slide sideways with scroll position.
+ *  - Fly-ins: [data-fly="left|right|up"] blocks travel in from that side (with a slight tilt and scale) and land
+ *    in place as they scroll in; the motion is tied to scroll position, so it reverses when scrolling back up.
+ *    data-fly-order staggers blocks within a group.
  *
  * Off under reduced motion. Sections holding a pinned element (the resilience dial) skip the section transform,
  * because a transformed ancestor would break the pin. While a dialog has the page scroll-locked, every
@@ -37,13 +39,16 @@ export function ScrollFx() {
     });
     frames.forEach((f) => f.classList.add("fx-parallax"));
     const marquees = Array.from(document.querySelectorAll<HTMLElement>("[data-marquee]"));
+    const flyers = Array.from(document.querySelectorAll<HTMLElement>("[data-fly]"));
+    // Inline transforms change every frame, so the reveal's transform transition must not ease them.
+    flyers.forEach((f) => (f.style.transition = "opacity 800ms var(--ease-out)"));
 
     const visible = new Set<HTMLElement>();
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => (e.isIntersecting ? visible.add(e.target as HTMLElement) : visible.delete(e.target as HTMLElement))),
       { rootMargin: "35% 0px 35% 0px" },
     );
-    [...sections, ...frames, ...marquees].forEach((el) => io.observe(el));
+    [...sections, ...frames, ...marquees, ...flyers].forEach((el) => io.observe(el));
 
     const clamp = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
     let raf = 0;
@@ -56,6 +61,29 @@ export function ScrollFx() {
           const r = el.getBoundingClientRect();
           const p = clamp((vh - r.top) / (vh + r.height));
           el.style.setProperty("--py", `${((0.5 - p) * 8).toFixed(2)}%`);
+          continue;
+        }
+        if (el.dataset.fly !== undefined) {
+          if (locked) {
+            el.style.transform = "";
+            continue;
+          }
+          const r = el.getBoundingClientRect();
+          const order = Number(el.dataset.flyOrder || 0);
+          // Longer, gentler range: cards are still travelling while they sit in the lower two thirds of the screen.
+          const p = clamp((vh * 1.0 - r.top) / (vh * 0.72) - order * 0.08);
+          if (p >= 1) {
+            el.style.transform = "";
+            continue;
+          }
+          const e = 1 - Math.pow(1 - p, 2);
+          const far = 1 - e;
+          const dist = mobile ? 110 : 240;
+          const dir = el.dataset.fly;
+          const dx = dir === "left" ? -dist : dir === "right" ? dist : 0;
+          const dy = dir === "up" ? dist * 0.7 : dist * 0.12;
+          const rot = dir === "left" ? -4 : dir === "right" ? 4 : 0;
+          el.style.transform = `translate3d(${(dx * far).toFixed(1)}px,${(dy * far).toFixed(1)}px,0) rotate(${(rot * far).toFixed(2)}deg) scale(${(0.86 + 0.14 * e).toFixed(4)})`;
           continue;
         }
         if (el.dataset.marquee !== undefined) {
@@ -108,6 +136,10 @@ export function ScrollFx() {
         delete s.dataset.fxSection;
       });
       frames.forEach((f) => f.classList.remove("fx-parallax"));
+      flyers.forEach((f) => {
+        f.style.transform = "";
+        f.style.transition = "";
+      });
     };
   }, [pathname]);
   return null;
