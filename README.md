@@ -30,6 +30,35 @@ Without a Sanity project the whole site renders from the typed seed in `src/cont
 `pnpm images:fetch` downloads the client's renders from oraworld.com into `assets-source/` (git-ignored);
 the optimised files in `public/images/client/` are committed, so the fetch is only needed to rebuild them.
 
+## Third-party UI components (Skiper UI, Vengeance UI)
+
+Some components come from two shadcn-style registries. They are vendored as source code in
+`src/components/vendor/<library>/` with a `// Source:` header, restyled to the ORA palette, fonts and spacing, and fed
+only real content and the client's renders. `npx shadcn init` is deliberately not used (it rewrites the global CSS
+and theme tokens); instead:
+
+```bash
+node scripts/registry-add.mjs skiper-ui skiper47 skiper58
+```
+
+```bash
+node scripts/registry-add.mjs vengeance-ui perspective-carousel stats-counter
+```
+
+The script prints each item's npm dependencies; they are installed with pnpm (`framer-motion`, `swiper`,
+`lucide-react`, plus `tailwind-merge` so `cn` in `src/lib/utils.ts` matches what the components expect).
+
+| Component | Library | File | Where it is used | Adaptations |
+| --- | --- | --- | --- | --- |
+| TextRoll (skiper58) | [Skiper UI](https://skiper-ui.com) | `vendor/skiper-ui/skiper58.tsx` | Header navigation links (desktop) | Demo nav removed; the roll is `aria-hidden` and the link carries the real text in `aria-label`; spaces kept |
+| Carousel_001 (skiper47) | [Skiper UI](https://skiper-ui.com) | `vendor/skiper-ui/skiper47.tsx` | `/place/gallery`, "Featured renders" coverflow | Demo images removed; optimised URLs from `getImageProps`; A11y + Keyboard modules; restyled from `FeaturedCarousel.tsx` (rounded, borderless, 440px slides on desktop, landscape heights below) |
+| PerspectiveCarousel | [Vengeance UI](https://www.vengeanceui.com) | `vendor/vengeance-ui/perspective-carousel.tsx` | Homepage "Walk through Tesoro Del Mar" module (`RenderGallery`) | Explicit-height wrapper (`h-[440px] md:h-[640px]`); opens on the middle slide; optimised URLs; 4:3 frames and focal points so towers never crop; 24px dot hit areas; localised labels |
+| StatsCounter | [Vengeance UI](https://www.vengeanceui.com) | `vendor/vengeance-ui/stats-counter.tsx` | Hero stat chips, Tesoro Del Mar numbers bento | Real value server-rendered, reset to 0 before paint, digits written through a ref, `toLocaleString`, no negative in-view margin, skipped under reduced motion |
+
+**Credit:** TextRoll and Carousel_001 are by [Skiper UI](https://skiper-ui.com) (author @gurvinder-singh02), used under the
+Skiper UI free licence, which requires this attribution; the licence comment is kept in each file. PerspectiveCarousel
+and StatsCounter are by [Vengeance UI](https://www.vengeanceui.com).
+
 ## Scripts
 
 | Command | What it does |
@@ -43,6 +72,7 @@ the optimised files in `public/images/client/` are committed, so the fetch is on
 | `node scripts/screenshots.mjs <dir> /en ...` | Full-page screenshots at 1440 and 390 |
 | `node scripts/sections.mjs <dir> /en "#hero" ...` | Per-module screenshots at 1440 and 390 |
 | `pnpm seed` | Push the seed into the ORA2 Sanity dataset (images uploaded once, stable ids) |
+| `node scripts/registry-add.mjs <library> <name...>` | Vendor a Skiper UI or Vengeance UI component as source and print its dependencies |
 
 ## Environment
 

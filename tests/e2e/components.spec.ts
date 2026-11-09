@@ -1,0 +1,61 @@
+import { test, expect } from "@playwright/test";
+
+test.describe("vendored components and the desktop menu", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("ora2_consent", "denied"));
+  });
+
+  test("compact nav pill opens the menu on desktop", async ({ page, isMobile }) => {
+    test.skip(isMobile, "desktop compact pill");
+    await page.goto("/en");
+    await page.locator("html:not(.no-js)").waitFor();
+    await page.waitForTimeout(500);
+    await page.mouse.wheel(0, 700);
+    await page.waitForTimeout(300);
+    await page.mouse.wheel(0, 700);
+    await page.waitForTimeout(600);
+    await page.getByRole("button", { name: /open menu/i }).click();
+    const menu = page.locator("#mobile-menu");
+    await expect(menu).toBeVisible();
+    await expect(menu.getByRole("link", { name: "Portfolio" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(menu).toBeHidden();
+  });
+
+  test("header links keep their real names behind the TextRoll", async ({ page, isMobile }) => {
+    test.skip(isMobile, "header links are desktop only");
+    await page.goto("/en");
+    const link = page.locator("header nav").getByRole("link", { name: "Residences", exact: true });
+    await expect(link).toBeVisible();
+    await expect(link.locator("[aria-hidden=true]").first()).toBeAttached();
+  });
+
+  test("3D render carousel opens on the middle slide and turns", async ({ page }) => {
+    await page.goto("/en");
+    const region = page.getByRole("region", { name: /3D carousel/i });
+    await region.scrollIntoViewIfNeeded();
+    const count = page.locator("#renders").getByText(/of 09/);
+    await expect(count).toHaveText("05 of 09");
+    await region.getByRole("button", { name: "Next render" }).click();
+    await expect(count).toHaveText("06 of 09");
+    const dot = region.getByRole("button", { name: /^Render 1:/ });
+    const box = await dot.boundingBox();
+    expect(box && box.height >= 24 && box.width >= 24).toBeTruthy();
+  });
+
+  test("counters render real values in the server HTML", async ({ request }) => {
+    const html = await (await request.get("/en")).text();
+    expect(html).toContain("65,500");
+    expect(html).toContain("335,995");
+  });
+
+  test("gallery coverflow carousel has labelled, clickable pagination", async ({ page }) => {
+    await page.goto("/en/place/gallery");
+    const carousel = page.getByTestId("featured-carousel");
+    await carousel.scrollIntoViewIfNeeded();
+    const bullets = carousel.getByRole("button", { name: /Go to render/ });
+    await expect(bullets.first()).toBeVisible();
+    await bullets.nth(2).click();
+    await expect(bullets.nth(2)).toHaveClass(/swiper-pagination-bullet-active/);
+  });
+});
