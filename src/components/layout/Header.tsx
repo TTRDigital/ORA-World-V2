@@ -69,12 +69,19 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
         <nav
           aria-label="Primary"
           className={cn(
-            "pointer-events-auto flex items-center gap-2 rounded-full pl-3 pr-2 shadow-[0_8px_30px_-12px_rgb(28_27_25/0.25)] transition-[padding,background-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)]",
+            "pointer-events-auto flex items-center gap-2 rounded-full pr-2 pl-3 shadow-[0_8px_30px_-12px_rgb(28_27_25/0.25)] transition-[padding,background-color,box-shadow,min-width] duration-500 [transition-timing-function:var(--ease-out)] md:pl-4 lg:pr-2.5",
             overHero ? "glass" : "bg-bone",
-            compact ? "py-1.5" : "py-2",
+            // Expanded on desktop: a long bar, logo left, links centred, language and CTA right.
+            compact
+              ? "py-1.5 lg:min-w-0"
+              : "py-2 lg:min-w-[min(1240px,calc(100vw-48px))] lg:justify-between lg:pl-5",
           )}
         >
-          <Link href="/" aria-label={t("home")} className="flex items-center rounded-full py-1 pr-2">
+          <Link
+            href="/"
+            aria-label={t("home")}
+            className="flex shrink-0 items-center rounded-full px-2 py-1 md:px-4 lg:px-6"
+          >
             <Logo
               height={76}
               priority
@@ -85,7 +92,7 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
               )}
             />
           </Link>
-          <ul className={cn("hidden items-center gap-1 lg:flex", compact && "lg:hidden")}>
+          <ul className={cn("hidden items-center gap-1 lg:flex xl:gap-3", compact && "lg:hidden")}>
             {primaryNav.map((item) => (
               <li key={item.key}>
                 {/* Skiper UI TextRoll: letters roll on hover. The roll is aria-hidden (every letter renders twice),
@@ -94,27 +101,40 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
                   href={item.href}
                   aria-label={t(item.key)}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={cn("hairline inline-flex min-h-10 items-center px-3 text-[14px] font-semibold text-charcoal transition-colors hover:text-brass-ink", isActive(item.href) && "is-active text-brass-ink")}
+                  className={cn(
+                    "hairline inline-flex min-h-10 items-center px-3 text-[14px] font-semibold text-charcoal transition-colors hover:text-brass-ink",
+                    isActive(item.href) && "is-active text-brass-ink",
+                  )}
                 >
                   <TextRoll>{t(item.key)}</TextRoll>
                 </Link>
               </li>
             ))}
           </ul>
-          <LanguageToggle className={cn("ml-2 hidden lg:flex", compact && "lg:hidden")} />
-          <Link href="/visit" className="pill pill-brass ml-1 hidden min-h-11 sm:inline-flex" data-track="cta_book_visit" data-track-label="header">
-            {t("visit")}
-          </Link>
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={t("openMenu")}
-            className={cn("inline-flex size-11 items-center justify-center rounded-full bg-bone-deep text-charcoal lg:hidden", compact && "lg:inline-flex")}
-          >
-            <Menu />
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <LanguageToggle className={cn("mr-2 hidden lg:flex", compact && "lg:hidden")} />
+            <Link
+              href="/visit"
+              className="pill pill-brass hidden min-h-11 sm:inline-flex"
+              data-track="cta_book_visit"
+              data-track-label="header"
+            >
+              {t("visit")}
+            </Link>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={t("openMenu")}
+              className={cn(
+                "inline-flex size-11 items-center justify-center rounded-full bg-bone-deep text-charcoal lg:hidden",
+                compact && "lg:inline-flex",
+              )}
+            >
+              <Menu />
+            </button>
+          </div>
         </nav>
       </header>
       <MobileSheet open={open} onClose={() => setOpen(false)} tiles={tiles} />
