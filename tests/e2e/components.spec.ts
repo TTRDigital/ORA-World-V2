@@ -5,23 +5,6 @@ test.describe("vendored components and the desktop menu", () => {
     await page.addInitScript(() => localStorage.setItem("ora2_consent", "denied"));
   });
 
-  test("compact nav pill opens the menu on desktop", async ({ page, isMobile }) => {
-    test.skip(isMobile, "desktop compact pill");
-    await page.goto("/en");
-    await page.locator("html:not(.no-js)").waitFor();
-    await page.waitForTimeout(500);
-    await page.mouse.wheel(0, 700);
-    await page.waitForTimeout(300);
-    await page.mouse.wheel(0, 700);
-    await page.waitForTimeout(600);
-    await page.getByRole("button", { name: /open menu/i }).click();
-    const menu = page.locator("#mobile-menu");
-    await expect(menu).toBeVisible();
-    await expect(menu.getByRole("link", { name: "Portfolio" })).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(menu).toBeHidden();
-  });
-
   test("header links keep their real names behind the TextRoll", async ({ page, isMobile }) => {
     test.skip(isMobile, "header links are desktop only");
     await page.goto("/en");
@@ -89,33 +72,4 @@ test.describe("vendored components and the desktop menu", () => {
     await bullets.nth(2).click();
     await expect(bullets.nth(2)).toHaveClass(/swiper-pagination-bullet-active/);
   });
-});
-
-test("nav pill does not blink while scrolling down slowly with smooth scroll", async ({ page, isMobile }) => {
-  test.skip(isMobile, "desktop pill");
-  await page.goto("/en");
-  await page.locator("html:not(.no-js)").waitFor();
-  await page.waitForTimeout(800);
-  // Count every switch between compact and expanded while the page scrolls down in small wheel steps.
-  await page.evaluate(() => {
-    const w = window as unknown as { __flips: number; __last: boolean | null };
-    w.__flips = 0;
-    w.__last = null;
-    const link = () => document.querySelector("header nav ul") as HTMLElement | null;
-    const tick = () => {
-      const el = link();
-      const shown = !!el && getComputedStyle(el).display !== "none";
-      if (w.__last !== null && shown !== w.__last) w.__flips++;
-      w.__last = shown;
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  });
-  for (let i = 0; i < 40; i++) {
-    await page.mouse.wheel(0, 60);
-    await page.waitForTimeout(60);
-  }
-  await page.waitForTimeout(800);
-  const flips = await page.evaluate(() => (window as unknown as { __flips: number }).__flips);
-  expect(flips).toBeLessThanOrEqual(1);
 });

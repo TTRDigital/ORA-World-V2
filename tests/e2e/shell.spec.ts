@@ -24,21 +24,21 @@ test.describe("shell", () => {
     await expect(page).toHaveURL(/\/es$/);
   });
 
-  test("nav pill compacts on scroll down and expands on scroll up", async ({ page, isMobile }) => {
-    test.skip(isMobile, "desktop pill only");
+  test("nav bar stays the same while scrolling (no shrinking)", async ({ page, isMobile }) => {
     await page.goto("/en");
-    // Wait for hydration (MotionInit removes .no-js), otherwise the wheel scrolls before the header listens.
     await page.locator("html:not(.no-js)").waitFor();
     await page.waitForTimeout(500);
-    await expect(page.locator("header nav").getByRole("link", { name: "Residences" })).toBeVisible();
-    await page.mouse.wheel(0, 600);
-    await page.waitForTimeout(300);
-    await page.mouse.wheel(0, 600);
+    const nav = page.locator("header nav");
+    const before = await nav.boundingBox();
+    if (!isMobile) await expect(nav.getByRole("link", { name: "Residences" })).toBeVisible();
+    await page.mouse.wheel(0, 900);
     await page.waitForTimeout(400);
-    await expect(page.locator("header nav").getByRole("link", { name: "Residences" })).toBeHidden();
-    await page.mouse.wheel(0, -400);
-    await page.waitForTimeout(400);
-    await expect(page.locator("header nav").getByRole("link", { name: "Residences" })).toBeVisible();
+    await page.mouse.wheel(0, 900);
+    await page.waitForTimeout(700);
+    const after = await nav.boundingBox();
+    expect(Math.abs(after!.height - before!.height)).toBeLessThan(1);
+    expect(Math.abs(after!.width - before!.width)).toBeLessThan(1);
+    if (!isMobile) await expect(nav.getByRole("link", { name: "Residences" })).toBeVisible();
   });
 
   test("mobile bottom sheet opens with tiles, traps focus, closes on Escape", async ({ page, isMobile }) => {

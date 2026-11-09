@@ -12,50 +12,19 @@ import { TextRoll } from "@/components/vendor/skiper-ui/skiper58";
 import { MobileSheet, type MenuTile } from "./MobileSheet";
 
 /**
- * Floating pill bar, centred, 12px from the top. Glass over imagery, solid bone over content. On scroll
- * down it compacts to logo, menu and "Book a visit"; scrolling up expands it again.
+ * Fixed bar, 12px from the top, the same on every scroll position (client feedback: it should not shrink or change
+ * while scrolling; simple and professional). Desktop: logo, links, language and "Book a visit". Below lg: logo,
+ * "Book a visit" (from sm) and the menu button, which opens the sheet.
  */
 export function Header({ tiles }: { tiles: MenuTile[] }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
-  const [overHero, setOverHero] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
+  // Only the shadow deepens once content passes under the bar; size, layout and colour never change.
   useEffect(() => {
-    // Direction is decided on travel, not per frame. Smooth scrolling (Lenis) moves 0–1px on many frames, and the
-    // old per-frame test (y > last) flipped the pill open and shut on every such frame: the visible "blink".
-    // Now the pill compacts only after 12px of continuous downward travel past 120px, expands after 12px upward
-    // (or near the top), and otherwise keeps its state.
-    const THRESHOLD = 12;
-    let anchor = window.scrollY;
-    let direction: 1 | -1 | 0 = 0;
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const y = window.scrollY;
-        setOverHero(y < 80);
-        if (y <= 120) {
-          setCompact(false);
-          anchor = y;
-          direction = 0;
-        } else {
-          const delta = y - anchor;
-          const dir = delta > 0 ? 1 : delta < 0 ? -1 : 0;
-          if (dir !== 0 && dir !== direction) {
-            // Direction changed: measure travel from the turning point.
-            direction = dir;
-            anchor = y;
-          } else if (Math.abs(delta) >= THRESHOLD) {
-            setCompact(direction === 1);
-            anchor = y;
-          }
-        }
-        ticking = false;
-      });
-    };
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -69,12 +38,8 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
         <nav
           aria-label="Primary"
           className={cn(
-            "pointer-events-auto flex items-center gap-2 rounded-full pr-2 pl-3 shadow-[0_8px_30px_-12px_rgb(28_27_25/0.25)] transition-[padding,background-color,box-shadow,min-width] duration-500 [transition-timing-function:var(--ease-out)] md:pl-4 lg:pr-2.5",
-            overHero ? "glass" : "bg-bone",
-            // Expanded on desktop: a long bar, logo left, links centred, language and CTA right.
-            compact
-              ? "py-1.5 lg:min-w-0"
-              : "py-2 lg:min-w-[min(1240px,calc(100vw-48px))] lg:justify-between lg:pl-5",
+            "pointer-events-auto flex w-full max-w-[1240px] items-center justify-between gap-2 rounded-full bg-bone/95 py-2 pr-2 pl-2 backdrop-blur-md transition-shadow duration-300 md:pl-3 lg:pr-2.5 lg:pl-4",
+            scrolled ? "shadow-[0_10px_30px_-14px_rgb(28_27_25/0.35)]" : "shadow-[0_6px_20px_-14px_rgb(28_27_25/0.2)]",
           )}
         >
           <Link
@@ -86,13 +51,10 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
               height={76}
               priority
               responsive
-              className={cn(
-                "logo-lift transition-[height] duration-500 [transition-timing-function:var(--ease-out)]",
-                compact ? "h-[54px] md:h-[60px]" : "h-[58px] md:h-[68px] lg:h-[76px]",
-              )}
+              className="logo-lift h-[58px] md:h-[68px] lg:h-[76px]"
             />
           </Link>
-          <ul className={cn("hidden items-center gap-1 lg:flex xl:gap-3", compact && "lg:hidden")}>
+          <ul className="hidden items-center gap-1 lg:flex xl:gap-3">
             {primaryNav.map((item) => (
               <li key={item.key}>
                 {/* Skiper UI TextRoll: letters roll on hover. The roll is aria-hidden (every letter renders twice),
@@ -112,7 +74,7 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
             ))}
           </ul>
           <div className="flex shrink-0 items-center gap-2">
-            <LanguageToggle className={cn("mr-2 hidden lg:flex", compact && "lg:hidden")} />
+            <LanguageToggle className="mr-2 hidden lg:flex" />
             <Link
               href="/visit"
               className="pill pill-brass hidden min-h-11 sm:inline-flex"
@@ -127,10 +89,7 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={t("openMenu")}
-              className={cn(
-                "inline-flex size-11 items-center justify-center rounded-full bg-bone-deep text-charcoal lg:hidden",
-                compact && "lg:inline-flex",
-              )}
+              className="inline-flex size-11 items-center justify-center rounded-full bg-bone-deep text-charcoal lg:hidden"
             >
               <Menu />
             </button>

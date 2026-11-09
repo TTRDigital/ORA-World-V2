@@ -5,10 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
-import { Play } from "@/components/ui/Icons";
 import { FilmLightbox } from "./FilmLightbox";
-
-type Thumb = { label: string; image: ImageRef };
 
 type Props = {
   locale: Locale;
@@ -16,25 +13,21 @@ type Props = {
   mp4: string | null;
   webm: string | null;
   poster: ImageRef;
-  thumbnails: Thumb[];
-  filmLabel: string;
 };
 
 const YT_ORIGIN = "https://www.youtube-nocookie.com";
 
 /**
- * The film in a 24px-radius 16:10 frame (never full-bleed) with four render thumbnails under it.
- * Poster first (priority). The YouTube iframe mounts only after window load + idle, and the poster
+ * The film as the background of the single hero banner (client feedback: one banner, the video, not two panels).
+ * It covers the banner at any aspect ratio. Poster first (priority). The YouTube iframe mounts only after window load + idle, and the poster
  * fades out only once the IFrame API reports playerState 1 through the "listening" handshake. If
  * YouTube never plays, the poster stays. Captions are unloaded repeatedly for 20 s. The iframe is
  * oversized to 130% inside the overflow-hidden frame so no player chrome is visible.
  */
-export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, filmLabel }: Props) {
+export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   const t = useTranslations("hero");
-  const tc = useTranslations("common");
   const [mount, setMount] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [active, setActive] = useState<number>(-1); // -1 = film
   const [lightbox, setLightbox] = useState(false);
   const iframe = useRef<HTMLIFrameElement>(null);
   const video = useRef<HTMLVideoElement>(null);
@@ -137,235 +130,63 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster, thumbnails, fi
     };
   }, [mount, selfHosted, youtubeId, post, silence]);
 
-  // Self-hosted loop: play/pause follows the active render.
-  useEffect(() => {
-    const v = video.current;
-    if (!v) return;
-    if (active === -1) v.play().catch(() => {});
-    else v.pause();
-  }, [active]);
-
-  // YouTube: pause the frame while a render is shown, resume on "Resume film".
-  useEffect(() => {
-    if (selfHosted || !mount) return;
-    post({ event: "command", func: active === -1 ? "playVideo" : "pauseVideo", args: [] });
-  }, [active, selfHosted, mount, post]);
-
   const embed =
     youtubeId && mount && !selfHosted && typeof window !== "undefined"
       ? `${YT_ORIGIN}/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=0&playsinline=1&rel=0&modestbranding=1&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`
       : null;
 
-  const showFilm = active === -1;
-  const current = active >= 0 ? thumbnails[active] : null;
-
   return (
-    <div className="flex min-w-0 flex-col gap-4">
-      <div
-        className="frame frame-lg relative"
-        style={{ aspectRatio: "16/10" }}
-        data-hero-image
-        data-focal={poster.focal}
-        data-film-state={playing ? "playing" : "poster"}
-      >
-        {/* Poster render: priority, sharp, over travertine. */}
-        <Image
-          src={poster.src}
-          alt={poster.alt[locale] || poster.alt.en}
-          fill
-          priority
-          fetchPriority="high"
-          sizes="(max-width: 1023px) calc(100vw - 24px), 56vw"
-          quality={80}
-          className={cn(
-            "object-cover transition-opacity duration-700 [transition-timing-function:var(--ease-out)]",
-            playing && showFilm ? "opacity-0" : "opacity-100",
-          )}
-          style={{ objectPosition: poster.focal }}
-        />
-        {/* Player, oversized to hide the chrome. */}
-        {embed && (
-          <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-            <iframe
-              ref={iframe}
-              src={embed}
-              title={t("filmTitle")}
-              tabIndex={-1}
-              allow="autoplay; encrypted-media"
-              className={cn(
-                "absolute top-1/2 left-1/2 h-[130%] w-[130%] -translate-x-1/2 -translate-y-1/2 border-0 transition-opacity duration-700",
-                playing && showFilm ? "opacity-100" : "opacity-0",
-              )}
-            />
-          </div>
-        )}
-        {mount && selfHosted && (
-          <video
-            ref={video}
-            muted
-            loop
-            playsInline
-            autoPlay
-            onPlaying={() => setPlaying(true)}
-            poster={undefined}
-            aria-hidden="true"
+    <div className="absolute inset-0 [container-type:size]" data-hero-image data-focal={poster.focal} data-film-state={playing ? "playing" : "poster"}>
+      {/* Poster render: priority, sharp; fades only once the film really plays. */}
+      <Image
+        src={poster.src}
+        alt={poster.alt[locale] || poster.alt.en}
+        fill
+        priority
+        fetchPriority="high"
+        sizes="100vw"
+        quality={80}
+        className={cn("object-cover transition-opacity duration-700 [transition-timing-function:var(--ease-out)]", playing ? "opacity-0" : "opacity-100")}
+        style={{ objectPosition: poster.focal }}
+      />
+      {/* YouTube player: a 16:9 box sized to cover the banner (container units), plus 30% so no chrome shows. */}
+      {embed && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <iframe
+            ref={iframe}
+            src={embed}
+            title={t("filmTitle")}
             tabIndex={-1}
+            allow="autoplay; encrypted-media"
             className={cn(
-              "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
-              playing && showFilm ? "opacity-100" : "opacity-0",
+              "absolute top-1/2 left-1/2 h-[max(130cqh,73.125cqw)] w-[max(130cqw,231.11cqh)] -translate-x-1/2 -translate-y-1/2 border-0 transition-opacity duration-700",
+              playing ? "opacity-100" : "opacity-0",
             )}
-            style={{ objectPosition: poster.focal }}
-          >
-            {webm && <source src={webm} type="video/webm" />}
-            {mp4 && <source src={mp4} type="video/mp4" />}
-          </video>
-        )}
-        {/* Selected render, crossfaded over the film frame. */}
-        {thumbnails.map((th, i) => (
-          <Image
-            key={th.label}
-            src={th.image.src}
-            alt={active === i ? th.image.alt[locale] || th.image.alt.en : ""}
-            fill
-            sizes="(max-width: 1023px) calc(100vw - 24px), 56vw"
-            quality={80}
-            aria-hidden={active !== i}
-            className={cn(
-              "object-cover transition-opacity duration-[600ms] [transition-timing-function:var(--ease-out)]",
-              active === i ? "opacity-100" : "opacity-0",
-            )}
-            style={{ objectPosition: th.image.focal }}
           />
-        ))}
-        {/* Now showing: names the film or the selected render, so the state is obvious at a glance. */}
-        <p
-          aria-hidden="true"
-          className="pointer-events-none absolute top-3 left-3 inline-flex items-center gap-2 rounded-full bg-basalt/60 px-3 py-1.5 text-[12px] font-semibold text-bone backdrop-blur-sm md:top-4 md:left-4 md:text-[13px]"
-        >
-          <span className={cn("relative inline-flex size-2 rounded-full", showFilm ? "bg-brass-light" : "bg-bone/70")}>
-            {showFilm && <span className="hero-live-dot absolute inset-0 rounded-full bg-brass-light" />}
-          </span>
-          <span key={current ? current.label : "film"} className="fade-in">{current ? current.label : filmLabel}</span>
-          {current && <span className="text-bone/60">· {active + 1}/{thumbnails.length}</span>}
-        </p>
-        {/* Resume film pill appears over a paused render. */}
-        <div
-          className={cn(
-            "absolute right-4 bottom-4 transition-opacity duration-500",
-            showFilm ? "pointer-events-none opacity-0" : "opacity-100",
-          )}
-        >
-          <button
-            type="button"
-            onClick={() => setActive(-1)}
-            className="pill pill-bone min-h-11 gap-2 shadow-lift"
-            tabIndex={showFilm ? -1 : 0}
-          >
-            <Play className="text-brass-ink" width={16} height={16} />
-            {tc("resumeFilm")}
-          </button>
         </div>
-        <p className="visually-hidden" aria-live="polite">
-          {current ? t("nowShowing", { label: current.label }) : playing ? t("filmPlaying") : ""}
-        </p>
-      </div>
-
-      {/* Thumbnails: a swipe row on mobile, a four-up row on desktop. */}
-      <div
-        role="group"
-        aria-label={t("thumbnails")}
-        onKeyDown={(e) => {
-          if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-          const buttons = Array.from(e.currentTarget.querySelectorAll<HTMLButtonElement>("button"));
-          const i = buttons.indexOf(document.activeElement as HTMLButtonElement);
-          if (i < 0) return;
-          e.preventDefault();
-          const next = buttons[(i + (e.key === "ArrowRight" ? 1 : buttons.length - 1)) % buttons.length];
-          next.focus();
-          next.scrollIntoView({ block: "nearest", inline: "nearest" });
-        }}
-        className="no-scrollbar -mx-1 flex gap-3 overflow-x-auto px-1 pt-1 pb-1 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0"
-      >
-        <button
-          type="button"
-          onClick={() => setActive(-1)}
-          aria-pressed={showFilm}
-          className={cn(
-            "group relative w-[31vw] shrink-0 snap-start rounded-[16px] text-left lg:w-auto",
-            "focus-visible:outline-offset-4",
-          )}
+      )}
+      {mount && selfHosted && (
+        <video
+          ref={video}
+          muted
+          loop
+          playsInline
+          autoPlay
+          onPlaying={() => setPlaying(true)}
+          aria-hidden="true"
+          tabIndex={-1}
+          className={cn("absolute inset-0 h-full w-full object-cover transition-opacity duration-700", playing ? "opacity-100" : "opacity-0")}
+          style={{ objectPosition: poster.focal }}
         >
-          <span
-            className={cn(
-              "frame relative block w-full overflow-hidden rounded-[16px] bg-basalt-soft ring-offset-2 ring-offset-bone-deep transition-[box-shadow,opacity] duration-300",
-              showFilm ? "ring-2 ring-brass" : "opacity-75 group-hover:opacity-100",
-            )}
-            style={{ aspectRatio: "16/10" }}
-          >
-            <Image
-              src={poster.src}
-              alt=""
-              fill
-              sizes="(max-width: 1023px) 31vw, 11vw"
-              quality={80}
-              className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
-              style={{ objectPosition: poster.focal }}
-            />
-            <span className="absolute inset-0 flex items-center justify-center">
-              <span className="inline-flex size-9 items-center justify-center rounded-full bg-bone/90 text-brass-ink">
-                <Play width={16} height={16} />
-              </span>
-            </span>
-          </span>
-          <span
-            className={cn(
-              "hairline mt-2 inline-block text-[13px] font-semibold text-charcoal",
-              showFilm && "is-active",
-            )}
-          >
-            {filmLabel}
-          </span>
-        </button>
-        {thumbnails.map((th, i) => (
-          <button
-            key={th.label}
-            type="button"
-            onClick={() => setActive(active === i ? -1 : i)}
-            aria-pressed={active === i}
-            aria-label={t("showRender", { label: th.label })}
-            className="group relative w-[31vw] shrink-0 snap-start rounded-[16px] text-left lg:w-auto"
-          >
-            <span
-              className={cn(
-                "frame relative block w-full overflow-hidden rounded-[16px] ring-offset-2 ring-offset-bone-deep transition-[box-shadow,opacity] duration-300",
-                active === i ? "ring-2 ring-brass" : "opacity-75 group-hover:opacity-100",
-              )}
-              style={{ aspectRatio: "16/10" }}
-            >
-              <Image
-                src={th.image.src}
-                alt=""
-                fill
-                sizes="(max-width: 1023px) 31vw, 11vw"
-                quality={80}
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                style={{ objectPosition: th.image.focal }}
-              />
-            </span>
-            <span
-              className={cn(
-                "hairline mt-2 inline-block text-[13px] font-semibold text-charcoal",
-                active === i && "is-active",
-              )}
-            >
-              {th.label}
-            </span>
-          </button>
-        ))}
-      </div>
-
+          {webm && <source src={webm} type="video/webm" />}
+          {mp4 && <source src={mp4} type="video/mp4" />}
+        </video>
+      )}
+      <p className="visually-hidden" aria-live="polite">
+        {playing ? t("filmPlaying") : ""}
+      </p>
       <FilmLightbox youtubeId={youtubeId} mp4={mp4} open={lightbox} onClose={() => setLightbox(false)} />
-      {/* The "Watch the film" pill in the basalt panel dispatches this event. */}
+      {/* The "Watch the film" pill dispatches this event. */}
       <OpenFilmListener onOpen={() => setLightbox(true)} />
     </div>
   );
