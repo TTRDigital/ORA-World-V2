@@ -118,7 +118,9 @@
   },
   "dial": {
     "progress": "{done} of {total} features in view",
-    "complete": "All nine features in view"
+    "complete": "All nine features in view",
+    "start": "Scroll the nine features",
+    "jump": "Jump to a feature"
   },
   "living": {
     "wellness": "Wellness",
@@ -146,14 +148,40 @@
     "dragHint": "Drag, swipe or use the arrow keys",
     "railLabel": "Places around Dorado",
     "zoomDorado": "Dorado",
-    "zoomIsland": "Whole island"
+    "zoomIsland": "Whole island",
+    "mapSummary": "{total} places on one map: {published} times published by ORA World, the rest approximate.",
+    "seeCard": "see the place"
   },
   "compare": {
     "feature": "Feature",
     "applies": "Applies",
     "showAll": "Show every row",
     "showDiff": "Only differences",
-    "rows": "{count, plural, =1 {1 row} other {# rows}}"
+    "rows": "{count, plural, =1 {1 row} other {# rows}}",
+    "scaleTitle": "Scale at a glance",
+    "over": "over",
+    "ratio": "{name} is about {ratio}× {other} by {metric}, from the published figures.",
+    "metrics": {
+      "residences": {
+        "label": "Residences",
+        "unit": "homes",
+        "tdmNote": "129 contemporary apartments; the villa count is to be confirmed."
+      },
+      "suites": {
+        "label": "Hotel suites",
+        "unit": "suites"
+      },
+      "amenities": {
+        "label": "Amenities",
+        "unit": "sq ft"
+      },
+      "land": {
+        "label": "Land",
+        "unit": "sq ft",
+        "dwNote": "Published as over 10 million sq ft."
+      }
+    },
+    "ratioPartial": "Shown to scale from what is published; see the note under the bar."
   },
   "invest": {
     "q1": "Are you relocating to Puerto Rico?",
@@ -242,14 +270,7 @@
     "buyer": "Buyer",
     "broker": "Broker",
     "source": "How did you hear about us?",
-    "sourceOptions": [
-      "Search",
-      "Social media",
-      "Referral",
-      "Press",
-      "Event",
-      "Other"
-    ],
+    "sourceOptions": ["Search", "Social media", "Referral", "Press", "Event", "Other"],
     "licence": "Licence number",
     "brokerage": "Brokerage",
     "client": "Client name",
@@ -459,7 +480,15 @@
     "show": "Show {title}",
     "slide": "Render {n}: {title}",
     "open": "Open the full gallery",
-    "count": "{n} of {total}"
+    "count": "{n} of {total}",
+    "chapterLabel": "Jump to a chapter",
+    "chapters": {
+      "arrival": "Arrival",
+      "lobby": "Lobby",
+      "residence": "Residence",
+      "penthouse": "Penthouse"
+    },
+    "hint": "Artist's conceptual renderings. Use the arrow keys, click a side image or pick a chapter."
   },
   "galleryCarousel": {
     "label": "Featured renders",

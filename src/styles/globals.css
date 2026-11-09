@@ -822,3 +822,9 @@ html.lenis body {
 .reduced-motion .brand-pin-ring {
   animation: none;
 }
+
+/* depth-pass B */
+/* Chip counts on dark panels (renders chapters): bone at 70% keeps AA on basalt-soft; active chips keep their own. */
+[data-tone="dark"] .chip:not(.is-active):not([aria-pressed="true"]) .count {
+  color: rgb(247 243 236 / 0.7);
+}

@@ -26,15 +26,50 @@ const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
  * Horizontally draggable place cards (scroll-snap, pointer drag with momentum on desktop, native swipe on
  * touch, arrow keys) beside a proximity list. Hovering a card highlights its point of interest and vice versa.
  */
-export function IslandRail({ locale, places, pois }: { locale: Locale; places: RailPlace[]; pois: RailPoi[] }) {
+export function IslandRail({
+  locale,
+  places,
+  pois,
+}: {
+  locale: Locale;
+  places: RailPlace[];
+  pois: RailPoi[];
+}) {
   const t = useTranslations("island");
   const tc = useTranslations("common");
   const railRef = useRef<HTMLUListElement>(null);
   const [active, setActive] = useState<string | null>(null);
   const [edges, setEdges] = useState({ start: true, end: false });
-  const drag = useRef({ down: false, moved: false, startX: 0, startLeft: 0, lastX: 0, lastT: 0, v: 0, raf: 0 });
+  const drag = useRef({
+    down: false,
+    moved: false,
+    startX: 0,
+    startLeft: 0,
+    lastX: 0,
+    lastT: 0,
+    v: 0,
+    raf: 0,
+  });
 
   const byPoi = (slug: string | null) => pois.find((p) => p.slug === slug) ?? null;
+  // The journey: walking distance first, then drives from nearest to furthest; unknown times last.
+  const journey = [...pois].sort((a, b) => {
+    const k = (p: RailPoi) => (p.minutes == null ? 1e6 : p.mode === "walk" ? -1e3 + p.minutes : p.minutes);
+    return k(a) - k(b);
+  });
+  const maxMinutes = Math.max(...pois.map((p) => p.minutes ?? 0), 1);
+  // Scroll the rail (only the rail, never the window) to a place card and highlight it.
+  const showPlace = (slug: string) => {
+    const rail = railRef.current;
+    const card = rail?.querySelector<HTMLElement>(`[data-card="${slug}"]`);
+    if (!rail || !card) return;
+    const reducedMotion = document.documentElement.classList.contains("reduced-motion");
+    rail.scrollTo({
+      left: (card.parentElement?.offsetLeft ?? card.offsetLeft) - (rail.clientWidth - card.clientWidth) / 2,
+      behavior: reducedMotion ? "auto" : "smooth",
+    });
+    setActive(slug);
+  };
   const timeLabel = (p: RailPoi | null) => {
     if (!p || p.minutes == null) return null;
     const base = p.mode === "walk" ? t("walk", { min: p.minutes }) : t("drive", { min: p.minutes });
@@ -52,7 +87,9 @@ export function IslandRail({ locale, places, pois }: { locale: Locale; places: R
       const r = card.getBoundingClientRect();
       const d = (r.left + r.width / 2 - centre) / rect.width; // -0.5 … 0.5
       const a = Math.min(1, Math.abs(d) * 2);
-      card.style.transform = reduced ? "" : `translateY(${(a * 12).toFixed(1)}px) rotate(${(d * 2).toFixed(2)}deg) scale(${(1 - a * 0.035).toFixed(3)})`;
+      card.style.transform = reduced
+        ? ""
+        : `translateY(${(a * 12).toFixed(1)}px) rotate(${(d * 2).toFixed(2)}deg) scale(${(1 - a * 0.035).toFixed(3)})`;
       // The off-centre fade stays shallow so text on edge cards keeps AA contrast.
       card.style.opacity = reduced ? "" : `${1 - a * 0.04}`;
     });
@@ -78,14 +115,24 @@ export function IslandRail({ locale, places, pois }: { locale: Locale; places: R
   }, [updateCards]);
 
   const cardWidth = () => railRef.current?.querySelector<HTMLElement>("[data-card]")?.offsetWidth ?? 320;
-  const scrollByCards = (n: number) => railRef.current?.scrollBy({ left: n * (cardWidth() + 16), behavior: "smooth" });
+  const scrollByCards = (n: number) =>
+    railRef.current?.scrollBy({ left: n * (cardWidth() + 16), behavior: "smooth" });
 
   /* Pointer drag with momentum (mouse / pen only; touch keeps native scrolling and snap). */
   const onPointerDown = (e: React.PointerEvent<HTMLUListElement>) => {
     if (e.pointerType === "touch") return;
     const rail = railRef.current!;
     cancelAnimationFrame(drag.current.raf);
-    drag.current = { down: true, moved: false, startX: e.clientX, startLeft: rail.scrollLeft, lastX: e.clientX, lastT: performance.now(), v: 0, raf: 0 };
+    drag.current = {
+      down: true,
+      moved: false,
+      startX: e.clientX,
+      startLeft: rail.scrollLeft,
+      lastX: e.clientX,
+      lastT: performance.now(),
+      v: 0,
+      raf: 0,
+    };
     rail.classList.add("dragging");
     rail.setPointerCapture(e.pointerId);
   };
@@ -134,7 +181,8 @@ export function IslandRail({ locale, places, pois }: { locale: Locale; places: R
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
     const cards = Array.from(railRef.current?.querySelectorAll<HTMLElement>("[data-card]") ?? []);
     const i = cards.findIndex((c) => c === document.activeElement || c.contains(document.activeElement));
-    const next = cards[Math.min(cards.length - 1, Math.max(0, (i < 0 ? 0 : i) + (e.key === "ArrowRight" ? 1 : -1)))];
+    const next =
+      cards[Math.min(cards.length - 1, Math.max(0, (i < 0 ? 0 : i) + (e.key === "ArrowRight" ? 1 : -1)))];
     if (next) {
       e.preventDefault();
       next.focus();
@@ -176,36 +224,54 @@ export function IslandRail({ locale, places, pois }: { locale: Locale; places: R
           onPointerCancel={endDrag}
           onClickCapture={onClickCapture}
           onKeyDown={onRailKey}
-          className="no-scrollbar -mx-4 flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-3 select-none [&.dragging]:cursor-grabbing [&.dragging]:snap-none md:-mx-2 md:px-2"
+          className="no-scrollbar -mx-4 flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-3 select-none md:-mx-2 md:px-2 [&.dragging]:cursor-grabbing [&.dragging]:snap-none"
           style={{ scrollPaddingInline: "1rem" }}
         >
           {places.map((place, i) => {
             const poi = byPoi(place.poi);
             const time = timeLabel(poi);
-            const isActive = active != null && (active === place.slug || (poi != null && active === poi.slug));
+            const isActive =
+              active != null && (active === place.slug || (poi != null && active === poi.slug));
             return (
               <li key={place.slug} className="w-[80vw] shrink-0 snap-start sm:w-[360px] lg:w-[380px]">
                 <article
-                  data-card
+                  data-card={place.slug}
                   tabIndex={0}
                   aria-label={`${i + 1} ${tc("of")} ${places.length}: ${place.name}`}
                   onMouseEnter={() => setActive(place.slug)}
                   onMouseLeave={() => setActive(null)}
                   onFocus={(e) => {
                     setActive(place.slug);
-                    e.currentTarget.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+                    e.currentTarget.scrollIntoView({
+                      inline: "center",
+                      block: "nearest",
+                      behavior: "smooth",
+                    });
                   }}
                   onBlur={() => setActive(null)}
-                  className={cn("card group h-full overflow-hidden rounded-[20px] bg-bone transition-[box-shadow] duration-500 will-change-transform", isActive && "shadow-lift ring-1 ring-brass")}
+                  className={cn(
+                    "card group h-full overflow-hidden rounded-[20px] bg-bone transition-[box-shadow] duration-500 will-change-transform",
+                    isActive && "shadow-lift ring-1 ring-brass",
+                  )}
                   style={{ transitionTimingFunction: EASE }}
                 >
                   <div className="ambient-zoom">
-                    <Picture image={place.image} locale={locale} sizes="(max-width: 640px) 80vw, 380px" ratio="3/2" reveal={false} rounded="none" className="rounded-none" />
+                    <Picture
+                      image={place.image}
+                      locale={locale}
+                      sizes="(max-width: 640px) 80vw, 380px"
+                      ratio="3/2"
+                      reveal={false}
+                      rounded="none"
+                      className="rounded-none"
+                    />
                   </div>
                   <div className="p-4 md:p-5">
                     <div className="flex items-baseline justify-between gap-3">
                       <h3 className="display-s">{place.name}</h3>
-                      <span className="numeral text-[22px] text-brass-ink">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="numeral text-[22px] text-brass-ink">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
                     </div>
                     <p className="body mt-2 text-[15px] text-charcoal-soft">{place.text}</p>
                     {time && (
@@ -222,33 +288,100 @@ export function IslandRail({ locale, places, pois }: { locale: Locale; places: R
         </ul>
       </div>
 
-      <aside className="lg:col-span-4" aria-label={t("proximity")} data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
+      <aside
+        className="lg:col-span-4"
+        aria-label={t("proximity")}
+        data-reveal
+        style={{ "--reveal-delay": "120ms" } as React.CSSProperties}
+      >
         <div className="card h-full rounded-[20px] bg-bone p-4 md:p-5">
           <p className="label">{t("proximity")}</p>
-          <ol className="mt-3 divide-y divide-travertine">
-            {pois.map((p) => {
+          {/* Legend: published times are filled brass, approximate ones hollow; both stay explicit in text. */}
+          <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-charcoal-soft">
+            <span className="inline-flex items-center gap-1.5">
+              <span aria-hidden className="size-2.5 rounded-full bg-brass" />
+              {t("confirmed")}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <span aria-hidden className="size-2.5 rounded-full border border-charcoal-soft" />
+              {t("approx")}
+            </span>
+          </p>
+          <ol className="relative mt-4">
+            {/* The journey line */}
+            <span aria-hidden className="absolute top-3 bottom-3 left-[17px] w-px bg-travertine-deep" />
+            {journey.map((p) => {
               const place = places.find((x) => x.poi === p.slug);
-              const isActive = active != null && (active === p.slug || (place != null && active === place.slug));
-              const time = p.minutes == null ? tc("tbc") : p.mode === "walk" ? t("walk", { min: p.minutes }) : t("drive", { min: p.minutes });
+              const isActive =
+                active != null && (active === p.slug || (place != null && active === place.slug));
+              const time =
+                p.minutes == null
+                  ? tc("tbc")
+                  : p.mode === "walk"
+                    ? t("walk", { min: p.minutes })
+                    : t("drive", { min: p.minutes });
+              const share = p.minutes == null ? 0 : Math.max(0.06, p.minutes / maxMinutes);
+              const Row = place ? "button" : "div";
               return (
-                <li key={p.slug}>
-                  <div
-                    tabIndex={0}
+                <li key={p.slug} className="relative">
+                  <Row
+                    {...(place
+                      ? { type: "button" as const, onClick: () => showPlace(place.slug) }
+                      : { tabIndex: 0 })}
                     onMouseEnter={() => setActive(p.slug)}
                     onMouseLeave={() => setActive(null)}
                     onFocus={() => setActive(p.slug)}
                     onBlur={() => setActive(null)}
-                    className={cn("hairline -mx-2 flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors duration-300", isActive && "is-active bg-bone-deep")}
+                    className={cn(
+                      "group relative flex w-full items-start gap-3 rounded-xl py-2.5 pr-2 pl-0 text-left transition-colors duration-300",
+                      isActive && "bg-bone-deep",
+                    )}
                   >
-                    <span className={cn("inline-flex size-9 shrink-0 items-center justify-center rounded-full transition-colors duration-300", isActive ? "bg-brass text-basalt" : "bg-travertine text-charcoal")}>
+                    <span
+                      className={cn(
+                        "relative z-10 inline-flex size-9 shrink-0 items-center justify-center rounded-full transition-colors duration-300",
+                        isActive
+                          ? "bg-brass text-basalt"
+                          : p.confirmed
+                            ? "bg-basalt text-brass-light"
+                            : "border border-dashed border-charcoal-soft bg-bone text-charcoal",
+                      )}
+                    >
                       <PoiIcon category={p.category} />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[15px] font-semibold">{p.name}</span>
-                      <span className={cn("block text-[12px]", p.confirmed ? "text-brass-ink" : "text-charcoal-soft")}>{p.confirmed ? t("confirmed") : t("approx")}</span>
+                      <span className="flex items-baseline justify-between gap-3">
+                        <span className="text-[15px] leading-snug font-semibold">{p.name}</span>
+                        <span className="tabular shrink-0 text-[14px] font-semibold">{time}</span>
+                      </span>
+                      {/* Relative distance bar, proportional to the minutes */}
+                      <span
+                        aria-hidden
+                        className="mt-1.5 block h-1 w-full overflow-hidden rounded-full bg-travertine"
+                      >
+                        <span
+                          className={cn(
+                            "block h-full rounded-full transition-[width] duration-700 [transition-timing-function:var(--ease-out)]",
+                            p.confirmed ? "bg-brass" : "bg-charcoal-soft/50",
+                          )}
+                          style={{ width: `${share * 100}%` }}
+                        />
+                      </span>
+                      <span
+                        className={cn(
+                          "mt-1 block text-[12px]",
+                          p.confirmed ? "text-brass-ink" : "text-charcoal-soft",
+                        )}
+                      >
+                        {p.confirmed ? t("confirmed") : t("approx")}
+                        {place && (
+                          <span className="ml-1.5 text-charcoal-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                            · {t("seeCard")}
+                          </span>
+                        )}
+                      </span>
                     </span>
-                    <span className="tabular shrink-0 text-[14px] font-semibold">{time}</span>
-                  </div>
+                  </Row>
                 </li>
               );
             })}
@@ -260,7 +393,17 @@ export function IslandRail({ locale, places, pois }: { locale: Locale; places: R
 }
 
 export function PoiIcon({ category, size = 18 }: { category: PoiCategory; size?: number }) {
-  const p = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.75, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
+  const p = {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.75,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
   switch (category) {
     case "beach":
       return (
