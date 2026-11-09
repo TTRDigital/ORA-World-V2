@@ -111,7 +111,9 @@
   },
   "dial": {
     "progress": "{done} de {total} características a la vista",
-    "complete": "Las nueve características a la vista"
+    "complete": "Las nueve características a la vista",
+    "start": "Recorra las nueve características",
+    "jump": "Ir a una característica"
   },
   "living": {
     "wellness": "Bienestar",
@@ -139,14 +141,40 @@
     "dragHint": "Arrastre, deslice o use las flechas del teclado",
     "railLabel": "Lugares alrededor de Dorado",
     "zoomDorado": "Dorado",
-    "zoomIsland": "Toda la isla"
+    "zoomIsland": "Toda la isla",
+    "mapSummary": "{total} lugares en un mapa: {published} tiempos publicados por ORA World, el resto aproximados.",
+    "seeCard": "ver el lugar"
   },
   "compare": {
     "feature": "Característica",
     "applies": "Aplica",
     "showAll": "Mostrar todas las filas",
     "showDiff": "Solo diferencias",
-    "rows": "{count, plural, =1 {1 fila} other {# filas}}"
+    "rows": "{count, plural, =1 {1 fila} other {# filas}}",
+    "scaleTitle": "La escala de un vistazo",
+    "over": "más de",
+    "ratio": "{name} es unas {ratio}× {other} en {metric}, según las cifras publicadas.",
+    "metrics": {
+      "residences": {
+        "label": "Residencias",
+        "unit": "viviendas",
+        "tdmNote": "129 apartamentos contemporáneos; el número de villas está por confirmar."
+      },
+      "suites": {
+        "label": "Suites de hotel",
+        "unit": "suites"
+      },
+      "amenities": {
+        "label": "Amenidades",
+        "unit": "pies²"
+      },
+      "land": {
+        "label": "Terreno",
+        "unit": "pies²",
+        "dwNote": "Publicado como más de 10 millones de pies²."
+      }
+    },
+    "ratioPartial": "A escala según lo publicado; vea la nota bajo la barra."
   },
   "invest": {
     "q1": "¿Se está mudando a Puerto Rico?",
@@ -223,14 +251,7 @@
     "buyer": "Comprador",
     "broker": "Corredor",
     "source": "¿Cómo supo de nosotros?",
-    "sourceOptions": [
-      "Búsqueda",
-      "Redes sociales",
-      "Referido",
-      "Prensa",
-      "Evento",
-      "Otro"
-    ],
+    "sourceOptions": ["Búsqueda", "Redes sociales", "Referido", "Prensa", "Evento", "Otro"],
     "licence": "Número de licencia",
     "brokerage": "Agencia",
     "client": "Nombre del cliente",
@@ -411,7 +432,15 @@
     "show": "Mostrar {title}",
     "slide": "Render {n}: {title}",
     "open": "Abrir la galería completa",
-    "count": "{n} de {total}"
+    "count": "{n} de {total}",
+    "chapterLabel": "Ir a un capítulo",
+    "chapters": {
+      "arrival": "Llegada",
+      "lobby": "Vestíbulo",
+      "residence": "Residencia",
+      "penthouse": "Penthouse"
+    },
+    "hint": "Representaciones conceptuales del artista. Use las flechas, haga clic en una imagen lateral o elija un capítulo."
   },
   "galleryCarousel": {
     "label": "Renders destacados",
