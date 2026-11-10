@@ -926,3 +926,8 @@ main section[id] { scroll-margin-top: 96px; }
 
 /* Banner text over the bright film: a soft shadow keeps it crisp on light skies and walls. */
 .hero-text-shadow { text-shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 4px 24px rgb(0 0 0 / 0.35); }
+
+/* While the browser holds the film's sound back, the sound button pulses gently and asks for one tap. */
+@keyframes film-sound-ask { 0%, 100% { box-shadow: 0 0 0 0 rgb(176 141 87 / 0.55); } 50% { box-shadow: 0 0 0 10px rgb(176 141 87 / 0); } }
+.film-sound-ask { animation: film-sound-ask 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .film-sound-ask { animation: none; } }

@@ -90,7 +90,8 @@
     "nowShowing": "Mostrando: {label}",
     "filmFrame": "La película",
     "soundOn": "Ver la película",
-    "soundOff": "Sin sonido"
+    "soundOff": "Sin sonido",
+    "tapForSound": "Toque para sonido"
   },
   "explorer": {
     "collections": "Colecciones",

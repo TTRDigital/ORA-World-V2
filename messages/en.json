@@ -90,7 +90,8 @@
     "nowShowing": "Now showing: {label}",
     "filmFrame": "The film",
     "soundOn": "Watch the film",
-    "soundOff": "Sound off"
+    "soundOff": "Sound off",
+    "tapForSound": "Tap for sound"
   },
   "explorer": {
     "collections": "Collections",

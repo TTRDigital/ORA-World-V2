@@ -48,6 +48,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   const startRef = useRef(false);
   const playingRef = useRef(false);
   const pendingRef = useRef(false);
+  const [blocked, setBlocked] = useState(false);
   const iframe = useRef<HTMLIFrameElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const selfHosted = Boolean(mp4 || webm);
@@ -141,6 +142,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
             soundRef.current = false;
             setSound(false);
             pendingRef.current = wantsSound();
+            setBlocked(wantsSound());
             post({ event: "command", func: "mute", args: [] });
             post({ event: "command", func: "playVideo", args: [] });
           }, 2500);
@@ -157,6 +159,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         soundRef.current = false;
         setSound(false);
         pendingRef.current = wantsSound();
+        setBlocked(wantsSound());
       }
       if (state === 1) {
         playingRef.current = true;
@@ -187,6 +190,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     soundRef.current = true;
     setSound(true);
     pendingRef.current = false;
+    setBlocked(false);
     if (offscreenRef.current) return; // comes on when the banner is back in view
     if (selfHosted && video.current) {
       video.current.muted = false;
@@ -202,6 +206,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     soundRef.current = false;
     setSound(false);
     pendingRef.current = false;
+    setBlocked(false);
     if (selfHosted && video.current) video.current.muted = true;
     else post({ event: "command", func: "mute", args: [] });
   }, [post, selfHosted]);
@@ -236,6 +241,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
       soundRef.current = false;
       setSound(false);
       pendingRef.current = true;
+      setBlocked(true);
     });
   }, [mount, selfHosted]);
 
@@ -246,15 +252,12 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
       if ((e.target as HTMLElement | null)?.closest("[data-film-sound]")) return; // the button handles itself
       if (soundRef.current || !wantsSound()) return;
       if (!mountRef.current) return; // the player mounts on this gesture (phones) and starts with sound
-      if (!pendingRef.current) return; // only when the browser blocked the sound at start
       unmuteNow();
     };
-    window.addEventListener("pointerdown", onGesture, true);
-    window.addEventListener("keydown", onGesture, true);
-    return () => {
-      window.removeEventListener("pointerdown", onGesture, true);
-      window.removeEventListener("keydown", onGesture, true);
-    };
+    // Every event browsers count as a real interaction (a scroll with the wheel does not count, by browser rule).
+    const events = ["pointerdown", "pointerup", "touchend", "click", "keydown"] as const;
+    events.forEach((ev) => window.addEventListener(ev, onGesture, true));
+    return () => events.forEach((ev) => window.removeEventListener(ev, onGesture, true));
   }, [youtubeId, selfHosted, unmuteNow]);
 
   // Mute while the banner is out of view; bring the sound back when it returns.
@@ -332,11 +335,14 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           onClick={toggleSound}
           aria-pressed={sound}
           data-film-sound
-          className="absolute bottom-6 left-5 z-20 inline-flex min-h-11 items-center gap-2.5 rounded-full bg-basalt/55 px-4 text-[11px] font-semibold tracking-[0.2em] text-bone uppercase ring-1 ring-bone/30 backdrop-blur-sm transition-colors hover:bg-basalt/75 md:bottom-8 md:left-8"
+          className={cn(
+            "absolute bottom-6 left-5 z-20 inline-flex min-h-11 items-center gap-2.5 rounded-full px-4 text-[11px] font-semibold tracking-[0.2em] uppercase backdrop-blur-sm transition-colors md:bottom-8 md:left-8",
+            blocked ? "film-sound-ask bg-brass text-basalt ring-1 ring-brass-light" : "bg-basalt/55 text-bone ring-1 ring-bone/30 hover:bg-basalt/75",
+          )}
           data-track={sound ? "film_sound_off" : "film_sound_on"}
         >
-          {sound ? <SoundOn className="text-brass-light" /> : <SoundOff className="text-brass-light" />}
-          {sound ? t("soundOff") : t("soundOn")}
+          {sound ? <SoundOn className="text-brass-light" /> : <SoundOff className={blocked ? "text-basalt" : "text-brass-light"} />}
+          {sound ? t("soundOff") : blocked ? t("tapForSound") : t("soundOn")}
         </button>
       )}
       <p className="visually-hidden" aria-live="polite">
