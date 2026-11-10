@@ -1,5 +1,5 @@
 import type { Locale } from "@/content/types";
-import { getFloorPlans, getSiteSettings } from "@/lib/content";
+import { getFloorPlans, getHome, getSiteSettings } from "@/lib/content";
 import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
 import { tdm, life } from "@/content/seed/images";
@@ -65,7 +65,7 @@ function SectionHead({ n, eyebrow, title, id, intro, dark = false, children }: {
  * Inquire. One layout throughout, after theresidencesatcipriani.com; one gold button, "Inquire".
  */
 export async function CipHome({ locale }: { locale: Locale }) {
-  const [settings, plans] = await Promise.all([getSiteSettings(), getFloorPlans()]);
+  const [settings, plans, home] = await Promise.all([getSiteSettings(), getFloorPlans(), getHome()]);
   const x = (l: Parameters<typeof t>[0]) => t(l, locale);
   const es = locale === "es";
   const hint = es ? "Use las flechas o deslice" : "Use arrows or swipe";
@@ -109,6 +109,16 @@ export async function CipHome({ locale }: { locale: Locale }) {
       <CipSection id="who" n="01" eyebrow={x(cip.who.eyebrow)} title={x(cip.who.title)} intro={x(cip.who.intro)} body={x(cip.who.body)} wideVisual={false}>
         <div className="grid gap-4">
           <AliveImage image={tdm.aerialTowers} locale={locale} ratio="16/10" sizes="(max-width: 1023px) calc(100vw - 40px), 620px" />
+          {/* Tesoro Del Mar property specs, as published on oraworld.com (the huddle's "property specs"). */}
+          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Tesoro Del Mar">
+            {home.hero.stats.map((st) => (
+              <div key={x(st.label)} className="rounded-[14px] bg-white px-4 py-3.5 ring-1 ring-travertine-deep/70">
+                <dt className="sr-only">{x(st.label)}</dt>
+                <dd className="font-[family-name:var(--font-display)] text-[30px] leading-none text-charcoal">{st.value == null ? "" : st.value.toLocaleString("en-US")}</dd>
+                <dd aria-hidden className="mt-1.5 text-[12px] leading-snug text-charcoal-soft">{x(st.label)}</dd>
+              </div>
+            ))}
+          </dl>
           <div className="rounded-[18px] bg-bone p-6 ring-1 ring-travertine-deep/70 md:p-7">
             <p className="text-[10.5px] font-semibold tracking-[0.26em] text-brass-ink uppercase">{x(cip.who.founder.label)}</p>
             <p className="mt-2 text-[16px] leading-relaxed text-charcoal">{x(cip.who.founder.text)}</p>

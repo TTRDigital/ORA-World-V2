@@ -114,8 +114,8 @@ export const cip = {
       es: "Si ya tiene una vida más larga, ¿no quiere tener una vida mejor? Algunas personas aparentan 50 o 60 a los 80; otras ya se ven mayores a los 60. ORA le ayuda a ser del primer tipo.",
     } as L,
     body: {
-      en: "The goal is the 95th to 98th percentile for your age: stronger, fitter and better than anyone in your situation. Around 50 is the age to start. How do you make yourself at 50 feel like 30 or 35?",
-      es: "La meta es el percentil 95 a 98 para su edad: más fuerte, más en forma y mejor que cualquiera en su situación. Alrededor de los 50 es la edad para empezar. ¿Cómo hacer que a los 50 se sienta como a los 30 o 35?",
+      en: "The goal is the 95th to 98th percentile for your age: an outlier, stronger, fitter and better than anyone in your situation. Your body is absolutely self-made, so you can work on it in advance and make it better and stronger. Around 50 is the age to start: how do you make yourself at 50 feel like 30 or 35?",
+      es: "La meta es el percentil 95 a 98 para su edad: un caso excepcional, más fuerte, más en forma y mejor que cualquiera en su situación. Su cuerpo se hace absolutamente a sí mismo, así que puede trabajarlo con anticipación y hacerlo mejor y más fuerte. Alrededor de los 50 es la edad para empezar: ¿cómo hacer que a los 50 se sienta como a los 30 o 35?",
     } as L,
     bullets: [
       { en: "Nutritionists who set specifics, like your daily protein target", es: "Nutricionistas que definen lo específico, como su meta diaria de proteína" },
@@ -131,12 +131,12 @@ export const cip = {
     eyebrow: { en: "Why Puerto Rico", es: "Por qué Puerto Rico" } as L,
     title: { en: "The nine-day week", es: "La semana de nueve días" } as L,
     intro: {
-      en: "Puerto Rico is the only place on earth with a nine-day week. Be in New York, in your office or anywhere you want, Monday through Thursday. Spend about 30 weekends a year in Puerto Rico: thirty amazing weekends, in a great place, with great friends.",
-      es: "Puerto Rico es el único lugar del mundo con una semana de nueve días. Esté en Nueva York, en su oficina o donde quiera, de lunes a jueves. Pase unos 30 fines de semana al año en Puerto Rico: treinta fines de semana increíbles, en un gran lugar, con grandes amigos.",
+      en: "Puerto Rico is the only place on earth with a nine-day week. Be in New York, in your office or anywhere you want, Monday through Thursday, from 9 or 10 am until 7 pm. You only need to be in Puerto Rico for about 30 weekends a year: thirty amazing weekends, in a great place, with great friends.",
+      es: "Puerto Rico es el único lugar del mundo con una semana de nueve días. Esté en Nueva York, en su oficina o donde quiera, de lunes a jueves, de 9 o 10 de la mañana a 7 de la tarde. Solo necesita estar en Puerto Rico unos 30 fines de semana al año: treinta fines de semana increíbles, en un gran lugar, con grandes amigos.",
     } as L,
     body: {
-      en: "If you are in your late 40s and running a successful business, the question is simple: wouldn't it be good to figure out how to run it from Puerto Rico?",
-      es: "Si tiene cerca de 50 años y dirige un negocio exitoso, la pregunta es simple: ¿no sería bueno descubrir cómo dirigirlo desde Puerto Rico?",
+      en: "If you are in your late 40s and making real money, running a big advertising or management business, for example, the question is simple: wouldn't it be good to figure out how to run your business from Puerto Rico?",
+      es: "Si tiene cerca de 50 años y gana bien, dirigiendo por ejemplo una gran empresa de publicidad o de gestión, la pregunta es simple: ¿no sería bueno descubrir cómo dirigir su negocio desde Puerto Rico?",
     } as L,
     bullets: [
       { en: "An official Puerto Rico law: public and easy to verify", es: "Una ley oficial de Puerto Rico: pública y fácil de verificar" },
@@ -277,15 +277,15 @@ export const cip = {
       { label: { en: "Higher units", es: "Unidades altas" } as L, value: "$2,500" },
     ],
     plansNote: {
-      en: "Inquire to receive the complete Phase 1 floor plans and the project presentation.",
-      es: "Consulte para recibir los planos completos de la Fase 1 y la presentación del proyecto.",
+      en: "Inquire to receive the complete Phase 1 floor plans and the brochure.",
+      es: "Consulte para recibir los planos completos de la Fase 1 y el folleto.",
     } as L,
   },
 
   /* 10 Three steps (approved on the call) */
   steps: {
-    eyebrow: { en: "Your path to Tesoro Del Mar", es: "Su camino a Tesoro Del Mar" } as L,
-    title: { en: "Three steps", es: "Tres pasos" } as L,
+    eyebrow: { en: "How ORA World helps you", es: "Cómo le ayuda ORA World" } as L,
+    title: { en: "Three steps to Tesoro Del Mar", es: "Tres pasos a Tesoro Del Mar" } as L,
     items: [
       {
         title: { en: "Discover the island", es: "Descubra la isla" } as L,
@@ -328,7 +328,7 @@ export const cip = {
     } as L,
     bullets: [
       { en: "A personal conversation about your goals", es: "Una conversación personal sobre sus metas" },
-      { en: "Phase 1 pricing, floor plans and the project presentation", es: "Precios, planos y presentación de la Fase 1" },
+      { en: "The brochure, Phase 1 floor plans and pricing", es: "El folleto, los planos y los precios de la Fase 1" },
       { en: "How the incentive decree could apply to you", es: "Cómo podría aplicarle el decreto de incentivos" },
     ] as L[],
   },

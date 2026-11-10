@@ -34,6 +34,15 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#amenities")).toContainText(/ghost kitchen/i);
     await expect(page.locator("#amenities")).toContainText(/total body scan/i);
     await expect(page.locator("#who")).toContainText(/harvard-trained heart surgeon/i);
+    // Huddle: the Tesoro Del Mar property specs, as published.
+    for (const spec of [/10\s*acres/i, /129\s*residences/i, /42\s*hotel suites/i, /65,500\s*sq ft of amenities/i]) await expect(page.locator("#who")).toContainText(spec);
+    // Brief details that are easy to drop.
+    await expect(page.locator("#fitness")).toContainText(/an outlier/i);
+    await expect(page.locator("#fitness")).toContainText(/work on it in advance/i);
+    await expect(page.locator("#why-puerto-rico")).toContainText(/9 or 10 am until 7 pm/i);
+    await expect(page.locator("#why-puerto-rico")).toContainText(/advertising or management business/i);
+    await expect(page.locator("#steps")).toContainText(/how ora world helps you/i);
+    await expect(page.locator("#inquire")).toContainText(/brochure/i);
     // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.
     const text = (await main.innerText()).toLowerCase();
     expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
@@ -41,7 +50,7 @@ test.describe("vendored components and the desktop menu", () => {
     // One link in the banner, "Inquire", plus the film's sound toggle.
     await expect(page.locator("#hero a")).toHaveCount(1);
     await expect(page.locator("#hero a")).toHaveText(/inquire/i);
-    const sound = page.locator("#hero").getByRole("button", { name: /watch with sound/i });
+    const sound = page.locator("#hero").getByRole("button", { name: /watch the film/i });
     await expect(sound).toHaveAttribute("aria-pressed", "false");
     await sound.click();
     await expect(page.locator("#hero").getByRole("button", { name: /sound off/i })).toHaveAttribute("aria-pressed", "true");

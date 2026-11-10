@@ -54,8 +54,9 @@ the optimised files in `public/images/client/` are committed, so the fetch is on
   built from the owner's brief, are in `docs/sales/ORA-call-script-and-outreach.md`. Ask ORA answers with the same
   wording.
 - **One call to action, "Inquire"** (header, banner, menu, footer, inner pages, Ask ORA). The complete floor plans and
-  the presentation are sent by the sales team after an inquiry. The banner film has a "Watch with sound" toggle
-  (browsers never allow sound before a click, so the click restarts the film with sound).
+  the presentation are sent by the sales team after an inquiry. The banner keeps "Watch the film" with sound on by
+  default: browsers never play sound before a click, so sound turns on at the visitor's first tap on the banner,
+  "Watch the film" restarts it with sound, "Sound off" is remembered, and it mutes while the banner is out of view.
 - **Never on the site:** the owner's name; helicopter, helipad or airport-pickup promises.
 - **Real Phase 1 floor plans:** 15 layouts (60 residences, floors 5–18) transcribed from the floor plan PDF, each with
   its page image and a link to that page of the PDF (`src/content/seed/collections.ts`).
