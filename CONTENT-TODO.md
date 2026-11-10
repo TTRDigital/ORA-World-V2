@@ -4,12 +4,32 @@ Nothing on the site is invented. Every fact traces to oraworld.com (captured in 
 `docs/source/oraworld-com/` and re-read for v2). Unknown numbers inside real modules read "To be confirmed";
 modules whose content is still a placeholder stay hidden.
 
+## 0. Confirm before go-live (owner's content brief, Nov 2026)
+
+The homepage, Ask ORA and the call script now carry the owner's own wording. His brief notes, and these must be
+confirmed by ORA's tax team and the client before the site is public:
+
+| Item | Where it shows | What to confirm |
+| --- | --- | --- |
+| Name of the tax law | Homepage "Why Puerto Rico", Ask ORA, call script | He said "Act 16" on the recording; the site and oraworld.com say Act 60. |
+| "Starting January 1 the rate is no longer zero; it will be 4%" | Homepage stats and bullets, Ask ORA "decree", call script | The rate, which income it applies to, and the date. The brochure says "0% on capital gains and dividends, 4% on qualified income". |
+| "Applications in before January 1 are grandfathered" | Homepage bullet, Ask ORA "move now", call script | That an application filed before the date keeps today's terms. |
+| "15 years plus a 15-year extension" | Homepage stat and bullet, Ask ORA, call script | Decree term and extension. |
+| "About 30 weekends a year" (the nine-day week) | Homepage "Why Puerto Rico", Ask ORA, call script | Conflicts with the 183-day bona fide residency test on oraworld.com's Act 60 page (shown on /invest). |
+| Founder: "Harvard-trained heart surgeon", clinics "within driving distance of about 65% of the US population" | Homepage "Who we are", "Why ORA World", Ask ORA, call script | Credentials and the 65% figure. The founder is never named (client instruction). |
+| ORA services: total body scan, personal interview, nutritionists, meal options, ghost kitchen, fitness program, cardiologist list | Homepage, amenities, Ask ORA | That each is part of membership at Tesoro Del Mar, and from when. |
+| "Private jet charters through ORA World Jet" | Homepage "Private charters" | Brochure p7 wording; the client asked to avoid unconfirmed air-travel promises (no helicopter or pickup claims are on the site). |
+| Time to San Juan | Homepage | Brochure says 30 minutes (p6) and 35 minutes (p3, p7). The site uses 30. |
+| Site area and residence count | Homepage, numbers | Brochure: "17-acre" community and 60 residences in Phase One; oraworld.com: 10 acres and 129 residences overall. |
+
+No health outcome is promised anywhere ("guaranteed" wording from the recording was softened, as the brief asks).
+
 ## 1. Facts and numbers
 
 | Item | Where it shows | Status |
 | --- | --- | --- |
 | Prices, unit mix, bedroom counts, sizes | Explorer specs, collection pages, plan library, compare | "To be confirmed". Supply per collection and per plan. |
-| Real floor plans (architect drawings, PDFs, keyplans, unit positions, orientations, floors, status) | Plan library, plan detail, compare | Six illustrative SVG plans labelled "Illustrative placeholder plan". |
+| Real floor plans | Plan library, plan detail, compare | Done: 15 Phase 1 layouts from the floor plan PDF. Still to confirm: exterior figures misprinted on floors 6/8/9/12/14/15, and units 1002/1003 (panel 3 bed, drawing 4 bed). Unit availability is not published. |
 | Tower floor mapping (which floors each collection occupies) | Residence explorer tower stack | Illustrative, noted on the module. |
 | Delivery dates, deposit schedule (percentages and timing) | Invest deposit stepper | Placeholders with the offering-plan notice. |
 | Drive times other than "30 minutes to the airport" and "walking distance to Balneario Cerro Gordo" | Island proximity list, map popups | Marked approximate. |

@@ -13,7 +13,7 @@ type Mode = "tour" | "film";
  * One large frame with two views: the ORA World 360° collection (kuula.co) and the short "Welcome to ORA World" film
  * the sales team sends to prospects. Click to load: nothing is fetched from kuula.co or YouTube until asked.
  */
-export function HomeTourStage({ vrUrl, filmId, poster, filmPoster, locale }: { vrUrl: string; filmId: string | null; poster: ImageRef; filmPoster: ImageRef; locale: Locale }) {
+export function HomeTourStage({ vrUrl, filmId, poster, filmPoster, locale, wide = false }: { vrUrl: string; filmId: string | null; poster: ImageRef; filmPoster: ImageRef; locale: Locale; wide?: boolean }) {
   const t = useTranslations("homeTour");
   const [mode, setMode] = useState<Mode>("tour");
   const [loaded, setLoaded] = useState<Record<Mode, boolean>>({ tour: false, film: false });
@@ -38,7 +38,7 @@ export function HomeTourStage({ vrUrl, filmId, poster, filmPoster, locale }: { v
           ))}
         </div>
       )}
-      <div className="frame frame-lg relative aspect-[4/5] sm:aspect-[16/10] lg:aspect-[16/8]" data-testid="home-vr-tour" role="tabpanel">
+      <div className={cn("frame frame-lg relative", wide ? "h-[78svh] max-h-[920px] min-h-[480px] w-full" : "aspect-[4/5] sm:aspect-[16/10] lg:aspect-[16/8]")} data-testid="home-vr-tour" role="tabpanel">
         {on && mode === "tour" && (
           <iframe src={vrUrl} title={t("frameTitle")} className="absolute inset-0 h-full w-full border-0" allow="xr-spatial-tracking; gyroscope; accelerometer; fullscreen" allowFullScreen />
         )}
@@ -59,7 +59,7 @@ export function HomeTourStage({ vrUrl, filmId, poster, filmPoster, locale }: { v
               fill
               rounded="none"
               reveal={false}
-              sizes="(max-width: 1400px) 96vw, 1340px"
+              sizes="(max-width: 1440px) 100vw, 1440px"
               className="absolute inset-0 h-full w-full !aspect-auto"
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-basalt/35 p-6 text-center text-bone">

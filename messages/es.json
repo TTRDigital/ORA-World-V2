@@ -301,7 +301,15 @@
     "newsletter": "Recibir novedades",
     "newsletterPlaceholder": "Su correo",
     "newsletterSuccess": "Ya está en la lista.",
-    "honeypot": "Deje este campo vacío"
+    "honeypot": "Deje este campo vacío",
+    "goal": "¿Qué es lo más importante para usted?",
+    "goalOptions": [
+      "Vivir más y con más salud",
+      "Estar más en forma y fuerte",
+      "Los incentivos fiscales de Puerto Rico",
+      "Un hogar para la semana de nueve días",
+      "Todo lo anterior"
+    ]
   },
   "gate": {
     "title": "Regístrese para ver el plano completo",

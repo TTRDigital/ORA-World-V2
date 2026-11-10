@@ -301,7 +301,15 @@
     "newsletter": "Receive updates",
     "newsletterPlaceholder": "Your email",
     "newsletterSuccess": "You are on the list.",
-    "honeypot": "Leave this field empty"
+    "honeypot": "Leave this field empty",
+    "goal": "What matters most to you?",
+    "goalOptions": [
+      "Living longer and healthier",
+      "Getting fitter and stronger",
+      "Puerto Rico's tax incentives",
+      "A home for the nine-day week",
+      "All of the above"
+    ]
   },
   "gate": {
     "title": "Register to view the full plan",

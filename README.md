@@ -44,11 +44,15 @@ the optimised files in `public/images/client/` are committed, so the fetch is on
   while on screen (`CardRail`, `AliveImage`; a card plays a looping clip if given a `video`). Dark floating header with
   the sales line and "Get price list"; phones get a fixed "Get brochure / Get floor plans" bar. Copy lives in
   `src/content/seed/homeCip.ts` (brochure and prospect email wording only).
-- **The homepage tells the ORA World story** (client call, 10 Nov 2026), in this order: who ORA World is → why
-  Puerto Rico (Act 60, with a not-tax-advice note) → longevity → step inside (360° tour and film) → residences and the
-  penthouse → amenities → private charters → floor plans and Phase 1 pricing → three steps (Discover the island ·
-  Choose your residence · Arrive in Dorado) → the inquiry form. Copy: `src/content/seed/homeCip.ts`, sourced only
-  from oraworld.com, the brochure, the floor plans and the sales email.
+- **The homepage tells the ORA World story** (client call and the owner's content brief, Nov 2026): who we are (the
+  core promise, the founder, unnamed) → why ORA World (how it differs, why you can trust it) → longevity and preventive
+  health → fitness and nutrition → why Puerto Rico (the nine-day week, the tax decree, "you just need to apply") → step
+  inside (full-width 360° tour and film) → residences → amenities (the full list, ORA health services, the ghost
+  kitchen) → private charters → floor plans and pricing → three steps → the inquiry form ("What matters most to you?").
+  Copy: `src/content/seed/homeCip.ts`. Items still to confirm before go-live: `CONTENT-TODO.md` §0.
+- **Sales:** the call script, its checklist (for flagging calls that drift from the script) and 10 outreach variations,
+  built from the owner's brief, are in `docs/sales/ORA-call-script-and-outreach.md`. Ask ORA answers with the same
+  wording.
 - **One call to action, "Inquire"** (header, banner, menu, footer, inner pages, Ask ORA). The complete floor plans and
   the presentation are sent by the sales team after an inquiry. The banner film has a "Watch with sound" toggle
   (browsers never allow sound before a click, so the click restarts the film with sound).

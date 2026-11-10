@@ -18,7 +18,25 @@ test.describe("vendored components and the desktop menu", () => {
     await page.locator("html:not(.no-js)").waitFor();
     // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "who", "why-puerto-rico", "longevity", "virtual-tour", "residences", "amenities", "charters", "floor-plans", "steps", "inquire"]);
+    expect(ids).toEqual(["hero", "who", "why-ora-world", "longevity", "fitness", "why-puerto-rico", "virtual-tour", "residences", "amenities", "charters", "floor-plans", "steps", "inquire"]);
+    // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
+    const main = page.locator("main");
+    for (const line of [
+      /nine-day week/i,
+      /planes don.t fall from the sky/i,
+      /two lungs, two kidneys/i,
+      /what is the value of an extra 10 years/i,
+      /don.t you want to have a better life/i,
+      /you don.t need to move now\. you just need to apply/i,
+      /longevity is the foundation of our world/i,
+    ])
+      await expect(main.getByText(line).first()).toBeVisible();
+    await expect(page.locator("#amenities")).toContainText(/ghost kitchen/i);
+    await expect(page.locator("#amenities")).toContainText(/total body scan/i);
+    await expect(page.locator("#who")).toContainText(/harvard-trained heart surgeon/i);
+    // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.
+    const text = (await main.innerText()).toLowerCase();
+    expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
     await expect(page.locator("#hero h1")).toHaveText(/a life to treasure/i);
     // One link in the banner, "Inquire", plus the film's sound toggle.
     await expect(page.locator("#hero a")).toHaveCount(1);
@@ -49,6 +67,7 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#floor-plans a[href*='/residences/plans/residence-501']")).toHaveCount(1);
     await expect(page.locator("#steps li")).toHaveCount(3);
     await expect(page.locator("#inquire form")).toHaveCount(1);
+    await expect(page.locator("#inquire").getByLabel(/what matters most to you/i)).toBeVisible();
   });
 
   test("counters render real values in the server HTML", async ({ request }) => {

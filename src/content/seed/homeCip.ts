@@ -1,12 +1,14 @@
 import type { L } from "../types";
 
 /**
- * Homepage story (client, 10 Nov 2026 call): who ORA World is, why Puerto Rico (Act 60), longevity, what ORA World
- * offers, how ORA World helps, then one call to action, "Inquire". Layout after theresidencesatcipriani.com.
- *
- * Sources, nothing invented: oraworld.com (mission, "Beyond expectations", Act 60 explainer), the TDM Brochure
- * (p3–p7), the Phase 1 floor plans and the sales team's prospect email. Rules from the call: never name the owner;
- * no promises of helicopter or airport pickups; brochure and floor plans are offered through the inquiry form.
+ * Homepage story. Sources, nothing invented:
+ *  - the owner's content brief ("ORA World Content Brief", from his recorded conversation, Nov 2026): the core
+ *    promise, preventive health, fitness and nutrition, ORA services, the founder, the nine-day week and the tax
+ *    decree, the audience, and his ready-to-use lines (quoted verbatim where marked "brief");
+ *  - oraworld.com (mission, "Beyond expectations", Act 60 explainer), the TDM Brochure, the Phase 1 floor plans and
+ *    the sales team's prospect email.
+ * Rules: never name the owner or the founder; no helicopter or pickup promises; no guaranteed health outcomes
+ * (the brief's own note); tax wording to be confirmed by ORA's tax team before go-live (see CONTENT-TODO.md).
  */
 export const cip = {
   hero: {
@@ -14,70 +16,151 @@ export const cip = {
     sub: { en: "Tesoro Del Mar · Dorado, Puerto Rico", es: "Tesoro Del Mar · Dorado, Puerto Rico" } as L,
   },
 
-  /* 01 Who is ORA World */
+  /* 01 The core promise and who we are (brief §1, §5; oraworld.com) */
   who: {
     eyebrow: { en: "Who we are", es: "Quiénes somos" } as L,
-    title: { en: "Beyond expectations", es: "Más allá de lo esperado" } as L,
+    title: { en: "A longer life. A better life.", es: "Una vida más larga. Una vida mejor." } as L,
     intro: {
-      en: "ORA World creates thoughtfully crafted communities in Puerto Rico where longevity, luxury and nature exist in perfect harmony.",
-      es: "ORA World crea comunidades concebidas con esmero en Puerto Rico, donde la longevidad, el lujo y la naturaleza conviven en perfecta armonía.",
+      en: "Longevity is the foundation of our world. If you are going to live longer, you will want to live better; and to live better, you will want to be stronger and fitter, and to feel it. ORA World makes all of this easy.",
+      es: "La longevidad es la base de nuestro mundo. Si va a vivir más, querrá vivir mejor; y para vivir mejor, querrá estar más fuerte y en forma, y sentirlo. ORA World lo hace fácil.",
     } as L,
     body: {
-      en: "Our mission is to revolutionize Puerto Rico's real estate landscape with luxurious, eco-friendly developments that blend modern elegance with the island's natural beauty. Tesoro Del Mar in Dorado is the first expression of ORA World: a new vision for living rooted in freedom, connection and purpose.",
-      es: "Nuestra misión es revolucionar el panorama inmobiliario de Puerto Rico con desarrollos de lujo y ecológicos que integran la elegancia moderna con la belleza natural de la isla. Tesoro Del Mar, en Dorado, es la primera expresión de ORA World: una nueva visión de vida basada en la libertad, la conexión y el propósito.",
+      en: "ORA World creates thoughtfully crafted communities in Puerto Rico where longevity, luxury and nature exist in perfect harmony. Tesoro Del Mar in Dorado is the first.",
+      es: "ORA World crea comunidades concebidas con esmero en Puerto Rico, donde la longevidad, el lujo y la naturaleza conviven en perfecta armonía. Tesoro Del Mar, en Dorado, es la primera.",
     } as L,
-    facts: [
-      { value: "60", label: { en: "residences in Phase One", es: "residencias en la Fase Uno" } as L },
-      { value: "65,000+", label: { en: "sq ft of amenities", es: "pies² de amenidades" } as L },
-      { value: "30", label: { en: "minutes from San Juan", es: "minutos de San Juan" } as L },
-      { value: "1–6", label: { en: "bedrooms, plus the penthouse", es: "dormitorios, más el penthouse" } as L },
-    ],
+    quote: { en: "Have you heard about anything like this? Never. That's ORA World.", es: "¿Ha oído hablar de algo así? Nunca. Eso es ORA World." } as L,
+    founder: {
+      label: { en: "The founder", es: "El fundador" } as L,
+      text: {
+        en: "ORA World was founded by a Harvard-trained heart surgeon whose clinics are within driving distance of about 65% of the US population. One of his focus areas is longevity.",
+        es: "ORA World fue fundado por un cirujano cardiovascular formado en Harvard, cuyas clínicas están a distancia en auto de cerca del 65% de la población de Estados Unidos. Uno de sus enfoques es la longevidad.",
+      } as L,
+    },
   },
 
-  /* 02 Why Puerto Rico: taxes */
+  /* Why ORA World: how it is different (client call: "How is ORA World better?", "not just another apartment
+     building", "nobody knows ORA World, so we have to build trust"). Each point is backed elsewhere on the page. */
+  different: {
+    eyebrow: { en: "Why ORA World", es: "Por qué ORA World" } as L,
+    title: { en: "Not another condo building", es: "No es otro edificio de condominios" } as L,
+    intro: {
+      en: "A residence at Tesoro Del Mar comes with three things no ordinary condo offers: care for your health, a better place to keep your income, and the travel to make it all easy.",
+      es: "Una residencia en Tesoro Del Mar incluye tres cosas que ningún condominio común ofrece: cuidado para su salud, un mejor lugar para su ingreso y los viajes que lo hacen todo fácil.",
+    } as L,
+    items: [
+      {
+        title: { en: "Longevity, built in", es: "Longevidad incluida" } as L,
+        text: {
+          en: "A total body scan for every member, nutritionists on staff, a ghost kitchen that cooks for you and a fitness program that makes getting fit easy.",
+          es: "Un escaneo corporal completo para cada miembro, nutricionistas en el equipo, una cocina fantasma que cocina para usted y un programa para ponerse en forma fácilmente.",
+        } as L,
+        href: "#longevity",
+      },
+      {
+        title: { en: "Keep more of what you earn", es: "Conserve más de lo que gana" } as L,
+        text: {
+          en: "Puerto Rico's official incentive law, a government-approved decree for about 30 years, and our accountants to guide you through it.",
+          es: "La ley oficial de incentivos de Puerto Rico, un decreto aprobado por el gobierno por unos 30 años y nuestros contadores para guiarle.",
+        } as L,
+        href: "#why-puerto-rico",
+      },
+      {
+        title: { en: "Travel, taken care of", es: "Viajes resueltos" } as L,
+        text: {
+          en: "Private charter flights to your condo in Puerto Rico and back to the United States, a lobby attended 24/7 and a house car waiting.",
+          es: "Vuelos chárter privados a su condominio en Puerto Rico y de regreso a Estados Unidos, un vestíbulo atendido 24/7 y el auto de la casa.",
+        } as L,
+        href: "#charters",
+      },
+    ],
+    trust: [
+      { en: "Founded by a Harvard-trained heart surgeon", es: "Fundado por un cirujano cardiovascular formado en Harvard" },
+      { en: "An official government decree you can look up yourself", es: "Un decreto oficial del gobierno que puede verificar usted mismo" },
+      { en: "Sponsor: TRPbuildco LLC, Dorado · Vega Alta, Puerto Rico", es: "Patrocinador: TRPbuildco LLC, Dorado · Vega Alta, Puerto Rico" },
+    ] as L[],
+  },
+
+  /* 02 Longevity and preventive health (brief §2, §4, lines) */
+  prevention: {
+    eyebrow: { en: "Longevity", es: "Longevidad" } as L,
+    title: { en: "Planes don't fall from the sky", es: "Los aviones no se caen del cielo" } as L,
+    intro: {
+      en: "Redundancy and preventive maintenance. You have two lungs, two kidneys: you have redundancy. But you don't have preventive maintenance.",
+      es: "Redundancia y mantenimiento preventivo. Tiene dos pulmones y dos riñones: tiene redundancia. Pero no tiene mantenimiento preventivo.",
+    } as L,
+    body: {
+      en: "Most people only see a doctor when something hurts, and by then something has often already broken. ORA checks you before something breaks, before you feel anything, so that what can be caught early, like heart issues or cancer, is caught early. Follow what the doctors recommend, and you give yourself the best chance at a longer life.",
+      es: "La mayoría solo va al médico cuando algo duele, y para entonces algo suele haberse roto ya. ORA lo revisa antes de que algo se rompa, antes de que sienta nada, para detectar a tiempo lo que puede detectarse a tiempo, como problemas cardíacos o cáncer. Siga lo que recomiendan los médicos y se dará la mejor oportunidad de una vida más larga.",
+    } as L,
+    bullets: [
+      { en: "A total body scan for every member", es: "Un escaneo corporal completo para cada miembro" },
+      { en: "A personal interview to understand your goals", es: "Una entrevista personal para entender sus metas" },
+      { en: "A connection to a list of cardiologists", es: "Conexión con una lista de cardiólogos" },
+      { en: "Nutritionists on staff", es: "Nutricionistas en el equipo" },
+    ] as L[],
+    question: { en: "What is the value of an extra 10 years for you?", es: "¿Cuánto valen para usted 10 años más?" } as L,
+    questionSub: {
+      en: "Would you pay a million? Five million? Ten? You can't take anything with you, and your children are already taken care of. Time and health become the real investment.",
+      es: "¿Pagaría un millón? ¿Cinco millones? ¿Diez? No puede llevarse nada, y sus hijos ya están cuidados. El tiempo y la salud se vuelven la verdadera inversión.",
+    } as L,
+  },
+
+  /* 03 Fitness, nutrition and aging well (brief §3, §4) */
+  fitness: {
+    eyebrow: { en: "Fitness and nutrition", es: "Forma física y nutrición" } as L,
+    title: { en: "Your body is self-made", es: "Su cuerpo se hace a sí mismo" } as L,
+    intro: {
+      en: "If you already have a longer life, don't you want to have a better life? Some people look 50 or 60 at age 80; others already look old at 60. ORA helps you be the first kind of person.",
+      es: "Si ya tiene una vida más larga, ¿no quiere tener una vida mejor? Algunas personas aparentan 50 o 60 a los 80; otras ya se ven mayores a los 60. ORA le ayuda a ser del primer tipo.",
+    } as L,
+    body: {
+      en: "The goal is the 95th to 98th percentile for your age: stronger, fitter and better than anyone in your situation. Around 50 is the age to start. How do you make yourself at 50 feel like 30 or 35?",
+      es: "La meta es el percentil 95 a 98 para su edad: más fuerte, más en forma y mejor que cualquiera en su situación. Alrededor de los 50 es la edad para empezar. ¿Cómo hacer que a los 50 se sienta como a los 30 o 35?",
+    } as L,
+    bullets: [
+      { en: "Nutritionists who set specifics, like your daily protein target", es: "Nutricionistas que definen lo específico, como su meta diaria de proteína" },
+      { en: "Many meal options, built around what you like", es: "Muchas opciones de comidas, según lo que le gusta" },
+      { en: "A ghost kitchen on premises that cooks for you", es: "Una cocina fantasma en el lugar que cocina para usted" },
+      { en: "A fitness program designed to make getting fit easy", es: "Un programa de entrenamiento pensado para que ponerse en forma sea fácil" },
+      { en: "Help gaining muscle and losing weight", es: "Ayuda para ganar músculo y perder peso" },
+    ] as L[],
+  },
+
+  /* 04 Why Puerto Rico: the nine-day week and the tax decree (brief §6, §7, lines) */
   why: {
     eyebrow: { en: "Why Puerto Rico", es: "Por qué Puerto Rico" } as L,
-    title: { en: "Keep more of what you earn", es: "Conserve más de lo que gana" } as L,
+    title: { en: "The nine-day week", es: "La semana de nueve días" } as L,
     intro: {
-      en: "Puerto Rico combines favorable tax advantages with the status of a US jurisdiction. Under Act 60, qualifying residents pay 0% tax on capital gains and dividends and just 4% on qualified income.",
-      es: "Puerto Rico combina ventajas fiscales favorables con la condición de jurisdicción de Estados Unidos. Bajo la Ley 60, los residentes que califican pagan 0% sobre ganancias de capital y dividendos y solo 4% sobre ingresos elegibles.",
+      en: "Puerto Rico is the only place on earth with a nine-day week. Be in New York, in your office or anywhere you want, Monday through Thursday. Spend about 30 weekends a year in Puerto Rico: thirty amazing weekends, in a great place, with great friends.",
+      es: "Puerto Rico es el único lugar del mundo con una semana de nueve días. Esté en Nueva York, en su oficina o donde quiera, de lunes a jueves. Pase unos 30 fines de semana al año en Puerto Rico: treinta fines de semana increíbles, en un gran lugar, con grandes amigos.",
+    } as L,
+    body: {
+      en: "If you are in your late 40s and running a successful business, the question is simple: wouldn't it be good to figure out how to run it from Puerto Rico?",
+      es: "Si tiene cerca de 50 años y dirige un negocio exitoso, la pregunta es simple: ¿no sería bueno descubrir cómo dirigirlo desde Puerto Rico?",
     } as L,
     bullets: [
-      { en: "Personal benefits require bona fide residency: generally 183 days a year in Puerto Rico", es: "Los beneficios personales exigen residencia bona fide: en general 183 días al año en Puerto Rico" },
-      { en: "Qualifying export-service companies can see corporate rates as low as 4%", es: "Las empresas de servicios de exportación que califican pueden tener tasas corporativas de hasta 4%" },
-      { en: "One application to the DDEC, then a decree with your benefits and obligations", es: "Una solicitud ante el DDEC y luego un decreto con sus beneficios y obligaciones" },
+      { en: "An official Puerto Rico law: public and easy to verify", es: "Una ley oficial de Puerto Rico: pública y fácil de verificar" },
+      { en: "A specific decree, approved by the government, that nobody can take away", es: "Un decreto específico, aprobado por el gobierno, que nadie puede quitarle" },
+      { en: "15 years plus a 15-year extension: about 30 years in total", es: "15 años más una extensión de 15: unos 30 años en total" },
+      { en: "You don't need to move now. You just need to apply.", es: "No necesita mudarse ahora. Solo necesita solicitar." },
+      { en: "Applications in before January 1 are grandfathered, even if the process finishes next year", es: "Las solicitudes presentadas antes del 1 de enero mantienen los términos actuales, aunque el proceso termine el año siguiente" },
+      { en: "Our team of accountants helps; every situation is specific", es: "Nuestro equipo de contadores le ayuda; cada situación es distinta" },
     ] as L[],
     stats: [
-      { value: "0%", label: { en: "on capital gains and dividends", es: "sobre ganancias de capital y dividendos" } as L },
-      { value: "4%", label: { en: "on qualified income", es: "sobre ingresos elegibles" } as L },
-      { value: "183", label: { en: "days a year for bona fide residency", es: "días al año para residencia bona fide" } as L },
+      { value: "0%", label: { en: "today, on capital gains and dividends", es: "hoy, sobre ganancias de capital y dividendos" } as L },
+      { value: "4%", label: { en: "the rate from January 1", es: "la tasa a partir del 1 de enero" } as L },
+      { value: "15+15", label: { en: "years: the decree and its extension", es: "años: el decreto y su extensión" } as L },
     ],
     note: {
-      en: "General information, not tax or legal advice. Eligibility depends on your circumstances; consult a qualified tax advisor.",
-      es: "Información general, no asesoría fiscal ni legal. La elegibilidad depende de su situación; consulte a un asesor fiscal calificado.",
+      en: "General information, not tax or legal advice. Every situation is specific; ORA's accountants will confirm what applies to you.",
+      es: "Información general, no asesoría fiscal ni legal. Cada situación es distinta; los contadores de ORA confirmarán lo que aplica a su caso.",
     } as L,
-    link: { en: "How Act 60 works", es: "Cómo funciona la Ley 60" } as L,
+    verify: { en: "Look up the law yourself", es: "Consulte la ley usted mismo" } as L,
+    verifyUrl: "https://www.desarrollo.pr.gov/",
+    link: { en: "How the incentive works", es: "Cómo funciona el incentivo" } as L,
   },
 
-  /* 03 Longevity */
-  longevity: {
-    eyebrow: { en: "Longevity", es: "Longevidad" } as L,
-    title: { en: "Live well, for longer", es: "Vivir bien, por más tiempo" } as L,
-    intro: {
-      en: "ORA World is focused on improving the health and wellness of its owners. Tesoro Del Mar is designed around longevity and quality of life, with access to modern amenities, healthcare, education and entertainment.",
-      es: "ORA World se enfoca en mejorar la salud y el bienestar de sus propietarios. Tesoro Del Mar está pensado para la longevidad y la calidad de vida, con acceso a amenidades modernas, salud, educación y entretenimiento.",
-    } as L,
-    bullets: [
-      { en: "A nutritionist on staff", es: "Nutricionista en el equipo" },
-      { en: "Fitness center and pilates studio", es: "Gimnasio y estudio de pilates" },
-      { en: "Spa for massage, treatments and salon services", es: "Spa para masajes, tratamientos y salón" },
-      { en: "Outdoor yoga terrace", es: "Terraza de yoga al aire libre" },
-      { en: "Two-mile walking path through gardens", es: "Sendero de dos millas entre jardines" },
-      { en: "Steps from the beach and a national park", es: "A pasos de la playa y de un parque nacional" },
-    ] as L[],
-  },
-
-  /* 04 Step inside: tour and film */
+  /* 05 Step inside: tour and film */
   tour: {
     eyebrow: { en: "Step inside", es: "Recorra" } as L,
     title: { en: "See it for yourself", es: "Véalo usted mismo" } as L,
@@ -87,7 +170,7 @@ export const cip = {
     } as L,
   },
 
-  /* 05 Residences (with the penthouse) */
+  /* 06 Residences (with the penthouse) */
   residences: {
     eyebrow: { en: "Residences", es: "Residencias" } as L,
     title: { en: "Inspired by flight", es: "Inspiradas en el vuelo" } as L,
@@ -100,45 +183,77 @@ export const cip = {
       { en: "Oversized balconies and wrap-around terraces", es: "Balcones amplios y terrazas envolventes" },
       { en: "10' ceilings; private elevators in most residences", es: "Techos de 10 pies; ascensor privado en la mayoría de las residencias" },
       { en: "Scavolini kitchens with Gaggenau appliances", es: "Cocinas Scavolini con electrodomésticos Gaggenau" },
-      { en: "1 to 6 bedrooms, floors 5 to 17", es: "De 1 a 6 dormitorios, pisos 5 al 17" },
+      { en: "60 residences in Phase One, 1 to 6 bedrooms", es: "60 residencias en la Fase Uno, de 1 a 6 dormitorios" },
       { en: "The Penthouse: floor 18, two levels, 9,807 sq ft", es: "El Penthouse: piso 18, dos niveles, 9,807 pies²" },
     ] as L[],
   },
 
-  /* 06 Amenities */
+  /* 07 Amenities: the full list, with the ORA health services and the ghost kitchen (brief §4; brochure p7) */
   amenities: {
     eyebrow: { en: "Amenities", es: "Amenidades" } as L,
     title: { en: "Ease, elevated", es: "La comodidad, elevada" } as L,
-    intro: { en: "Over 65,000 sq ft of bespoke indoor and outdoor amenities.", es: "Más de 65,000 pies² de amenidades interiores y exteriores." } as L,
+    intro: { en: "Over 65,000 sq ft of bespoke indoor and outdoor amenities, and the services that make a longer, better life easy.", es: "Más de 65,000 pies² de amenidades interiores y exteriores, y los servicios que hacen fácil una vida más larga y mejor." } as L,
     groups: [
       {
-        label: { en: "Clubhouse", es: "Clubhouse" } as L,
+        label: { en: "ORA health and longevity", es: "Salud y longevidad ORA" } as L,
         items: [
-          { en: "Members-only club, 14,000 sq ft", es: "Club privado de 14,000 pies²" },
-          { en: "Fine-dining restaurant", es: "Restaurante de alta cocina" },
-          { en: "Rooftop pool, sundeck and pool bar", es: "Piscina en la azotea, solárium y bar" },
-          { en: "Business center, open 24/7", es: "Centro de negocios 24/7" },
+          { en: "Total body scan for every member", es: "Escaneo corporal completo para cada miembro" },
+          { en: "Personal interview to understand your goals", es: "Entrevista personal sobre sus metas" },
+          { en: "Nutritionists on staff", es: "Nutricionistas en el equipo" },
+          { en: "Many meal options, built around what you like", es: "Muchas opciones de comidas, a su gusto" },
+          { en: "Ghost kitchen on premises that cooks for members", es: "Cocina fantasma que cocina para los miembros" },
+          { en: "Fitness program designed to make getting fit easy", es: "Programa para ponerse en forma fácilmente" },
+          { en: "Connection to a list of cardiologists", es: "Conexión con una lista de cardiólogos" },
         ] as L[],
       },
       {
-        label: { en: "Resort", es: "Resort" } as L,
+        label: { en: "The Clubhouse · 14,000 sq ft, members only", es: "El Clubhouse · 14,000 pies², solo miembros" } as L,
         items: [
-          { en: "Resort-style pool and poolside bar", es: "Piscina estilo resort y bar" },
-          { en: "18-hole putting course", es: "Campo de putting de 18 hoyos" },
-          { en: "Beach club and boat slipway", es: "Club de playa y rampa para botes" },
-          { en: "Tennis and golf simulator", es: "Tenis y simulador de golf" },
+          { en: "Café, bakery and corner store", es: "Café, panadería y tienda" },
+          { en: "Fine-dining restaurant", es: "Restaurante de alta cocina" },
+          { en: "Indoor and outdoor spaces for hosting events", es: "Espacios interiores y exteriores para eventos" },
+          { en: "Business center: conference rooms, private offices, coffee bar, IT 24/7", es: "Centro de negocios: salas, oficinas privadas, coffee bar, TI 24/7" },
+          { en: "Programmable golf simulator and lounge", es: "Simulador de golf programable y salón" },
+          { en: "Tennis, half basketball and beach volleyball courts", es: "Tenis, media cancha de baloncesto y voleibol de playa" },
+          { en: "Rooftop resort-style pool, sundeck and pool bar", es: "Piscina en la azotea, solárium y bar" },
+          { en: "Fitness center and wellness spa", es: "Gimnasio y spa de bienestar" },
+        ] as L[],
+      },
+      {
+        label: { en: "The tower", es: "La torre" } as L,
+        items: [
+          { en: "Next-generation 18-hole putting course", es: "Campo de putting de 18 hoyos" },
+          { en: "Outdoor resort-style pool with sundeck and bar", es: "Piscina estilo resort con solárium y bar" },
+          { en: "Fitness center and pilates studio", es: "Gimnasio y estudio de pilates" },
+          { en: "Spa for massage, treatments and salon services", es: "Spa para masajes, tratamientos y salón" },
+          { en: "Outdoor yoga terrace", es: "Terraza de yoga" },
+          { en: "Business center with reservable private offices", es: "Centro de negocios con oficinas reservables" },
+          { en: "Resident lounge with curated art and bar service", es: "Salón de residentes con arte y bar" },
+          { en: "Children's play area, playgrounds and teen lounge", es: "Área infantil, parques y salón juvenil" },
+          { en: "Private, secure climate-controlled storage", es: "Almacenamiento privado y climatizado" },
+        ] as L[],
+      },
+      {
+        label: { en: "Coast and service", es: "Costa y servicio" } as L,
+        items: [
+          { en: "Beach club with food and beverage service", es: "Club de playa con comida y bebida" },
+          { en: "Slipway for easy boat launching", es: "Rampa para botar embarcaciones" },
+          { en: "Two-mile walking path through landscaped gardens", es: "Sendero de dos millas entre jardines" },
+          { en: "Porte-cochère and a lobby attended 24/7", es: "Pórtico y vestíbulo atendido 24/7" },
+          { en: "Valet and self-parking", es: "Valet y estacionamiento propio" },
+          { en: "Luxury house car and golf cart service", es: "Auto de la casa y carrito de golf" },
         ] as L[],
       },
     ],
   },
 
-  /* 07 Private charters (how ORA World takes care of you). No helicopter, helipad or pickup claims. */
+  /* 08 Private charters. No helicopter, helipad or pickup claims. */
   charters: {
     eyebrow: { en: "Private charters", es: "Vuelos chárter privados" } as L,
     title: { en: "Fly private to Puerto Rico", es: "Vuele privado a Puerto Rico" } as L,
     intro: {
-      en: "Owners at Tesoro Del Mar have private charter flights to their condo in Puerto Rico and back to the United States.",
-      es: "Los propietarios de Tesoro Del Mar cuentan con vuelos chárter privados a su condominio en Puerto Rico y de regreso a Estados Unidos.",
+      en: "Owners at Tesoro Del Mar have private charter flights to their condo in Puerto Rico and back to the United States: the nine-day week, made easy.",
+      es: "Los propietarios de Tesoro Del Mar cuentan con vuelos chárter privados a su condominio en Puerto Rico y de regreso a Estados Unidos: la semana de nueve días, fácil.",
     } as L,
     bullets: [
       { en: "Private jet charters through ORA World Jet", es: "Vuelos privados con ORA World Jet" },
@@ -148,7 +263,7 @@ export const cip = {
     ] as L[],
   },
 
-  /* 08 Floor plans and pricing */
+  /* 09 Floor plans and pricing */
   plans: {
     eyebrow: { en: "Floor plans and pricing", es: "Planos y precios" } as L,
     title: { en: "Phase One", es: "Fase Uno" } as L,
@@ -167,7 +282,7 @@ export const cip = {
     } as L,
   },
 
-  /* 09 Three steps (approved on the call) */
+  /* 10 Three steps (approved on the call) */
   steps: {
     eyebrow: { en: "Your path to Tesoro Del Mar", es: "Su camino a Tesoro Del Mar" } as L,
     title: { en: "Three steps", es: "Tres pasos" } as L,
@@ -175,8 +290,8 @@ export const cip = {
       {
         title: { en: "Discover the island", es: "Descubra la isla" } as L,
         text: {
-          en: "Watch the film, walk the 360° tour and see how Act 60 and Puerto Rico's north shore fit your plans.",
-          es: "Vea la película, recorra el tour 360° y descubra cómo la Ley 60 y la costa norte de Puerto Rico encajan en sus planes.",
+          en: "Watch the film, walk the 360° tour and see how the nine-day week and Puerto Rico's incentive law fit your plans.",
+          es: "Vea la película, recorra el tour 360° y descubra cómo la semana de nueve días y la ley de incentivos de Puerto Rico encajan en sus planes.",
         } as L,
         href: "#virtual-tour",
         link: { en: "Step inside", es: "Recorrer" } as L,
@@ -193,8 +308,8 @@ export const cip = {
       {
         title: { en: "Arrive in Dorado", es: "Llegue a Dorado" } as L,
         text: {
-          en: "Inquire, and our sales team will follow up with pricing, availability and a visit to Tesoro Del Mar.",
-          es: "Consulte, y nuestro equipo de ventas le enviará precios, disponibilidad y una visita a Tesoro Del Mar.",
+          en: "Inquire, and our team will follow up with a personal conversation about your goals, pricing, availability and a visit.",
+          es: "Consulte, y nuestro equipo le contactará para conversar sobre sus metas, precios, disponibilidad y una visita.",
         } as L,
         href: "#inquire",
         link: { en: "Inquire", es: "Consultar" } as L,
@@ -203,18 +318,18 @@ export const cip = {
     address: { en: "Tesoro Del Mar, Dorado · Vega Alta, Puerto Rico 00692", es: "Tesoro Del Mar, Dorado · Vega Alta, Puerto Rico 00692" } as L,
   },
 
-  /* 10 Inquire */
+  /* 11 Inquire (brief §7: who he is talking to) */
   inquire: {
     eyebrow: { en: "Inquire", es: "Consultar" } as L,
     title: { en: "Inquire about Tesoro Del Mar", es: "Consulte por Tesoro Del Mar" } as L,
     intro: {
-      en: "Tell us about your plans. Our sales team will follow up personally.",
-      es: "Cuéntenos sus planes. Nuestro equipo de ventas le responderá personalmente.",
+      en: "For professionals, business owners and doctors who have built something, whose children are taken care of, and who now see time and health as the real investment. Tell us your goals; our team will follow up personally.",
+      es: "Para profesionales, empresarios y médicos que han construido algo, cuyos hijos ya están cuidados y que ahora ven el tiempo y la salud como la verdadera inversión. Cuéntenos sus metas; nuestro equipo le responderá personalmente.",
     } as L,
     bullets: [
-      { en: "Current Phase 1 pricing and availability", es: "Precios y disponibilidad actuales de la Fase 1" },
-      { en: "The Phase 1 floor plans and project presentation", es: "Los planos de la Fase 1 y la presentación del proyecto" },
-      { en: "A private call or a visit to Dorado", es: "Una llamada privada o una visita a Dorado" },
+      { en: "A personal conversation about your goals", es: "Una conversación personal sobre sus metas" },
+      { en: "Phase 1 pricing, floor plans and the project presentation", es: "Precios, planos y presentación de la Fase 1" },
+      { en: "How the incentive decree could apply to you", es: "Cómo podría aplicarle el decreto de incentivos" },
     ] as L[],
   },
 };

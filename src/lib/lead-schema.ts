@@ -13,6 +13,8 @@ export const leadSchema = z.object({
   phone: phone.or(z.literal("")).optional(),
   role: z.enum(["buyer", "broker"]).optional(),
   source: z.string().trim().max(80).optional(),
+  /** "What matters most to you?" (owner's brief: a personal interview about each person's goals). */
+  goal: z.string().trim().max(120).optional(),
   message: z.string().trim().max(2000).optional(),
   licence: z.string().trim().max(80).optional(),
   brokerage: z.string().trim().max(120).optional(),

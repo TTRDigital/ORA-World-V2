@@ -153,6 +153,21 @@ export function LeadForm({
         {variant === "visit" && field("preferred", t("preferred"), { placeholder: "" })}
         {full && (
           <div>
+            <label htmlFor={`${variant}-goal`} className="small mb-1 block font-semibold">
+              {t("goal")}
+            </label>
+            <select id={`${variant}-goal`} className="field" {...register("goal")}>
+              <option value=""></option>
+              {t.raw("goalOptions").map((o: string) => (
+                <option key={o} value={o}>
+                  {o}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {full && (
+          <div>
             <label htmlFor={`${variant}-source`} className="small mb-1 block font-semibold">
               {t("source")}
             </label>
