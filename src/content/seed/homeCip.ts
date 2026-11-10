@@ -12,7 +12,8 @@ import type { L } from "../types";
  */
 export const cip = {
   hero: {
-    title: { en: "A life to treasure", es: "Una vida para atesorar" } as L,
+    // Client, 11 Nov 2026: the banner carries just this one line (after the Cipriani banner, with ORA World's name).
+    title: { en: "Live the ORA World legacy", es: "Viva el legado ORA World" } as L,
     sub: { en: "Tesoro Del Mar · Dorado, Puerto Rico", es: "Tesoro Del Mar · Dorado, Puerto Rico" } as L,
   },
 

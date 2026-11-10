@@ -7,7 +7,7 @@ import { HeroStage } from "./HeroStage";
 
 /**
  * Hero (client reference: theresidencesatcipriani.com): the film full screen behind the floating header, a soft
- * dark veil, the brochure's line "A life to treasure" in serif capitals, centred, and one button: "Inquire"
+ * dark veil, one line in serif capitals, centred ("Live the ORA World legacy", client), and one button: "Inquire"
  * (client call, 10 Nov 2026: one clean call to action). The film's sound toggle sits bottom-left.
  */
 export async function Hero({ locale }: { locale: Locale }) {
@@ -31,10 +31,7 @@ export async function Hero({ locale }: { locale: Locale }) {
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-basalt/40 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-[1100px] pt-16">
-        <p className="hero-text-shadow text-[11px] font-semibold tracking-[0.32em] text-bone uppercase" data-hero-rise>
-          {tr(cip.hero.sub, locale)}
-        </p>
-        <h1 id="hero-title" className="hero-text-shadow display-xl mt-5 text-bone" data-hero-rise style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
+        <h1 id="hero-title" className="hero-text-shadow display-xl text-bone" data-hero-rise style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
           {tr(cip.hero.title, locale)}
         </h1>
         <div className="mt-9 flex justify-center" data-hero-rise style={{ "--reveal-delay": "260ms" } as React.CSSProperties}>
