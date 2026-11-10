@@ -44,6 +44,15 @@ the optimised files in `public/images/client/` are committed, so the fetch is on
   while on screen (`CardRail`, `AliveImage`; a card plays a looping clip if given a `video`). Dark floating header with
   the sales line and "Get price list"; phones get a fixed "Get brochure / Get floor plans" bar. Copy lives in
   `src/content/seed/homeCip.ts` (brochure and prospect email wording only).
+- **The homepage tells the ORA World story** (client call, 10 Nov 2026), in this order: who ORA World is → why
+  Puerto Rico (Act 60, with a not-tax-advice note) → longevity → step inside (360° tour and film) → residences and the
+  penthouse → amenities → private charters → floor plans and Phase 1 pricing → three steps (Discover the island ·
+  Choose your residence · Arrive in Dorado) → the inquiry form. Copy: `src/content/seed/homeCip.ts`, sourced only
+  from oraworld.com, the brochure, the floor plans and the sales email.
+- **One call to action, "Inquire"** (header, banner, menu, footer, inner pages, Ask ORA). The complete floor plans and
+  the presentation are sent by the sales team after an inquiry. The banner film has a "Watch with sound" toggle
+  (browsers never allow sound before a click, so the click restarts the film with sound).
+- **Never on the site:** the owner's name; helicopter, helipad or airport-pickup promises.
 - **Real Phase 1 floor plans:** 15 layouts (60 residences, floors 5–18) transcribed from the floor plan PDF, each with
   its page image and a link to that page of the PDF (`src/content/seed/collections.ts`).
 

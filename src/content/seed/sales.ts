@@ -32,7 +32,7 @@ export const charters = {
   } as L,
   points: [
     { en: "Private charter flights to your condo in Puerto Rico and back to the United States", es: "Vuelos chárter privados a su condominio en Puerto Rico y de regreso a Estados Unidos" },
-    { en: "Private helipads, luxury shuttles and chauffeur services", es: "Helipuertos privados, traslados de lujo y servicio de chofer" },
+    { en: "A luxury house car and golf cart service", es: "Auto de la casa y servicio de carrito de golf" },
     { en: "About 30 minutes from San Juan's international airport", es: "A unos 30 minutos del aeropuerto internacional de San Juan" },
   ] as L[],
 };

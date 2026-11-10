@@ -13,7 +13,7 @@
     "place": "El lugar",
     "invest": "Invertir",
     "portfolio": "Portafolio",
-    "visit": "Reserve una visita",
+    "visit": "Contacto",
     "menu": "Menú",
     "close": "Cerrar",
     "openMenu": "Abrir menú",
@@ -31,16 +31,16 @@
     "tour": "Película y tour VR",
     "plans": "Planos",
     "compare": "Comparar",
-    "priceList": "Lista de precios"
+    "priceList": "Consultar"
   },
   "ask": {
     "open": "Pregunte a ORA",
     "title": "Pregunte a ORA",
     "questions": "Preguntas rápidas",
     "call": "Llamar / WhatsApp",
-    "book": "Reservar visita",
+    "book": "Consultar",
     "search": "Buscar entre las preguntas",
-    "noResults": "Ninguna pregunta coincide todavía. Reserve una visita y pregunte directamente al equipo.",
+    "noResults": "Ninguna pregunta coincide todavía. Consulte y el equipo le responderá directamente.",
     "callSoon": "El teléfono y el WhatsApp aparecerán aquí en cuanto el equipo de ventas los publique.",
     "callNow": "Llamar",
     "whatsapp": "WhatsApp"
@@ -56,7 +56,7 @@
     "explore": "Explorar",
     "comingSoon": "Próximamente",
     "viewPlans": "Ver planos",
-    "bookVisit": "Reserve una visita",
+    "bookVisit": "Consultar",
     "watchFilm": "Ver la película",
     "resumeFilm": "Reanudar la película",
     "closeFilm": "Cerrar la película",
@@ -88,7 +88,9 @@
     "posterAlt": "Tesoro Del Mar",
     "filmTitle": "Película de ORA World",
     "nowShowing": "Mostrando: {label}",
-    "filmFrame": "La película"
+    "filmFrame": "La película",
+    "soundOn": "Ver con sonido",
+    "soundOff": "Sin sonido"
   },
   "explorer": {
     "collections": "Colecciones",
@@ -241,7 +243,7 @@
     "popular": "Preguntas frecuentes",
     "emptyTitle": "Aún no hay nada publicado sobre eso",
     "askOra": "Pregunte al equipo",
-    "bookVisit": "Reserve una visita",
+    "bookVisit": "Consultar",
     "stillCurious": "¿Le queda alguna duda? El equipo responde en persona."
   },
   "visit": {
@@ -386,7 +388,7 @@
     "address": "Tesoro Del Mar · Dorado, Vega Alta, Puerto Rico 00692",
     "top": "Volver arriba",
     "ask": "Pregunte al equipo",
-    "book": "Reserve una visita"
+    "book": "Consultar"
   },
   "consent": {
     "text": "Usamos cookies analíticas con su consentimiento para entender cómo se usa el sitio.",

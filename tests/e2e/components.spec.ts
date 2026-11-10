@@ -13,15 +13,25 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(link.locator("[aria-hidden=true]").first()).toBeAttached();
   });
 
-  test("home follows the Cipriani layout: banner, eight numbered sections, living card rails", async ({ page }) => {
+  test("home tells the ORA World story with one call to action, Inquire", async ({ page }) => {
     await page.goto("/en");
     await page.locator("html:not(.no-js)").waitFor();
+    // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "virtual-tour", "amenities", "residences", "penthouse", "floor-plans", "charters", "location", "contact"]);
+    expect(ids).toEqual(["hero", "who", "why-puerto-rico", "longevity", "virtual-tour", "residences", "amenities", "charters", "floor-plans", "steps", "inquire"]);
     await expect(page.locator("#hero h1")).toHaveText(/a life to treasure/i);
-    // Client: one call to action on the first screen, "Get price list".
-    await expect(page.locator("#hero a, #hero button")).toHaveCount(1);
-    await expect(page.locator("#hero a")).toHaveText(/get price list/i);
+    // One link in the banner, "Inquire", plus the film's sound toggle.
+    await expect(page.locator("#hero a")).toHaveCount(1);
+    await expect(page.locator("#hero a")).toHaveText(/inquire/i);
+    const sound = page.locator("#hero").getByRole("button", { name: /watch with sound/i });
+    await expect(sound).toHaveAttribute("aria-pressed", "false");
+    await sound.click();
+    await expect(page.locator("#hero").getByRole("button", { name: /sound off/i })).toHaveAttribute("aria-pressed", "true");
+    // No other wording for the main action anywhere on the page.
+    await expect(page.getByText(/get price list|book a visit/i)).toHaveCount(0);
+    // Act 60 figures with the not-tax-advice note.
+    await expect(page.locator("#why-puerto-rico")).toContainText("0%");
+    await expect(page.locator("#why-puerto-rico")).toContainText(/not tax or legal advice/i);
     // The 360° tour loads only on click.
     const tour = page.getByTestId("home-vr-tour");
     await expect(tour.locator("iframe")).toHaveCount(0);
@@ -34,9 +44,11 @@ test.describe("vendored components and the desktop menu", () => {
     const before = await track.evaluate((el) => el.scrollLeft);
     await rail.getByRole("button", { name: "Next" }).click();
     await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);
-    // Phase 1 pricing and the real floor plans.
+    // Pricing, the real plans, the three steps and the inquiry form.
     await expect(page.locator("#floor-plans")).toContainText("$2,250");
     await expect(page.locator("#floor-plans a[href*='/residences/plans/residence-501']")).toHaveCount(1);
+    await expect(page.locator("#steps li")).toHaveCount(3);
+    await expect(page.locator("#inquire form")).toHaveCount(1);
   });
 
   test("counters render real values in the server HTML", async ({ request }) => {

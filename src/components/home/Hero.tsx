@@ -7,8 +7,8 @@ import { HeroStage } from "./HeroStage";
 
 /**
  * Hero (client reference: theresidencesatcipriani.com): the film full screen behind the floating header, a soft
- * dark veil, the brochure's line "A life to treasure" in serif capitals, centred, and one button: "Get price list"
- * (client: "So many CTA … Get price list is enough").
+ * dark veil, the brochure's line "A life to treasure" in serif capitals, centred, and one button: "Inquire"
+ * (client call, 10 Nov 2026: one clean call to action). The film's sound toggle sits bottom-left.
  */
 export async function Hero({ locale }: { locale: Locale }) {
   const [home, settings] = await Promise.all([getHome(), getSiteSettings()]);
@@ -35,8 +35,8 @@ export async function Hero({ locale }: { locale: Locale }) {
           {tr(cip.hero.title, locale)}
         </h1>
         <div className="mt-9 flex justify-center" data-hero-rise style={{ "--reveal-delay": "260ms" } as React.CSSProperties}>
-          <a href="#contact" className="cta min-h-[52px] px-8" data-track="cta_price_list" data-track-label="hero">
-            {es ? "Lista de precios" : "Get price list"} <ArrowRight width={14} height={14} />
+          <a href="#inquire" className="cta min-h-[52px] px-8" data-track="cta_inquire" data-track-label="hero">
+            {es ? "Consultar" : "Inquire"} <ArrowRight width={14} height={14} />
           </a>
         </div>
       </div>

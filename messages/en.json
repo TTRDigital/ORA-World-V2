@@ -13,7 +13,7 @@
     "place": "Place",
     "invest": "Invest",
     "portfolio": "Portfolio",
-    "visit": "Book a visit",
+    "visit": "Contact us",
     "menu": "Menu",
     "close": "Close",
     "openMenu": "Open menu",
@@ -31,16 +31,16 @@
     "tour": "Film and VR tour",
     "plans": "Floor plans",
     "compare": "Compare",
-    "priceList": "Get price list"
+    "priceList": "Inquire"
   },
   "ask": {
     "open": "Ask ORA",
     "title": "Ask ORA",
     "questions": "Quick questions",
     "call": "Call / WhatsApp",
-    "book": "Book a visit",
+    "book": "Inquire",
     "search": "Search the questions",
-    "noResults": "No question matches yet. Book a visit and ask the team directly.",
+    "noResults": "No question matches yet. Inquire and the team will answer you directly.",
     "callSoon": "Phone and WhatsApp will appear here as soon as the sales team publishes them.",
     "callNow": "Call",
     "whatsapp": "WhatsApp"
@@ -56,7 +56,7 @@
     "explore": "Explore",
     "comingSoon": "Coming soon",
     "viewPlans": "View plans",
-    "bookVisit": "Book a visit",
+    "bookVisit": "Inquire",
     "watchFilm": "Watch the film",
     "resumeFilm": "Resume film",
     "closeFilm": "Close the film",
@@ -88,7 +88,9 @@
     "posterAlt": "Tesoro Del Mar",
     "filmTitle": "ORA World film",
     "nowShowing": "Now showing: {label}",
-    "filmFrame": "The film"
+    "filmFrame": "The film",
+    "soundOn": "Watch with sound",
+    "soundOff": "Sound off"
   },
   "explorer": {
     "collections": "Collections",
@@ -241,7 +243,7 @@
     "popular": "Popular questions",
     "emptyTitle": "Nothing published on that yet",
     "askOra": "Ask the team",
-    "bookVisit": "Book a visit",
+    "bookVisit": "Inquire",
     "stillCurious": "Still curious? The team answers in person."
   },
   "visit": {
@@ -386,7 +388,7 @@
     "address": "Tesoro Del Mar · Dorado, Vega Alta, Puerto Rico 00692",
     "top": "Back to top",
     "ask": "Ask the team",
-    "book": "Book a visit"
+    "book": "Inquire"
   },
   "consent": {
     "text": "We use analytics cookies with your consent to understand how the site is used.",

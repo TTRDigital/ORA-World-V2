@@ -88,7 +88,7 @@ export const home: HomeContent = {
       en: "Luxury, eco-conscious residences in Dorado, Puerto Rico, a walk from Balneario Cerro Gordo and thirty minutes from the airport.",
       es: "Residencias de lujo y conciencia ecológica en Dorado, Puerto Rico, a pasos del Balneario Cerro Gordo y a treinta minutos del aeropuerto.",
     },
-    ctaPrimary: { en: "Book a visit", es: "Reserve una visita" },
+    ctaPrimary: { en: "Inquire", es: "Consultar" },
     ctaFilm: { en: "Watch the film", es: "Ver la película" },
     statsLabel: { en: "Tesoro Del Mar", es: "Tesoro Del Mar" },
     stats: [

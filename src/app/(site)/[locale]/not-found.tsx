@@ -9,7 +9,7 @@ export default function NotFound() {
       <p className="lead mx-auto mt-4">{t("text")}</p>
       <div className="mt-8 flex justify-center gap-3">
         <Link href="/" className="pill pill-basalt">{t("home")}</Link>
-        <Link href="/visit" className="pill pill-brass">{t("home") === "Homepage" ? "Book a visit" : "Reserve una visita"}</Link>
+        <Link href="/#inquire" className="pill pill-brass">{t("home") === "Homepage" ? "Inquire" : "Consultar"}</Link>
       </div>
     </section>
   );

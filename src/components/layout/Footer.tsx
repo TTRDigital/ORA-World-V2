@@ -25,7 +25,7 @@ export function Footer({ settings, showPress }: { settings: SiteSettings; showPr
           </p>
         </div>
         <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
-          <Link href="/#contact" className="cta" data-track="cta_price_list" data-track-label="footer">
+          <Link href="/#inquire" className="cta" data-track="cta_inquire" data-track-label="footer">
             {t("nav.priceList")}
           </Link>
         </div>

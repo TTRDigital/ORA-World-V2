@@ -13,6 +13,8 @@ export function CipSection({
   eyebrow,
   title,
   intro,
+  body,
+  note,
   groups,
   bullets,
   cta,
@@ -26,6 +28,10 @@ export function CipSection({
   eyebrow: string;
   title: string;
   intro?: string;
+  /** A second, quieter paragraph under the intro. */
+  body?: string;
+  /** Fine print under the call to action (e.g. "not tax advice"). */
+  note?: string;
   groups?: { label: string; items: string[] }[];
   bullets?: string[];
   cta?: ReactNode;
@@ -62,6 +68,11 @@ export function CipSection({
               {intro}
             </p>
           )}
+          {body && (
+            <p className={cn("mt-4 max-w-[52ch] text-[15px] leading-relaxed", dark ? "text-bone/70" : "text-charcoal-soft")} data-reveal>
+              {body}
+            </p>
+          )}
           {groups && groups.length > 0 && (
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {groups.map((g) => (
@@ -89,7 +100,8 @@ export function CipSection({
               ))}
             </ul>
           )}
-          {cta && <div className="mt-9 flex flex-wrap gap-3">{cta}</div>}
+          {cta && <div className="mt-9 flex flex-wrap items-center gap-3">{cta}</div>}
+          {note && <p className={cn("mt-6 max-w-[56ch] text-[12px] leading-relaxed", dark ? "text-bone/55" : "text-charcoal-soft")}>{note}</p>}
         </div>
         {children && <div className="min-w-0">{children}</div>}
       </div>

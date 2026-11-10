@@ -13,7 +13,7 @@ import { MobileSheet, type MenuTile } from "./MobileSheet";
 
 /**
  * Floating dark bar (client reference: theresidencesatcipriani.com), the same on every scroll position: logo, tracked
- * capitals navigation, the sales line, EN | ES and a gold "Get price list". Below lg: logo, price list and the menu.
+ * capitals navigation, the sales line, EN | ES and one gold button, "Inquire". Below lg: the logo and the menu.
  * Height 72px phones / 80px desktop, 12px from the top; main's top padding matches.
  */
 export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | null }) {
@@ -76,7 +76,7 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
               </a>
             )}
             <LanguageToggle dark className="hidden rounded-full px-3 py-1.5 ring-1 ring-bone/20 lg:flex" />
-            <Link href="/#contact" className="cta hidden min-h-11 px-5 text-[11px] lg:inline-flex" data-track="cta_price_list" data-track-label="header">
+            <Link href="/#inquire" className="cta hidden min-h-11 px-5 text-[11px] lg:inline-flex" data-track="cta_inquire" data-track-label="header">
               {t("priceList")}
             </Link>
             <button

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
+import { SoundOn, SoundOff } from "@/components/ui/Icons";
 import { FilmLightbox } from "./FilmLightbox";
 
 type Props = {
@@ -29,6 +30,12 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   const [mount, setMount] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [lightbox, setLightbox] = useState(false);
+  // Sound (client: "watch the film" with a sound on/off control). Browsers never allow sound before a click, so the
+  // film plays silently and the visitor turns sound on; that click restarts the film from the beginning with sound.
+  const [sound, setSound] = useState(false);
+  const soundRef = useRef(false);
+  // Only an iframe created by the sound click starts unmuted; toggling later never reloads the player.
+  const [startWithSound, setStartWithSound] = useState(false);
   const iframe = useRef<HTMLIFrameElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const selfHosted = Boolean(mp4 || webm);
@@ -75,7 +82,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     post({ event: "command", func: "unloadModule", args: ["captions"] });
     post({ event: "command", func: "unloadModule", args: ["cc"] });
     post({ event: "command", func: "setOption", args: ["captions", "track", {}] });
-    post({ event: "command", func: "mute", args: [] });
+    if (!soundRef.current) post({ event: "command", func: "mute", args: [] });
   }, [post]);
 
   // Handshake with the IFrame API; fade the poster only on playerState 1.
@@ -130,9 +137,37 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     };
   }, [mount, selfHosted, youtubeId, post, silence]);
 
+  const toggleSound = () => {
+    const next = !soundRef.current;
+    soundRef.current = next;
+    setSound(next);
+    if (selfHosted && video.current) {
+      video.current.muted = !next;
+      if (next) {
+        video.current.currentTime = 0;
+        video.current.play().catch(() => {});
+      }
+      return;
+    }
+    if (!mount) {
+      // Not loaded yet (phones wait for a first touch; reduced motion shows the poster): load it now, with sound.
+      setStartWithSound(true);
+      setMount(true);
+      return;
+    }
+    if (next) {
+      post({ event: "command", func: "seekTo", args: [0, true] });
+      post({ event: "command", func: "unMute", args: [] });
+      post({ event: "command", func: "setVolume", args: [100] });
+      post({ event: "command", func: "playVideo", args: [] });
+    } else {
+      post({ event: "command", func: "mute", args: [] });
+    }
+  };
+
   const embed =
     youtubeId && mount && !selfHosted && typeof window !== "undefined"
-      ? `${YT_ORIGIN}/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=0&playsinline=1&rel=0&modestbranding=1&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`
+      ? `${YT_ORIGIN}/embed/${youtubeId}?autoplay=1&mute=${startWithSound ? 0 : 1}&loop=1&playlist=${youtubeId}&controls=0&playsinline=1&rel=0&modestbranding=1&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`
       : null;
 
   return (
@@ -181,6 +216,18 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           {webm && <source src={webm} type="video/webm" />}
           {mp4 && <source src={mp4} type="video/mp4" />}
         </video>
+      )}
+      {(youtubeId || selfHosted) && (
+        <button
+          type="button"
+          onClick={toggleSound}
+          aria-pressed={sound}
+          className="absolute bottom-6 left-5 z-20 inline-flex min-h-11 items-center gap-2.5 rounded-full bg-basalt/55 px-4 text-[11px] font-semibold tracking-[0.2em] text-bone uppercase ring-1 ring-bone/30 backdrop-blur-sm transition-colors hover:bg-basalt/75 md:bottom-8 md:left-8"
+          data-track={sound ? "film_sound_off" : "film_sound_on"}
+        >
+          {sound ? <SoundOn className="text-brass-light" /> : <SoundOff className="text-brass-light" />}
+          {sound ? t("soundOff") : t("soundOn")}
+        </button>
       )}
       <p className="visually-hidden" aria-live="polite">
         {playing ? t("filmPlaying") : ""}

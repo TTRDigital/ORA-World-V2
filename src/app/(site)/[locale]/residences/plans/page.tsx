@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getCollections, getFloorPlans, getSiteSettings } from "@/lib/content";
+import { getCollections, getFloorPlans } from "@/lib/content";
 import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
 import type { Locale } from "@/content/types";
 import { PageHero } from "@/components/ui/PageHero";
@@ -16,18 +16,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 export default async function PlansPage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [plans, collections, settings, tp, tn, tc] = await Promise.all([getFloorPlans(), getCollections(), getSiteSettings(), getTranslations({ locale, namespace: "plans" }), getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" })]);
+  const [plans, collections, tp, tn] = await Promise.all([getFloorPlans(), getCollections(), getTranslations({ locale, namespace: "plans" }), getTranslations({ locale, namespace: "nav" })]);
   return (
     <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("residences"), path: "/residences" }, { name: tp("title"), path: "/residences/plans" }])} />
       <PageHero locale={locale} label={tn("residences")} headline={tp("title")} intro={locale === "es" ? "Fase 1, Torre 1, pisos 5 al 18: 60 residencias en 15 distribuciones, de un dormitorio con estudio al penthouse de dos niveles. Todas con techos de 10 pies. Planos sujetos a cambios." : "Phase 1, Tower 1, floors 5 to 18: 60 residences in 15 layouts, from one bedroom with den to the two-level penthouse. Every residence has 10' ceilings. Plans are subject to change."} compact>
-        {settings.floorPlansUrl && (
-          <a href={settings.floorPlansUrl} target="_blank" rel="noopener" className="pill pill-basalt" data-track="floor_plans_pdf">
-            {locale === "es" ? "PDF completo de planos" : "Full floor plan PDF"}
-          </a>
-        )}
+        {/* Client: the complete PDF is sent by the sales team after an inquiry, so the page offers "Inquire". */}
+        <PillLink href="/#inquire" tone="brass">{locale === "es" ? "Consultar" : "Inquire"}</PillLink>
         <PillLink href="/residences/compare" tone="ghost">{tp("compare")}</PillLink>
-        <PillLink href="/visit" tone="brass">{tc("bookVisit")}</PillLink>
       </PageHero>
       <section className="panel panel-travertine container-x section-y" aria-label={tp("title")}>
         <PlanLibrary plans={plans} collections={collections} locale={locale} />
