@@ -4,7 +4,6 @@ import { t as tr } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
 import { ArrowRight } from "@/components/ui/Icons";
 import { HeroStage } from "./HeroStage";
-import { EnterGate } from "./EnterGate";
 
 /**
  * Hero (client reference: theresidencesatcipriani.com): the film full screen behind the floating header, a soft
@@ -24,7 +23,6 @@ export async function Hero({ locale }: { locale: Locale }) {
       data-tone="dark"
       className="on-dark relative isolate -mt-[96px] flex h-[100svh] min-h-[560px] flex-col items-center justify-center overflow-hidden bg-basalt px-5 text-center lg:-mt-[104px]"
     >
-      <EnterGate line={tr(cip.hero.title, locale)} />
       <HeroStage locale={locale} youtubeId={settings.filmYoutubeId} mp4={settings.filmMp4} webm={settings.filmWebm} poster={settings.filmPoster} />
       {/* Client: the film should read bright. No full veil: only a soft shade behind the words, a light top edge for the
           header and a light bottom edge for the sound button, plus a text shadow, so the text stays crisp. */}

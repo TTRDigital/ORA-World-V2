@@ -104,27 +104,3 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(bullets.nth(2)).toHaveClass(/swiper-pagination-bullet-active/);
   });
 });
-
-test.describe("first-visit welcome screen", () => {
-  test.use({ storageState: { cookies: [], origins: [] } });
-
-  test("asks for one click, then starts the banner film with sound; shown once", async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem("ora2_consent", "denied"));
-    await page.goto("/en");
-    const gate = page.getByTestId("enter-gate");
-    await expect(gate).toBeVisible();
-    await expect(gate).toContainText(/live the ora world legacy/i);
-    await expect(gate.getByRole("button", { name: /enter with sound/i })).toBeFocused();
-    // The screen covers the window and the page stays on the banner (a page-relative screen scrolled it away, muting the film).
-    expect(await page.evaluate(() => window.scrollY)).toBe(0);
-    const box = await gate.boundingBox();
-    expect(box?.y).toBe(0);
-    await gate.getByRole("button", { name: /enter with sound/i }).click();
-    expect(await page.evaluate(() => window.scrollY)).toBe(0);
-    await expect(gate).toHaveCount(0);
-    await expect(page.locator("#hero [data-film-sound]")).toHaveAttribute("aria-pressed", "true");
-    expect(await page.evaluate(() => localStorage.getItem("ora2_entered"))).toBe("1");
-    await page.reload();
-    await expect(page.getByTestId("enter-gate")).toHaveCount(0);
-  });
-});

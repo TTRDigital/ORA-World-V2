@@ -329,7 +329,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   useEffect(() => {
     if (!youtubeId && !selfHosted) return;
     const onGesture = (e: Event) => {
-      if ((e.target as HTMLElement | null)?.closest("[data-film-sound], [data-enter-gate]")) return; // these handle themselves
+      if ((e.target as HTMLElement | null)?.closest("[data-film-sound]")) return; // the sound button handles itself
       if (soundRef.current || !wantsSound()) return;
       if (!mountRef.current) return; // the player mounts on this gesture (phones) and starts with sound
       unmuteNow();

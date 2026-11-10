@@ -91,10 +91,7 @@
     "filmFrame": "La película",
     "soundOn": "Ver la película",
     "soundOff": "Sin sonido",
-    "tapForSound": "Toque para sonido",
-    "gateLabel": "Bienvenido a ORA World",
-    "gateEnter": "Entrar con sonido",
-    "gateQuiet": "Entrar sin sonido"
+    "tapForSound": "Toque para sonido"
   },
   "explorer": {
     "collections": "Colecciones",
