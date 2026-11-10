@@ -17,6 +17,14 @@ type Props = {
 };
 
 const YT_ORIGIN = "https://www.youtube-nocookie.com";
+const SOUND_KEY = "ora2_film_sound";
+const wantsSound = () => {
+  try {
+    return localStorage.getItem(SOUND_KEY) !== "off";
+  } catch {
+    return true;
+  }
+};
 
 /**
  * The film as the background of the single hero banner (client feedback: one banner, the video, not two panels).
@@ -30,12 +38,16 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   const [mount, setMount] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [lightbox, setLightbox] = useState(false);
-  // Sound (client: "watch the film" with a sound on/off control). Browsers never allow sound before a click, so the
-  // film plays silently and the visitor turns sound on; that click restarts the film from the beginning with sound.
+  // Sound (client, 11 Nov 2026: "sound on auto when open, and off by clicking the button"). The film is created with
+  // sound on. If the browser blocks sound before any click (most first visits), the film plays silently and the sound
+  // comes on at the visitor's first click, tap or key press anywhere. "Sound off" is remembered for later visits.
   const [sound, setSound] = useState(false);
   const soundRef = useRef(false);
-  // Only an iframe created by the sound click starts unmuted; toggling later never reloads the player.
+  // The iframe's starting state (sound on unless the visitor turned it off); never changed after it loads.
   const [startWithSound, setStartWithSound] = useState(false);
+  const startRef = useRef(false);
+  const playingRef = useRef(false);
+  const pendingRef = useRef(false);
   const iframe = useRef<HTMLIFrameElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const selfHosted = Boolean(mp4 || webm);
@@ -51,9 +63,16 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
       const w = window as Window & {
         requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
       };
-      if (typeof w.requestIdleCallback === "function")
-        idle = w.requestIdleCallback(() => setMount(true), { timeout: 3000 });
-      else timer = window.setTimeout(() => setMount(true), 1500);
+      const start = () => {
+        const on = wantsSound();
+        startRef.current = on;
+        soundRef.current = on;
+        setStartWithSound(on);
+        setSound(on);
+        setMount(true);
+      };
+      if (typeof w.requestIdleCallback === "function") idle = w.requestIdleCallback(start, { timeout: 3000 });
+      else timer = window.setTimeout(start, 1500);
     };
     // Phones: the YouTube player is about 1.1 MB of script, so it waits for the visitor's first touch, scroll or
     // key press instead of loading during start-up. The poster render shows until then. Self-hosted loops are light.
@@ -113,14 +132,34 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         return;
       }
       if (!data) return;
-      if (data.event === "onReady") startSilencing();
+      if (data.event === "onReady") {
+        startSilencing();
+        if (startRef.current)
+          window.setTimeout(() => {
+            if (playingRef.current) return;
+            // The browser blocked autoplay with sound: play silently now, turn sound on at the first gesture.
+            soundRef.current = false;
+            setSound(false);
+            pendingRef.current = wantsSound();
+            post({ event: "command", func: "mute", args: [] });
+            post({ event: "command", func: "playVideo", args: [] });
+          }, 2500);
+      }
       const state =
         data.event === "onStateChange"
           ? data.info
           : data.event === "infoDelivery"
             ? (data.info as { playerState?: number })?.playerState
             : undefined;
+      // Some browsers start the film muted instead of blocking it: the player reports that, so wait for a gesture.
+      const muted = data.event === "infoDelivery" ? (data.info as { muted?: boolean })?.muted : undefined;
+      if (muted === true && soundRef.current && !offscreenRef.current && startRef.current) {
+        soundRef.current = false;
+        setSound(false);
+        pendingRef.current = wantsSound();
+      }
       if (state === 1) {
+        playingRef.current = true;
         setPlaying(true);
         startSilencing();
       }
@@ -137,89 +176,97 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     };
   }, [mount, selfHosted, youtubeId, post, silence]);
 
-  // Sound (huddle 10 Nov 2026: keep "Watch the film", sound on by default, the visitor can turn it off). Browsers never
-  // play sound before the visitor's first click or tap, so sound turns on at the first tap on the banner itself (not on
-  // a link or button), the button restarts the film with sound, "Sound off" is remembered, and the sound mutes itself
-  // while the banner is scrolled out of view.
   const root = useRef<HTMLDivElement>(null);
   const mountRef = useRef(false);
+  const offscreenRef = useRef(false);
   useEffect(() => {
     mountRef.current = mount;
   }, [mount]);
 
-  const setAudible = useCallback(
-    (on: boolean, restart: boolean) => {
-      soundRef.current = on;
-      setSound(on);
-      if (selfHosted && video.current) {
-        video.current.muted = !on;
-        if (on && restart) video.current.currentTime = 0;
-        if (on) video.current.play().catch(() => {});
-        return;
-      }
-      if (on && !mountRef.current) {
-        // Not loaded yet (phones wait for a first touch; reduced motion shows the poster): load it now, with sound.
-        setStartWithSound(true);
-        setMount(true);
-        return;
-      }
-      if (on) {
-        if (restart) post({ event: "command", func: "seekTo", args: [0, true] });
-        post({ event: "command", func: "unMute", args: [] });
-        post({ event: "command", func: "setVolume", args: [100] });
-        post({ event: "command", func: "playVideo", args: [] });
-      } else {
-        post({ event: "command", func: "mute", args: [] });
-      }
-    },
-    [post, selfHosted],
-  );
+  const unmuteNow = useCallback(() => {
+    soundRef.current = true;
+    setSound(true);
+    pendingRef.current = false;
+    if (offscreenRef.current) return; // comes on when the banner is back in view
+    if (selfHosted && video.current) {
+      video.current.muted = false;
+      video.current.play().catch(() => {});
+      return;
+    }
+    post({ event: "command", func: "unMute", args: [] });
+    post({ event: "command", func: "setVolume", args: [100] });
+    post({ event: "command", func: "playVideo", args: [] });
+  }, [post, selfHosted]);
+
+  const muteNow = useCallback(() => {
+    soundRef.current = false;
+    setSound(false);
+    pendingRef.current = false;
+    if (selfHosted && video.current) video.current.muted = true;
+    else post({ event: "command", func: "mute", args: [] });
+  }, [post, selfHosted]);
 
   const toggleSound = () => {
     const next = !soundRef.current;
     try {
-      localStorage.setItem("ora2_film_sound", next ? "on" : "off");
+      localStorage.setItem(SOUND_KEY, next ? "on" : "off");
     } catch {}
-    setAudible(next, next);
+    if (!next) return muteNow();
+    if (!mountRef.current && !selfHosted) {
+      // Not loaded yet (reduced motion shows the poster): load it now, with sound, from this click.
+      startRef.current = true;
+      soundRef.current = true;
+      setStartWithSound(true);
+      setSound(true);
+      setMount(true);
+      return;
+    }
+    unmuteNow();
   };
 
-  // Sound on by default: the first tap or click on the banner (outside links and buttons) turns it on.
+  // Self-hosted film: try sound on; if the browser blocks it, play silently and wait for the first gesture.
+  useEffect(() => {
+    const v = video.current;
+    if (!mount || !selfHosted || !v) return;
+    if (!wantsSound()) return;
+    v.muted = false;
+    v.play().catch(() => {
+      v.muted = true;
+      v.play().catch(() => {});
+      soundRef.current = false;
+      setSound(false);
+      pendingRef.current = true;
+    });
+  }, [mount, selfHosted]);
+
+  // First click, tap or key press anywhere: if sound is wanted but was blocked, turn it on now.
   useEffect(() => {
     if (!youtubeId && !selfHosted) return;
-    let pref = "on";
-    try {
-      pref = localStorage.getItem("ora2_film_sound") || "on";
-    } catch {}
-    if (pref === "off" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const onFirst = (e: Event) => {
-      const target = e.target as HTMLElement | null;
-      if (!target || target.closest("a, button, input, select, textarea, label, [role=dialog], header, nav")) return;
-      const r = root.current?.getBoundingClientRect();
-      if (!r || r.bottom < window.innerHeight * 0.4) return;
-      window.removeEventListener("pointerdown", onFirst, true);
-      if (!soundRef.current) setAudible(true, false);
+    const onGesture = (e: Event) => {
+      if ((e.target as HTMLElement | null)?.closest("[data-film-sound]")) return; // the button handles itself
+      if (soundRef.current || !wantsSound()) return;
+      if (!mountRef.current) return; // the player mounts on this gesture (phones) and starts with sound
+      if (!pendingRef.current) return; // only when the browser blocked the sound at start
+      unmuteNow();
     };
-    window.addEventListener("pointerdown", onFirst, true);
-    return () => window.removeEventListener("pointerdown", onFirst, true);
-  }, [youtubeId, selfHosted, setAudible]);
+    window.addEventListener("pointerdown", onGesture, true);
+    window.addEventListener("keydown", onGesture, true);
+    return () => {
+      window.removeEventListener("pointerdown", onGesture, true);
+      window.removeEventListener("keydown", onGesture, true);
+    };
+  }, [youtubeId, selfHosted, unmuteNow]);
 
   // Mute while the banner is out of view; bring the sound back when it returns.
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    let mutedByScroll = false;
     const io = new IntersectionObserver(
       ([e]) => {
-        if (!e.isIntersecting && soundRef.current && !mutedByScroll) {
-          mutedByScroll = true;
-          if (selfHosted && video.current) video.current.muted = true;
-          else post({ event: "command", func: "mute", args: [] });
-        } else if (e.isIntersecting && mutedByScroll) {
-          mutedByScroll = false;
-          if (!soundRef.current) return;
-          if (selfHosted && video.current) video.current.muted = false;
-          else post({ event: "command", func: "unMute", args: [] });
-        }
+        offscreenRef.current = !e.isIntersecting;
+        if (!soundRef.current) return;
+        if (selfHosted && video.current) video.current.muted = !e.isIntersecting;
+        else post({ event: "command", func: e.isIntersecting ? "unMute" : "mute", args: [] });
       },
       { threshold: 0.25 },
     );
@@ -284,6 +331,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           type="button"
           onClick={toggleSound}
           aria-pressed={sound}
+          data-film-sound
           className="absolute bottom-6 left-5 z-20 inline-flex min-h-11 items-center gap-2.5 rounded-full bg-basalt/55 px-4 text-[11px] font-semibold tracking-[0.2em] text-bone uppercase ring-1 ring-bone/30 backdrop-blur-sm transition-colors hover:bg-basalt/75 md:bottom-8 md:left-8"
           data-track={sound ? "film_sound_off" : "film_sound_on"}
         >

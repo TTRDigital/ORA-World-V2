@@ -50,10 +50,17 @@ test.describe("vendored components and the desktop menu", () => {
     // One link in the banner, "Inquire", plus the film's sound toggle.
     await expect(page.locator("#hero a")).toHaveCount(1);
     await expect(page.locator("#hero a")).toHaveText(/inquire/i);
-    const sound = page.locator("#hero").getByRole("button", { name: /watch the film/i });
-    await expect(sound).toHaveAttribute("aria-pressed", "false");
+    // Sound on when the page opens (client); one click on the button turns it off, and the choice is remembered.
+    const sound = page.locator("#hero [data-film-sound]");
+    await expect(sound).toBeVisible();
+    await page.waitForTimeout(2000); // the film mounts after load + idle and starts with sound where allowed
+    const pressedBefore = await sound.getAttribute("aria-pressed");
     await sound.click();
-    await expect(page.locator("#hero").getByRole("button", { name: /sound off/i })).toHaveAttribute("aria-pressed", "true");
+    await expect(sound).toHaveAttribute("aria-pressed", pressedBefore === "true" ? "false" : "true");
+    if (pressedBefore === "true") {
+      await expect(sound).toHaveText(/watch the film/i);
+      expect(await page.evaluate(() => localStorage.getItem("ora2_film_sound"))).toBe("off");
+    }
     // No other wording for the main action anywhere on the page.
     await expect(page.getByText(/get price list|book a visit/i)).toHaveCount(0);
     // Act 60 figures with the not-tax-advice note.

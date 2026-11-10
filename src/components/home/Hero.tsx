@@ -24,14 +24,17 @@ export async function Hero({ locale }: { locale: Locale }) {
       className="on-dark relative isolate -mt-[96px] flex h-[100svh] min-h-[560px] flex-col items-center justify-center overflow-hidden bg-basalt px-5 text-center lg:-mt-[104px]"
     >
       <HeroStage locale={locale} youtubeId={settings.filmYoutubeId} mp4={settings.filmMp4} webm={settings.filmWebm} poster={settings.filmPoster} />
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-basalt/45" />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-basalt/60 to-transparent" />
+      {/* Client: the film should read bright. No full veil: only a soft shade behind the words, a light top edge for the
+          header and a light bottom edge for the sound button, plus a text shadow, so the text stays crisp. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_62%_38%_at_50%_54%,rgb(28_27_25/0.42),rgb(28_27_25/0.12)_62%,transparent_100%)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-basalt/30 to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-basalt/40 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-[1100px] pt-16">
-        <p className="text-[11px] font-semibold tracking-[0.32em] text-bone/85 uppercase" data-hero-rise>
+        <p className="hero-text-shadow text-[11px] font-semibold tracking-[0.32em] text-bone uppercase" data-hero-rise>
           {tr(cip.hero.sub, locale)}
         </p>
-        <h1 id="hero-title" className="display-xl mt-5 text-bone" data-hero-rise style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
+        <h1 id="hero-title" className="hero-text-shadow display-xl mt-5 text-bone" data-hero-rise style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
           {tr(cip.hero.title, locale)}
         </h1>
         <div className="mt-9 flex justify-center" data-hero-rise style={{ "--reveal-delay": "260ms" } as React.CSSProperties}>
