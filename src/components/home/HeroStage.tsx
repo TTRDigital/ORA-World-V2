@@ -18,6 +18,8 @@ type Props = {
 
 const YT_ORIGIN = "https://www.youtube-nocookie.com";
 const SOUND_KEY = "ora2_film_sound";
+/** True once the visitor has clicked, tapped or pressed a key on the page: from then on the browser allows sound. */
+const userHasInteracted = () => (navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation?.hasBeenActive ?? false;
 const wantsSound = () => {
   try {
     return localStorage.getItem(SOUND_KEY) !== "off";
@@ -48,6 +50,13 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   const startRef = useRef(false);
   const playingRef = useRef(false);
   const pendingRef = useRef(false);
+  const unmutedAtRef = useRef(0);
+  // A player created before the visitor's first click cannot be unmuted later (Chrome ties the permission to the
+  // moment the player loads), so it is reloaded with sound from that click, at the same point in the film.
+  const preClickPlayerRef = useRef(false);
+  const filmTimeRef = useRef(0);
+  const [playerKey, setPlayerKey] = useState(0);
+  const [startAt, setStartAt] = useState(0);
   const [blocked, setBlocked] = useState(false);
   const iframe = useRef<HTMLIFrameElement>(null);
   const video = useRef<HTMLVideoElement>(null);
@@ -137,7 +146,9 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         startSilencing();
         if (startRef.current)
           window.setTimeout(() => {
-            if (playingRef.current) return;
+            // After a click the browser allows sound: never mute then. Before one, show the film silently if it
+            // has not started (the browser held it back) and turn the sound on at the first interaction.
+            if (playingRef.current || soundRef.current === false || userHasInteracted()) return;
             // The browser blocked autoplay with sound: play silently now, turn sound on at the first gesture.
             soundRef.current = false;
             setSound(false);
@@ -145,7 +156,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
             setBlocked(wantsSound());
             post({ event: "command", func: "mute", args: [] });
             post({ event: "command", func: "playVideo", args: [] });
-          }, 2500);
+          }, 6000);
       }
       const state =
         data.event === "onStateChange"
@@ -153,9 +164,22 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           : data.event === "infoDelivery"
             ? (data.info as { playerState?: number })?.playerState
             : undefined;
+      const time = data.event === "infoDelivery" ? (data.info as { currentTime?: number })?.currentTime : undefined;
+      if (typeof time === "number") filmTimeRef.current = time;
       // Some browsers start the film muted instead of blocking it: the player reports that, so wait for a gesture.
       const muted = data.event === "infoDelivery" ? (data.info as { muted?: boolean })?.muted : undefined;
-      if (muted === true && soundRef.current && !offscreenRef.current && startRef.current) {
+      if (muted === true && soundRef.current && !offscreenRef.current && Date.now() - unmutedAtRef.current > 2000) {
+        if (userHasInteracted() && preClickPlayerRef.current) {
+          reloadWithSound();
+          return;
+        }
+        if (userHasInteracted()) {
+          // The browser allows sound now: the player just has not applied it yet.
+          unmutedAtRef.current = Date.now();
+          post({ event: "command", func: "unMute", args: [] });
+          post({ event: "command", func: "setVolume", args: [100] });
+          return;
+        }
         soundRef.current = false;
         setSound(false);
         pendingRef.current = wantsSound();
@@ -177,7 +201,11 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
       clearTimeout(stop);
       clearInterval(silencer);
     };
-  }, [mount, selfHosted, youtubeId, post, silence]);
+  }, [mount, selfHosted, youtubeId, post, silence, playerKey]);
+
+  useEffect(() => {
+    if (mount && !selfHosted && youtubeId) preClickPlayerRef.current = !userHasInteracted();
+  }, [mount, selfHosted, youtubeId, playerKey]);
 
   const root = useRef<HTMLDivElement>(null);
   const mountRef = useRef(false);
@@ -186,17 +214,39 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     mountRef.current = mount;
   }, [mount]);
 
+  /** The banner counts as off screen once less than a third of it is still visible. */
+  const bannerOffscreen = () => {
+    const r = root.current?.getBoundingClientRect();
+    if (!r || !r.height) return false;
+    const visible = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
+    return visible < r.height * 0.33;
+  };
+
+  /** Reload the player with sound, from the visitor's click, at the same point in the film. */
+  function reloadWithSound() {
+    preClickPlayerRef.current = false;
+    startRef.current = true;
+    playingRef.current = false;
+    setPlaying(false);
+    unmutedAtRef.current = Date.now();
+    setStartAt(Math.floor(filmTimeRef.current));
+    setStartWithSound(true);
+    setPlayerKey((k) => k + 1);
+  }
+
   const unmuteNow = useCallback(() => {
     soundRef.current = true;
     setSound(true);
     pendingRef.current = false;
     setBlocked(false);
-    if (offscreenRef.current) return; // comes on when the banner is back in view
+    unmutedAtRef.current = Date.now();
+    if (bannerOffscreen()) return; // comes on when the banner is back in view
     if (selfHosted && video.current) {
       video.current.muted = false;
       video.current.play().catch(() => {});
       return;
     }
+    if (preClickPlayerRef.current && userHasInteracted()) return reloadWithSound();
     post({ event: "command", func: "unMute", args: [] });
     post({ event: "command", func: "setVolume", args: [100] });
     post({ event: "command", func: "playVideo", args: [] });
@@ -229,6 +279,36 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     unmuteNow();
   };
 
+  // The welcome screen's "Enter with sound" / "Enter without sound" (that click is the permission browsers require).
+  useEffect(() => {
+    const on = () => {
+      try {
+        localStorage.setItem(SOUND_KEY, "on");
+      } catch {}
+      if (!mountRef.current && !selfHosted) {
+        startRef.current = true;
+        soundRef.current = true;
+        setStartWithSound(true);
+        setSound(true);
+        setMount(true);
+        return;
+      }
+      unmuteNow();
+    };
+    const off = () => {
+      try {
+        localStorage.setItem(SOUND_KEY, "off");
+      } catch {}
+      muteNow();
+    };
+    window.addEventListener("ora2:sound-on", on);
+    window.addEventListener("ora2:sound-off", off);
+    return () => {
+      window.removeEventListener("ora2:sound-on", on);
+      window.removeEventListener("ora2:sound-off", off);
+    };
+  }, [selfHosted, unmuteNow, muteNow]);
+
   // Self-hosted film: try sound on; if the browser blocks it, play silently and wait for the first gesture.
   useEffect(() => {
     const v = video.current;
@@ -249,7 +329,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   useEffect(() => {
     if (!youtubeId && !selfHosted) return;
     const onGesture = (e: Event) => {
-      if ((e.target as HTMLElement | null)?.closest("[data-film-sound]")) return; // the button handles itself
+      if ((e.target as HTMLElement | null)?.closest("[data-film-sound], [data-enter-gate]")) return; // these handle themselves
       if (soundRef.current || !wantsSound()) return;
       if (!mountRef.current) return; // the player mounts on this gesture (phones) and starts with sound
       unmuteNow();
@@ -260,26 +340,33 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     return () => events.forEach((ev) => window.removeEventListener(ev, onGesture, true));
   }, [youtubeId, selfHosted, unmuteNow]);
 
-  // Mute while the banner is out of view; bring the sound back when it returns.
+  // Mute while the banner is scrolled out of view; bring the sound back when it returns.
   useEffect(() => {
-    const el = root.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        offscreenRef.current = !e.isIntersecting;
-        if (!soundRef.current) return;
-        if (selfHosted && video.current) video.current.muted = !e.isIntersecting;
-        else post({ event: "command", func: e.isIntersecting ? "unMute" : "mute", args: [] });
-      },
-      { threshold: 0.25 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const off = bannerOffscreen();
+      if (off === offscreenRef.current) return;
+      offscreenRef.current = off;
+      if (!soundRef.current) return;
+      if (selfHosted && video.current) video.current.muted = off;
+      else post({ event: "command", func: off ? "mute" : "unMute", args: [] });
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, [post, selfHosted]);
 
   const embed =
     youtubeId && mount && !selfHosted && typeof window !== "undefined"
-      ? `${YT_ORIGIN}/embed/${youtubeId}?autoplay=1&mute=${startWithSound ? 0 : 1}&loop=1&playlist=${youtubeId}&controls=0&playsinline=1&rel=0&modestbranding=1&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`
+      ? `${YT_ORIGIN}/embed/${youtubeId}?autoplay=1&mute=${startWithSound ? 0 : 1}${startAt ? `&start=${startAt}` : ""}&loop=1&playlist=${youtubeId}&controls=0&playsinline=1&rel=0&modestbranding=1&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`
       : null;
 
   return (
@@ -300,6 +387,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
       {embed && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <iframe
+            key={playerKey}
             ref={iframe}
             src={embed}
             title={t("filmTitle")}

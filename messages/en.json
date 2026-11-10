@@ -91,7 +91,10 @@
     "filmFrame": "The film",
     "soundOn": "Watch the film",
     "soundOff": "Sound off",
-    "tapForSound": "Tap for sound"
+    "tapForSound": "Tap for sound",
+    "gateLabel": "Welcome to ORA World",
+    "gateEnter": "Enter with sound",
+    "gateQuiet": "Enter without sound"
   },
   "explorer": {
     "collections": "Collections",
