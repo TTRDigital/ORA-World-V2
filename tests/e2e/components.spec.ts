@@ -19,6 +19,9 @@ test.describe("vendored components and the desktop menu", () => {
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
     expect(ids).toEqual(["hero", "virtual-tour", "amenities", "residences", "penthouse", "floor-plans", "charters", "location", "contact"]);
     await expect(page.locator("#hero h1")).toHaveText(/a life to treasure/i);
+    // Client: one call to action on the first screen, "Get price list".
+    await expect(page.locator("#hero a, #hero button")).toHaveCount(1);
+    await expect(page.locator("#hero a")).toHaveText(/get price list/i);
     // The 360° tour loads only on click.
     const tour = page.getByTestId("home-vr-tour");
     await expect(tour.locator("iframe")).toHaveCount(0);

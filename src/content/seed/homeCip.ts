@@ -8,7 +8,7 @@ import type { L } from "../types";
 export const cip = {
   hero: {
     title: { en: "A life to treasure", es: "Una vida para atesorar" } as L,
-    sub: { en: "Tesoro Del Mar · An ORA World residence · Dorado, Puerto Rico", es: "Tesoro Del Mar · Una residencia ORA World · Dorado, Puerto Rico" } as L,
+    sub: { en: "Tesoro Del Mar · Dorado, Puerto Rico", es: "Tesoro Del Mar · Dorado, Puerto Rico" } as L,
   },
   tour: {
     eyebrow: { en: "Virtual tour", es: "Recorrido virtual" } as L,

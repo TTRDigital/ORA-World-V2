@@ -81,8 +81,8 @@ export function MobileSheet({ open, onClose, tiles }: { open: boolean; onClose: 
             </li>
           ))}
           <li className="col-span-2 lg:col-span-5">
-            <Link href="/visit" className="pill pill-brass w-full min-h-12">
-              {t("visit")}
+            <Link href="/#contact" className="cta w-full" data-track="cta_price_list" data-track-label="menu">
+              {t("priceList")}
             </Link>
           </li>
         </ul>

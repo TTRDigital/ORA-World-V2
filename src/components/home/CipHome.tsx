@@ -22,11 +22,6 @@ const es = (locale: Locale) => locale === "es";
 export async function CipHome({ locale }: { locale: Locale }) {
   const [settings, plans] = await Promise.all([getSiteSettings(), getFloorPlans()]);
   const x = (l: Parameters<typeof t>[0]) => t(l, locale);
-  const requestCta = (
-    <a href="#contact" className="cta" data-track="cta_request_pricing">
-      {es(locale) ? "Solicitar precios y planos" : "Request pricing & floor plans"} <ArrowRight width={14} height={14} />
-    </a>
-  );
   const hint = es(locale) ? "Use las flechas o deslice" : "Use arrows or swipe";
 
   const amenityCards: RailCard[] = [
@@ -65,7 +60,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
 
   return (
     <div className="flex flex-col">
-      <CipSection id="virtual-tour" n="01" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} tone="dark" cta={requestCta}>
+      <CipSection id="virtual-tour" n="01" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} tone="dark">
         <HomeTourStage vrUrl={settings.vrTourUrl} filmId={settings.introFilmYoutubeId} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} />
       </CipSection>
 
@@ -76,16 +71,16 @@ export async function CipHome({ locale }: { locale: Locale }) {
         title={x(cip.amenities.title)}
         intro={x(cip.amenities.intro)}
         groups={cip.amenities.groups.map((g) => ({ label: x(g.label), items: g.items.map(x) }))}
-        cta={requestCta}
+       
       >
         <CardRail cards={amenityCards} label={x(cip.amenities.eyebrow)} hint={hint} locale={locale} />
       </CipSection>
 
-      <CipSection id="residences" n="03" tone="pale" eyebrow={x(cip.residences.eyebrow)} title={x(cip.residences.title)} intro={x(cip.residences.intro)} bullets={cip.residences.bullets.map(x)} cta={requestCta}>
+      <CipSection id="residences" n="03" tone="pale" eyebrow={x(cip.residences.eyebrow)} title={x(cip.residences.title)} intro={x(cip.residences.intro)} bullets={cip.residences.bullets.map(x)}>
         <CardRail cards={residenceCards} label={x(cip.residences.eyebrow)} hint={hint} locale={locale} />
       </CipSection>
 
-      <CipSection id="penthouse" n="04" tone="dark" eyebrow={x(cip.penthouse.eyebrow)} title={x(cip.penthouse.title)} intro={x(cip.penthouse.intro)} bullets={cip.penthouse.bullets.map(x)} cta={requestCta}>
+      <CipSection id="penthouse" n="04" tone="dark" eyebrow={x(cip.penthouse.eyebrow)} title={x(cip.penthouse.title)} intro={x(cip.penthouse.intro)} bullets={cip.penthouse.bullets.map(x)}>
         <CardRail cards={penthouseCards} label={x(cip.penthouse.eyebrow)} hint={hint} locale={locale} dark />
       </CipSection>
 
@@ -102,8 +97,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
                 {es(locale) ? "Planos completos (PDF)" : "Full floor plans (PDF)"} <ArrowRight width={14} height={14} />
               </a>
             )}
-            <Link href="/residences/plans" className="cta cta-ghost text-charcoal">
-              {es(locale) ? "Biblioteca de planos" : "Floor plan library"}
+            <Link href="/residences/plans" className="inline-flex min-h-12 items-center px-2 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal">
+              {es(locale) ? "Biblioteca de planos" : "Floor plan library"} →
             </Link>
           </>
         }
@@ -122,11 +117,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </CipSection>
 
-      <CipSection id="charters" n="06" tone="pale" eyebrow={x(cip.charters.eyebrow)} title={x(cip.charters.title)} intro={x(chartersCopy.body)} bullets={cip.charters.bullets.map(x)} cta={requestCta} wideVisual={false}>
+      <CipSection id="charters" n="06" tone="pale" eyebrow={x(cip.charters.eyebrow)} title={x(cip.charters.title)} intro={x(chartersCopy.body)} bullets={cip.charters.bullets.map(x)} wideVisual={false}>
         <AliveImage image={life.jet} locale={locale} ratio="4/5" sizes="(max-width: 1023px) calc(100vw - 40px), 600px" />
       </CipSection>
 
-      <CipSection id="location" n="07" eyebrow={x(cip.location.eyebrow)} title={x(cip.location.title)} intro={x(cip.location.intro)} bullets={cip.location.bullets.map(x)} cta={requestCta} wideVisual={false}>
+      <CipSection id="location" n="07" eyebrow={x(cip.location.eyebrow)} title={x(cip.location.title)} intro={x(cip.location.intro)} bullets={cip.location.bullets.map(x)} wideVisual={false}>
         <div>
           <AliveImage image={tdm.aerialCoast} locale={locale} ratio="4/3" sizes="(max-width: 1023px) calc(100vw - 40px), 600px" />
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[16px] bg-bone p-5 ring-1 ring-travertine-deep/70">
@@ -157,7 +152,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
         wideVisual={false}
         cta={
           settings.phone ? (
-            <a href={`tel:${settings.phone.replace(/[^\d+]/g, "")}`} className="cta cta-ghost text-bone">
+            <a href={`tel:${settings.phone.replace(/[^\d+]/g, "")}`} className="text-[15px] font-semibold tracking-[0.08em] text-bone hover:text-brass-light">
               {settings.phone}
             </a>
           ) : undefined

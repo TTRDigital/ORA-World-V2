@@ -6,7 +6,7 @@ import { footerGroups } from "./nav";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import type { SiteSettings } from "@/content/types";
 import { Headline } from "@/components/ui/Headline";
-import { FooterAsk, BackToTop } from "./FooterActions";
+import { BackToTop } from "./FooterActions";
 
 /** Basalt rounded panel: white logo, newsletter, five nav groups, language, legal notice at 11px, EHO, sponsor. */
 export function Footer({ settings, showPress }: { settings: SiteSettings; showPress: boolean }) {
@@ -25,10 +25,9 @@ export function Footer({ settings, showPress }: { settings: SiteSettings; showPr
           </p>
         </div>
         <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
-          <Link href="/visit" className="pill pill-brass min-h-12 px-6" data-track="cta_book_visit" data-track-label="footer">
-            {t("footer.book")}
+          <Link href="/#contact" className="cta" data-track="cta_price_list" data-track-label="footer">
+            {t("nav.priceList")}
           </Link>
-          <FooterAsk label={t("footer.ask")} />
         </div>
       </div>
       <div className="grid gap-10 lg:grid-cols-12">

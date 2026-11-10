@@ -918,3 +918,8 @@ h1, h2, h3, h4 { font-weight: 500; letter-spacing: 0.01em; }
 }
 /* Anchored sections clear the floating header */
 main section[id] { scroll-margin-top: 96px; }
+
+/* While the cookie strip is showing on phones, Ask ORA sits just above it. */
+@media (max-width: 767px) {
+  body:has([aria-label="Cookie consent"]) .ask-ora-btn { bottom: calc(5.25rem + env(safe-area-inset-bottom)); }
+}

@@ -65,19 +65,20 @@ export function Consent() {
         </>
       )}
       {choice === "unset" && (
-        <div role="region" aria-label="Cookie consent" className="fade-in fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+8.5rem)] z-[70] mx-auto max-w-3xl lg:bottom-5 rounded-2xl bg-basalt px-4 py-3 text-bone shadow-lift md:inset-x-auto md:left-1/2 md:w-[min(720px,calc(100%-24px))] md:-translate-x-1/2">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <p className="small flex-1 basis-60 text-bone/85">
+        // Slim strip pinned to the bottom edge so it never competes with the one button on the first screen.
+        <div role="region" aria-label="Cookie consent" className="fade-in fixed inset-x-0 bottom-0 z-[70] border-t border-white/10 bg-basalt/95 px-4 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] text-bone backdrop-blur-md md:inset-x-auto md:bottom-5 md:left-1/2 md:w-[min(720px,calc(100%-24px))] md:-translate-x-1/2 md:rounded-2xl md:border-0 md:px-5 md:py-3 md:shadow-lift">
+          <div className="flex items-center gap-3">
+            <p className="flex-1 text-[12.5px] leading-snug text-bone/80 md:text-[14px]">
               {t("text")}{" "}
               <Link href="/privacy" className="underline decoration-brass-light/60 underline-offset-2">
                 {t("privacy")}
               </Link>
             </p>
-            <div className="flex gap-2">
-              <button type="button" onClick={() => decide("denied")} className="pill pill-ghost on-dark min-h-10 px-4 text-bone">
+            <div className="flex shrink-0 gap-1.5">
+              <button type="button" onClick={() => decide("denied")} className="min-h-10 rounded-full px-3 text-[13px] font-semibold text-bone/80 hover:text-bone">
                 {t("decline")}
               </button>
-              <button type="button" onClick={() => decide("granted")} className="pill pill-brass min-h-10 px-4">
+              <button type="button" onClick={() => decide("granted")} className="min-h-10 rounded-full bg-brass px-4 text-[13px] font-semibold text-basalt">
                 {t("accept")}
               </button>
             </div>

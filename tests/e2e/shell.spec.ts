@@ -55,6 +55,9 @@ test.describe("shell", () => {
 
   test("Ask ORA opens with searchable questions and keyboard tabs", async ({ page }) => {
     await page.goto("/en");
+    await page.locator("html:not(.no-js)").waitFor();
+    // The button appears once the banner is scrolled past (one button on the first screen).
+    await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.2));
     await page.getByRole("button", { name: "Ask ORA" }).click();
     const dialog = page.getByRole("dialog", { name: "Ask ORA" });
     await expect(dialog).toBeVisible();

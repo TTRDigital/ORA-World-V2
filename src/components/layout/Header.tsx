@@ -76,7 +76,7 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
               </a>
             )}
             <LanguageToggle dark className="hidden rounded-full px-3 py-1.5 ring-1 ring-bone/20 lg:flex" />
-            <Link href="/#contact" className="cta min-h-11 px-4 text-[11px] sm:px-5" data-track="cta_price_list" data-track-label="header">
+            <Link href="/#contact" className="cta hidden min-h-11 px-5 text-[11px] lg:inline-flex" data-track="cta_price_list" data-track-label="header">
               {t("priceList")}
             </Link>
             <button

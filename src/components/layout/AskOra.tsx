@@ -19,6 +19,14 @@ export function AskOra({ faqs, phone, whatsapp, consentText }: { faqs: Faq[]; ph
   const t = useTranslations("ask");
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("questions");
+  // Client: the first screen shows one button only, so the Ask ORA button appears once the banner is scrolled past.
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShown(window.scrollY > window.innerHeight * 0.6);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const panel = useRef<HTMLDivElement>(null);
   const tabs: Tab[] = ["questions", ...(phone || whatsapp ? (["call"] as Tab[]) : []), "book"];
 
@@ -67,11 +75,16 @@ export function AskOra({ faqs, phone, whatsapp, consentText }: { faqs: Faq[]; ph
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="pill pill-basalt fixed right-3 bottom-[calc(76px+env(safe-area-inset-bottom))] z-[65] min-h-12 gap-2 pl-4 shadow-lift md:right-5 lg:bottom-5"
+        aria-label={t("open")}
+        className={cn(
+          "ask-ora-btn pill pill-basalt fixed right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-[65] size-12 justify-center gap-2 px-0 shadow-lift transition-[opacity,transform] duration-300 md:right-5 md:bottom-5 md:size-auto md:min-h-12 md:pr-5 md:pl-4",
+          shown ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0",
+        )}
+        tabIndex={shown ? 0 : -1}
         data-track="ask_ora_open"
       >
         <Chat className="text-brass-light" />
-        {t("open")}
+        <span className="hidden md:inline">{t("open")}</span>
       </button>
       {open && (
         <div className="fixed inset-0 z-[85]" role="dialog" aria-modal="true" aria-label={t("title")}>
