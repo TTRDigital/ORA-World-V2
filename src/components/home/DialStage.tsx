@@ -101,7 +101,7 @@ export function DialStage({ locale, features }: { locale: Locale; features: Resi
       `}</style>
 
       {/* Mobile: sticky progress track under the nav */}
-      <div className="sticky top-[84px] z-20 -mx-4 rounded-2xl bg-travertine px-4 py-3 shadow-[0_12px_24px_-16px_rgb(28_27_25/0.45)] lg:hidden">
+      <div className="sticky top-[84px] z-20 -mx-4 rounded-2xl bg-travertine px-4 py-3 shadow-[0_12px_24px_-16px_rgb(44_36_22/0.45)] lg:hidden">
         <div className="flex items-center gap-3">
           <span
             aria-hidden

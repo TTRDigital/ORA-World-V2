@@ -264,7 +264,7 @@ export function RoomTourStage({ locale, rooms }: { locale: Locale; rooms: Room[]
                   >
                     <span
                       className={cn(
-                        "pulse relative flex size-6 items-center justify-center rounded-full bg-bone/95 shadow-[0_2px_10px_rgb(28_27_25/0.35)]",
+                        "pulse relative flex size-6 items-center justify-center rounded-full bg-bone/95 shadow-[0_2px_10px_rgb(44_36_22/0.35)]",
                         open && "bg-brass-light",
                       )}
                     >
@@ -465,7 +465,7 @@ export function RoomTourStage({ locale, rooms }: { locale: Locale; rooms: Room[]
                 style={{ height: `${((index + 0.5) / total) * 100}%` }}
               />
               <span
-                className="absolute left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brass-light shadow-[0_0_0_4px_rgb(28_27_25)] transition-[top] duration-500 [transition-timing-function:var(--ease-out)]"
+                className="absolute left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brass-light shadow-[0_0_0_4px_rgb(44_36_22)] transition-[top] duration-500 [transition-timing-function:var(--ease-out)]"
                 style={{ top: `${((index + 0.5) / total) * 100}%` }}
               />
             </div>

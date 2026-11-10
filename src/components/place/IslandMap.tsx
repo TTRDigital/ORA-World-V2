@@ -159,7 +159,7 @@ export function IslandMap({
                 </span>
                 <span
                   className={cn(
-                    "pointer-events-none absolute top-1/2 left-full ml-1 -translate-y-1/2 rounded-full bg-bone px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap text-charcoal shadow-[0_8px_20px_-10px_rgb(28_27_25/0.35)] transition-opacity duration-300",
+                    "pointer-events-none absolute top-1/2 left-full ml-1 -translate-y-1/2 rounded-full bg-bone px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap text-charcoal shadow-[0_8px_20px_-10px_rgb(44_36_22/0.35)] transition-opacity duration-300",
                     active || hot ? "opacity-100" : "opacity-0",
                   )}
                   aria-hidden

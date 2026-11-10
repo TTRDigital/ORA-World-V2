@@ -15,7 +15,7 @@ export function AliveImage({ image, locale, ratio, sizes }: { image: ImageRef; l
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} className="alive relative overflow-hidden rounded-[20px] bg-travertine shadow-[0_24px_50px_-30px_rgb(28_27_25/0.5)]" style={{ aspectRatio: ratio }}>
+    <div ref={ref} className="alive relative overflow-hidden rounded-[20px] bg-travertine shadow-[0_24px_50px_-30px_rgb(44_36_22/0.5)]" style={{ aspectRatio: ratio }}>
       <Image src={image.src} alt={image.alt[locale] || image.alt.en} fill sizes={sizes} quality={80} className="object-cover" style={{ objectPosition: image.focal }} />
     </div>
   );

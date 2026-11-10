@@ -42,7 +42,7 @@ export function VisitForm({ consentText, submitLabel }: { consentText: string; s
       >
         <span
           aria-hidden
-          className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-basalt shadow-[0_6px_16px_-8px_rgb(28_27_25/0.5)] transition-transform duration-300 [transition-timing-function:var(--ease-out)]"
+          className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-basalt shadow-[0_6px_16px_-8px_rgb(44_36_22/0.5)] transition-transform duration-300 [transition-timing-function:var(--ease-out)]"
           style={{ transform: mode === "video" ? "translateX(100%)" : "translateX(0)" }}
         />
         {options.map((o) => (

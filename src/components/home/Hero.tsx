@@ -28,7 +28,7 @@ export async function Hero({ locale }: { locale: Locale }) {
       <HeroStage locale={locale} youtubeId={settings.filmYoutubeId} mp4={settings.filmMp4} webm={settings.filmWebm} poster={settings.filmPoster} />
       {/* Client: the film should read bright. No full veil: only a soft shade behind the words, a light top edge for the
           header and a light bottom edge for the sound button, plus a text shadow, so the text stays crisp. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_62%_38%_at_50%_54%,rgb(28_27_25/0.42),rgb(28_27_25/0.12)_62%,transparent_100%)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_62%_38%_at_50%_54%,rgb(44_36_22/0.42),rgb(44_36_22/0.12)_62%,transparent_100%)]" />
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-basalt/30 to-transparent" />
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-basalt/40 to-transparent" />
 

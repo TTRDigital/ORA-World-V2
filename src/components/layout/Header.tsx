@@ -44,7 +44,7 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
           aria-label="Primary"
           className={cn(
             "pointer-events-auto mx-auto flex h-[72px] max-w-[1400px] items-center justify-between gap-3 rounded-full bg-basalt/95 pr-2 pl-7 text-bone backdrop-blur-md transition-shadow duration-300 lg:h-[80px] lg:pr-3 lg:pl-10",
-            scrolled ? "shadow-[0_14px_34px_-16px_rgb(0_0_0/0.55)]" : "shadow-[0_10px_26px_-18px_rgb(0_0_0/0.45)]",
+            scrolled ? "shadow-[0_14px_34px_-16px_rgb(44_36_22/0.55)]" : "shadow-[0_10px_26px_-18px_rgb(44_36_22/0.45)]",
           )}
         >
           <Link href="/" aria-label={t("home")} className="flex shrink-0 items-center">

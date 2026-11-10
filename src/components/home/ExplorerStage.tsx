@@ -142,7 +142,7 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
 
       {/* Side card: right on desktop, a sheet-like card below the stack on mobile */}
       <div className="min-w-0 lg:col-span-7">
-        <div className="card relative overflow-hidden rounded-t-[28px] rounded-b-[20px] bg-bone shadow-[0_-12px_40px_-24px_rgb(28_27_25/0.25)] lg:rounded-[24px] lg:shadow-none">
+        <div className="card relative overflow-hidden rounded-t-[28px] rounded-b-[20px] bg-bone shadow-[0_-12px_40px_-24px_rgb(44_36_22/0.25)] lg:rounded-[24px] lg:shadow-none">
           <div className="mx-auto mt-3 h-1.5 w-12 rounded-full bg-travertine-deep lg:hidden" aria-hidden />
           {none || !active ? (
             <p className="body p-6 md:p-8">{tx("noMatch")}</p>

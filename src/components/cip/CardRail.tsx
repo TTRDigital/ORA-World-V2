@@ -80,11 +80,11 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
           return (
             <li key={c.key} className="w-[82%] shrink-0 snap-start sm:w-[60%] lg:w-[78%] xl:w-[64%]">
               {c.href ? (
-                <a href={c.href} className="block overflow-hidden rounded-[18px] bg-white shadow-[0_18px_40px_-28px_rgb(28_27_25/0.45)] ring-1 ring-travertine-deep/60 transition-transform duration-300 hover:-translate-y-0.5">
+                <a href={c.href} className="block overflow-hidden rounded-[18px] bg-white shadow-[0_18px_40px_-28px_rgb(44_36_22/0.45)] ring-1 ring-travertine-deep/60 transition-transform duration-300 hover:-translate-y-0.5">
                   {body}
                 </a>
               ) : (
-                <div className="overflow-hidden rounded-[18px] bg-white shadow-[0_18px_40px_-28px_rgb(28_27_25/0.45)] ring-1 ring-travertine-deep/60">{body}</div>
+                <div className="overflow-hidden rounded-[18px] bg-white shadow-[0_18px_40px_-28px_rgb(44_36_22/0.45)] ring-1 ring-travertine-deep/60">{body}</div>
               )}
             </li>
           );

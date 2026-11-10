@@ -71,7 +71,7 @@ export function TowerHint({ text, active }: { text: string; active: boolean }) {
       {/* Pointer that glides to a band and taps it */}
       <span className="tower-hint-pointer absolute">
         <span className="tower-hint-ripple absolute top-0 left-0 size-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-brass" />
-        <svg width="34" height="34" viewBox="0 0 24 24" className="relative drop-shadow-[0_6px_10px_rgb(28_27_25/0.35)]">
+        <svg width="34" height="34" viewBox="0 0 24 24" className="relative drop-shadow-[0_6px_10px_rgb(44_36_22/0.35)]">
           <path d="M5 3.5 18.5 12l-6 1.4 3.4 6.4-2.6 1.3-3.3-6.4L5.6 18.6z" fill="var(--color-basalt)" stroke="var(--color-bone)" strokeWidth="1.3" strokeLinejoin="round" />
         </svg>
       </span>

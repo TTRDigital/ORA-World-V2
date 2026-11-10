@@ -25,10 +25,10 @@ in `src/styles/globals.css`.
 | travertine | #E3D9C8 | surfaces, image ground while loading |
 | travertine-deep | #C9B99E | strong rules, disabled |
 | sand | #A39174 | decorative only, never text |
-| basalt | #1C1B19 | dark panels, footer |
-| basalt-soft | #242321 | dark cards |
-| charcoal | #2A2825 | body text |
-| charcoal-soft | #5A5650 | secondary text |
+| basalt | #2C2416 | Deep Earth (brand guideline 2.1): dark panels, footer, replaces black |
+| basalt-soft | #362D1E | dark cards |
+| charcoal | #2C2416 | Deep Earth: headlines and body text |
+| charcoal-soft | #5E5242 | secondary text (warm grey from Deep Earth) |
 | brass | #A8864F | hairlines, icons, numerals 32px+ only |
 | brass-ink | #684D25 | small brass text, focus ring, links on light |
 | brass-light | #D4B987 | accent text on basalt |
@@ -39,19 +39,19 @@ in `src/styles/globals.css`.
 
 | Foreground | Background | Ratio | AA (4.5 text / 3 large) | Use |
 |---|---|---|---|---|
-| charcoal #2A2825 | bone #F7F3EC | 13.29:1 | pass | Body text |
-| charcoal #2A2825 | bone-deep #EFE9DF | 12.17:1 | pass | Body on card ground |
-| charcoal #2A2825 | travertine #E3D9C8 | 10.52:1 | pass | Body on travertine |
-| charcoal-soft #5A5650 | bone #F7F3EC | 6.59:1 | pass | Secondary text |
-| charcoal-soft #5A5650 | travertine #E3D9C8 | 5.21:1 | pass | Secondary on travertine |
+| charcoal #2C2416 | bone #F7F3EC | 13.85:1 | pass | Body text |
+| charcoal #2C2416 | bone-deep #EFE9DF | 12.67:1 | pass | Body on card ground |
+| charcoal #2C2416 | travertine #E3D9C8 | 10.96:1 | pass | Body on travertine |
+| charcoal-soft #5E5242 | bone #F7F3EC | 6.88:1 | pass | Secondary text |
+| charcoal-soft #5E5242 | travertine #E3D9C8 | 5.44:1 | pass | Secondary on travertine |
 | brass-ink #684D25 | bone #F7F3EC | 7.09:1 | pass | Labels, links, focus ring |
 | brass-ink #684D25 | travertine #E3D9C8 | 5.61:1 | pass | Labels on travertine |
 | brass #A8864F | bone #F7F3EC | 3.07:1 | large only | Hairlines, 32px+ numerals only |
-| bone #F7F3EC | basalt #1C1B19 | 15.56:1 | pass | Text on dark panels |
-| bone #F7F3EC | basalt-soft #242321 | 14.20:1 | pass | Text on dark cards |
-| brass-light #D4B987 | basalt #1C1B19 | 9.09:1 | pass | Accent text on dark |
-| brass-light #D4B987 | basalt-soft #242321 | 8.29:1 | pass | Accent on dark cards |
-| basalt #1C1B19 | brass #A8864F | 5.07:1 | pass | Text on brass pill |
+| bone #F7F3EC | basalt #2C2416 | 13.85:1 | pass | Text on dark panels |
+| bone #F7F3EC | basalt-soft #362D1E | 12.24:1 | pass | Text on dark cards |
+| brass-light #D4B987 | basalt #2C2416 | 8.09:1 | pass | Accent text on dark |
+| brass-light #D4B987 | basalt-soft #362D1E | 7.15:1 | pass | Accent on dark cards |
+| basalt #2C2416 | brass #A8864F | 4.51:1 | pass | Text on brass pill |
 | sea-ink #2C6A82 | bone #F7F3EC | 5.44:1 | pass | Map labels |
 | palm #4A5A3A | bone #F7F3EC | 6.75:1 | pass | Eco tags |
 | sand #A39174 | bone #F7F3EC | 2.77:1 | fail | Decorative only (fails for text) |

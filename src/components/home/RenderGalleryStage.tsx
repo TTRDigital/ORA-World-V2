@@ -86,7 +86,7 @@ export function RenderGalleryStage({
           inactiveScale={0.82}
           aspectClassName="aspect-[4/3]"
           className="rounded-[24px] focus-visible:outline-brass-light"
-          imageClassName="rounded-[20px] shadow-[0_30px_60px_-30px_rgb(0_0_0/0.8)]"
+          imageClassName="rounded-[20px] shadow-[0_30px_60px_-30px_rgb(44_36_22/0.8)]"
           labelClassName="mt-1 font-sans text-[14px] font-semibold text-bone"
           controlsClassName="bottom-3 gap-1 border-brass-light/25 bg-basalt-soft/90 text-bone dark:border-brass-light/25 dark:bg-basalt-soft/90"
           labels={{

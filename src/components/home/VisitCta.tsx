@@ -42,12 +42,12 @@ export async function VisitCta({ locale }: { locale: Locale }) {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top, rgb(28 27 25 / .8), rgb(28 27 25 / .25) 55%, transparent 80%)",
+              "linear-gradient(to top, rgb(44 36 22 / .8), rgb(44 36 22 / .25) 55%, transparent 80%)",
           }}
           aria-hidden
         />
         {/* Desktop: a left-side scrim so the label, headline and steps read over the bright greens. */}
-        <div className="absolute inset-0 hidden lg:block" style={{ background: "linear-gradient(to right, rgb(28 27 25 / .62), rgb(28 27 25 / .2) 48%, transparent 62%)" }} aria-hidden />
+        <div className="absolute inset-0 hidden lg:block" style={{ background: "linear-gradient(to right, rgb(44 36 22 / .62), rgb(44 36 22 / .2) 48%, transparent 62%)" }} aria-hidden />
         <p className="legal absolute top-4 right-4 rounded-full bg-basalt/50 px-3 py-1 text-bone/80">
           {tc("rendering")}
         </p>

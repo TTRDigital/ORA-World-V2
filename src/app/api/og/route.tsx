@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   return new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", background: "#F7F3EC", padding: 40 }}>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#1C1B19", borderRadius: 40, padding: 64, color: "#F7F3EC" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#2C2416", borderRadius: 40, padding: 64, color: "#F7F3EC" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 26, color: "#D4B987", fontWeight: 600 }}>
             <div style={{ width: 14, height: 14, borderRadius: 14, background: "#A8864F" }} />
             ORA WORLD · PUERTO RICO
