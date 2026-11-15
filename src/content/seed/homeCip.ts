@@ -30,14 +30,6 @@ export const cip = {
       en: "ORA World creates thoughtfully crafted communities in Puerto Rico where longevity, luxury and nature exist in perfect harmony. Tesoro Del Mar in Dorado is the first.",
       es: "ORA World crea comunidades concebidas con esmero en Puerto Rico, donde la longevidad, el lujo y la naturaleza conviven en perfecta armonía. Tesoro Del Mar, en Dorado, es la primera.",
     } as L,
-    quote: { en: "Have you heard about anything like this? Never. That's ORA World.", es: "¿Ha oído hablar de algo así? Nunca. Eso es ORA World." } as L,
-    founder: {
-      label: { en: "The founder", es: "El fundador" } as L,
-      text: {
-        en: "ORA World was founded by a Harvard-trained heart surgeon whose clinics are within driving distance of about 65% of the US population. One of his focus areas is longevity.",
-        es: "ORA World fue fundado por un cirujano cardiovascular formado en Harvard, cuyas clínicas están a distancia en auto de cerca del 65% de la población de Estados Unidos. Uno de sus enfoques es la longevidad.",
-      } as L,
-    },
   },
 
   /* Why ORA World: how it is different (client call: "How is ORA World better?", "not just another apartment

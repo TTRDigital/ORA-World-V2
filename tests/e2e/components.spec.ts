@@ -33,7 +33,8 @@ test.describe("vendored components and the desktop menu", () => {
       await expect(main.getByText(line).first()).toBeVisible();
     await expect(page.locator("#amenities")).toContainText(/ghost kitchen/i);
     await expect(page.locator("#amenities")).toContainText(/total body scan/i);
-    await expect(page.locator("#who")).toContainText(/harvard-trained heart surgeon/i);
+    // Client, 15 Nov: no founder card or quote on the homepage.
+    await expect(page.locator("#who")).not.toContainText(/harvard|heard about anything like this/i);
     // Huddle: the Tesoro Del Mar property specs, as published.
     for (const spec of [/10\s*acres/i, /129\s*residences/i, /42\s*hotel suites/i, /65,500\s*sq ft of amenities/i]) await expect(page.locator("#who")).toContainText(spec);
     // Brief details that are easy to drop.

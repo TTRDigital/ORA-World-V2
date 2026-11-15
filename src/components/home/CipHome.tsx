@@ -105,7 +105,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
 
   return (
     <div className="flex flex-col">
-      {/* 01 Who we are: the core promise and the founder */}
+      {/* 01 Who we are: the core promise and the property (founder card and quote removed, client 15 Nov) */}
       <CipSection id="who" n="01" eyebrow={x(cip.who.eyebrow)} title={x(cip.who.title)} intro={x(cip.who.intro)} body={x(cip.who.body)} wideVisual={false}>
         <div className="grid gap-4">
           <AliveImage image={tdm.aerialTowers} locale={locale} ratio="16/10" sizes="(max-width: 1023px) calc(100vw - 40px), 620px" />
@@ -119,13 +119,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
               </div>
             ))}
           </dl>
-          <div className="rounded-[18px] bg-bone p-6 ring-1 ring-travertine-deep/70 md:p-7">
-            <p className="text-[10.5px] font-semibold tracking-[0.26em] text-brass-ink uppercase">{x(cip.who.founder.label)}</p>
-            <p className="mt-2 text-[16px] leading-relaxed text-charcoal">{x(cip.who.founder.text)}</p>
-          </div>
-          <blockquote className="border-l-2 border-brass pl-5 font-[family-name:var(--font-display)] text-[22px] leading-snug text-charcoal italic md:text-[24px]">
-            “{x(cip.who.quote)}”
-          </blockquote>
         </div>
       </CipSection>
 
