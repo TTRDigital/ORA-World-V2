@@ -124,3 +124,10 @@ export const SoundOff = (p: SVGProps<SVGSVGElement>) => (
     <path d="m16 9.5 5 5M21 9.5l-5 5" />
   </svg>
 );
+
+export const Pause = (p: SVGProps<SVGSVGElement>) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...p}>
+    <rect x="6.5" y="5" width="3.6" height="14" rx="1" />
+    <rect x="13.9" y="5" width="3.6" height="14" rx="1" />
+  </svg>
+);

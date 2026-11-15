@@ -91,7 +91,9 @@
     "filmFrame": "The film",
     "soundOn": "Watch the film",
     "soundOff": "Sound off",
-    "tapForSound": "Tap for sound"
+    "tapForSound": "Tap for sound",
+    "pauseFilm": "Pause the film",
+    "playFilm": "Play the film"
   },
   "explorer": {
     "collections": "Collections",

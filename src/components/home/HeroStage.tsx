@@ -6,7 +6,7 @@ import { preconnect } from "react-dom";
 import { useTranslations } from "next-intl";
 import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
-import { SoundOn, SoundOff } from "@/components/ui/Icons";
+import { SoundOn, SoundOff, Pause, Play } from "@/components/ui/Icons";
 import { FilmLightbox } from "./FilmLightbox";
 
 type Props = {
@@ -89,15 +89,16 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   const [playerKey, setPlayerKey] = useState(0);
   const [startAt, setStartAt] = useState(0);
   const [blocked, setBlocked] = useState(false);
+  const [paused, setPaused] = useState(false);
   const iframe = useRef<HTMLIFrameElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const selfHosted = Boolean(mp4 || webm);
 
-  // Mount the player after load + idle, unless reduced motion or Save-Data asks for the poster only.
+  // Mount the player straight away, for everyone (client, 15 Nov: the film must play when people land; reduced-motion
+  // visitors get it too, with the pause button beside the sound button). Only Save-Data keeps the poster.
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
-    if (reduced || saveData || (!youtubeId && !selfHosted)) return;
+    if (saveData || (!youtubeId && !selfHosted)) return;
     // Client: the film plays the moment the site opens, with sound, and the visitor can turn the sound off. It loads
     // straight away (no waiting for the rest of the page). With sound where the browser allows it; where it does not
     // (until the first click or tap), it still plays at once, silently, the sound button asks for a tap, and the first
@@ -261,6 +262,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
       return;
     }
     if (preClickPlayerRef.current && userHasInteracted()) return reloadWithSound();
+    setPaused(false); // sound on also means the film plays
     post({ event: "command", func: "unMute", args: [] });
     post({ event: "command", func: "setVolume", args: [100] });
     post({ event: "command", func: "playVideo", args: [] });
@@ -274,6 +276,17 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     if (selfHosted && video.current) video.current.muted = true;
     else post({ event: "command", func: "mute", args: [] });
   }, [post, selfHosted]);
+
+  const togglePause = () => {
+    const next = !paused;
+    setPaused(next);
+    if (selfHosted && video.current) {
+      if (next) video.current.pause();
+      else video.current.play().catch(() => {});
+      return;
+    }
+    post({ event: "command", func: next ? "pauseVideo" : "playVideo", args: [] });
+  };
 
   const toggleSound = () => {
     const next = !soundRef.current;
@@ -343,7 +356,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   useEffect(() => {
     if (!youtubeId && !selfHosted) return;
     const onGesture = (e: Event) => {
-      if ((e.target as HTMLElement | null)?.closest("[data-film-sound]")) return; // the sound button handles itself
+      if ((e.target as HTMLElement | null)?.closest("[data-film-sound], [data-film-pause]")) return; // these buttons handle themselves
       if (soundRef.current || !wantsSound()) return;
       if (!userHasInteracted()) return; // e.g. the pointerdown of a touch: sound is allowed from its touchend
       if (!mountRef.current) {
@@ -404,10 +417,12 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         fetchPriority="high"
         sizes="100vw"
         quality={80}
-        className={cn("object-cover transition-opacity duration-700 [transition-timing-function:var(--ease-out)]", playing ? "opacity-0" : "opacity-100")}
+        className={cn("z-[1] object-cover transition-opacity duration-700 [transition-timing-function:var(--ease-out)]", playing ? "opacity-0" : "opacity-100")}
         style={{ objectPosition: poster.focal }}
       />
-      {/* YouTube player: a 16:9 box sized to cover the banner (container units), plus 30% so no chrome shows. */}
+      {/* YouTube player: a 16:9 box sized to cover the banner (container units), plus 30% so no chrome shows. It stays
+          fully visible under the poster (iPhone Safari may refuse to start a film it considers hidden); the poster
+          fades away once the film really plays. */}
       {embed && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <iframe
@@ -418,8 +433,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
             tabIndex={-1}
             allow="autoplay; encrypted-media"
             className={cn(
-              "absolute top-1/2 left-1/2 h-[max(130cqh,73.125cqw)] w-[max(130cqw,231.11cqh)] -translate-x-1/2 -translate-y-1/2 border-0 transition-opacity duration-700",
-              playing ? "opacity-100" : "opacity-0",
+              "absolute top-1/2 left-1/2 h-[max(130cqh,73.125cqw)] w-[max(130cqw,231.11cqh)] -translate-x-1/2 -translate-y-1/2 border-0",
             )}
           />
         </div>
@@ -434,7 +448,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           onPlaying={() => setPlaying(true)}
           aria-hidden="true"
           tabIndex={-1}
-          className={cn("absolute inset-0 h-full w-full object-cover transition-opacity duration-700", playing ? "opacity-100" : "opacity-0")}
+          className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: poster.focal }}
         >
           {webm && <source src={webm} type="video/webm" />}
@@ -442,13 +456,14 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         </video>
       )}
       {(youtubeId || selfHosted) && (
+        <div className="absolute bottom-6 left-5 z-20 flex items-center gap-2 md:bottom-8 md:left-8">
         <button
           type="button"
           onClick={toggleSound}
           aria-pressed={sound}
           data-film-sound
           className={cn(
-            "absolute bottom-6 left-5 z-20 inline-flex min-h-11 items-center gap-2.5 rounded-full px-4 text-[11px] font-semibold tracking-[0.2em] uppercase backdrop-blur-sm transition-colors md:bottom-8 md:left-8",
+            "inline-flex min-h-11 items-center gap-2.5 rounded-full px-4 text-[11px] font-semibold tracking-[0.2em] uppercase backdrop-blur-sm transition-colors",
             blocked ? "film-sound-ask bg-brass text-basalt ring-1 ring-brass-light" : "bg-basalt/55 text-bone ring-1 ring-bone/30 hover:bg-basalt/75",
           )}
           data-track={sound ? "film_sound_off" : "film_sound_on"}
@@ -456,6 +471,19 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           {sound ? <SoundOn className="text-brass-light" /> : <SoundOff className={blocked ? "text-basalt" : "text-brass-light"} />}
           {sound ? t("soundOff") : blocked ? t("tapForSound") : t("soundOn")}
         </button>
+        {/* Pause / play: anyone can stop the moving film (WCAG 2.2.2). */}
+        <button
+          type="button"
+          onClick={togglePause}
+          aria-pressed={paused}
+          aria-label={paused ? t("playFilm") : t("pauseFilm")}
+          data-film-pause
+          className="inline-flex size-11 items-center justify-center rounded-full bg-basalt/55 text-bone ring-1 ring-bone/30 backdrop-blur-sm transition-colors hover:bg-basalt/75"
+          data-track={paused ? "film_play" : "film_pause"}
+        >
+          {paused ? <Play width={16} height={16} /> : <Pause width={16} height={16} />}
+        </button>
+        </div>
       )}
       <p className="visually-hidden" aria-live="polite">
         {playing ? t("filmPlaying") : ""}
