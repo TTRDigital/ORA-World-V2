@@ -20,6 +20,28 @@ const YT_ORIGIN = "https://www.youtube-nocookie.com";
 const SOUND_KEY = "ora2_film_sound";
 /** True once the visitor has clicked, tapped or pressed a key on the page: from then on the browser allows sound. */
 const userHasInteracted = () => (navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation?.hasBeenActive ?? false;
+/**
+ * Will this browser play sound right now, before any click? Chrome allows it for visitors who often play media on the
+ * site; Safari and Firefox (default settings) and first-time Chrome visitors do not. Asked up front so the film never
+ * waits: it starts with sound where allowed, and silently (still at once) everywhere else.
+ */
+const soundAllowedNow = () => {
+  const nav = navigator as Navigator & { getAutoplayPolicy?: (type: string) => string };
+  try {
+    if (typeof nav.getAutoplayPolicy === "function") return nav.getAutoplayPolicy("mediaelement") === "allowed";
+  } catch {}
+  if (userHasInteracted()) return true;
+  try {
+    const Ctx = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!Ctx) return false;
+    const ctx = new Ctx();
+    const ok = ctx.state === "running";
+    void ctx.close();
+    return ok;
+  } catch {
+    return false;
+  }
+};
 const wantsSound = () => {
   try {
     return localStorage.getItem(SOUND_KEY) !== "off";
@@ -73,30 +95,27 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
       const w = window as Window & {
         requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
       };
+      // Client: the film plays the moment the site opens, with sound, and the visitor can turn the sound off.
+      // With sound where the browser allows it; where it does not (until the first click or tap), the film still
+      // plays at once, silently, the sound button asks for a tap, and the first tap anywhere brings the sound in.
       const start = () => {
-        const on = wantsSound();
+        const want = wantsSound();
+        const on = want && soundAllowedNow();
         startRef.current = on;
         soundRef.current = on;
         setStartWithSound(on);
         setSound(on);
+        pendingRef.current = want && !on;
+        setBlocked(want && !on);
         setMount(true);
       };
-      if (typeof w.requestIdleCallback === "function") idle = w.requestIdleCallback(start, { timeout: 3000 });
-      else timer = window.setTimeout(start, 1500);
+      if (typeof w.requestIdleCallback === "function") idle = w.requestIdleCallback(start, { timeout: 600 });
+      else timer = window.setTimeout(start, 200);
     };
-    // Phones: the YouTube player is about 1.1 MB of script, so it waits for the visitor's first touch, scroll or
-    // key press instead of loading during start-up. The poster render shows until then. Self-hosted loops are light.
-    const phone = !selfHosted && window.matchMedia("(max-width: 767px), (pointer: coarse)").matches;
-    const events = ["pointerdown", "touchstart", "wheel", "keydown"] as const;
-    const onFirst = () => {
-      events.forEach((e) => window.removeEventListener(e, onFirst));
-      go();
-    };
-    if (phone) events.forEach((e) => window.addEventListener(e, onFirst, { once: true, passive: true }));
-    else if (document.readyState === "complete") go();
+    // Phones and desktops alike: the film starts as soon as the page has loaded (client: plays right away).
+    if (document.readyState === "complete") go();
     else window.addEventListener("load", go, { once: true });
     return () => {
-      events.forEach((e) => window.removeEventListener(e, onFirst));
       window.removeEventListener("load", go);
       if (idle && "cancelIdleCallback" in window) window.cancelIdleCallback(idle);
       clearTimeout(timer);
@@ -331,7 +350,17 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     const onGesture = (e: Event) => {
       if ((e.target as HTMLElement | null)?.closest("[data-film-sound]")) return; // the sound button handles itself
       if (soundRef.current || !wantsSound()) return;
-      if (!mountRef.current) return; // the player mounts on this gesture (phones) and starts with sound
+      if (!userHasInteracted()) return; // e.g. the pointerdown of a touch: sound is allowed from its touchend
+      if (!mountRef.current) {
+        // Still loading: it will load with sound, since the visitor has now interacted.
+        startRef.current = true;
+        soundRef.current = true;
+        setStartWithSound(true);
+        setSound(true);
+        pendingRef.current = false;
+        setBlocked(false);
+        return;
+      }
       unmuteNow();
     };
     // Every event browsers count as a real interaction (a scroll with the wheel does not count, by browser rule).
