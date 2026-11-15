@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const PAGES = ["/en", "/es", "/en/residences", "/en/residences/plans", "/en/residences/plans/residence-b1", "/en/living", "/en/place", "/en/place/tesoro-del-mar", "/en/place/gallery", "/en/invest", "/en/portfolio", "/en/visit", "/en/faq"];
+const PAGES = ["/en", "/es", "/en/residences", "/en/residences/plans", "/en/residences/plans/residence-b1", "/en/living", "/en/place", "/en/place/tesoro-del-mar", "/en/place/gallery", "/en/portfolio", "/en/visit", "/en/faq"];
 
 test.describe("accessibility (axe, WCAG 2.2 AA)", () => {
   for (const path of PAGES) {

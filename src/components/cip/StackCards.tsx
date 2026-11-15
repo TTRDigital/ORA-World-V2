@@ -81,7 +81,7 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
         <li
           key={c.href}
           data-stack-item
-          className="sticky mb-6 last:mb-0 md:mb-10 [top:calc(88px+var(--i)*14px)] lg:[top:calc(104px+var(--i)*20px)]"
+          className="sticky mb-6 last:mb-0 md:mb-10 [top:calc(96px+var(--i)*14px)] lg:[top:calc(120px+var(--i)*20px)]"
           style={{ "--i": i } as React.CSSProperties}
         >
           <article className="relative grid origin-top overflow-hidden rounded-[24px] bg-white shadow-[0_24px_60px_-34px_rgb(44_36_22/0.55)] ring-1 ring-travertine-deep/60 will-change-transform md:min-h-[420px] md:grid-cols-[1.1fr_1fr] md:rounded-[28px]">

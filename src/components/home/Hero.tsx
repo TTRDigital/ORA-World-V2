@@ -21,7 +21,7 @@ export async function Hero({ locale }: { locale: Locale }) {
       id="hero"
       aria-labelledby="hero-title"
       data-tone="dark"
-      className="on-dark relative isolate flex h-[calc(100svh-72px)] min-h-[520px] flex-col items-center justify-center overflow-hidden bg-basalt px-5 text-center lg:h-[calc(100svh-80px)]"
+      className="on-dark relative isolate flex h-[calc(100svh-80px)] min-h-[520px] flex-col items-center justify-center overflow-hidden bg-basalt px-5 text-center lg:h-[calc(100svh-96px)]"
     >
       <HeroStage locale={locale} youtubeId={settings.filmYoutubeId} mp4={settings.filmMp4} webm={settings.filmWebm} poster={settings.filmPoster} />
       {/* Client: the film should read bright. No full veil: only a soft shade behind the words, a light top edge for the

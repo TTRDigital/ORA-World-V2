@@ -15,7 +15,7 @@ import { MobileSheet, type MenuTile } from "./MobileSheet";
  * Clean white bar fixed across the top of the page (client, 15 Nov: white, the logo in its original gold, always at
  * the top, full width rather than a floating pill, and "Inquire" as the only action; no phone number). Desktop: logo,
  * tracked capitals navigation, EN | ES and "Inquire". Phones: logo, "Inquire" and the menu.
- * Height 72px phones / 80px desktop; main's top padding matches.
+ * Height 80px phones / 96px desktop (client, 15 Nov: a bigger, clearer logo); main's top padding matches.
  */
 export function Header({ tiles }: { tiles: MenuTile[] }) {
   const t = useTranslations("nav");
@@ -46,9 +46,9 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
           scrolled ? "border-transparent shadow-[0_10px_28px_-18px_rgb(44_36_22/0.35)]" : "border-travertine-deep/50",
         )}
       >
-        <nav aria-label="Primary" className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between gap-3 px-4 text-charcoal min-[400px]:px-5 lg:h-[80px] lg:px-10">
+        <nav aria-label="Primary" className="mx-auto flex h-[80px] max-w-[1440px] items-center justify-between gap-3 px-4 text-charcoal min-[400px]:px-5 lg:h-[96px] lg:px-10">
           <Link href="/" aria-label={t("home")} className="flex shrink-0 items-center">
-            <Logo variant="gold" height={72} priority responsive className="h-[50px] lg:h-[64px]" />
+            <Logo variant="header" height={96} priority responsive className="h-[64px] lg:h-[80px]" />
           </Link>
           <ul className="hidden items-center lg:flex">
             {primaryNav.map((item) => (

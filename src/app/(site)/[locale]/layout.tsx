@@ -46,7 +46,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     { key: "residences" as const, href: "/residences", image: tdm.aptLiving },
     { key: "living" as const, href: "/living", image: tdm.gym },
     { key: "place" as const, href: "/place", image: tdm.aerialCoast },
-    { key: "invest" as const, href: "/invest", image: tdm.exteriorGolf },
     { key: "plans" as const, href: "/residences/plans", image: tdm.kitchenDining },
   ];
   return (
@@ -55,7 +54,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <NextIntlClientProvider>
           <SkipLink />
           <Header tiles={tiles} />
-          <main id="main" className="pt-[72px] lg:pt-[80px]">
+          <main id="main" className="pt-[80px] lg:pt-[96px]">
             <PageTransition>{children}</PageTransition>
           </main>
           <Footer settings={settings} showPress={press.length > 0} />

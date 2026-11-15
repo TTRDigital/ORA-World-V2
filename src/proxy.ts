@@ -32,7 +32,9 @@ export function proxy(request: NextRequest) {
   if (hit) {
     const locale = pathname.match(/^\/(en|es)(?=\/|$)/)?.[1] ?? routing.defaultLocale;
     const url = request.nextUrl.clone();
-    url.pathname = `/${locale}${hit.to === "/" ? "" : hit.to}`;
+    const [path, hash] = hit.to.split("#");
+    url.pathname = `/${locale}${path === "/" ? "" : path}`;
+    url.hash = hash ? `#${hash}` : "";
     return NextResponse.redirect(url, hit.permanent ? 308 : 307);
   }
 

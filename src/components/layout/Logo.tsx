@@ -12,7 +12,8 @@ export function Logo({
   priority,
   responsive,
 }: {
-  variant?: "gold" | "white";
+  /** "header": the gold lockup graded to read on the white bar (richer gold, firmer strokes; same artwork). */
+  variant?: "gold" | "white" | "header";
   height?: number;
   className?: string;
   priority?: boolean;
@@ -24,7 +25,7 @@ export function Logo({
   const width = Math.round(height * ratio);
   return (
     <Image
-      src={variant === "gold" ? "/brand/ora-world-logo-gold.png" : "/brand/ora-world-logo-white.png"}
+      src={variant === "header" ? "/brand/ora-world-logo-gold-header.png" : variant === "gold" ? "/brand/ora-world-logo-gold.png" : "/brand/ora-world-logo-white.png"}
       alt="ORA World · Puerto Rico"
       width={width}
       height={height}

@@ -147,7 +147,6 @@ export const cip = {
       en: "General information, not tax or legal advice. Every situation is specific; ORA's accountants will confirm what applies to you.",
       es: "Información general, no asesoría fiscal ni legal. Cada situación es distinta; los contadores de ORA confirmarán lo que aplica a su caso.",
     } as L,
-    link: { en: "How the incentive works", es: "Cómo funciona el incentivo" } as L,
   },
 
   /* 05 Step inside: tour and film */

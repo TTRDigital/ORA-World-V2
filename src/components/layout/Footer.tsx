@@ -37,7 +37,7 @@ export function Footer({ settings, showPress }: { settings: SiteSettings; showPr
           <p className="small mt-1 mb-4 max-w-sm text-bone/70">{t("footer.newsletterText")}</p>
           <NewsletterForm dark />
         </div>
-        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:grid-cols-5">
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:grid-cols-4">
           {footerGroups.map((g) => (
             <div key={g.key}>
               <p className="label mb-3">{t(`footer.groups.${g.key}`)}</p>
