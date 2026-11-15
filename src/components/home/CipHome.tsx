@@ -187,12 +187,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
         intro={x(cip.why.intro)}
         body={x(cip.why.body)}
         bullets={cip.why.bullets.map(x)}
-        cta={
-          <>
-            <TextLink href={cip.why.verifyUrl} external>{x(cip.why.verify)}</TextLink>
-            <TextLink href="/invest">{x(cip.why.link)}</TextLink>
-          </>
-        }
+        cta={<TextLink href="/invest">{x(cip.why.link)}</TextLink>}
         note={x(cip.why.note)}
         wideVisual={false}
       >
