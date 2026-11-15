@@ -7,7 +7,7 @@ import { HeroStage } from "./HeroStage";
 
 /**
  * Hero (client reference: theresidencesatcipriani.com): the film full screen behind the floating header, a soft
- * dark veil, one line in serif capitals, centred (the brand slogan, guideline 2.4: "Where smart money meets brilliant living"), and one button: "Inquire"
+ * dark veil, one line in serif capitals, centred (client, 15 Nov: short, about longevity, with ORA World in it: "ORA World, where longevity lives"), and one button: "Inquire"
  * (client call, 10 Nov 2026: one clean call to action). The film's sound toggle sits bottom-left.
  */
 export async function Hero({ locale }: { locale: Locale }) {
