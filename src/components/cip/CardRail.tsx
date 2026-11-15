@@ -6,11 +6,12 @@ import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "@/components/ui/Icons";
 
-export type RailCard = { key: string; kicker: string; title: string; text?: string; image: ImageRef; video?: string; href?: string; meta?: string; cta?: string };
+export type RailCard = { key: string; kicker: string; title: string; text?: string; image: ImageRef; video?: string; poster?: string; href?: string; meta?: string; cta?: string };
 
 /**
  * Swipeable row of cards (scroll-snap, arrow buttons, arrow keys), the Cipriani gallery pattern. Card images "come
- * alive": a slow drift and zoom while the card is on screen, or a muted looping clip when a `video` is supplied.
+ * alive": a slow drift and zoom while the card is on screen, or a muted looping clip when a `video` is supplied (it
+ * loads only when about to be seen, plays while on screen and pauses off screen; reduced motion keeps the poster).
  */
 export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/3", fit = "cover" }: { cards: RailCard[]; label: string; hint?: string; locale: Locale; dark?: boolean; ratio?: string; fit?: "cover" | "contain" }) {
   const track = useRef<HTMLUListElement>(null);
@@ -24,9 +25,24 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
     el.addEventListener("scroll", update, { passive: true });
     const io = new IntersectionObserver((entries) => entries.forEach((e) => ((e.target as HTMLElement).dataset.inview = String(e.isIntersecting))), { threshold: 0.35 });
     el.querySelectorAll<HTMLElement>(".alive").forEach((c) => io.observe(c));
+    // Clips: play while at least a third of the card shows (in the page and in the rail), pause otherwise.
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const vio = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          const v = e.target as HTMLVideoElement;
+          if (e.isIntersecting) {
+            if (v.preload !== "auto") v.preload = "auto";
+            v.play().catch(() => {});
+          } else v.pause();
+        }),
+      { threshold: 0.35 },
+    );
+    if (!still) el.querySelectorAll<HTMLVideoElement>("video[data-loop]").forEach((v) => vio.observe(v));
     return () => {
       el.removeEventListener("scroll", update);
       io.disconnect();
+      vio.disconnect();
     };
   }, []);
 
@@ -55,7 +71,19 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
             <>
               <div className={cn("alive relative overflow-hidden", fit === "contain" ? "bg-white" : "bg-travertine")} style={{ aspectRatio: ratio }}>
                 {c.video ? (
-                  <video src={c.video} muted loop playsInline autoPlay aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+                  <video
+                    data-loop
+                    src={c.video}
+                    poster={c.poster}
+                    muted
+                    loop
+                    playsInline
+                    preload="none"
+                    disablePictureInPicture
+                    tabIndex={-1}
+                    aria-label={c.image.alt[locale] || c.image.alt.en}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
                 ) : (
                   <Image
                     src={c.image.src}
