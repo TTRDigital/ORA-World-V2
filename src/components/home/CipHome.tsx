@@ -145,14 +145,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
               </li>
             ))}
           </ol>
-          <ul className="mt-8 flex flex-col gap-3 border-t border-travertine-deep pt-6 text-[13px] text-charcoal-soft md:flex-row md:flex-wrap md:gap-x-10" aria-label={es ? "Confianza" : "Why you can trust it"}>
-            {cip.different.trust.map((tr, i) => (
-              <li key={i} className="flex items-center gap-2.5">
-                <span aria-hidden className="size-1.5 rounded-full bg-brass" />
-                {x(tr)}
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 

@@ -75,11 +75,6 @@ export const cip = {
         href: "#charters",
       },
     ],
-    trust: [
-      { en: "Founded by a Harvard-trained heart surgeon", es: "Fundado por un cirujano cardiovascular formado en Harvard" },
-      { en: "An official government decree you can look up yourself", es: "Un decreto oficial del gobierno que puede verificar usted mismo" },
-      { en: "Sponsor: TRPbuildco LLC, Dorado · Vega Alta, Puerto Rico", es: "Patrocinador: TRPbuildco LLC, Dorado · Vega Alta, Puerto Rico" },
-    ] as L[],
   },
 
   /* 02 Longevity and preventive health (brief §2, §4, lines) */
