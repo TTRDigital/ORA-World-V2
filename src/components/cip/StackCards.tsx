@@ -103,9 +103,9 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
               <span aria-hidden className="h-px w-12 bg-brass" />
               <h3 className="display-m mt-4 text-charcoal md:mt-5">{c.title}</h3>
               <p className="mt-2.5 text-[15px] leading-relaxed text-charcoal-soft md:text-[16px]">{c.text}</p>
-              <ul className="mt-4 flex flex-wrap gap-2 md:mt-5" aria-label={c.title}>
+              <ul className="mt-4 flex flex-wrap gap-1.5 md:mt-5 md:gap-2" aria-label={c.title}>
                 {c.tags.map((tag) => (
-                  <li key={tag} className="rounded-full bg-bone px-3 py-1 text-[12px] md:py-1.5 font-medium text-charcoal ring-1 ring-brass/35">
+                  <li key={tag} className="rounded-full bg-bone px-2.5 py-1 text-[11.5px] font-medium whitespace-nowrap text-charcoal ring-1 ring-brass/35 min-[400px]:text-[12px] md:px-3 md:py-1.5">
                     {tag}
                   </li>
                 ))}
