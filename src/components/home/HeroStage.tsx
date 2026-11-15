@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { preconnect } from "react-dom";
 import { useTranslations } from "next-intl";
 import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
@@ -27,10 +28,12 @@ const userHasInteracted = () => (navigator as Navigator & { userActivation?: { h
  */
 const soundAllowedNow = () => {
   const nav = navigator as Navigator & { getAutoplayPolicy?: (type: string) => string };
+  const apple = /iP(hone|ad|od)/.test(nav.userAgent) || (/Macintosh/.test(nav.userAgent) && nav.maxTouchPoints > 1) || (/Safari\//.test(nav.userAgent) && !/Chrom(e|ium)|Edg\/|OPR\/|Firefox\//.test(nav.userAgent));
   try {
     if (typeof nav.getAutoplayPolicy === "function") return nav.getAutoplayPolicy("mediaelement") === "allowed";
   } catch {}
   if (userHasInteracted()) return true;
+  if (apple) return false;
   try {
     const Ctx = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!Ctx) return false;
@@ -59,6 +62,12 @@ const wantsSound = () => {
  */
 export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   const t = useTranslations("hero");
+  // Open the connections to YouTube while the page is still loading, so the film starts sooner.
+  if (youtubeId) {
+    preconnect(YT_ORIGIN);
+    preconnect("https://www.youtube.com");
+    preconnect("https://i.ytimg.com");
+  }
   const [mount, setMount] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [lightbox, setLightbox] = useState(false);
@@ -89,37 +98,23 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     if (reduced || saveData || (!youtubeId && !selfHosted)) return;
-    let idle = 0;
-    let timer = 0;
-    const go = () => {
-      const w = window as Window & {
-        requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
-      };
-      // Client: the film plays the moment the site opens, with sound, and the visitor can turn the sound off.
-      // With sound where the browser allows it; where it does not (until the first click or tap), the film still
-      // plays at once, silently, the sound button asks for a tap, and the first tap anywhere brings the sound in.
-      const start = () => {
-        const want = wantsSound();
-        const on = want && soundAllowedNow();
-        startRef.current = on;
-        soundRef.current = on;
-        setStartWithSound(on);
-        setSound(on);
-        pendingRef.current = want && !on;
-        setBlocked(want && !on);
-        setMount(true);
-      };
-      if (typeof w.requestIdleCallback === "function") idle = w.requestIdleCallback(start, { timeout: 600 });
-      else timer = window.setTimeout(start, 200);
+    // Client: the film plays the moment the site opens, with sound, and the visitor can turn the sound off. It loads
+    // straight away (no waiting for the rest of the page). With sound where the browser allows it; where it does not
+    // (until the first click or tap), it still plays at once, silently, the sound button asks for a tap, and the first
+    // tap anywhere brings the sound in.
+    const start = () => {
+      const want = wantsSound();
+      const on = want && soundAllowedNow();
+      startRef.current = on;
+      soundRef.current = on;
+      setStartWithSound(on);
+      setSound(on);
+      pendingRef.current = want && !on;
+      setBlocked(want && !on);
+      setMount(true);
     };
-    // Phones and desktops alike: the film starts as soon as the page has loaded (client: plays right away).
-    if (document.readyState === "complete") go();
-    else window.addEventListener("load", go, { once: true });
-    return () => {
-      window.removeEventListener("load", go);
-      if (idle && "cancelIdleCallback" in window) window.cancelIdleCallback(idle);
-      clearTimeout(timer);
-    };
+    const frame = requestAnimationFrame(start); // the next frame after the page appears
+    return () => cancelAnimationFrame(frame);
   }, [youtubeId, selfHosted]);
 
   const post = useCallback((msg: Record<string, unknown>) => {
@@ -175,7 +170,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
             setBlocked(wantsSound());
             post({ event: "command", func: "mute", args: [] });
             post({ event: "command", func: "playVideo", args: [] });
-          }, 6000);
+          }, 1500);
       }
       const state =
         data.event === "onStateChange"

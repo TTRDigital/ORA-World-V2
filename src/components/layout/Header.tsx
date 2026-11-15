@@ -12,12 +12,12 @@ import { TextRoll } from "@/components/vendor/skiper-ui/skiper58";
 import { MobileSheet, type MenuTile } from "./MobileSheet";
 
 /**
- * Floating white bar (client, 15 Nov: white background, the logo in its original gold, and "Inquire" plus the phone
- * number at the top on every screen), the same on every scroll position: logo, tracked capitals navigation, the sales
- * line, EN | ES and one gold button, "Inquire". Phones: logo, the phone number, "Inquire" and the menu.
- * Height 72px phones / 80px desktop, 12px from the top; main's top padding matches.
+ * Clean white bar fixed across the top of the page (client, 15 Nov: white, the logo in its original gold, always at
+ * the top, full width rather than a floating pill, and "Inquire" as the only action; no phone number). Desktop: logo,
+ * tracked capitals navigation, EN | ES and "Inquire". Phones: logo, "Inquire" and the menu.
+ * Height 72px phones / 80px desktop; main's top padding matches.
  */
-export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | null }) {
+export function Header({ tiles }: { tiles: MenuTile[] }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -40,16 +40,15 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-3 z-[60] px-3 lg:px-6">
-        <nav
-          aria-label="Primary"
-          className={cn(
-            "pointer-events-auto mx-auto flex h-[72px] max-w-[1400px] items-center justify-between gap-2 rounded-full bg-white/97 pr-2 pl-4 text-charcoal ring-1 ring-travertine-deep/40 backdrop-blur-md transition-shadow duration-300 min-[400px]:pl-5 lg:h-[80px] lg:gap-3 lg:pr-3 lg:pl-10",
-            scrolled ? "shadow-[0_14px_34px_-16px_rgb(44_36_22/0.4)]" : "shadow-[0_10px_26px_-18px_rgb(44_36_22/0.3)]",
-          )}
-        >
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-[60] border-b bg-white transition-[box-shadow,border-color] duration-300",
+          scrolled ? "border-transparent shadow-[0_10px_28px_-18px_rgb(44_36_22/0.35)]" : "border-travertine-deep/50",
+        )}
+      >
+        <nav aria-label="Primary" className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between gap-3 px-4 text-charcoal min-[400px]:px-5 lg:h-[80px] lg:px-10">
           <Link href="/" aria-label={t("home")} className="flex shrink-0 items-center">
-            <Logo variant="gold" height={72} priority responsive className="h-[46px] min-[400px]:h-[50px] lg:h-[62px]" />
+            <Logo variant="gold" height={72} priority responsive className="h-[50px] lg:h-[64px]" />
           </Link>
           <ul className="hidden items-center lg:flex">
             {primaryNav.map((item) => (
@@ -70,19 +69,9 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
               </li>
             ))}
           </ul>
-          <div className="flex min-w-0 items-center gap-1.5 min-[400px]:gap-2 lg:gap-3">
-            {phone && (
-              <a
-                href={`tel:${phone.replace(/[^\d+]/g, "")}`}
-                className="inline-flex min-h-11 items-center px-1 text-[12px] font-semibold whitespace-nowrap text-charcoal hover:text-brass-ink max-[339px]:hidden min-[400px]:text-[13px] lg:max-xl:hidden lg:px-0 lg:tracking-[0.08em]"
-                data-track="call"
-                data-track-label="header"
-              >
-                {phone}
-              </a>
-            )}
+          <div className="flex items-center gap-2 lg:gap-3">
             <LanguageToggle className="hidden rounded-full px-3 py-1.5 ring-1 ring-travertine-deep lg:flex" />
-            <Link href="/#inquire" className="cta min-h-10 px-3.5 text-[10px] tracking-[0.16em] min-[400px]:px-4 lg:min-h-11 lg:px-5 lg:text-[11px] lg:tracking-[0.2em]" data-track="cta_inquire" data-track-label="header">
+            <Link href="/#inquire" className="cta min-h-11 px-5 text-[11px]" data-track="cta_inquire" data-track-label="header">
               {t("priceList")}
             </Link>
             <button
