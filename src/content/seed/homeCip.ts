@@ -49,6 +49,7 @@ export const cip = {
           es: "Un escaneo corporal completo para cada miembro, nutricionistas en el equipo, una cocina fantasma que cocina para usted y un programa para ponerse en forma fácilmente.",
         } as L,
         href: "#longevity",
+        tags: [{ en: "Total body scan", es: "Escaneo corporal completo" }, { en: "Nutritionists on staff", es: "Nutricionistas" }, { en: "Ghost kitchen", es: "Cocina fantasma" }, { en: "Fitness program", es: "Programa de ejercicio" }] as L[],
       },
       {
         title: { en: "Keep more of what you earn", es: "Conserve más de lo que gana" } as L,
@@ -57,6 +58,7 @@ export const cip = {
           es: "La ley oficial de incentivos de Puerto Rico, un decreto aprobado por el gobierno por unos 30 años y nuestros contadores para guiarle.",
         } as L,
         href: "#why-puerto-rico",
+        tags: [{ en: "Official incentive law", es: "Ley oficial de incentivos" }, { en: "Decree for about 30 years", es: "Decreto por unos 30 años" }, { en: "Accountants to guide you", es: "Contadores que le guían" }] as L[],
       },
       {
         title: { en: "Travel, taken care of", es: "Viajes resueltos" } as L,
@@ -65,6 +67,7 @@ export const cip = {
           es: "Vuelos chárter privados a su condominio en Puerto Rico y de regreso a Estados Unidos, un vestíbulo atendido 24/7 y el auto de la casa.",
         } as L,
         href: "#charters",
+        tags: [{ en: "Private charter flights", es: "Vuelos chárter privados" }, { en: "Lobby attended 24/7", es: "Vestíbulo 24/7" }, { en: "House car", es: "Auto de la casa" }] as L[],
       },
     ],
   },

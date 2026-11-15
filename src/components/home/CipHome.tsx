@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { CipSection } from "@/components/cip/CipSection";
 import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { AliveImage } from "@/components/cip/AliveImage";
+import { StackCards } from "@/components/cip/StackCards";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
@@ -122,22 +123,22 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </CipSection>
 
-      {/* 02 Why ORA World: how it is different, and why you can trust it */}
+      {/* 02 Why ORA World: how it is different */}
       <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
           <SectionHead n="02" id="why-ora-world-title" eyebrow={x(cip.different.eyebrow)} title={x(cip.different.title)} intro={x(cip.different.intro)} />
-          <ol className="mt-10 grid gap-4 md:grid-cols-3 md:gap-6">
-            {cip.different.items.map((item, i) => (
-              <li key={item.href} className="flex flex-col rounded-[20px] bg-white p-6 ring-1 ring-travertine-deep/60 md:p-8" data-reveal style={{ "--reveal-delay": `${i * 90}ms` } as React.CSSProperties}>
-                <span aria-hidden className="h-px w-12 bg-brass" />
-                <h3 className="display-s mt-5 text-charcoal">{x(item.title)}</h3>
-                <p className="mt-2 flex-1 text-[15px] leading-relaxed text-charcoal-soft">{x(item.text)}</p>
-                <div className="mt-4">
-                  <TextLink href={item.href}>{es ? "Leer más" : "Read more"}</TextLink>
-                </div>
-              </li>
-            ))}
-          </ol>
+          {/* Client, 15 Nov: cards that stack on top of each other as you scroll, with more than plain text. */}
+          <StackCards
+            locale={locale}
+            cards={cip.different.items.map((item, i) => ({
+              title: x(item.title),
+              text: x(item.text),
+              tags: item.tags.map((tag) => x(tag)),
+              href: item.href,
+              linkLabel: es ? "Leer más" : "Read more",
+              image: [life.spa, tdm.exteriorRoad, life.jet][i],
+            }))}
+          />
         </div>
       </section>
 
