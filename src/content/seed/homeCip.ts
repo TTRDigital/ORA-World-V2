@@ -126,18 +126,6 @@ export const cip = {
       en: "Puerto Rico is the only place on earth with a nine-day week. Be in New York, in your office or anywhere you want, Monday through Thursday, from 9 or 10 am until 7 pm. You only need to be in Puerto Rico for about 30 weekends a year: thirty amazing weekends, in a great place, with great friends.",
       es: "Puerto Rico es el único lugar del mundo con una semana de nueve días. Esté en Nueva York, en su oficina o donde quiera, de lunes a jueves, de 9 o 10 de la mañana a 7 de la tarde. Solo necesita estar en Puerto Rico unos 30 fines de semana al año: treinta fines de semana increíbles, en un gran lugar, con grandes amigos.",
     } as L,
-    body: {
-      en: "If you are in your late 40s and making real money, running a big advertising or management business, for example, the question is simple: wouldn't it be good to figure out how to run your business from Puerto Rico?",
-      es: "Si tiene cerca de 50 años y gana bien, dirigiendo por ejemplo una gran empresa de publicidad o de gestión, la pregunta es simple: ¿no sería bueno descubrir cómo dirigir su negocio desde Puerto Rico?",
-    } as L,
-    bullets: [
-      { en: "An official Puerto Rico law: public and easy to verify", es: "Una ley oficial de Puerto Rico: pública y fácil de verificar" },
-      { en: "A specific decree, approved by the government, that nobody can take away", es: "Un decreto específico, aprobado por el gobierno, que nadie puede quitarle" },
-      { en: "15 years plus a 15-year extension: about 30 years in total", es: "15 años más una extensión de 15: unos 30 años en total" },
-      { en: "You don't need to move now. You just need to apply.", es: "No necesita mudarse ahora. Solo necesita solicitar." },
-      { en: "Applications in before January 1 are grandfathered, even if the process finishes next year", es: "Las solicitudes presentadas antes del 1 de enero mantienen los términos actuales, aunque el proceso termine el año siguiente" },
-      { en: "Our team of accountants helps; every situation is specific", es: "Nuestro equipo de contadores le ayuda; cada situación es distinta" },
-    ] as L[],
     stats: [
       { value: "0%", label: { en: "today, on capital gains and dividends", es: "hoy, sobre ganancias de capital y dividendos" } as L },
       { value: "4%", label: { en: "the rate from January 1", es: "la tasa a partir del 1 de enero" } as L },

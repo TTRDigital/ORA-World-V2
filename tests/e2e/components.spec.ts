@@ -27,7 +27,6 @@ test.describe("vendored components and the desktop menu", () => {
       /two lungs, two kidneys/i,
       /what is the value of an extra 10 years/i,
       /don.t you want to have a better life/i,
-      /you don.t need to move now\. you just need to apply/i,
       /longevity is the foundation of our world/i,
     ])
       await expect(main.getByText(line).first()).toBeVisible();
@@ -41,7 +40,8 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#fitness")).toContainText(/an outlier/i);
     await expect(page.locator("#fitness")).toContainText(/work on it in advance/i);
     await expect(page.locator("#why-puerto-rico")).toContainText(/9 or 10 am until 7 pm/i);
-    await expect(page.locator("#why-puerto-rico")).toContainText(/advertising or management business/i);
+    // Client, 15 Nov: the late-40s paragraph and the decree bullet list were removed.
+    await expect(page.locator("#why-puerto-rico")).not.toContainText(/advertising or management business|nobody can take away/i);
     await expect(page.locator("#steps")).toContainText(/how ora world helps you/i);
     await expect(page.locator("#inquire")).toContainText(/brochure/i);
     // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.

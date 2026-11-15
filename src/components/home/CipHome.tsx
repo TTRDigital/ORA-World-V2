@@ -185,8 +185,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
         eyebrow={x(cip.why.eyebrow)}
         title={x(cip.why.title)}
         intro={x(cip.why.intro)}
-        body={x(cip.why.body)}
-        bullets={cip.why.bullets.map(x)}
         note={x(cip.why.note)}
         wideVisual={false}
       >
