@@ -3,7 +3,7 @@ import type { L } from "../types";
 /**
  * Homepage story. Sources, nothing invented:
  *  - the owner's content brief ("ORA World Content Brief", from his recorded conversation, Nov 2026): the core
- *    promise, preventive health, fitness and nutrition, ORA services, the nine-day week and the tax decree, the
+ *    promise, preventive health, fitness and nutrition, ORA services, the tax decree (the nine-day week was dropped, client 15 Nov), the
  *    audience, and his ready-to-use lines (kept word for word: "Planes don't fall from the sky", "two lungs, two
  *    kidneys", "What is the value of an extra 10 years", "don't you want to have a better life", "an outlier");
  *  - oraworld.com (mission, "Beyond expectations", Act 60 explainer), the TDM Brochure, the Phase 1 floor plans and
@@ -56,11 +56,11 @@ export const cip = {
       {
         title: { en: "Keep more of what you earn", es: "Conserve más de lo que gana" } as L,
         text: {
-          en: "Puerto Rico's official incentive law: a government decree for about 30 years, with our accountants to guide you.",
-          es: "La ley oficial de incentivos de Puerto Rico: un decreto del gobierno por unos 30 años, con nuestros contadores para guiarle.",
+          en: "Puerto Rico's Act 60: 0% or 4% on investment income for residents, with our accountants to guide you.",
+          es: "La Ley 60 de Puerto Rico: 0% o 4% sobre ingresos de inversión para residentes, con nuestros contadores para guiarle.",
         } as L,
         href: "#why-puerto-rico",
-        tags: [{ en: "Incentive law", es: "Ley de incentivos" }, { en: "~30-year decree", es: "Decreto de ~30 años" }, { en: "Accountants", es: "Contadores" }] as L[],
+        tags: [{ en: "Act 60", es: "Ley 60" }, { en: "0% or 4%", es: "0% o 4%" }, { en: "Accountants", es: "Contadores" }] as L[],
       },
       {
         title: { en: "Travel, taken care of", es: "Viajes resueltos" } as L,
@@ -120,24 +120,33 @@ export const cip = {
     ] as L[],
   },
 
-  /* 04 Why Puerto Rico: the nine-day week and the tax decree (brief §6, §7, lines). Rates checked 15 Nov 2026 against
-     Act 38-2026 (signed 10 Mar 2026): resident-investor applications filed by 31 Dec 2026 keep 0%; filed from
-     1 Jan 2027, 4%. Dated labels, so they stay true after New Year. */
+  /* 04 Why Puerto Rico: Act 60 and what residents get (client, 15 Nov: talk about Act 60 and its tax benefits for people
+     who move to Puerto Rico and become residents, not the nine-day week). Checked 15 Nov 2026 against summaries of
+     Act 38-2026 (signed 10 Mar 2026; incorp.com, thecfoassociates.com, procopio.com): resident-investor applications
+     filed by 31 Dec 2026 keep 0% on interest, dividends and post-move capital gains, through 2035; filed from
+     1 Jan 2027, 4%, with the program running to 2055. Tax team to confirm before go-live (CONTENT-TODO.md). */
   why: {
     eyebrow: { en: "Why Puerto Rico", es: "Por qué Puerto Rico" } as L,
-    title: { en: "The nine-day week", es: "La semana de nueve días" } as L,
+    title: { en: "Act 60: the tax benefits of living here", es: "Ley 60: los beneficios fiscales de vivir aquí" } as L,
     intro: {
-      en: "Puerto Rico is the only place with a nine-day week. Work from New York or anywhere, Monday to Thursday, 9 or 10 am until 7 pm. Then spend about 30 weekends a year in Puerto Rico, with great friends.",
-      es: "Puerto Rico es el único lugar con una semana de nueve días. Trabaje desde Nueva York o donde quiera, de lunes a jueves, de 9 o 10 de la mañana a 7 de la tarde. Luego pase unos 30 fines de semana al año en Puerto Rico, con grandes amigos.",
+      en: "Move to Puerto Rico, become a resident, and Act 60 lets you keep more of what you earn. Interest, dividends and capital gains made after you move are taxed at 0% if you apply by December 31, 2026, or 4% if you apply from 2027. And it is part of the United States: same passport, same dollar.",
+      es: "Múdese a Puerto Rico, hágase residente y la Ley 60 le permite conservar más de lo que gana. Los intereses, dividendos y ganancias de capital generados después de mudarse tributan al 0% si solicita hasta el 31 de diciembre de 2026, o al 4% si solicita desde 2027. Y es parte de Estados Unidos: el mismo pasaporte, el mismo dólar.",
     } as L,
+    body: { en: "To qualify, you:", es: "Para calificar, usted:" } as L,
+    bullets: [
+      { en: "Become a bona fide resident (generally at least 183 days a year in Puerto Rico)", es: "Se convierte en residente bona fide (en general, al menos 183 días al año en Puerto Rico)" },
+      { en: "Buy a home in Puerto Rico within two years of your decree, such as a residence at Tesoro Del Mar", es: "Compra una vivienda en Puerto Rico dentro de los dos años del decreto, como una residencia en Tesoro Del Mar" },
+      { en: "Make a yearly donation to Puerto Rico nonprofits and file a yearly report", es: "Hace una donación anual a organizaciones sin fines de lucro de Puerto Rico y presenta un informe anual" },
+      { en: "Apply for your decree, with ORA's accountants guiding you", es: "Solicita su decreto, con la guía de los contadores de ORA" },
+    ] as L[],
     stats: [
-      { value: "0%", label: { en: "on capital gains and dividends, for applications filed by December 31, 2026", es: "sobre ganancias de capital y dividendos, para solicitudes presentadas hasta el 31 de diciembre de 2026" } as L },
-      { value: "4%", label: { en: "for applications filed from January 1, 2027", es: "para solicitudes presentadas desde el 1 de enero de 2027" } as L },
-      { value: "15+15", label: { en: "years: the decree and its extension", es: "años: el decreto y su extensión" } as L },
+      { value: "0%", label: { en: "on interest, dividends and capital gains, if you apply by December 31, 2026", es: "sobre intereses, dividendos y ganancias de capital, si solicita hasta el 31 de diciembre de 2026" } as L },
+      { value: "4%", label: { en: "on the same income, if you apply from January 1, 2027", es: "sobre los mismos ingresos, si solicita desde el 1 de enero de 2027" } as L },
+      { value: "2055", label: { en: "the year the program now runs to", es: "el año hasta el que ahora llega el programa" } as L },
     ],
     note: {
-      en: "General information, not tax or legal advice. ORA's accountants will confirm what applies to you.",
-      es: "Información general, no asesoría fiscal ni legal. Los contadores de ORA confirmarán lo que aplica a su caso.",
+      en: "General information, not tax or legal advice. Based on Act 60 as amended by Act 38-2026; ORA's accountants will confirm what applies to you.",
+      es: "Información general, no asesoría fiscal ni legal. Basado en la Ley 60, enmendada por la Ley 38-2026; los contadores de ORA confirmarán lo que aplica a su caso.",
     } as L,
   },
 
@@ -233,8 +242,8 @@ export const cip = {
     eyebrow: { en: "Private charters", es: "Vuelos chárter privados" } as L,
     title: { en: "Fly private to Puerto Rico", es: "Vuele privado a Puerto Rico" } as L,
     intro: {
-      en: "Owners fly private between the United States and their condo in Puerto Rico: the nine-day week, made easy.",
-      es: "Los propietarios vuelan en privado entre Estados Unidos y su condominio en Puerto Rico: la semana de nueve días, fácil.",
+      en: "Owners fly private between the United States and their condo in Puerto Rico.",
+      es: "Los propietarios vuelan en privado entre Estados Unidos y su condominio en Puerto Rico.",
     } as L,
     bullets: [
       { en: "Private jet charters through ORA World Jet", es: "Vuelos privados con ORA World Jet" },
@@ -271,8 +280,8 @@ export const cip = {
       {
         title: { en: "Discover the island", es: "Descubra la isla" } as L,
         text: {
-          en: "Watch the film, take the 360° tour, and see how the nine-day week and the incentive law fit your plans.",
-          es: "Vea la película, haga el tour 360° y descubra cómo la semana de nueve días y la ley de incentivos encajan en sus planes.",
+          en: "Watch the film, take the 360° tour, and see how Act 60 fits your plans.",
+          es: "Vea la película, haga el tour 360° y descubra cómo la Ley 60 encaja en sus planes.",
         } as L,
         href: "#virtual-tour",
         link: { en: "Step inside", es: "Recorrer" } as L,

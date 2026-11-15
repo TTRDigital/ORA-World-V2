@@ -22,7 +22,7 @@ test.describe("vendored components and the desktop menu", () => {
     // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
     const main = page.locator("main");
     for (const line of [
-      /nine-day week/i,
+      /act 60: the tax benefits of living here/i,
       /planes don.t fall from the sky/i,
       /two lungs, two kidneys/i,
       /what is the value of an extra 10 years/i,
@@ -39,7 +39,9 @@ test.describe("vendored components and the desktop menu", () => {
     // Brief details that are easy to drop.
     await expect(page.locator("#fitness")).toContainText(/an outlier/i);
     await expect(page.locator("#fitness")).toContainText(/work on it in advance/i);
-    await expect(page.locator("#why-puerto-rico")).toContainText(/9 or 10 am until 7 pm/i);
+    await expect(page.locator("#why-puerto-rico")).toContainText(/bona fide resident/i);
+    // Client, 15 Nov: no nine-day week anywhere on the homepage.
+    await expect(page.locator("main")).not.toContainText(/nine-day week/i);
     // Client, 15 Nov: the late-40s paragraph and the decree bullet list were removed.
     await expect(page.locator("#why-puerto-rico")).not.toContainText(/advertising or management business|nobody can take away/i);
     await expect(page.locator("#steps")).toContainText(/how ora world helps you/i);

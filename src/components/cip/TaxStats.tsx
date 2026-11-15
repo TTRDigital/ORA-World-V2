@@ -7,15 +7,15 @@ type Props = {
   locale: "en" | "es";
   todayLabel: string; // "today, on capital gains and dividends"
   janLabel: string; // "the rate from January 1"
-  decreeLabel: string; // "years: the decree and its extension"
+  decreeLabel: string; // "the year the program now runs to"
 };
 
 /**
  * The tax figures as something to play with (client, 15 Nov: "make these numbers interactive, not just plain").
  * 1. The rate: a switch between applications filed by Dec 31, 2026 (0%) and from Jan 1, 2027 (4%), per Act 38-2026; the figure counts between 0% and 4% and a ten-mark meter (one mark
  *    per percentage point) lights up to match. Once the card is on screen it moves to January 1 by itself, once.
- * 2. The decree: a timeline that fills in two parts (15 years, then the 15-year extension) while a counter runs to 30.
- * The server HTML carries the real figures (0%, 4%, 15+15), so nothing depends on the animation. Reduced motion: no
+ * 2. How long: a to-scale timeline, 2026 to 2035 (0% decrees) and 2035 to 2055 (4% decrees), filling as it comes into view.
+ * The server HTML carries the real figures (0%, 4%, 2035, 2055), so nothing depends on the animation. Reduced motion: no
  * counting or filling, the end states show at once.
  */
 export function TaxStats({ locale, todayLabel, janLabel, decreeLabel }: Props) {
@@ -24,7 +24,7 @@ export function TaxStats({ locale, todayLabel, janLabel, decreeLabel }: Props) {
   const [shown, setShown] = useState(0); // the rate on screen while it counts
   const [decree, setDecree] = useState(0); // 0..1 timeline fill
   const [inView, setInView] = useState(false);
-  // The server HTML shows the finished timeline (30 years); the browser empties it before it is seen, then fills it.
+  // The server HTML shows the finished timeline (to 2055); the browser empties it before it is seen, then fills it.
   const [armed, setArmed] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const touched = useRef(false);
@@ -94,7 +94,7 @@ export function TaxStats({ locale, todayLabel, janLabel, decreeLabel }: Props) {
     setMode(m);
   };
   const filled = armed ? decree : 1;
-  const years = Math.round(filled * 30);
+  const year = 2026 + Math.round(filled * 29);
   const lit = Math.round(shown);
 
   return (
@@ -113,7 +113,7 @@ export function TaxStats({ locale, todayLabel, janLabel, decreeLabel }: Props) {
                 mode === m ? "bg-charcoal text-bone" : "text-charcoal-soft hover:text-charcoal",
               )}
             >
-              {m === "today" ? (es ? "Solicitud en 2026" : "Filed in 2026") : es ? "Desde 2027" : "Filed from 2027"}
+              {m === "today" ? (es ? "Solicite en 2026" : "Apply in 2026") : es ? "Desde 2027" : "Apply from 2027"}
             </button>
           ))}
         </div>
@@ -145,28 +145,35 @@ export function TaxStats({ locale, todayLabel, janLabel, decreeLabel }: Props) {
         </p>
       </div>
 
-      {/* 2. The decree: 15 + 15 years */}
+      {/* 2. How long it lasts: today -> 2035 (decrees applied for by Dec 31, 2026) -> 2055 (the program's new end). */}
       <div className="rounded-[20px] bg-white p-6 ring-1 ring-travertine-deep/70 md:p-8">
         <div className="flex items-end gap-5">
-          <p className="shrink-0 font-[family-name:var(--font-display)] text-[64px] leading-[0.85] text-brass-ink md:text-[80px]">15+15</p>
+          <p className="shrink-0 font-[family-name:var(--font-display)] text-[64px] leading-[0.85] text-brass-ink tabular-nums md:text-[80px]">{year}</p>
           <p className="pb-1 text-[15px] leading-snug text-charcoal md:text-[17px]">{decreeLabel}</p>
         </div>
         <div className="mt-6" aria-hidden>
-          <div className="relative grid h-11 grid-cols-2 gap-1.5 overflow-hidden rounded-full">
+          {/* Two spans to scale: 2026-2035 (9 years) and 2035-2055 (20 years). */}
+          <div className="grid h-11 grid-cols-[9fr_20fr] gap-1.5">
             {[0, 1].map((seg) => {
-              const fill = Math.min(1, Math.max(0, filled * 2 - seg));
+              const split = 9 / 29;
+              const fill = seg === 0 ? Math.min(1, filled / split) : Math.min(1, Math.max(0, (filled - split) / (1 - split)));
               return (
                 <div key={seg} className="relative overflow-hidden rounded-full bg-travertine">
                   <div className={cn("absolute inset-y-0 left-0", seg === 0 ? "bg-brass" : "bg-brass-light")} style={{ width: `${fill * 100}%` }} />
-                  <span className={cn("absolute inset-0 flex items-center justify-center px-2 text-[11px] font-semibold whitespace-nowrap transition-colors duration-300 min-[400px]:text-[12px] md:tracking-[0.06em]", fill > 0.55 ? "text-basalt" : "text-charcoal-soft")}>
-                    {seg === 0 ? (es ? "15 años · el decreto" : "15 years · the decree") : es ? "15 más · la extensión" : "15 more · the extension"}
+                  <span className={cn("absolute inset-0 flex items-center justify-center px-2 text-[11px] font-semibold whitespace-nowrap transition-colors duration-300 min-[400px]:text-[12px]", fill > 0.55 ? "text-basalt" : "text-charcoal-soft")}>
+                    {seg === 0 ? "0%" : es ? "4% · hasta 2055" : "4% · to 2055"}
                   </span>
                 </div>
               );
             })}
           </div>
-          <p className="mt-3 text-[13px] text-charcoal-soft">
-            {es ? "Unos" : "About"} <span className="font-semibold text-charcoal tabular-nums">{years}</span> {es ? "años en total" : "years in total"}
+          <div className="relative mt-2 h-4 text-[11px] text-charcoal-soft">
+            <span className="absolute left-0">2026</span>
+            <span className="absolute left-[31%] -translate-x-1/2">2035</span>
+            <span className="absolute right-0">2055</span>
+          </div>
+          <p className="mt-3 text-[13px] leading-relaxed text-charcoal-soft">
+            {es ? "Decretos solicitados hasta el 31 dic 2026: 0% hasta 2035. Desde 2027: 4% hasta 2055." : "Decrees applied for by Dec 31, 2026: 0% through 2035. From 2027: 4% through 2055."}
           </p>
         </div>
       </div>

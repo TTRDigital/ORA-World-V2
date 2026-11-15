@@ -13,14 +13,15 @@ confirmed by ORA's tax team and the client before the site is public:
 | --- | --- | --- |
 | Name of the tax law | Homepage "Why Puerto Rico", Ask ORA, call script | He said "Act 16" on the recording; the site and oraworld.com say Act 60. |
 | 0% now, 4% later | Homepage tax figures, Ask ORA "decree", call script | **Checked 15 Nov 2026 against Act 38-2026 (signed 10 Mar 2026):** resident-investor decree applications filed by 31 Dec 2026 keep 0% on interest, dividends and post-move capital gains (through 31 Dec 2035); applications filed from 1 Jan 2027 pay 4% (through 2055). The site now uses these dated labels. Tax team to confirm. Sources: incorp.com, thecfoassociates.com, accountingsl.com (secondary, not the statute). |
-| "Applications in before January 1 are grandfathered" | Homepage bullet, Ask ORA "move now", call script | That an application filed before the date keeps today's terms. |
-| "15 years plus a 15-year extension" | Homepage "15+15" figure, Ask ORA, call script | Decree term and extension. **Possible conflict (15 Nov 2026):** sources on Act 38-2026 give the resident-investor benefit end dates as 31 Dec 2035 (old 0% regime) and 2055 (new 4% regime), not 15 + 15 years. Confirm before go-live. |
-| "About 30 weekends a year" (the nine-day week) | Homepage "Why Puerto Rico", Ask ORA, call script | Conflicts with the 183-day bona fide residency test on oraworld.com's Act 60 page (shown on /invest). |
+| "Applications in before January 1 are grandfathered" | Ask ORA "move now" (now: filed by December 31, 2026), call script | That an application filed before the date keeps today's terms. |
+| "15 years plus a 15-year extension" | Removed from the site (15 Nov 2026) | Replaced on the homepage and in Ask ORA by the Act 38-2026 end dates: 0% decrees through 2035, the program to 2055. Still in the sales call script (docs/sales). Confirm with the tax team. |
+| "About 30 weekends a year" (the nine-day week) | Removed from the site (15 Nov 2026, client) | Still in the sales call script (docs/sales); it conflicts with the 183-day bona fide residency test the homepage now states. |
 | Founder: "Harvard-trained heart surgeon", clinics "within driving distance of about 65% of the US population" | Homepage "Who we are", "Why ORA World", Ask ORA, call script | Credentials and the 65% figure. The founder is never named (client instruction). |
 | ORA services: total body scan, personal interview, nutritionists, meal options, ghost kitchen, fitness program, cardiologist list | Homepage, amenities, Ask ORA | That each is part of membership at Tesoro Del Mar, and from when. |
 | "Private jet charters through ORA World Jet" | Homepage "Private charters" | Brochure p7 wording; the client asked to avoid unconfirmed air-travel promises (no helicopter or pickup claims are on the site). |
 | Time to San Juan | Homepage | Brochure says 30 minutes (p6) and 35 minutes (p3, p7). The site uses 30. |
 | Site area and residence count | Homepage, numbers | Brochure: "17-acre" community and 60 residences in Phase One; oraworld.com: 10 acres and 129 residences overall. |
+| Act 60 requirements on the homepage | Homepage "Why Puerto Rico" | Bona fide residency (generally 183 days), buying a Puerto Rico home within two years of the decree, a yearly donation to Puerto Rico nonprofits and a yearly report. From advisor summaries of Act 38-2026 (procopio.com, incorp.com); one notes it awaited the fiscal oversight board's endorsement. Tax team to confirm. |
 
 No health outcome is promised anywhere ("guaranteed" wording from the recording was softened, as the brief asks).
 

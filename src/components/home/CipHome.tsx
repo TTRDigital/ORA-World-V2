@@ -63,7 +63,7 @@ function SectionHead({ n, eyebrow, title, id, intro, dark = false, children }: {
  * The homepage story, following the owner's content brief and the client call (Nov 2026):
  * who we are (the core promise, the founder) → why ORA World (how it is different, why you can trust it) → longevity
  * and preventive health → fitness and nutrition → why Puerto
- * Rico (the nine-day week, the tax decree) → step inside (360° tour and film, full width) → residences → amenities (the
+ * Rico (Act 60 and its tax benefits) → step inside (360° tour and film, full width) → residences → amenities (the
  * full list, ORA health services and the ghost kitchen) → private charters → floor plans and pricing → three steps →
  * Inquire. One layout throughout, after theresidencesatcipriani.com; one gold button, "Inquire".
  */
@@ -178,7 +178,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
         <CardRail cards={fitnessCards} label={x(cip.fitness.eyebrow)} hint={hint} locale={locale} />
       </CipSection>
 
-      {/* 05 Why Puerto Rico: the nine-day week and the decree */}
+      {/* 05 Why Puerto Rico: Act 60 and its tax benefits for residents */}
       <CipSection
         id="why-puerto-rico"
         n="05"
@@ -186,6 +186,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
         eyebrow={x(cip.why.eyebrow)}
         title={x(cip.why.title)}
         intro={x(cip.why.intro)}
+        body={x(cip.why.body)}
+        bullets={cip.why.bullets.map(x)}
         note={x(cip.why.note)}
         wideVisual={false}
       >
