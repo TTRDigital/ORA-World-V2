@@ -89,7 +89,7 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
                     src={c.image.src}
                     alt={c.image.alt[locale] || c.image.alt.en}
                     fill
-                    sizes="(max-width: 767px) 82vw, (max-width: 1023px) 60vw, 520px"
+                    sizes="(max-width: 639px) 82vw, (max-width: 1023px) 56vw, (max-width: 1439px) 72vw, 820px"
                     quality={80}
                     className={fit === "contain" ? "object-contain p-2" : "object-cover"}
                     style={{ objectPosition: c.image.focal }}
