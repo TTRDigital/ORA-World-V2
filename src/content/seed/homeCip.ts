@@ -120,7 +120,9 @@ export const cip = {
     ] as L[],
   },
 
-  /* 04 Why Puerto Rico: the nine-day week and the tax decree (brief §6, §7, lines) */
+  /* 04 Why Puerto Rico: the nine-day week and the tax decree (brief §6, §7, lines). Rates checked 15 Nov 2026 against
+     Act 38-2026 (signed 10 Mar 2026): resident-investor applications filed by 31 Dec 2026 keep 0%; filed from
+     1 Jan 2027, 4%. Dated labels, so they stay true after New Year. */
   why: {
     eyebrow: { en: "Why Puerto Rico", es: "Por qué Puerto Rico" } as L,
     title: { en: "The nine-day week", es: "La semana de nueve días" } as L,
@@ -129,8 +131,8 @@ export const cip = {
       es: "Puerto Rico es el único lugar con una semana de nueve días. Trabaje desde Nueva York o donde quiera, de lunes a jueves, de 9 o 10 de la mañana a 7 de la tarde. Luego pase unos 30 fines de semana al año en Puerto Rico, con grandes amigos.",
     } as L,
     stats: [
-      { value: "0%", label: { en: "today, on capital gains and dividends", es: "hoy, sobre ganancias de capital y dividendos" } as L },
-      { value: "4%", label: { en: "the rate from January 1", es: "la tasa a partir del 1 de enero" } as L },
+      { value: "0%", label: { en: "on capital gains and dividends, for applications filed by December 31, 2026", es: "sobre ganancias de capital y dividendos, para solicitudes presentadas hasta el 31 de diciembre de 2026" } as L },
+      { value: "4%", label: { en: "for applications filed from January 1, 2027", es: "para solicitudes presentadas desde el 1 de enero de 2027" } as L },
       { value: "15+15", label: { en: "years: the decree and its extension", es: "años: el decreto y su extensión" } as L },
     ],
     note: {

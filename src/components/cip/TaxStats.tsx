@@ -12,7 +12,7 @@ type Props = {
 
 /**
  * The tax figures as something to play with (client, 15 Nov: "make these numbers interactive, not just plain").
- * 1. The rate: a "Today / From January 1" switch; the figure counts between 0% and 4% and a ten-mark meter (one mark
+ * 1. The rate: a switch between applications filed by Dec 31, 2026 (0%) and from Jan 1, 2027 (4%), per Act 38-2026; the figure counts between 0% and 4% and a ten-mark meter (one mark
  *    per percentage point) lights up to match. Once the card is on screen it moves to January 1 by itself, once.
  * 2. The decree: a timeline that fills in two parts (15 years, then the 15-year extension) while a counter runs to 30.
  * The server HTML carries the real figures (0%, 4%, 15+15), so nothing depends on the animation. Reduced motion: no
@@ -109,11 +109,11 @@ export function TaxStats({ locale, todayLabel, janLabel, decreeLabel }: Props) {
               aria-pressed={mode === m}
               onClick={() => choose(m)}
               className={cn(
-                "min-h-10 rounded-full px-4 text-[12px] font-semibold tracking-[0.12em] uppercase transition-colors duration-300",
+                "min-h-10 rounded-full px-4 text-[12px] font-semibold tracking-[0.1em] whitespace-nowrap uppercase transition-colors duration-300",
                 mode === m ? "bg-charcoal text-bone" : "text-charcoal-soft hover:text-charcoal",
               )}
             >
-              {m === "today" ? (es ? "Hoy" : "Today") : es ? "Desde el 1 de enero" : "From January 1"}
+              {m === "today" ? (es ? "Solicitud en 2026" : "Filed in 2026") : es ? "Desde 2027" : "Filed from 2027"}
             </button>
           ))}
         </div>
