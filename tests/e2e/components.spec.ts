@@ -46,7 +46,7 @@ test.describe("vendored components and the desktop menu", () => {
     // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.
     const text = (await main.innerText()).toLowerCase();
     expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
-    await expect(page.locator("#hero h1")).toHaveText(/live the ora world legacy/i);
+    await expect(page.locator("#hero h1")).toHaveText(/where smart money meets brilliant living/i);
     // Just this one line of text on the banner (plus the Inquire and sound buttons).
     await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveCount(0);
     // One link in the banner, "Inquire", plus the film's sound toggle.

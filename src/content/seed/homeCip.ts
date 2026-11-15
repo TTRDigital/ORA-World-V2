@@ -12,8 +12,9 @@ import type { L } from "../types";
  */
 export const cip = {
   hero: {
-    // Client, 11 Nov 2026: the banner carries just this one line (after the Cipriani banner, with ORA World's name).
-    title: { en: "Live the ORA World legacy", es: "Viva el legado ORA World" } as L,
+    // The banner carries just this one line (client, 11 Nov 2026). Client, 15 Nov: make it about ORA World, so it is the
+    // brand slogan from the ORA World Brand Guideline, section 2.4.
+    title: { en: "Where smart money meets brilliant living", es: "Donde el dinero inteligente se une a una vida brillante" } as L, // brand guideline 2.4, slogan
     sub: { en: "Tesoro Del Mar · Dorado, Puerto Rico", es: "Tesoro Del Mar · Dorado, Puerto Rico" } as L,
   },
 
