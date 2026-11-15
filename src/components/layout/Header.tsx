@@ -12,8 +12,9 @@ import { TextRoll } from "@/components/vendor/skiper-ui/skiper58";
 import { MobileSheet, type MenuTile } from "./MobileSheet";
 
 /**
- * Floating dark bar (client reference: theresidencesatcipriani.com), the same on every scroll position: logo, tracked
- * capitals navigation, the sales line, EN | ES and one gold button, "Inquire". Below lg: the logo and the menu.
+ * Floating white bar (client, 15 Nov: white background, the logo in its original gold, and "Inquire" plus the phone
+ * number at the top on every screen), the same on every scroll position: logo, tracked capitals navigation, the sales
+ * line, EN | ES and one gold button, "Inquire". Phones: logo, the phone number, "Inquire" and the menu.
  * Height 72px phones / 80px desktop, 12px from the top; main's top padding matches.
  */
 export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | null }) {
@@ -43,12 +44,12 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
         <nav
           aria-label="Primary"
           className={cn(
-            "pointer-events-auto mx-auto flex h-[72px] max-w-[1400px] items-center justify-between gap-3 rounded-full bg-basalt/95 pr-2 pl-7 text-bone backdrop-blur-md transition-shadow duration-300 lg:h-[80px] lg:pr-3 lg:pl-10",
-            scrolled ? "shadow-[0_14px_34px_-16px_rgb(44_36_22/0.55)]" : "shadow-[0_10px_26px_-18px_rgb(44_36_22/0.45)]",
+            "pointer-events-auto mx-auto flex h-[72px] max-w-[1400px] items-center justify-between gap-2 rounded-full bg-white/97 pr-2 pl-4 text-charcoal ring-1 ring-travertine-deep/40 backdrop-blur-md transition-shadow duration-300 min-[400px]:pl-5 lg:h-[80px] lg:gap-3 lg:pr-3 lg:pl-10",
+            scrolled ? "shadow-[0_14px_34px_-16px_rgb(44_36_22/0.4)]" : "shadow-[0_10px_26px_-18px_rgb(44_36_22/0.3)]",
           )}
         >
           <Link href="/" aria-label={t("home")} className="flex shrink-0 items-center">
-            <Logo variant="white" height={64} priority responsive className="h-[50px] lg:h-[58px]" />
+            <Logo variant="gold" height={72} priority responsive className="h-[46px] min-[400px]:h-[50px] lg:h-[62px]" />
           </Link>
           <ul className="hidden items-center lg:flex">
             {primaryNav.map((item) => (
@@ -60,8 +61,8 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
                   aria-label={t(item.key)}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
-                    "inline-flex min-h-11 items-center px-3 text-[12px] font-semibold tracking-[0.22em] uppercase transition-colors hover:text-brass-light xl:px-4",
-                    isActive(item.href) ? "text-brass-light" : "text-bone/85",
+                    "inline-flex min-h-11 items-center px-3 text-[12px] font-semibold tracking-[0.22em] uppercase transition-colors hover:text-brass-ink xl:px-4",
+                    isActive(item.href) ? "text-brass-ink" : "text-charcoal",
                   )}
                 >
                   <TextRoll>{t(item.key)}</TextRoll>
@@ -69,14 +70,19 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
               </li>
             ))}
           </ul>
-          <div className="flex items-center gap-2 lg:gap-3">
+          <div className="flex min-w-0 items-center gap-1.5 min-[400px]:gap-2 lg:gap-3">
             {phone && (
-              <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="hidden text-[13px] font-semibold tracking-[0.08em] text-bone/90 hover:text-brass-light xl:inline">
+              <a
+                href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+                className="inline-flex min-h-11 items-center px-1 text-[12px] font-semibold whitespace-nowrap text-charcoal hover:text-brass-ink max-[339px]:hidden min-[400px]:text-[13px] lg:max-xl:hidden lg:px-0 lg:tracking-[0.08em]"
+                data-track="call"
+                data-track-label="header"
+              >
                 {phone}
               </a>
             )}
-            <LanguageToggle dark className="hidden rounded-full px-3 py-1.5 ring-1 ring-bone/20 lg:flex" />
-            <Link href="/#inquire" className="cta hidden min-h-11 px-5 text-[11px] lg:inline-flex" data-track="cta_inquire" data-track-label="header">
+            <LanguageToggle className="hidden rounded-full px-3 py-1.5 ring-1 ring-travertine-deep lg:flex" />
+            <Link href="/#inquire" className="cta min-h-10 px-3.5 text-[10px] tracking-[0.16em] min-[400px]:px-4 lg:min-h-11 lg:px-5 lg:text-[11px] lg:tracking-[0.2em]" data-track="cta_inquire" data-track-label="header">
               {t("priceList")}
             </Link>
             <button
@@ -85,7 +91,7 @@ export function Header({ tiles, phone }: { tiles: MenuTile[]; phone?: string | n
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={t("openMenu")}
-              className="inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-bone lg:hidden"
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-bone-deep text-charcoal lg:hidden"
             >
               <Menu />
             </button>
