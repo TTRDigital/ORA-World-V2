@@ -9,6 +9,7 @@ import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { AliveImage } from "@/components/cip/AliveImage";
 import { StackCards } from "@/components/cip/StackCards";
 import { LoopVideo } from "@/components/cip/LoopVideo";
+import { TaxStats } from "@/components/cip/TaxStats";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
@@ -188,15 +189,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
         note={x(cip.why.note)}
         wideVisual={false}
       >
-        <dl className="grid gap-3">
-          {cip.why.stats.map((st) => (
-            <div key={st.value} className="flex items-baseline gap-5 rounded-[18px] bg-white px-6 py-5 ring-1 ring-travertine-deep/70 md:px-8 md:py-6">
-              <dt className="sr-only">{x(st.label)}</dt>
-              <dd className="w-[3.6ch] shrink-0 font-[family-name:var(--font-display)] text-[46px] leading-none text-brass-ink md:text-[58px]">{st.value}</dd>
-              <dd aria-hidden className="text-[15px] leading-snug text-charcoal md:text-[17px]">{x(st.label)}</dd>
-            </div>
-          ))}
-        </dl>
+        {/* Client, 15 Nov: the figures as something to play with, not plain text. */}
+        <TaxStats locale={locale} todayLabel={x(cip.why.stats[0].label)} janLabel={x(cip.why.stats[1].label)} decreeLabel={x(cip.why.stats[2].label)} />
       </CipSection>
 
       {/* 06 Step inside: the 360° tour and the film, full width so people can see it big */}
