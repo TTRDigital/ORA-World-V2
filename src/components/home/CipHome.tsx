@@ -8,6 +8,7 @@ import { CipSection } from "@/components/cip/CipSection";
 import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { AliveImage } from "@/components/cip/AliveImage";
 import { StackCards } from "@/components/cip/StackCards";
+import { LoopVideo } from "@/components/cip/LoopVideo";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
@@ -155,7 +156,14 @@ export async function CipHome({ locale }: { locale: Locale }) {
         wideVisual={false}
       >
         <figure className="relative overflow-hidden rounded-[22px]">
-          <AliveImage image={tdm.gym} locale={locale} ratio="4/5" sizes="(max-width: 1023px) calc(100vw - 40px), 600px" />
+          {/* Client, 15 Nov: a film that walks into the Tesoro Del Mar gym instead of the still picture (made from the
+              gym rendering: a slow camera move from the entrance toward the window and the palms, looping). */}
+          <LoopVideo
+            src="/videos/longevity-gym.mp4"
+            poster="/videos/longevity-gym-poster.jpg"
+            ratio="4/5"
+            label={es ? "Recorrido por el gimnasio de Tesoro Del Mar, hacia el ventanal y las palmeras" : "Moving through the Tesoro Del Mar fitness center toward the window and the palms"}
+          />
           <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-basalt via-basalt/80 to-transparent p-6 pt-24 md:p-9 md:pt-32">
             <p className="font-[family-name:var(--font-display)] text-[28px] leading-tight text-bone md:text-[36px]">“{x(cip.prevention.question)}”</p>
             <p className="mt-3 max-w-[48ch] text-[14px] leading-relaxed text-bone/80">{x(cip.prevention.questionSub)}</p>
