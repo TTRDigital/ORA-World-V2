@@ -49,16 +49,11 @@ test.describe("vendored components and the desktop menu", () => {
     // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.
     const text = (await main.innerText()).toLowerCase();
     expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
-    await expect(page.locator("#hero h1")).toHaveText(/ora world, where longevity lives/i);
-    // Just this one line of text on the banner (plus the Inquire and sound buttons).
-    // Client, 16 Nov (888.dolcegabbana.com opening): the line, then one place line under it.
-    // Client, 16 Nov: the logo, then the line; nothing else over the film.
-    await expect(page.locator("#hero img.hero-logo")).toHaveCount(1);
-    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveCount(0);
-    // One link in the banner, "Inquire", plus the film's sound toggle.
-    // Client, 16 Nov (888.dolcegabbana.com): nothing but words over the film; "Inquire" sits in the bar (top bar on
-    // desktop, bottom bar on phones). The "scroll to continue" cue is a scroll aid, not a call to action.
-    await expect(page.locator("#hero a:not([data-scroll-cue])")).toHaveCount(0);
+    await expect(page.locator("#hero h1")).toHaveText(/beyond expectations/i);
+    // Client, 16 Nov: only "Beyond expectations" in the middle, with the client's sentence under it.
+    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveText(/thoughtfully crafted communities where longevity, luxury, and nature exist in perfect harmony/i);
+    // No links over the film; "Inquire" is in the white bar at the top.
+    await expect(page.locator("#hero a")).toHaveCount(0);
     await expect(page.locator('a[data-track="cta_inquire"]:visible').first()).toHaveText(/inquire/i);
     // Sound on when the page opens (client); one click on the button turns it off, and the choice is remembered.
     const sound = page.locator("#hero [data-film-sound]");

@@ -42,16 +42,14 @@ test.describe("shell", () => {
     if (!isMobile) await expect(nav.getByRole("link", { name: "Residences" })).toBeVisible();
   });
 
-  test("homepage opens like 888.dolcegabbana.com: clear bar over the film, white bar after scrolling", async ({ page, isMobile }) => {
+  test("homepage keeps the white bar at the top, with the banner below it", async ({ page, isMobile }) => {
     await page.goto("/en");
     await page.locator("html:not(.no-js)").waitFor();
-    await expect(page.locator("header")).toHaveAttribute("data-mode", "clear");
-    await expect(page.locator("header nav").getByRole("link", { name: "Residences", exact: true })).toHaveCount(0);
-    const plans = isMobile ? page.locator("div.fixed.bottom-0").getByRole("link", { name: /floor plans/i }) : page.locator("header nav").getByRole("link", { name: /floor plans/i });
-    await expect(plans).toBeVisible({ timeout: 5000 });
-    await page.mouse.wheel(0, 900);
     await expect(page.locator("header")).toHaveAttribute("data-mode", "solid");
     if (!isMobile) await expect(page.locator("header nav").getByRole("link", { name: "Residences", exact: true })).toBeVisible();
+    const bar = await page.locator("header").boundingBox();
+    const hero = await page.locator("#hero").boundingBox();
+    expect(Math.abs(hero!.y - bar!.height)).toBeLessThanOrEqual(1); // the banner starts right under the bar (its 1px border)
   });
 
   test("mobile bottom sheet opens with tiles, traps focus, closes on Escape", async ({ page, isMobile }) => {

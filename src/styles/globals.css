@@ -933,46 +933,16 @@ main section[id] { scroll-margin-top: 96px; }
 .film-sound-ask { animation: film-sound-ask 1.8s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .film-sound-ask { animation: none; } }
 
-/* Homepage opening (client, 16 Nov; reference 888.dolcegabbana.com): the film full screen, the line appearing word by
-   word, then the place, the button and a "scroll to continue" cue; the clear bar fades in after the text, and the white
-   bar slides down once the visitor scrolls. */
-@keyframes header-intro { from { opacity: 0; } to { opacity: 1; } }
-.header-intro { animation: header-intro 900ms ease-out 3.6s both; }
-@keyframes header-slide-in { from { transform: translateY(-100%); } to { transform: none; } }
-.header-slide-in { animation: header-slide-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+/* Homepage banner text: the line appears word by word, then the sentence fades up. */
 @keyframes hero-word { from { opacity: 0; transform: translateY(0.35em); filter: blur(10px); letter-spacing: 0.2em; } to { opacity: 1; transform: none; filter: blur(0); } }
 .hero-word { display: inline-block; animation: hero-word 1100ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--hero-start, 300ms) + var(--w, 0) * 140ms); }
 @keyframes hero-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .hero-fade { animation: hero-fade 900ms ease-out both; }
-@keyframes scroll-cue { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
-.scroll-cue-line { animation: scroll-cue 2.2s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
-  .header-intro, .header-slide-in, .hero-word, .hero-fade { animation: none; }
-  .scroll-cue-line { animation: none; }
+  .hero-word, .hero-fade { animation: none; }
 }
 
 /* Reference-style title: a light serif in capitals, wide, calm. */
 .hero-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem); line-height: 1.04; letter-spacing: 0.035em; text-transform: uppercase; font-variant-numeric: lining-nums; }
-@keyframes scroll-chevron { 0%, 100% { transform: translateY(0); opacity: 0.8; } 50% { transform: translateY(4px); opacity: 1; } }
-.scroll-cue-chevron { animation: scroll-chevron 1.8s ease-in-out infinite; }
-/* While the homepage film fills the screen (the clear bar), keep it clean: Ask ORA waits until the visitor scrolls. */
-body:has(header[data-mode="clear"]) .ask-ora-btn { opacity: 0; pointer-events: none; }
-@media (prefers-reduced-motion: reduce) { .scroll-cue-chevron { animation: none; } }
 
-/* Phones over the homepage film: the white bottom bar (menu, Floor plans, Inquire) stays reachable; the cookie notice
-   sits just above it instead of covering it. */
-@media (max-width: 1023px) {
-  body:has(header[data-mode="clear"]) [aria-label="Cookie consent"] { bottom: calc(4rem + env(safe-area-inset-bottom)); padding-bottom: 0.625rem; }
-}
 
-/* The opening: the logo arrives (fade, settle from slightly smaller, unblur, a soft glow that fades), then the line
-   word by word (.hero-word, from 1.3 s), then the curtain lifts and the film appears (from 3 s). */
-@keyframes hero-logo {
-  0% { opacity: 0; transform: scale(0.88) translateY(10px); filter: blur(12px) drop-shadow(0 0 0 rgb(201 169 97 / 0)); }
-  60% { opacity: 1; filter: blur(0) drop-shadow(0 0 22px rgb(201 169 97 / 0.55)); }
-  100% { opacity: 1; transform: none; filter: blur(0) drop-shadow(0 2px 14px rgb(28 22 14 / 0.5)); }
-}
-.hero-logo { animation: hero-logo 1600ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both; }
-@keyframes hero-curtain { from { opacity: 1; } to { opacity: 0; } }
-.hero-curtain { animation: hero-curtain 1600ms ease-in-out 3s both; }
-@media (prefers-reduced-motion: reduce) { .hero-logo { animation: none; } .hero-curtain { animation: none; opacity: 0; } }

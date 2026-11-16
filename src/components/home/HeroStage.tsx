@@ -289,18 +289,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     v.addEventListener("playing", on);
     if (!v.paused && v.readyState > 2) on();
     else v.play().catch(() => {}); // in case the browser waited for the page to settle
-    // The opening shows the logo and the line on a dark screen first; just before the curtain lifts (3 s), start the
-    // film from its first shot so the reveal begins at the beginning.
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const rewind = still ? 0 : window.setTimeout(() => {
-      try {
-        v.currentTime = 0;
-      } catch {}
-    }, 2900);
-    return () => {
-      v.removeEventListener("playing", on);
-      clearTimeout(rewind);
-    };
+    return () => v.removeEventListener("playing", on);
   }, []);
   // Once the YouTube film is really playing, the loop steps aside (and stops, to save battery).
   useEffect(() => {
@@ -507,7 +496,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         </video>
       )}
       {(youtubeId || selfHosted) && (
-        <div className="hero-fade absolute top-4 right-3 z-20 flex items-center gap-1 lg:top-auto lg:right-auto lg:bottom-7 lg:left-8" style={{ animationDelay: "4s" }}>
+        <div className="hero-fade absolute bottom-5 left-3 z-20 flex items-center gap-1 md:bottom-7 md:left-7" style={{ animationDelay: "1.2s" }}>
         <button
           type="button"
           onClick={toggleSound}
