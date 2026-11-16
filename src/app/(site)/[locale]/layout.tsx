@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { display, sans } from "@/lib/fonts";
+import { display, sans, script } from "@/lib/fonts";
 import { SITE_URL, IS_PROD } from "@/lib/utils";
 import { getFaqs, getPress, getSiteSettings } from "@/lib/content";
 import { tdm } from "@/content/seed/images";
@@ -49,7 +49,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     { key: "plans" as const, href: "/residences/plans", image: tdm.kitchenDining },
   ];
   return (
-    <html lang={locale} className={`${display.variable} ${sans.variable} no-js`} suppressHydrationWarning>
+    <html lang={locale} className={`${display.variable} ${sans.variable} ${script.variable} no-js`} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
           <SkipLink />

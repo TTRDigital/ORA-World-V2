@@ -69,6 +69,8 @@ export const cip = {
      building", "nobody knows ORA World, so we have to build trust"). Each point is backed elsewhere on the page. */
   different: {
     eyebrow: { en: "Why ORA World", es: "Por qué ORA World" } as L,
+    // Client, 16 Nov: an accent line in script above the cards.
+    script: { en: "Creating luxury living with timeless elegance and comfort", es: "Creamos una vida de lujo con elegancia atemporal y confort" } as L,
     // Client, 16 Nov: this sentence replaces "Not another condo building".
     title: {
       en: "Thoughtfully crafted communities where longevity, luxury, and nature exist in perfect harmony.",

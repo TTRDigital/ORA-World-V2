@@ -139,7 +139,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
         eyebrow={x(cip.who.offerEyebrow)}
         title={x(cip.who.offerTitle)}
         intro={x(cip.who.offerIntro)}
-        cards={cip.who.offerCards.map((c) => ({ label: x(c.label), items: c.items.map(x) }))}
+        // Client, 16 Nov: no Amenities / Features cards here ("too busy"); the line, the specs and the gallery say it.
+        cards={[]}
         // Tesoro Del Mar property specs, as published on oraworld.com (the huddle's "property specs").
         facts={home.hero.stats.map((st) => ({ value: st.value == null ? "" : st.value.toLocaleString("en-US"), label: x(st.label) }))}
         cta={inquire}
@@ -151,6 +152,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
       <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
           <SectionHead n="02" id="why-ora-world-title" eyebrow={x(cip.different.eyebrow)} title={x(cip.different.title)} intro={x(cip.different.intro)} />
+          {/* Client, 16 Nov: an accent line in script above the cards. */}
+          <p className="mt-12 text-center font-[family-name:var(--font-script)] text-[30px] leading-snug text-charcoal md:mt-16 md:text-[44px]" data-reveal>
+            {x(cip.different.script)}
+          </p>
           {/* Client, 15 Nov: cards that stack on top of each other as you scroll, with more than plain text. */}
           <StackCards
             locale={locale}

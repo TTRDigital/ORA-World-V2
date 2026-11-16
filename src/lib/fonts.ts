@@ -1,4 +1,4 @@
-import { Cormorant_Garamond, Urbanist } from "next/font/google";
+import { Cormorant_Garamond, Pinyon_Script, Urbanist } from "next/font/google";
 
 /**
  * Client direction (Cipriani Residences reference): a classic serif for headings, set in capitals with generous
@@ -19,4 +19,12 @@ export const sans = Urbanist({
   weight: "variable",
   display: "swap",
   variable: "--font-sans",
+});
+
+/** A copperplate script for single accent lines (client, 16 Nov: "Creating luxury living with timeless elegance..."). */
+export const script = Pinyon_Script({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-script",
 });
