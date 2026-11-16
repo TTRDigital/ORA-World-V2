@@ -10,7 +10,6 @@ import { CipShowcase } from "@/components/cip/CipShowcase";
 import { StackCards } from "@/components/cip/StackCards";
 import { InteriorsGallery } from "@/components/cip/InteriorsGallery";
 import { FloorExplorer } from "@/components/cip/FloorExplorer";
-import { LoopVideo } from "@/components/cip/LoopVideo";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
@@ -142,25 +141,13 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 03 Step inside: the 360° tour and the film, full width so people can see it big */}
-      <section id="virtual-tour" aria-labelledby="virtual-tour-title" data-tone="dark" className="on-dark border-b border-basalt bg-basalt px-3 py-16 text-bone md:px-6 md:py-24">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="px-2 md:px-4">
-            <SectionHead n="03" id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
-          </div>
-          <div className="mt-10 md:mt-12">
-            <HomeTourStage vrUrl={settings.vrTourUrl} filmId={settings.introFilmYoutubeId} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
-          </div>
-        </div>
-      </section>
-
-      {/* 04 Interiors (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): heading and line on
+      {/* 03 Interiors (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): heading and line on
           the left, a counter between round arrows on the right, wide 16:9 slides running off the right edge, then two
           feature lists. Living and kitchen play as films. */}
       <section id="residences" aria-labelledby="residences-title" className="overflow-hidden border-b border-travertine-deep/60 bg-bone py-16 md:py-24">
         <div className="mx-auto grid max-w-[1280px] gap-8 px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-10 xl:px-0">
           <div className="grid gap-4">
-            <p className="eyebrow" data-n="04" data-reveal>
+            <p className="eyebrow" data-n="03" data-reveal>
               <span className="rule" aria-hidden />
               {x(cip.interiors.eyebrow)}
             </p>
@@ -208,42 +195,23 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 05 Private charters, in the same Cipriani layout (client, 16 Nov: "we can do a lot better here on design"):
-          flights and arrival as two cards, and a film card on the right (a slow push-in on the jet and the car). */}
-      <CipShowcase
-        id="charters"
-        n="05"
-        dark
-        eyebrow={x(cip.charters.eyebrow)}
-        title={x(cip.charters.title)}
-        intro={x(cip.charters.intro)}
-        cards={[
-          { label: x(cip.charters.cardLabels[0]), items: cip.charters.bullets.slice(0, 2).map(x) },
-          { label: x(cip.charters.cardLabels[1]), items: cip.charters.bullets.slice(2).map(x) },
-        ]}
-        cta={inquire}
-      >
-        <div className="overflow-hidden rounded-[18px] bg-white shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)]">
-          <LoopVideo
-            src="/videos/charters-landscape.mp4"
-            poster="/videos/charters-landscape-poster.jpg"
-            ratio="5/4"
-            flat
-            label={es ? "Un jet privado y el auto de la casa al atardecer" : "A private jet and the house car at golden hour"}
-          />
-          <div className="p-6 md:p-7">
-            <p className="text-[10.5px] font-semibold tracking-[0.26em] text-brass-ink uppercase">{x(cip.charters.film.kicker)}</p>
-            <h3 className="display-s mt-2 text-charcoal">{x(cip.charters.film.title)}</h3>
-            <p className="mt-1.5 text-[14px] leading-relaxed text-charcoal-soft">{x(cip.charters.film.text)}</p>
+      {/* 04 Step inside: the 360° tour and the film, full width so people can see it big */}
+      <section id="virtual-tour" aria-labelledby="virtual-tour-title" data-tone="dark" className="on-dark border-b border-basalt bg-basalt px-3 py-16 text-bone md:px-6 md:py-24">
+        <div className="mx-auto max-w-[1400px]">
+          <div className="px-2 md:px-4">
+            <SectionHead n="04" id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
+          </div>
+          <div className="mt-10 md:mt-12">
+            <HomeTourStage vrUrl={settings.vrTourUrl} filmId={settings.introFilmYoutubeId} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
           </div>
         </div>
-      </CipShowcase>
+      </section>
 
-      {/* 06 Floor plans (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): bedroom filters,
+      {/* 05 Floor plans (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): bedroom filters,
           the tower, the level's residences and the plan with its figures. */}
       <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-travertine/40 px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <p className="eyebrow" data-n="06" data-reveal>
+          <p className="eyebrow" data-n="05" data-reveal>
             <span className="rule" aria-hidden />
             {x(cip.explorer.eyebrow)}
           </p>
@@ -259,10 +227,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 07 Three steps */}
+      {/* 06 Three steps */}
       <section id="steps" aria-labelledby="steps-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <p className="eyebrow" data-n="07" data-reveal>
+          <p className="eyebrow" data-n="06" data-reveal>
             <span className="rule" aria-hidden />
             {x(cip.steps.eyebrow)}
           </p>
@@ -285,7 +253,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 08 Location, in the Cipriani "A branded address" layout: the map on the left; on the right the title, the
+      {/* 07 Location, in the Cipriani "A branded address" layout: the map on the left; on the right the title, the
           address card, the facts and one centred button. */}
       <section id="location" aria-labelledby="location-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
@@ -299,7 +267,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
             />
           </div>
           <div className="min-w-0">
-            <p className="eyebrow" data-n="08" data-reveal>
+            <p className="eyebrow" data-n="07" data-reveal>
               <span className="rule" aria-hidden />
               {x(cip.location.eyebrow)}
             </p>
@@ -334,10 +302,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 09 Inquire, in the Cipriani "Request pricing" layout: the form on a white card with the logo at the top. */}
+      {/* 08 Inquire, in the Cipriani "Request pricing" layout: the form on a white card with the logo at the top. */}
       <CipSection
         id="inquire"
-        n="09"
+        n="08"
         tone="dark"
         eyebrow={x(cip.inquire.eyebrow)}
         title={x(cip.inquire.title)}
