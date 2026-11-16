@@ -946,3 +946,8 @@ main section[id] { scroll-margin-top: 96px; }
 .hero-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.75rem, 1.7rem + 4vw, 5.5rem); line-height: 1.05; letter-spacing: 0.005em; text-transform: none; font-variant-numeric: lining-nums; } /* client, 16 Nov: "Beyond expectations" as written, not all capitals */
 
 
+
+/* Banner scroll prompt: the arrow drops and returns. */
+@keyframes scroll-cue-arrow { 0%, 100% { transform: translateY(-2px); opacity: 0.8; } 50% { transform: translateY(4px); opacity: 1; } }
+.scroll-cue-arrow { animation: scroll-cue-arrow 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .scroll-cue-arrow { animation: none; } }

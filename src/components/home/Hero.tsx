@@ -14,31 +14,52 @@ export async function Hero({ locale }: { locale: Locale }) {
   if (!h.enabled) return null;
   const words = tr(cip.hero.title, locale).split(" ");
 
+  const es = locale === "es";
+
   return (
     <section
       id="hero"
       aria-labelledby="hero-title"
       data-tone="dark"
-      className="on-dark relative isolate flex h-[calc(100svh-80px)] min-h-[520px] flex-col items-center justify-center overflow-hidden bg-basalt px-5 text-center lg:h-[calc(100svh-96px)]"
+      className="on-dark relative isolate flex h-[calc(100svh-80px)] min-h-[520px] flex-col justify-end overflow-hidden bg-basalt lg:h-[calc(100svh-96px)]"
     >
       <HeroStage locale={locale} youtubeId={settings.filmYoutubeId} mp4={settings.filmMp4} webm={settings.filmWebm} poster={settings.filmPoster} />
-      {/* Clean (client, 16 Nov): one light, even veil over the film so the words read without a visible shade behind
-          them, and a soft bottom edge for the sound controls. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-[3] bg-[rgb(28_24_18/0.2)]" />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-32 bg-gradient-to-t from-basalt/35 to-transparent" />
+      {/* Client, 16 Nov: the line bottom-left and easy to read: a light veil over the film, and a deeper shade rising
+          from the bottom-left corner behind the words. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-[3] bg-[rgb(28_24_18/0.12)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-[3] bg-[radial-gradient(ellipse_75%_60%_at_0%_100%,rgb(28_24_18/0.62),rgb(28_24_18/0.2)_55%,transparent_80%)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48 bg-gradient-to-t from-basalt/45 to-transparent" />
 
-      <div className="relative z-10 mx-auto flex max-w-[1100px] flex-col items-center">
-        <h1 id="hero-title" className="hero-title text-bone [text-shadow:0_2px_30px_rgb(28_22_14/0.45)]">
-          {words.map((w, i) => (
-            <span key={i}>
-              {i > 0 && " "}
-              <span className="hero-word" style={{ "--w": i } as React.CSSProperties}>
-                {w}
+      <div className="relative z-10 w-full px-5 pb-[104px] md:px-10 md:pb-24 lg:px-14 lg:pb-20">
+        <div className="mx-auto max-w-[1440px]">
+          <h1 id="hero-title" className="hero-title max-w-[12ch] text-left text-bone [text-shadow:0_2px_24px_rgb(28_22_14/0.55)]">
+            {words.map((w, i) => (
+              <span key={i}>
+                {i > 0 && " "}
+                <span className="hero-word" style={{ "--w": i } as React.CSSProperties}>
+                  {w}
+                </span>
               </span>
-            </span>
-          ))}
-        </h1>
+            ))}
+          </h1>
+          <span aria-hidden className="hero-fade mt-6 block h-px w-24 bg-brass-light" style={{ animationDelay: "900ms" }} />
+        </div>
       </div>
+
+      {/* Scroll prompt (client, 16 Nov: show people they need to scroll down). */}
+      <a
+        href="#who"
+        data-scroll-cue
+        className="hero-fade absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-[11px] font-semibold tracking-[0.28em] whitespace-nowrap text-bone uppercase [text-shadow:0_1px_8px_rgb(28_22_14/0.6)] hover:text-white md:bottom-7"
+        style={{ animationDelay: "1300ms" }}
+      >
+        {es ? "Desplácese" : "Scroll down"}
+        <span className="scroll-cue-ring flex size-10 items-center justify-center rounded-full ring-1 ring-bone/70 backdrop-blur-[2px]">
+          <svg aria-hidden width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="scroll-cue-arrow">
+            <path d="M7 1v13M1.5 8.5 7 14l5.5-5.5" />
+          </svg>
+        </span>
+      </a>
     </section>
   );
 }

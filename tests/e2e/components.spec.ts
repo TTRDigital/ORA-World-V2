@@ -53,7 +53,8 @@ test.describe("vendored components and the desktop menu", () => {
     // Client, 16 Nov: only "Beyond expectations" on the banner, no other text.
     await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveCount(0);
     // No links over the film; "Inquire" is in the white bar at the top.
-    await expect(page.locator("#hero a")).toHaveCount(0);
+    await expect(page.locator("#hero a:not([data-scroll-cue])")).toHaveCount(0);
+    await expect(page.locator("#hero a[data-scroll-cue]")).toHaveAttribute("href", "#who");
     await expect(page.locator('a[data-track="cta_inquire"]:visible').first()).toHaveText(/inquire/i);
     // Sound on when the page opens (client); one click on the button turns it off, and the choice is remembered.
     const sound = page.locator("#hero [data-film-sound]");

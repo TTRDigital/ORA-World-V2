@@ -496,7 +496,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         </video>
       )}
       {(youtubeId || selfHosted) && (
-        <div className="hero-fade absolute bottom-5 left-3 z-20 flex items-center gap-1 md:bottom-7 md:left-7" style={{ animationDelay: "1.2s" }}>
+        <div className="hero-fade absolute top-3 right-3 z-20 flex items-center gap-1 md:top-auto md:right-7 md:bottom-7" style={{ animationDelay: "1.2s" }}>
         <button
           type="button"
           onClick={toggleSound}
