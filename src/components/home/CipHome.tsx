@@ -162,18 +162,21 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 03 Longevity and preventive health */}
-      <CipSection
+      {/* 03 Longevity and preventive health, in the Cipriani layout (client, 16 Nov): the services as two cards, the gym
+          film on the right. */}
+      <CipShowcase
         id="longevity"
         n="03"
-        tone="dark"
+        dark
         eyebrow={x(cip.prevention.eyebrow)}
         title={x(cip.prevention.title)}
         intro={x(cip.prevention.intro)}
         body={x(cip.prevention.body)}
-        bullets={cip.prevention.bullets.map(x)}
-        cta={inquireBtn}
-        wideVisual={false}
+        cards={[
+          { label: x(cip.prevention.cardLabels[0]), items: cip.prevention.bullets.slice(0, 2).map(x) },
+          { label: x(cip.prevention.cardLabels[1]), items: cip.prevention.bullets.slice(2).map(x) },
+        ]}
+        cta={inquire}
       >
         <figure className="relative overflow-hidden rounded-[22px]">
           {/* Client, 15 Nov: a film that walks into the Tesoro Del Mar gym instead of the still picture (made from the
@@ -189,12 +192,24 @@ export async function CipHome({ locale }: { locale: Locale }) {
             <p className="mt-3 max-w-[48ch] text-[14px] leading-relaxed text-bone/80">{x(cip.prevention.questionSub)}</p>
           </figcaption>
         </figure>
-      </CipSection>
+      </CipShowcase>
 
-      {/* 04 Fitness, nutrition and aging well */}
-      <CipSection id="fitness" n="04" eyebrow={x(cip.fitness.eyebrow)} title={x(cip.fitness.title)} intro={x(cip.fitness.intro)} body={x(cip.fitness.body)} bullets={cip.fitness.bullets.map(x)} cta={inquireBtn}>
-        <CardRail cards={fitnessCards} label={x(cip.fitness.eyebrow)} hint={hint} locale={locale} />
-      </CipSection>
+      {/* 04 Fitness, nutrition and aging well, in the Cipriani layout: two cards and the film gallery. */}
+      <CipShowcase
+        id="fitness"
+        n="04"
+        eyebrow={x(cip.fitness.eyebrow)}
+        title={x(cip.fitness.title)}
+        intro={x(cip.fitness.intro)}
+        body={x(cip.fitness.body)}
+        cards={[
+          { label: x(cip.fitness.cardLabels[0]), items: cip.fitness.bullets.slice(0, 3).map(x) },
+          { label: x(cip.fitness.cardLabels[1]), items: cip.fitness.bullets.slice(3).map(x) },
+        ]}
+        cta={inquire}
+      >
+        <CardRail cards={fitnessCards} label={x(cip.fitness.eyebrow)} hint={hint} locale={locale} ratio="5/4" />
+      </CipShowcase>
 
       {/* 05 Why Puerto Rico: Act 60 and its tax benefits for residents */}
       <CipSection
@@ -226,10 +241,21 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 07 Residences, with the penthouse */}
-      <CipSection id="residences" n="07" eyebrow={x(cip.residences.eyebrow)} title={x(cip.residences.title)} intro={x(cip.residences.intro)} bullets={cip.residences.bullets.map(x)} cta={inquireBtn}>
-        <CardRail cards={residenceCards} label={x(cip.residences.eyebrow)} hint={hint} locale={locale} />
-      </CipSection>
+      {/* 07 Residences, with the penthouse, in the Cipriani layout: two cards and the gallery. */}
+      <CipShowcase
+        id="residences"
+        n="07"
+        eyebrow={x(cip.residences.eyebrow)}
+        title={x(cip.residences.title)}
+        intro={x(cip.residences.intro)}
+        cards={[
+          { label: x(cip.residences.cardLabels[0]), items: cip.residences.bullets.slice(0, 4).map(x) },
+          { label: x(cip.residences.cardLabels[1]), items: cip.residences.bullets.slice(4).map(x) },
+        ]}
+        cta={inquire}
+      >
+        <CardRail cards={residenceCards} label={x(cip.residences.eyebrow)} hint={hint} locale={locale} ratio="5/4" />
+      </CipShowcase>
 
       {/* 08 Amenities, in the Cipriani "Amenities & features" layout: the four lists as cards on the left, the gallery on
           the right (the full list, with the ORA health services and the ghost kitchen). */}
@@ -331,7 +357,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
 
       {/* 12 Location, in the Cipriani "A branded address" layout: the map on the left; on the right the title, the
           address card, the facts and one centred button. */}
-      <section id="location" aria-labelledby="location-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+      <section id="location" aria-labelledby="location-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
           <div className="relative overflow-hidden rounded-[20px] bg-travertine shadow-[0_24px_50px_-30px_rgb(44_36_22/0.5)] ring-1 ring-travertine-deep/60" style={{ aspectRatio: "4/3" }}>
             <iframe

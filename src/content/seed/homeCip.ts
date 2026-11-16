@@ -106,6 +106,8 @@ export const cip = {
       { en: "Nutritionists on staff", es: "Nutricionistas en el equipo" },
     ] as L[],
     question: { en: "What is the value of an extra 10 years for you?", es: "¿Cuánto valen para usted 10 años más?" } as L,
+    // Cipriani layout (client, 16 Nov): the four services as two cards.
+    cardLabels: [{ en: "Checked early", es: "Revisión a tiempo" }, { en: "Your team", es: "Su equipo" }] as L[],
     questionSub: {
       en: "A million? Five? Ten? You can't take it with you, and your children are taken care of. Time and health are the real investment.",
       es: "¿Un millón? ¿Cinco? ¿Diez? No puede llevárselo, y sus hijos ya están cuidados. El tiempo y la salud son la verdadera inversión.",
@@ -116,6 +118,7 @@ export const cip = {
   fitness: {
     eyebrow: { en: "Fitness and nutrition", es: "Forma física y nutrición" } as L,
     title: { en: "Your body is self-made", es: "Su cuerpo se hace a sí mismo" } as L,
+    cardLabels: [{ en: "Nutrition", es: "Nutrición" }, { en: "Fitness", es: "Ejercicio" }] as L[],
     intro: {
       en: "If you're living longer, don't you want to have a better life? Some people look 50 or 60 at 80; others look old at 60. ORA helps you be the first.",
       es: "Si vive más, ¿no quiere tener una vida mejor? Algunos aparentan 50 o 60 a los 80; otros se ven mayores a los 60. ORA le ayuda a ser de los primeros.",
@@ -177,6 +180,7 @@ export const cip = {
   residences: {
     eyebrow: { en: "Residences", es: "Residencias" } as L,
     title: { en: "Inspired by flight", es: "Inspiradas en el vuelo" } as L,
+    cardLabels: [{ en: "Residences", es: "Residencias" }, { en: "Phase One", es: "Fase Uno" }] as L[],
     intro: {
       en: "Curved towers arc like wings, balconies reach toward the sea, and glass blurs the line between home and horizon.",
       es: "Torres curvas como alas, balcones hacia el mar y vidrio que borra el límite entre hogar y horizonte.",

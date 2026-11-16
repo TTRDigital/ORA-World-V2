@@ -16,6 +16,7 @@ export function CipShowcase({
   title,
   intro,
   cards,
+  body,
   cta,
   dark = false,
   tone,
@@ -27,6 +28,8 @@ export function CipShowcase({
   title: string;
   intro: string;
   cards: ShowcaseCard[];
+  /** a second paragraph under the intro */
+  body?: string;
   cta?: { href: string; label: string; track: string };
   dark?: boolean;
   /** light sections: "white" (default) or "pale" (bone), to alternate like the reference */
@@ -46,20 +49,25 @@ export function CipShowcase({
             <span className="rule" aria-hidden />
             {eyebrow}
           </p>
-          <h2 id={`${id}-title`} className={cn("display-l mt-5", dark ? "text-bone" : "text-charcoal")} data-reveal>
+          <h2 id={`${id}-title`} className={cn("display-l mt-5 lg:!text-[3rem]", dark ? "text-bone" : "text-charcoal")} data-reveal>
             {title}
           </h2>
-          <p className={cn("mt-6 max-w-[44ch] text-[16px] leading-relaxed md:text-[17px]", dark ? "text-bone/85" : "text-charcoal")} data-reveal>
+          <p className={cn("mt-7 max-w-[46ch] text-[16px] leading-8", dark ? "text-bone/80" : "text-charcoal-soft")} data-reveal>
             {intro}
           </p>
+          {body && (
+            <p className={cn("mt-4 max-w-[46ch] text-[15px] leading-7", dark ? "text-bone/70" : "text-charcoal-soft")} data-reveal>
+              {body}
+            </p>
+          )}
           <div className="mt-8 grid gap-3 sm:grid-cols-2" data-reveal>
             {cards.map((c) => (
-              <div key={c.label} className={cn("rounded-[18px] p-6", dark ? "bg-white/[0.06] ring-1 ring-bone/15" : "bg-bone/60 ring-1 ring-travertine-deep/70")}>
+              <div key={c.label} className={cn("rounded-[18px] px-6 pt-7 pb-6", dark ? "bg-white/[0.06] ring-1 ring-bone/15" : "bg-bone/50 ring-1 ring-travertine-deep/70")}>
                 <p className={cn("text-[11px] font-semibold tracking-[0.26em] uppercase", dark ? "text-brass-light" : "text-brass-ink")}>{c.label}</p>
-                <ul className="mt-4 space-y-3">
+                <ul className="mt-5 space-y-3">
                   {c.items.map((it) => (
-                    <li key={it} className={cn("flex gap-2.5 text-[15px] leading-snug", dark ? "text-bone/85" : "text-charcoal")}>
-                      <span aria-hidden className={cn("mt-[0.55em] size-1 shrink-0 rounded-full", dark ? "bg-brass-light" : "bg-brass")} />
+                    <li key={it} className={cn("flex gap-2.5 text-[14px] leading-7", dark ? "text-bone/80" : "text-charcoal-soft")}>
+                      <span aria-hidden className={cn("mt-[0.6em] size-1 shrink-0 rounded-full", dark ? "bg-brass-light" : "bg-brass")} />
                       {it}
                     </li>
                   ))}
