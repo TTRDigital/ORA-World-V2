@@ -174,8 +174,9 @@ export async function CipHome({ locale }: { locale: Locale }) {
         dark
         eyebrow={x(cip.prevention.eyebrow)}
         title={x(cip.prevention.title)}
-        intro={x(cip.prevention.intro)}
-        body={x(cip.prevention.body)}
+        // The owner's core promise (brief §1) opens the section; the redundancy lines and the check-up paragraph follow.
+        intro={x(cip.who.intro)}
+        body={`${x(cip.prevention.intro)} ${x(cip.prevention.body)}`}
         cards={[
           { label: x(cip.prevention.cardLabels[0]), items: cip.prevention.bullets.slice(0, 2).map(x) },
           { label: x(cip.prevention.cardLabels[1]), items: cip.prevention.bullets.slice(2).map(x) },
