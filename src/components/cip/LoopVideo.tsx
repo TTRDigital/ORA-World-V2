@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
  * gym"). Plays only while on screen and pauses when scrolled away; loads nothing until it is about to be seen. Reduced
  * motion: the poster frame stays still. The poster is the film's first frame, so nothing jumps when it starts.
  */
-export function LoopVideo({ src, poster, label, ratio }: { src: string; poster: string; label: string; ratio: string }) {
+export function LoopVideo({ src, poster, label, ratio, flat = false }: { src: string; poster: string; label: string; ratio: string; /** inside a card: no own rounding or shadow */ flat?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export function LoopVideo({ src, poster, label, ratio }: { src: string; poster: 
   }, []);
 
   return (
-    <div className="relative overflow-hidden rounded-[20px] bg-travertine shadow-[0_24px_50px_-30px_rgb(44_36_22/0.5)]" style={{ aspectRatio: ratio }}>
+    <div className={flat ? "relative overflow-hidden bg-travertine" : "relative overflow-hidden rounded-[20px] bg-travertine shadow-[0_24px_50px_-30px_rgb(44_36_22/0.5)]"} style={{ aspectRatio: ratio }}>
       <video
         ref={ref}
         className="absolute inset-0 h-full w-full object-cover"

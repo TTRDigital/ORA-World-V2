@@ -13,9 +13,20 @@ export type RailCard = { key: string; kicker: string; title: string; text?: stri
  * alive": a slow drift and zoom while the card is on screen, or a muted looping clip when a `video` is supplied (it
  * loads only when about to be seen, plays while on screen and pauses off screen; reduced motion keeps the poster).
  */
-export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/3", fit = "cover" }: { cards: RailCard[]; label: string; hint?: string; locale: Locale; dark?: boolean; ratio?: string; fit?: "cover" | "contain" }) {
+export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/3", fit = "cover", overlay = false }: { cards: RailCard[]; label: string; hint?: string; locale: Locale; dark?: boolean; ratio?: string; fit?: "cover" | "contain"; /** Cipriani style: round arrows over the middle of the picture (desktop). */ overlay?: boolean }) {
   const track = useRef<HTMLUListElement>(null);
   const [edge, setEdge] = useState<{ start: boolean; end: boolean }>({ start: true, end: false });
+  const [imgMid, setImgMid] = useState(0); // where the arrows sit: half the picture's height
+
+  useEffect(() => {
+    if (!overlay) return;
+    const el = track.current;
+    const pic = el?.querySelector<HTMLElement>(".alive");
+    if (!pic) return;
+    const ro = new ResizeObserver(() => setImgMid(pic.offsetHeight / 2));
+    ro.observe(pic);
+    return () => ro.disconnect();
+  }, [overlay]);
 
   useEffect(() => {
     const el = track.current;
@@ -57,6 +68,7 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
   return (
     <div role="region" aria-roledescription="carousel" aria-label={label} className="relative">
       {hint && <p className={cn("mb-4 text-[11px] font-semibold tracking-[0.24em] uppercase", dark ? "text-bone/60" : "text-charcoal-soft")}>{hint}</p>}
+      <div className="relative">
       <ul
         ref={track}
         tabIndex={0}
@@ -118,7 +130,28 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
           );
         })}
       </ul>
-      <div className="mt-5 flex gap-2">
+      {overlay && imgMid > 0 && (
+        <>
+          {(["prev", "next"] as const).map((d) => (
+            <button
+              key={d}
+              type="button"
+              aria-label={d === "prev" ? (locale === "es" ? "Anterior" : "Previous") : locale === "es" ? "Siguiente" : "Next"}
+              onClick={() => step(d === "prev" ? -1 : 1)}
+              disabled={d === "prev" ? edge.start : edge.end}
+              style={{ top: imgMid }}
+              className={cn(
+                "absolute z-10 hidden size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-charcoal shadow-[0_10px_24px_-12px_rgb(44_36_22/0.5)] ring-1 ring-travertine-deep/60 transition-opacity hover:bg-white disabled:opacity-0 lg:inline-flex",
+                d === "prev" ? "left-3" : "right-3",
+              )}
+            >
+              {d === "prev" ? <ArrowLeft width={18} height={18} /> : <ArrowRight width={18} height={18} />}
+            </button>
+          ))}
+        </>
+      )}
+      </div>
+      <div className={cn("mt-5 flex gap-2", overlay && "lg:hidden")}>
         <button type="button" aria-label={locale === "es" ? "Anterior" : "Previous"} onClick={() => step(-1)} disabled={edge.start} className={cn("inline-flex size-11 items-center justify-center rounded-full ring-1 transition-opacity disabled:opacity-35", dark ? "text-bone ring-bone/40" : "text-charcoal ring-charcoal/25")}>
           <ArrowLeft width={18} height={18} />
         </button>

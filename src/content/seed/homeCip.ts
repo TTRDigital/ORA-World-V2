@@ -32,6 +32,18 @@ export const cip = {
       en: "Communities in Puerto Rico where longevity, luxury and nature meet. Tesoro Del Mar, in Dorado, is the first.",
       es: "Comunidades en Puerto Rico donde se unen la longevidad, el lujo y la naturaleza. Tesoro Del Mar, en Dorado, es la primera.",
     } as L,
+    // Cipriani layout (client, 16 Nov): two cards on the left. The second card's figures come from the published specs.
+    promise: {
+      label: { en: "Our promise", es: "Nuestra promesa" } as L,
+      items: [
+        { en: "Longevity at the foundation", es: "La longevidad como base" },
+        { en: "Stronger, fitter, and feeling it", es: "Más fuerte, en forma y sintiéndolo" },
+        { en: "Longevity, luxury and nature together", es: "Longevidad, lujo y naturaleza juntos" },
+        { en: "ORA World makes it easy", es: "ORA World lo hace fácil" },
+      ] as L[],
+    },
+    specsLabel: { en: "Tesoro Del Mar", es: "Tesoro Del Mar" } as L,
+    galleryKicker: { en: "Tesoro Del Mar", es: "Tesoro Del Mar" } as L,
   },
 
   /* Why ORA World: how it is different (client call: "How is ORA World better?", "not just another apartment
@@ -245,6 +257,12 @@ export const cip = {
       en: "Owners fly private between the United States and their condo in Puerto Rico.",
       es: "Los propietarios vuelan en privado entre Estados Unidos y su condominio en Puerto Rico.",
     } as L,
+    cardLabels: [{ en: "Flights", es: "Vuelos" }, { en: "On arrival", es: "Al llegar" }] as L[],
+    film: {
+      kicker: { en: "ORA World Jet", es: "ORA World Jet" } as L,
+      title: { en: "Private charters", es: "Vuelos chárter privados" } as L,
+      text: { en: "Between the United States and your condo in Puerto Rico.", es: "Entre Estados Unidos y su condominio en Puerto Rico." } as L,
+    },
     bullets: [
       { en: "Private jet charters through ORA World Jet", es: "Vuelos privados con ORA World Jet" },
       { en: "About 30 minutes from San Juan's airport", es: "A unos 30 minutos del aeropuerto de San Juan" },

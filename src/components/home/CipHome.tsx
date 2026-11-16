@@ -6,8 +6,8 @@ import { tdm, life } from "@/content/seed/images";
 import { Link } from "@/i18n/navigation";
 import { CipSection } from "@/components/cip/CipSection";
 import { CardRail, type RailCard } from "@/components/cip/CardRail";
-import { AliveImage } from "@/components/cip/AliveImage";
 import { StackCards } from "@/components/cip/StackCards";
+import { CipShowcase } from "@/components/cip/CipShowcase";
 import { LoopVideo } from "@/components/cip/LoopVideo";
 import { TaxStats } from "@/components/cip/TaxStats";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
@@ -73,6 +73,15 @@ export async function CipHome({ locale }: { locale: Locale }) {
   const es = locale === "es";
   const hint = es ? "Use las flechas o deslice" : "Use arrows or swipe";
 
+  // Who we are gallery (Cipriani layout). Captions from the image descriptions and the published specs.
+  const whoCards: RailCard[] = [
+    { key: "towers", kicker: x(cip.who.galleryKicker), title: es ? "Las torres" : "The towers", text: es ? "Tesoro Del Mar, en Dorado, es la primera comunidad ORA World." : "Tesoro Del Mar, in Dorado, is the first ORA World community.", image: tdm.aerialTowers },
+    { key: "pool", kicker: x(cip.who.galleryKicker), title: es ? "La piscina" : "The pool", text: es ? "Las torres curvas sobre la piscina del resort." : "The curved towers above the resort pool.", image: tdm.exteriorPull },
+    { key: "coast", kicker: x(cip.who.galleryKicker), title: es ? "La costa" : "The coast", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast },
+    { key: "lobby", kicker: x(cip.who.galleryKicker), title: es ? "El vestíbulo" : "The lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium },
+    { key: "penthouse", kicker: x(cip.who.galleryKicker), title: "Penthouse", text: es ? "Piso 18, en dos niveles." : "Floor 18, on two levels.", image: tdm.penthouseLiving },
+  ];
+
   // Client, 15 Nov: each card plays a short film (a camera move made from its picture), not a still.
   const fitnessCards: RailCard[] = [
     { key: "gym", kicker: es ? "Entrenamiento" : "Training", title: es ? "Gimnasio y pilates" : "Fitness and pilates", text: es ? "Un programa pensado para que sea fácil." : "A program designed to make it easy.", image: tdm.gym, video: "/videos/fitness-gym.mp4", poster: "/videos/fitness-gym-poster.jpg" },
@@ -109,22 +118,23 @@ export async function CipHome({ locale }: { locale: Locale }) {
 
   return (
     <div className="flex flex-col">
-      {/* 01 Who we are: the core promise and the property (founder card and quote removed, client 15 Nov) */}
-      <CipSection id="who" n="01" eyebrow={x(cip.who.eyebrow)} title={x(cip.who.title)} intro={x(cip.who.intro)} body={x(cip.who.body)} wideVisual={false}>
-        <div className="grid gap-4">
-          <AliveImage image={tdm.aerialTowers} locale={locale} ratio="16/10" sizes="(max-width: 1023px) calc(100vw - 40px), 620px" />
-          {/* Tesoro Del Mar property specs, as published on oraworld.com (the huddle's "property specs"). */}
-          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Tesoro Del Mar">
-            {home.hero.stats.map((st) => (
-              <div key={x(st.label)} className="rounded-[14px] bg-white px-4 py-3.5 ring-1 ring-travertine-deep/70">
-                <dt className="sr-only">{x(st.label)}</dt>
-                <dd className="font-[family-name:var(--font-display)] text-[30px] leading-none text-charcoal">{st.value == null ? "" : st.value.toLocaleString("en-US")}</dd>
-                <dd aria-hidden className="mt-1.5 text-[12px] leading-snug text-charcoal-soft">{x(st.label)}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </CipSection>
+      {/* 01 Who we are, in the Cipriani "Amenities & features" layout (client, 16 Nov): the promise and the property specs
+          as two cards, one Inquire button, and a swipeable gallery of Tesoro Del Mar on the right. */}
+      <CipShowcase
+        id="who"
+        n="01"
+        eyebrow={x(cip.who.eyebrow)}
+        title={x(cip.who.title)}
+        intro={x(cip.who.intro)}
+        cards={[
+          { label: x(cip.who.promise.label), items: cip.who.promise.items.map(x) },
+          // Tesoro Del Mar property specs, as published on oraworld.com (the huddle's "property specs").
+          { label: x(cip.who.specsLabel), items: home.hero.stats.map((st) => `${st.value == null ? "" : st.value.toLocaleString("en-US")} ${x(st.label)}`) },
+        ]}
+        cta={{ href: "#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" }}
+      >
+        <CardRail cards={whoCards} label={x(cip.who.galleryKicker)} hint={hint} locale={locale} ratio="5/4" overlay />
+      </CipShowcase>
 
       {/* 02 Why ORA World: how it is different */}
       <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
@@ -237,10 +247,36 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 09 Private charters */}
-      <CipSection id="charters" n="09" tone="dark" eyebrow={x(cip.charters.eyebrow)} title={x(cip.charters.title)} intro={x(cip.charters.intro)} bullets={cip.charters.bullets.map(x)} wideVisual={false}>
-        <AliveImage image={life.jet} locale={locale} ratio="4/5" sizes="(max-width: 1023px) calc(100vw - 40px), 600px" />
-      </CipSection>
+      {/* 09 Private charters, in the same Cipriani layout (client, 16 Nov: "we can do a lot better here on design"):
+          flights and arrival as two cards, and a film card on the right (a slow push-in on the jet and the car). */}
+      <CipShowcase
+        id="charters"
+        n="09"
+        dark
+        eyebrow={x(cip.charters.eyebrow)}
+        title={x(cip.charters.title)}
+        intro={x(cip.charters.intro)}
+        cards={[
+          { label: x(cip.charters.cardLabels[0]), items: cip.charters.bullets.slice(0, 2).map(x) },
+          { label: x(cip.charters.cardLabels[1]), items: cip.charters.bullets.slice(2).map(x) },
+        ]}
+        cta={{ href: "#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" }}
+      >
+        <div className="overflow-hidden rounded-[18px] bg-white shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)]">
+          <LoopVideo
+            src="/videos/charters-landscape.mp4"
+            poster="/videos/charters-landscape-poster.jpg"
+            ratio="5/4"
+            flat
+            label={es ? "Un jet privado y el auto de la casa al atardecer" : "A private jet and the house car at golden hour"}
+          />
+          <div className="p-6 md:p-7">
+            <p className="text-[10.5px] font-semibold tracking-[0.26em] text-brass-ink uppercase">{x(cip.charters.film.kicker)}</p>
+            <h3 className="display-s mt-2 text-charcoal">{x(cip.charters.film.title)}</h3>
+            <p className="mt-1.5 text-[14px] leading-relaxed text-charcoal-soft">{x(cip.charters.film.text)}</p>
+          </div>
+        </div>
+      </CipShowcase>
 
       {/* 10 Floor plans and pricing */}
       <CipSection
