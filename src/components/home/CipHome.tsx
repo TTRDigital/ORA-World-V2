@@ -86,8 +86,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
   const whoCards: RailCard[] = [
     // Client, 16 Nov: the aerial cove film first, titled "View".
     { key: "view", kicker: k, title: es ? "Vista" : "View", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...v("cove") },
-    // Client, 16 Nov: the penthouse living film second, titled "Luxury Living".
-    { key: "luxury", kicker: k, title: es ? "Vida de lujo" : "Luxury Living", text: es ? "El salón del penthouse, piso 18." : "The penthouse living room, floor 18.", image: tdm.penthouseLiving, ...v("penthouse") },
+    // Client, 16 Nov: "Luxury Living" second: the penthouse living film, then the primary suite, then the kitchen.
+    { key: "luxury", kicker: k, title: es ? "Vida de lujo" : "Luxury Living", text: es ? "El salón del penthouse, piso 18." : "The penthouse living room, floor 18.", image: tdm.penthouseLiving, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
     { key: "pool", kicker: k, title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...v("pool") },
     { key: "lobby", kicker: k, title: es ? "Vestíbulo" : "Lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium, ...v("lobby") },
     { key: "fitness", kicker: k, title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym, ...v("gym") },

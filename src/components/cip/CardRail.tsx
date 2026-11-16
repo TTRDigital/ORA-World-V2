@@ -6,7 +6,7 @@ import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "@/components/ui/Icons";
 
-export type RailCard = { key: string; kicker: string; title: string; text?: string; image: ImageRef; video?: string; poster?: string; href?: string; meta?: string; cta?: string };
+export type RailCard = { key: string; kicker: string; title: string; text?: string; image: ImageRef; video?: string; poster?: string; /** more films that play after `video`, one after another, then from the start */ playlist?: string[]; href?: string; meta?: string; cta?: string };
 
 /**
  * Swipeable row of cards (scroll-snap, arrow buttons, arrow keys), the Cipriani gallery pattern. Card images "come
@@ -107,7 +107,19 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
                     src={c.video}
                     poster={c.poster}
                     muted
-                    loop
+                    loop={!c.playlist?.length}
+                    onEnded={
+                      c.playlist?.length
+                        ? (e) => {
+                            // Client, 16 Nov: the clips play one after another, then start again.
+                            const v = e.currentTarget;
+                            const list = [c.video!, ...c.playlist!];
+                            const now = list.findIndex((src) => v.src.endsWith(src));
+                            v.src = list[(now + 1) % list.length];
+                            v.play().catch(() => {});
+                          }
+                        : undefined
+                    }
                     playsInline
                     preload="none"
                     disablePictureInPicture
