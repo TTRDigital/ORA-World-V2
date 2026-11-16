@@ -16,9 +16,8 @@ export const cip = {
   hero: {
     // The banner carries just this one line (client, 11 Nov 2026). Client, 15 Nov: short, about longevity, with "ORA World"
     // in it. Worded as a place, not a promise (no guaranteed health outcomes).
-    // Client, 16 Nov: "ORA WORLD" on top, the title "A Life To Treasure" (Tesoro: treasure).
-    kicker: { en: "ORA World", es: "ORA World" } as L,
-    title: { en: "A Life To Treasure", es: "Una vida para atesorar" } as L,
+    // Client, 16 Nov: the logo comes in first, then this line, both before the film appears.
+    title: { en: "ORA World, where longevity lives", es: "ORA World, donde vive la longevidad" } as L,
     sub: { en: "Tesoro Del Mar · Dorado, Puerto Rico", es: "Tesoro Del Mar · Dorado, Puerto Rico" } as L,
   },
 

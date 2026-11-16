@@ -49,11 +49,12 @@ test.describe("vendored components and the desktop menu", () => {
     // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.
     const text = (await main.innerText()).toLowerCase();
     expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
-    await expect(page.locator("#hero h1")).toHaveText(/a life to treasure/i);
+    await expect(page.locator("#hero h1")).toHaveText(/ora world, where longevity lives/i);
     // Just this one line of text on the banner (plus the Inquire and sound buttons).
     // Client, 16 Nov (888.dolcegabbana.com opening): the line, then one place line under it.
-    // Client, 16 Nov: "ORA WORLD" on top of the title, and the place line under it.
-    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveText([/ora world/i, /tesoro del mar · dorado, puerto rico/i]);
+    // Client, 16 Nov: the logo, then the line; nothing else over the film.
+    await expect(page.locator("#hero img.hero-logo")).toHaveCount(1);
+    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveCount(0);
     // One link in the banner, "Inquire", plus the film's sound toggle.
     // Client, 16 Nov (888.dolcegabbana.com): nothing but words over the film; "Inquire" sits in the bar (top bar on
     // desktop, bottom bar on phones). The "scroll to continue" cue is a scroll aid, not a call to action.
