@@ -926,9 +926,27 @@ main section[id] { scroll-margin-top: 96px; }
 }
 
 /* Banner text over the bright film: a soft shadow keeps it crisp on light skies and walls. */
-.hero-text-shadow { text-shadow: 0 1px 2px rgb(44 36 22 / 0.45), 0 4px 24px rgb(44 36 22 / 0.35); }
+.hero-text-shadow { text-shadow: 0 1px 2px rgb(44 36 22 / 0.55), 0 2px 12px rgb(44 36 22 / 0.45), 0 4px 28px rgb(44 36 22 / 0.4); }
 
 /* While the browser holds the film's sound back, the sound button pulses gently and asks for one tap. */
 @keyframes film-sound-ask { 0%, 100% { box-shadow: 0 0 0 0 rgb(176 141 87 / 0.55); } 50% { box-shadow: 0 0 0 10px rgb(176 141 87 / 0); } }
 .film-sound-ask { animation: film-sound-ask 1.8s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .film-sound-ask { animation: none; } }
+
+/* Homepage opening (client, 16 Nov; reference 888.dolcegabbana.com): the film full screen, the line appearing word by
+   word, then the place, the button and a "scroll to continue" cue; the clear bar fades in after the text, and the white
+   bar slides down once the visitor scrolls. */
+@keyframes header-intro { from { opacity: 0; } to { opacity: 1; } }
+.header-intro { animation: header-intro 900ms ease-out 1.9s both; }
+@keyframes header-slide-in { from { transform: translateY(-100%); } to { transform: none; } }
+.header-slide-in { animation: header-slide-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes hero-word { from { opacity: 0; transform: translateY(0.35em); filter: blur(10px); letter-spacing: 0.2em; } to { opacity: 1; transform: none; filter: blur(0); } }
+.hero-word { display: inline-block; animation: hero-word 1100ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(300ms + var(--w, 0) * 140ms); }
+@keyframes hero-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.hero-fade { animation: hero-fade 900ms ease-out both; }
+@keyframes scroll-cue { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+.scroll-cue-line { animation: scroll-cue 2.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .header-intro, .header-slide-in, .hero-word, .hero-fade { animation: none; }
+  .scroll-cue-line { animation: none; }
+}

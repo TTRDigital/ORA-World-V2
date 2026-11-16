@@ -51,10 +51,13 @@ test.describe("vendored components and the desktop menu", () => {
     expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
     await expect(page.locator("#hero h1")).toHaveText(/ora world, where longevity lives/i);
     // Just this one line of text on the banner (plus the Inquire and sound buttons).
-    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveCount(0);
+    // Client, 16 Nov (888.dolcegabbana.com opening): the line, then one place line under it.
+    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveCount(1);
+    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveText(/tesoro del mar · dorado, puerto rico/i);
     // One link in the banner, "Inquire", plus the film's sound toggle.
-    await expect(page.locator("#hero a")).toHaveCount(1);
-    await expect(page.locator("#hero a")).toHaveText(/inquire/i);
+    // One call to action on the banner (the "scroll to continue" cue is a scroll aid, not a call to action).
+    await expect(page.locator("#hero a:not([data-scroll-cue])")).toHaveCount(1);
+    await expect(page.locator("#hero a:not([data-scroll-cue])")).toHaveText(/inquire/i);
     // Sound on when the page opens (client); one click on the button turns it off, and the choice is remembered.
     const sound = page.locator("#hero [data-film-sound]");
     await expect(sound).toBeVisible();

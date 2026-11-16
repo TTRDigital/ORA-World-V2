@@ -11,6 +11,12 @@ test.describe("accessibility (axe, WCAG 2.2 AA)", () => {
       await page.locator("html:not(.no-js)").waitFor();
       // Reveal everything so axe sees final colours rather than mid-fade opacity.
       await page.evaluate(() => document.querySelectorAll("[data-reveal]").forEach((n) => n.classList.add("is-revealed")));
+      // Finish one-off entrance animations (e.g. the homepage opening fades), for the same reason; loops keep running.
+      await page.evaluate(() =>
+        document.getAnimations().forEach((a) => {
+          if (a.effect?.getTiming().iterations !== Infinity) a.finish();
+        }),
+      );
       await page.waitForTimeout(1000);
       const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
       const serious = results.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
