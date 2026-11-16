@@ -934,7 +934,7 @@ main section[id] { scroll-margin-top: 96px; }
 @media (prefers-reduced-motion: reduce) { .film-sound-ask { animation: none; } }
 
 /* Homepage banner text: the line appears word by word, then the sentence fades up. */
-@keyframes hero-word { from { opacity: 0; transform: translateY(0.35em); filter: blur(10px); letter-spacing: 0.2em; } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes hero-word { from { opacity: 0; transform: translateY(0.35em); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
 .hero-word { display: inline-block; animation: hero-word 1100ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--hero-start, 300ms) + var(--w, 0) * 140ms); }
 @keyframes hero-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .hero-fade { animation: hero-fade 900ms ease-out both; }
@@ -943,6 +943,6 @@ main section[id] { scroll-margin-top: 96px; }
 }
 
 /* Reference-style title: a light serif in capitals, wide, calm. */
-.hero-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem); line-height: 1.04; letter-spacing: 0.035em; text-transform: uppercase; font-variant-numeric: lining-nums; }
+.hero-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.75rem, 1.7rem + 4vw, 5.5rem); line-height: 1.05; letter-spacing: 0.005em; text-transform: none; font-variant-numeric: lining-nums; } /* client, 16 Nov: "Beyond expectations" as written, not all capitals */
 
 
