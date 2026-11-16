@@ -18,15 +18,16 @@ test.describe("vendored components and the desktop menu", () => {
     await page.locator("html:not(.no-js)").waitFor();
     // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "who", "why-ora-world", "virtual-tour", "residences", "amenities", "charters", "floor-plans", "steps", "location", "inquire"]);
+    expect(ids).toEqual(["hero", "who", "why-ora-world", "virtual-tour", "residences", "charters", "floor-plans", "steps", "location", "inquire"]);
     // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
     const main = page.locator("main");
     // Client, 16 Nov: the longevity and fitness sections moved to their own page (tested below).
     // Client, 16 Nov: the Act 60 line is now a "Why ORA World" card (the tax section left the homepage).
     for (const line of [/act 60: the tax benefits of living here/i])
       await expect(main.getByText(line).first()).toBeVisible();
-    await expect(page.locator("#amenities")).toContainText(/ghost kitchen/i);
-    await expect(page.locator("#amenities")).toContainText(/total body scan/i);
+    // Client, 16 Nov: the amenities section left the homepage; the ORA services are in the "Longevity, built in" card.
+    await expect(page.locator("#why-ora-world")).toContainText(/ghost kitchen/i);
+    await expect(page.locator("#why-ora-world")).toContainText(/total body scan/i);
     // Client, 15 Nov: no founder card or quote on the homepage.
     await expect(page.locator("#who")).not.toContainText(/harvard|heard about anything like this/i);
     // Huddle: the Tesoro Del Mar property specs, as published.
