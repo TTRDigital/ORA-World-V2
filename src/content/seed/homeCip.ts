@@ -36,11 +36,7 @@ export const cip = {
     // Client, 16 Nov: section 01 says everything ORA World offers, like Cipriani's "Amenities & features" (all items
     // from the amenities list, the ORA services and the charters on this page).
     offerEyebrow: { en: "Amenities & features", es: "Amenidades y servicios" } as L,
-    // Client, 16 Nov: the section's headline is this sentence.
-    offerTitle: {
-      en: "Thoughtfully crafted communities where longevity, luxury, and nature exist in perfect harmony.",
-      es: "Comunidades concebidas con esmero donde la longevidad, el lujo y la naturaleza conviven en perfecta armonía.",
-    } as L,
+    offerTitle: { en: "Longevity, luxury and nature, at home", es: "Longevidad, lujo y naturaleza, en casa" } as L,
     offerIntro: {
       en: "65,500 sq ft of pools, dining, wellness and social spaces, and the services that make a longer, better life easy.",
       es: "65,500 pies² de piscinas, gastronomía, bienestar y espacios sociales, y los servicios que facilitan una vida más larga y mejor.",
@@ -67,6 +63,50 @@ export const cip = {
       },
     ],
     galleryKicker: { en: "Amenity gallery", es: "Galería de amenidades" } as L,
+  },
+
+  /* Why ORA World: how it is different (client call: "How is ORA World better?", "not just another apartment
+     building", "nobody knows ORA World, so we have to build trust"). Each point is backed elsewhere on the page. */
+  different: {
+    eyebrow: { en: "Why ORA World", es: "Por qué ORA World" } as L,
+    // Client, 16 Nov: this sentence replaces "Not another condo building".
+    title: {
+      en: "Thoughtfully crafted communities where longevity, luxury, and nature exist in perfect harmony.",
+      es: "Comunidades concebidas con esmero donde la longevidad, el lujo y la naturaleza conviven en perfecta armonía.",
+    } as L,
+    intro: {
+      en: "Three things no ordinary condo offers: care for your health, a better place for your income, and easy travel.",
+      es: "Tres cosas que ningún condominio común ofrece: cuidado de su salud, un mejor lugar para su ingreso y viajes fáciles.",
+    } as L,
+    items: [
+      {
+        title: { en: "Longevity, built in", es: "Longevidad incluida" } as L,
+        text: {
+          en: "A total body scan, nutritionists, a ghost kitchen that cooks for you and an easy fitness program.",
+          es: "Escaneo corporal completo, nutricionistas, una cocina fantasma que cocina para usted y un programa de ejercicio fácil.",
+        } as L,
+        href: "#longevity",
+        tags: [{ en: "Body scan", es: "Escaneo corporal" }, { en: "Nutritionists", es: "Nutricionistas" }, { en: "Ghost kitchen", es: "Cocina fantasma" }, { en: "Fitness program", es: "Ejercicio" }] as L[],
+      },
+      {
+        title: { en: "Keep more of what you earn", es: "Conserve más de lo que gana" } as L,
+        text: {
+          en: "Puerto Rico's Act 60: 0% or 4% on investment income for residents, with our accountants to guide you.",
+          es: "La Ley 60 de Puerto Rico: 0% o 4% sobre ingresos de inversión para residentes, con nuestros contadores para guiarle.",
+        } as L,
+        href: "#why-puerto-rico",
+        tags: [{ en: "Act 60", es: "Ley 60" }, { en: "0% or 4%", es: "0% o 4%" }, { en: "Accountants", es: "Contadores" }] as L[],
+      },
+      {
+        title: { en: "Travel, taken care of", es: "Viajes resueltos" } as L,
+        text: {
+          en: "Private charter flights between the US and your condo, a lobby attended 24/7 and a house car waiting.",
+          es: "Vuelos chárter privados entre Estados Unidos y su condominio, un vestíbulo atendido 24/7 y el auto de la casa.",
+        } as L,
+        href: "#charters",
+        tags: [{ en: "Private charters", es: "Chárter privados" }, { en: "24/7 lobby", es: "Vestíbulo 24/7" }, { en: "House car", es: "Auto de la casa" }] as L[],
+      },
+    ],
   },
 
   /* 02 Longevity and preventive health (brief §2, §4, lines) */
