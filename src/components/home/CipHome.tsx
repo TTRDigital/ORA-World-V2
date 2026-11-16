@@ -1,5 +1,5 @@
 import type { Locale } from "@/content/types";
-import { getFloorPlans, getHome, getSiteSettings } from "@/lib/content";
+import { getHome, getSiteSettings } from "@/lib/content";
 import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
 import { tdm, life } from "@/content/seed/images";
@@ -8,6 +8,8 @@ import { CipSection } from "@/components/cip/CipSection";
 import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { CipShowcase } from "@/components/cip/CipShowcase";
 import { StackCards } from "@/components/cip/StackCards";
+import { InteriorsGallery } from "@/components/cip/InteriorsGallery";
+import { FloorExplorer } from "@/components/cip/FloorExplorer";
 import { LoopVideo } from "@/components/cip/LoopVideo";
 import { TaxStats } from "@/components/cip/TaxStats";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
@@ -69,7 +71,7 @@ function SectionHead({ n, eyebrow, title, id, intro, dark = false, children }: {
  * location → Inquire. One layout throughout, after theresidencesatcipriani.com; one gold button, "Inquire".
  */
 export async function CipHome({ locale }: { locale: Locale }) {
-  const [settings, plans, home] = await Promise.all([getSiteSettings(), getFloorPlans(), getHome()]);
+  const [settings, home] = await Promise.all([getSiteSettings(), getHome()]);
   const x = (l: Parameters<typeof t>[0]) => t(l, locale);
   const es = locale === "es";
   const inquire = { href: "#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" };
@@ -103,14 +105,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
     { key: "putting", kicker: es ? "Movimiento" : "Movement", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, video: "/videos/fitness-putting.mp4", poster: "/videos/fitness-putting-poster.jpg" },
   ];
 
-  const residenceCards: RailCard[] = [
-    { key: "living", kicker: es ? "Residencia" : "Residence", title: es ? "Sala y comedor" : "Living and dining", text: es ? "Ventanales y acceso a la terraza." : "Floor-to-ceiling glass and terrace access.", image: tdm.kitchenDining },
-    { key: "kitchen", kicker: es ? "Cocina" : "Kitchen", title: es ? "Cocina italiana" : "Italian kitchen", text: es ? "Gabinetes Scavolini y electrodomésticos Gaggenau." : "Scavolini cabinetry and Gaggenau appliances.", image: tdm.kitchenWine },
-    { key: "suite", kicker: es ? "Dormitorio" : "Bedroom", title: es ? "Suite principal" : "Primary suite", text: es ? "Vista al mar a través del vidrio." : "Ocean views through floor-to-ceiling glass.", image: tdm.masterSuite },
-    { key: "bath", kicker: es ? "Baño" : "Bath", title: es ? "Baño principal" : "Primary bath", text: es ? "Mármol y grifería Dornbracht." : "Marble and Dornbracht fittings.", image: tdm.vanity },
-    { key: "ph-living", kicker: "Penthouse", title: es ? "Salón de doble altura" : "Double-height salon", text: es ? "Piso 18, en dos niveles." : "Floor 18, on two levels.", image: tdm.penthouseLiving },
-    { key: "ph-piano", kicker: "Penthouse", title: es ? "Salón con piano" : "Piano salon", text: es ? "9,807 pies² interiores." : "9,807 sq ft inside.", image: tdm.penthousePiano },
-  ];
+
 
   const amenityCards: RailCard[] = [
     { key: "club", kicker: "Clubhouse", title: es ? "El Clubhouse" : "The Clubhouse", text: es ? "Club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
@@ -119,15 +114,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
     { key: "arrival", kicker: es ? "Llegada" : "Arrival", title: es ? "El vestíbulo" : "The lobby", text: es ? "Vestíbulo de doble altura atendido 24/7." : "A double-height lobby attended 24/7.", image: tdm.foyerAtrium },
   ];
 
-  const planCards: RailCard[] = plans.map((p) => ({
-    key: p.slug,
-    kicker: `${es ? "Pisos" : "Floors"} ${p.floors ?? ""}`,
-    title: t(p.name, locale),
-    meta: `${p.bedrooms} ${es ? "dorm." : "bed"} · ${p.bathrooms} ${es ? "baños" : "bath"}${p.powder ? ` + ${p.powder} ${es ? "medio baño" : "powder"}` : ""} · ${p.interiorSqFt?.toLocaleString("en-US")} ${es ? "pies² int." : "sq ft interior"}`,
-    image: p.image,
-    href: `/${locale}/residences/plans/${p.slug}`,
-    cta: es ? "Ver el plano" : "View floor plan",
-  }));
 
   return (
     <div className="flex flex-col">
@@ -151,11 +137,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
       {/* 02 Why ORA World: how it is different */}
       <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <SectionHead n="02" id="why-ora-world-title" eyebrow={x(cip.different.eyebrow)} title={x(cip.different.title)} intro={x(cip.different.intro)} />
-          {/* Client, 16 Nov: an accent line in script above the cards. */}
-          <p className="mt-12 text-center font-[family-name:var(--font-script)] text-[30px] leading-snug text-charcoal md:mt-16 md:text-[44px]" data-reveal>
+          {/* Client, 16 Nov: no eyebrow, title or intro here; the script line heads the section, then the cards. */}
+          <h2 id="why-ora-world-title" className="text-center font-[family-name:var(--font-script)] text-[30px] leading-snug font-normal text-charcoal md:text-[44px]" data-reveal>
             {x(cip.different.script)}
-          </p>
+          </h2>
           {/* Client, 15 Nov: cards that stack on top of each other as you scroll, with more than plain text. */}
           <StackCards
             locale={locale}
@@ -251,21 +236,59 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 07 Residences, with the penthouse, in the Cipriani layout: two cards and the gallery. */}
-      <CipShowcase
-        id="residences"
-        n="07"
-        eyebrow={x(cip.residences.eyebrow)}
-        title={x(cip.residences.title)}
-        intro={x(cip.residences.intro)}
-        cards={[
-          { label: x(cip.residences.cardLabels[0]), items: cip.residences.bullets.slice(0, 4).map(x) },
-          { label: x(cip.residences.cardLabels[1]), items: cip.residences.bullets.slice(4).map(x) },
-        ]}
-        cta={inquire}
-      >
-        <CardRail cards={residenceCards} label={x(cip.residences.eyebrow)} hint={hint} locale={locale} ratio="5/4" />
-      </CipShowcase>
+      {/* 07 Interiors (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): heading and line on
+          the left, a counter between round arrows on the right, wide 16:9 slides running off the right edge, then two
+          feature lists. Living and kitchen play as films. */}
+      <section id="residences" aria-labelledby="residences-title" className="overflow-hidden border-b border-travertine-deep/60 bg-bone py-16 md:py-24">
+        <div className="mx-auto grid max-w-[1280px] gap-8 px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-10 xl:px-0">
+          <div className="grid gap-4">
+            <p className="eyebrow" data-n="07" data-reveal>
+              <span className="rule" aria-hidden />
+              {x(cip.interiors.eyebrow)}
+            </p>
+            <h2 id="residences-title" className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]" data-reveal>
+              {x(cip.interiors.title)}
+            </h2>
+            <p className="max-w-[60ch] text-[16px] leading-relaxed text-charcoal-soft" data-reveal>
+              {x(cip.interiors.intro)}
+            </p>
+          </div>
+          <InteriorsGallery
+            locale={locale}
+            label={x(cip.interiors.title)}
+            prevLabel={es ? "Imagen anterior" : "Previous image"}
+            nextLabel={es ? "Imagen siguiente" : "Next image"}
+            slides={[
+              { title: es ? "Sala y comedor" : "Living & dining", note: es ? "Interior de residencia" : "Residence interior", image: tdm.kitchenDining, video: "/videos/interior-living.mp4", poster: "/videos/interior-living-poster.jpg" },
+              { title: es ? "Cocina gourmet" : "Gourmet kitchen", note: es ? "Gabinetes italianos" : "Italian cabinetry", image: tdm.kitchenWine, video: "/videos/interior-kitchen.mp4", poster: "/videos/interior-kitchen-poster.jpg" },
+              { title: es ? "Suite principal" : "Primary suite", note: es ? "Interior de residencia" : "Residence interior", image: tdm.masterSuite },
+              { title: es ? "Dormitorio" : "Bedroom", note: es ? "Vista al mar" : "Ocean view", image: tdm.bedroomOcean },
+              { title: es ? "Baño principal" : "Primary bath", note: "Dornbracht", image: tdm.vanity },
+              { title: es ? "Medio baño" : "Powder room", note: es ? "Madera y piedra" : "Wood and stone", image: tdm.powderRoom },
+              { title: es ? "Estudio" : "Study", note: es ? "Interior de residencia" : "Residence interior", image: tdm.aptStudy },
+              { title: "Penthouse", note: es ? "Piso 18, dos niveles" : "Floor 18, two levels", image: tdm.penthouseLiving },
+            ]}
+          />
+        </div>
+        <div className="mx-auto mt-14 grid max-w-[1280px] gap-10 px-5 md:mt-20 md:grid-cols-2 md:gap-16 md:px-10 xl:px-0">
+          {cip.interiors.lists.map((l) => (
+            <div key={x(l.title)} data-reveal>
+              <h3 className="mb-4 font-[family-name:var(--font-display)] text-[28px] font-medium text-charcoal italic md:text-[32px]">{x(l.title)}</h3>
+              <ul className="border-t border-travertine-deep">
+                {l.items.map((it) => (
+                  <li key={x(it)} className="grid grid-cols-[2rem_minmax(0,1fr)] items-baseline border-b border-travertine-deep py-3.5 text-[15px] text-charcoal">
+                    <span aria-hidden className="text-brass">—</span>
+                    {x(it)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="mt-12 flex justify-center" data-reveal>
+          {inquireBtn}
+        </div>
+      </section>
 
       {/* 08 Amenities, in the Cipriani "Amenities & features" layout: the four lists as cards on the left, the gallery on
           the right (the full list, with the ORA health services and the ghost kitchen). */}
@@ -313,29 +336,23 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </CipShowcase>
 
-      {/* 10 Floor plans, in the Cipriani layout: "Starting from" centred, three plan cards across with the details on a
-          dark band, and one centred button. */}
-      <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
+      {/* 10 Floor plans (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): bedroom filters,
+          the tower, the level's residences and the plan with its figures. */}
+      <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-travertine/40 px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
           <p className="eyebrow" data-n="10" data-reveal>
             <span className="rule" aria-hidden />
-            {x(cip.plans.eyebrow)}
+            {x(cip.explorer.eyebrow)}
           </p>
-          <div className="mt-6 text-center" data-reveal>
-            <h2 id="floor-plans-title" className="text-[12px] font-semibold tracking-[0.3em] text-charcoal-soft uppercase md:text-[13px]">
-              {x(cip.plans.title)} · {x(cip.plans.startingFrom)}{" "}
-              <span className="font-[family-name:var(--font-display)] text-[30px] tracking-normal text-charcoal normal-case md:text-[36px]">{cip.plans.tiers[0].value}</span>{" "}
-              <span className="tracking-[0.2em]">{x(cip.plans.perSqFt)}</span>
+          <div className="mt-5 mb-8 flex flex-wrap items-end justify-between gap-4">
+            <h2 id="floor-plans-title" className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]" data-reveal>
+              {x(cip.explorer.title)}
             </h2>
-            <p className="mx-auto mt-3 max-w-[60ch] text-[15px] leading-relaxed text-charcoal-soft">{x(cip.plans.intro)}</p>
+            <p className="text-[12px] font-semibold tracking-[0.24em] text-charcoal-soft uppercase">
+              {x(cip.plans.title)} · {x(cip.plans.startingFrom)} <span className="font-[family-name:var(--font-display)] text-[24px] tracking-normal text-charcoal normal-case">{cip.plans.tiers[0].value}</span> {x(cip.plans.perSqFt)}
+            </p>
           </div>
-          <div className="mt-10">
-            <CardRail cards={planCards} label={x(cip.plans.eyebrow)} hint={hint} locale={locale} ratio="4/3" variant="plan" />
-          </div>
-          <div className="mt-10 flex flex-col items-center gap-4 text-center" data-reveal>
-            {inquireBtn}
-            <p className="text-[13px] text-charcoal-soft">{x(cip.plans.plansNote)}</p>
-          </div>
+          <FloorExplorer locale={locale} />
         </div>
       </section>
 

@@ -219,6 +219,49 @@ export const cip = {
     ] as L[],
   },
 
+  /* Interiors (client, 16 Nov: copy the Interiors section of the ORA World · Tesoro del Mar presentation; its text and
+     lists are from the brochure). */
+  interiors: {
+    eyebrow: { en: "Interiors", es: "Interiores" } as L,
+    title: { en: "Inspired living spaces", es: "Espacios inspirados" } as L,
+    intro: {
+      en: "Designed for indoor and outdoor living, the residences welcome the salt air and breathe with the ocean breeze.",
+      es: "Pensadas para vivir dentro y fuera, las residencias reciben el aire salino y respiran con la brisa del mar.",
+    } as L,
+    lists: [
+      {
+        title: { en: "Inspired living spaces", es: "Espacios inspirados" } as L,
+        items: [
+          { en: "Balconies and wrap-around terraces", es: "Balcones y terrazas envolventes" },
+          { en: "Panoramic ocean views through an expansive glass façade", es: "Vistas panorámicas al mar a través de una amplia fachada de vidrio" },
+          { en: "Large-format porcelain tile flooring throughout", es: "Pisos de porcelanato de gran formato en toda la residencia" },
+          { en: "Motorized window shades in every room", es: "Cortinas motorizadas en cada habitación" },
+          { en: "Mitsubishi Electric multi-split air conditioning", es: "Aire acondicionado multi-split Mitsubishi Electric" },
+          { en: "Walk-in closets with custom built-ins", es: "Vestidores con muebles a medida" },
+          { en: "Integrated smart home technology, pre-wired for high-speed Wi-Fi", es: "Tecnología de hogar inteligente, precableado para Wi-Fi de alta velocidad" },
+        ] as L[],
+      },
+      {
+        title: { en: "Elevated kitchens", es: "Cocinas elevadas" } as L,
+        items: [
+          { en: "Gourmet kitchen with custom Italian cabinetry", es: "Cocina gourmet con gabinetes italianos a medida" },
+          { en: "Quartzite countertops and backsplashes", es: "Encimeras y salpicaderos de cuarcita" },
+          { en: "Fully integrated Gaggenau appliance suite", es: "Electrodomésticos Gaggenau totalmente integrados" },
+          { en: "Refrigerator and freezer columns", es: "Columnas de refrigerador y congelador" },
+          { en: "Convection oven and dishwasher", es: "Horno de convección y lavavajillas" },
+          { en: "Built-in coffee machine", es: "Cafetera integrada" },
+          { en: "Optional wine refrigerator", es: "Vinoteca opcional" },
+        ] as L[],
+      },
+    ],
+  },
+
+  /* Floor-plan explorer heading (client, 16 Nov: copy the presentation's floor-plan section). */
+  explorer: {
+    eyebrow: { en: "Floor plans · Tower 1", es: "Planos · Torre 1" } as L,
+    title: { en: "Find your residence", es: "Encuentre su residencia" } as L,
+  },
+
   /* 07 Amenities: the full list, with the ORA health services and the ghost kitchen (brief §4; brochure p7) */
   amenities: {
     eyebrow: { en: "Amenities", es: "Amenidades" } as L,

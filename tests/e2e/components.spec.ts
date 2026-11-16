@@ -81,15 +81,24 @@ test.describe("vendored components and the desktop menu", () => {
     await tour.getByRole("button").click();
     await expect(tour.locator("iframe")).toHaveAttribute("src", /kuula\.co/);
     // Card rail: the next arrow scrolls the row.
-    const rail = page.locator("#residences [aria-roledescription=carousel]");
+    const rail = page.locator("#who [aria-roledescription=carousel]");
     await rail.scrollIntoViewIfNeeded();
     const track = rail.locator("ul").first();
     const before = await track.evaluate((el) => el.scrollLeft);
     await rail.getByRole("button", { name: "Next" }).click();
     await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);
-    // Pricing, the real plans, the three steps and the inquiry form.
-    await expect(page.locator("#floor-plans")).toContainText("$2,250");
-    await expect(page.locator("#floor-plans a[href*='/residences/plans/residence-501']")).toHaveCount(1);
+    // Interiors: the counter follows the arrows.
+    await page.locator("#residences").getByRole("button", { name: "Next image" }).click();
+    await expect(page.locator("#residences")).toContainText("02 / 08");
+    // Floor-plan explorer: pricing line, the default residence, a bedroom filter and a level.
+    await expect(page.locator("#floor-plans")).toContainText("$2,000");
+    await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1002/i);
+    await page.locator("#floor-plans").getByRole("button", { name: "4 Bed", exact: true }).click();
+    await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1301/i);
+    const ph = page.locator("#floor-plans").getByRole("button", { name: /^PH/ });
+    await ph.evaluate((el) => el.scrollIntoView({ block: "nearest", inline: "center" }));
+    await ph.click();
+    await expect(page.locator("#floor-plans h3").first()).toHaveText(/the penthouse/i);
     await expect(page.locator("#steps li")).toHaveCount(3);
     await expect(page.locator("#inquire form")).toHaveCount(1);
     await expect(page.locator("#inquire").getByLabel(/what matters most to you/i)).toBeVisible();
