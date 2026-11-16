@@ -90,6 +90,10 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
   const [startAt, setStartAt] = useState(0);
   const [blocked, setBlocked] = useState(false);
   const [paused, setPaused] = useState(false);
+  // The instant film: a self-hosted loop in the server HTML, so it starts the moment the page arrives (client, 16 Nov:
+  // "the video plays as soon as someone lands"). The YouTube film loads underneath and takes over once it really plays.
+  const ambientWrap = useRef<HTMLDivElement>(null);
+  const [ambientOn, setAmbientOn] = useState(false);
   const iframe = useRef<HTMLIFrameElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const selfHosted = Boolean(mp4 || webm);
@@ -277,9 +281,31 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
     else post({ event: "command", func: "mute", args: [] });
   }, [post, selfHosted]);
 
+  const ambientVideo = () => ambientWrap.current?.querySelector("video") ?? null;
+  useEffect(() => {
+    const v = ambientVideo();
+    if (!v) return;
+    const on = () => setAmbientOn(true);
+    v.addEventListener("playing", on);
+    if (!v.paused && v.readyState > 2) on();
+    else v.play().catch(() => {}); // in case the browser waited for the page to settle
+    return () => v.removeEventListener("playing", on);
+  }, []);
+  // Once the YouTube film is really playing, the loop steps aside (and stops, to save battery).
+  useEffect(() => {
+    const v = ambientVideo();
+    if (!v) return;
+    if (playing) v.pause();
+  }, [playing]);
+
   const togglePause = () => {
     const next = !paused;
     setPaused(next);
+    const amb = ambientVideo();
+    if (amb && !playing) {
+      if (next) amb.pause();
+      else amb.play().catch(() => {});
+    }
     if (selfHosted && video.current) {
       if (next) video.current.pause();
       else video.current.play().catch(() => {});
@@ -417,8 +443,22 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         fetchPriority="high"
         sizes="100vw"
         quality={80}
-        className={cn("z-[1] object-cover transition-opacity duration-700 [transition-timing-function:var(--ease-out)]", playing ? "opacity-0" : "opacity-100")}
+        className={cn("z-[2] object-cover transition-opacity duration-700 [transition-timing-function:var(--ease-out)]", playing || ambientOn ? "opacity-0" : "opacity-100")}
         style={{ objectPosition: poster.focal }}
+      />
+      {/* The instant film (written as HTML so "muted" and "autoplay" are in the very first response: browsers only
+          autoplay muted video, and React leaves "muted" out of server HTML). Phones get the portrait cut. */}
+      <div
+        ref={ambientWrap}
+        aria-hidden="true"
+        className={cn("pointer-events-none absolute inset-0 z-[1] transition-opacity duration-1000", playing ? "opacity-0" : "opacity-100")}
+        dangerouslySetInnerHTML={{
+          __html:
+            '<video autoplay muted loop playsinline preload="auto" disablepictureinpicture tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">' +
+            '<source src="/videos/hero-portrait.mp4" type="video/mp4" media="(orientation: portrait)">' +
+            '<source src="/videos/hero-landscape.mp4" type="video/mp4">' +
+            "</video>",
+        }}
       />
       {/* YouTube player: a 16:9 box sized to cover the banner (container units), plus 30% so no chrome shows. It stays
           fully visible under the poster (iPhone Safari may refuse to start a film it considers hidden); the poster
