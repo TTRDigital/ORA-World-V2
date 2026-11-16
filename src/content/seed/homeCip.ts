@@ -91,12 +91,13 @@ export const cip = {
         tags: [{ en: "Body scan", es: "Escaneo corporal" }, { en: "Nutritionists", es: "Nutricionistas" }, { en: "Ghost kitchen", es: "Cocina fantasma" }, { en: "Fitness program", es: "Ejercicio" }] as L[],
       },
       {
-        title: { en: "Keep more of what you earn", es: "Conserve más de lo que gana" } as L,
+        // Client, 16 Nov: this card carries the Act 60 line; the tax section left the homepage.
+        title: { en: "Act 60: the tax benefits of living here", es: "Ley 60: los beneficios fiscales de vivir aquí" } as L,
         text: {
           en: "Puerto Rico's Act 60: 0% or 4% on investment income for residents, with our accountants to guide you.",
           es: "La Ley 60 de Puerto Rico: 0% o 4% sobre ingresos de inversión para residentes, con nuestros contadores para guiarle.",
         } as L,
-        href: "#why-puerto-rico",
+        href: "/faq",
         tags: [{ en: "Act 60", es: "Ley 60" }, { en: "0% or 4%", es: "0% o 4%" }, { en: "Accountants", es: "Contadores" }] as L[],
       },
       {

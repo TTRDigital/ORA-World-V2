@@ -886,7 +886,7 @@ html.lenis body {
 /* Headings: serif capitals with wide tracking for the big titles, serif sentence case for card titles. */
 h1, h2, h3, h4 { font-weight: 500; letter-spacing: 0.01em; }
 .display-xl, .display-l { font-weight: 500 !important; text-transform: uppercase; letter-spacing: 0.06em !important; line-height: 1.08 !important; font-variant-numeric: lining-nums; } /* capitals headlines: full-height figures ("ACT 60", not "ACT 6o") */
-.display-m, .display-s { font-weight: 500 !important; letter-spacing: 0.01em !important; }
+.display-m, .display-s { font-weight: 500 !important; letter-spacing: 0.01em !important; font-variant-numeric: lining-nums; } /* full-height figures: "Act 60", not "Act 6o" */
 .accent { color: inherit; }
 /* Numbered eyebrow: "01 ——— AMENITIES & FEATURES" */
 .eyebrow { display: flex; align-items: center; gap: 14px; font-size: 11px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--color-brass-ink); }

@@ -18,10 +18,11 @@ test.describe("vendored components and the desktop menu", () => {
     await page.locator("html:not(.no-js)").waitFor();
     // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "who", "why-ora-world", "why-puerto-rico", "virtual-tour", "residences", "amenities", "charters", "floor-plans", "steps", "location", "inquire"]);
+    expect(ids).toEqual(["hero", "who", "why-ora-world", "virtual-tour", "residences", "amenities", "charters", "floor-plans", "steps", "location", "inquire"]);
     // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
     const main = page.locator("main");
     // Client, 16 Nov: the longevity and fitness sections moved to their own page (tested below).
+    // Client, 16 Nov: the Act 60 line is now a "Why ORA World" card (the tax section left the homepage).
     for (const line of [/act 60: the tax benefits of living here/i])
       await expect(main.getByText(line).first()).toBeVisible();
     await expect(page.locator("#amenities")).toContainText(/ghost kitchen/i);
@@ -34,11 +35,8 @@ test.describe("vendored components and the desktop menu", () => {
     await page.waitForTimeout(2200);
     for (const spec of [/10\s*acres/i, /129\s*residences/i, /42\s*hotel suites/i, /65,500\s*sq ft of amenities/i]) await expect(page.locator("#who")).toContainText(spec);
     // Brief details that are easy to drop.
-    await expect(page.locator("#why-puerto-rico")).toContainText(/bona fide resident/i);
     // Client, 15 Nov: no nine-day week anywhere on the homepage.
     await expect(page.locator("main")).not.toContainText(/nine-day week/i);
-    // Client, 15 Nov: the late-40s paragraph and the decree bullet list were removed.
-    await expect(page.locator("#why-puerto-rico")).not.toContainText(/advertising or management business|nobody can take away/i);
     await expect(page.locator("#steps")).toContainText(/how ora world helps you/i);
     await expect(page.locator("#inquire")).toContainText(/brochure/i);
     // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.
@@ -65,8 +63,6 @@ test.describe("vendored components and the desktop menu", () => {
     // No other wording for the main action anywhere on the page.
     await expect(page.getByText(/get price list|book a visit/i)).toHaveCount(0);
     // Act 60 figures with the not-tax-advice note.
-    await expect(page.locator("#why-puerto-rico")).toContainText("0%");
-    await expect(page.locator("#why-puerto-rico")).toContainText(/not tax or legal advice/i);
     // The 360° tour loads only on click.
     const tour = page.getByTestId("home-vr-tour");
     await expect(tour.locator("iframe")).toHaveCount(0);

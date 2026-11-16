@@ -10,12 +10,12 @@ export const redirects: Redirect[] = [
   { from: "/tesoro-del-mar", to: "/place/tesoro-del-mar", permanent: true },
   { from: "/projects/dorado-waterfalls", to: "/place/dorado-waterfalls", permanent: true },
   { from: "/dorado-waterfalls", to: "/place/dorado-waterfalls", permanent: true },
-  // The Invest page was removed (client, 15 Nov): its old addresses open the homepage at "Why Puerto Rico".
-  { from: "/invest", to: "/#why-puerto-rico", permanent: false },
-  { from: "/tax-incentive", to: "/#why-puerto-rico", permanent: true },
-  { from: "/incentives", to: "/#why-puerto-rico", permanent: true },
-  { from: "/investment", to: "/#why-puerto-rico", permanent: true },
-  { from: "/resilience", to: "/#why-puerto-rico", permanent: true },
+  // The Invest page was removed (client, 15 Nov): its old addresses open the FAQ (its Act 60 answers).
+  { from: "/invest", to: "/faq", permanent: false },
+  { from: "/tax-incentive", to: "/faq", permanent: true },
+  { from: "/incentives", to: "/faq", permanent: true },
+  { from: "/investment", to: "/faq", permanent: true },
+  { from: "/resilience", to: "/faq", permanent: true },
   { from: "/contact-us", to: "/visit", permanent: true },
   { from: "/contact", to: "/visit", permanent: true },
   { from: "/location", to: "/place", permanent: true },
