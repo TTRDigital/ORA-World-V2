@@ -17,6 +17,7 @@ export function CipShowcase({
   intro,
   cards,
   body,
+  longTitle = false,
   facts,
   cta,
   dark = false,
@@ -29,6 +30,8 @@ export function CipShowcase({
   title: string;
   intro: string;
   cards: ShowcaseCard[];
+  /** a long headline (a full sentence): set smaller so it stays elegant */
+  longTitle?: boolean;
   /** a quiet row of figures under the cards (e.g. property specs) */
   facts?: { value: string; label: string }[];
   /** a second paragraph under the intro */
@@ -52,7 +55,7 @@ export function CipShowcase({
             <span className="rule" aria-hidden />
             {eyebrow}
           </p>
-          <h2 id={`${id}-title`} className={cn("display-l mt-5 lg:!text-[3rem]", dark ? "text-bone" : "text-charcoal")} data-reveal>
+          <h2 id={`${id}-title`} className={cn("display-l mt-5", longTitle ? "!text-[1.75rem] !leading-[1.18] md:!text-[2.125rem] lg:!text-[2.375rem]" : "lg:!text-[3rem]", dark ? "text-bone" : "text-charcoal")} data-reveal>
             {title}
           </h2>
           <p className={cn("mt-7 max-w-[46ch] text-[16px] leading-8", dark ? "text-bone/80" : "text-charcoal-soft")} data-reveal>
