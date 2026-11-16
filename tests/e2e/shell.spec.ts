@@ -25,7 +25,8 @@ test.describe("shell", () => {
   });
 
   test("nav bar stays the same while scrolling (no shrinking)", async ({ page, isMobile }) => {
-    await page.goto("/en");
+    // An inner page: the homepage opens with the clear bar over the film (its own test below).
+    await page.goto("/en/living");
     await page.locator("html:not(.no-js)").waitFor();
     await page.waitForTimeout(500);
     const nav = page.locator("header nav");
@@ -39,6 +40,18 @@ test.describe("shell", () => {
     expect(Math.abs(after!.height - before!.height)).toBeLessThan(1);
     expect(Math.abs(after!.width - before!.width)).toBeLessThan(1);
     if (!isMobile) await expect(nav.getByRole("link", { name: "Residences" })).toBeVisible();
+  });
+
+  test("homepage opens like 888.dolcegabbana.com: clear bar over the film, white bar after scrolling", async ({ page, isMobile }) => {
+    await page.goto("/en");
+    await page.locator("html:not(.no-js)").waitFor();
+    await expect(page.locator("header")).toHaveAttribute("data-mode", "clear");
+    await expect(page.locator("header nav").getByRole("link", { name: "Residences", exact: true })).toHaveCount(0);
+    const plans = isMobile ? page.locator("div.fixed.bottom-0").getByRole("link", { name: /floor plans/i }) : page.locator("header nav").getByRole("link", { name: /floor plans/i });
+    await expect(plans).toBeVisible({ timeout: 5000 });
+    await page.mouse.wheel(0, 900);
+    await expect(page.locator("header")).toHaveAttribute("data-mode", "solid");
+    if (!isMobile) await expect(page.locator("header nav").getByRole("link", { name: "Residences", exact: true })).toBeVisible();
   });
 
   test("mobile bottom sheet opens with tiles, traps focus, closes on Escape", async ({ page, isMobile }) => {

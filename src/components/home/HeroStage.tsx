@@ -496,19 +496,20 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         </video>
       )}
       {(youtubeId || selfHosted) && (
-        <div className="absolute bottom-6 left-5 z-20 flex items-center gap-2 md:bottom-8 md:left-8">
+        <div className="hero-fade absolute top-4 right-3 z-20 flex items-center gap-1 [animation-delay:2.2s] lg:top-auto lg:right-auto lg:bottom-7 lg:left-8">
         <button
           type="button"
           onClick={toggleSound}
           aria-pressed={sound}
           data-film-sound
           className={cn(
-            "inline-flex min-h-11 items-center gap-2.5 rounded-full px-4 text-[11px] font-semibold tracking-[0.2em] uppercase backdrop-blur-sm transition-colors",
-            blocked ? "film-sound-ask bg-brass text-basalt ring-1 ring-brass-light" : "bg-basalt/55 text-bone ring-1 ring-bone/30 hover:bg-basalt/75",
+            // Understated, like the reference: white words and a small icon over the film, no pill.
+            "inline-flex min-h-11 items-center gap-2 px-2 text-[11px] tracking-[0.2em] text-bone uppercase [text-shadow:0_1px_8px_rgb(28_22_14/0.6)] transition-opacity hover:opacity-100",
+            blocked ? "opacity-100" : "opacity-85",
           )}
           data-track={sound ? "film_sound_off" : "film_sound_on"}
         >
-          {sound ? <SoundOn className="text-brass-light" /> : <SoundOff className={blocked ? "text-basalt" : "text-brass-light"} />}
+          {sound ? <SoundOn width={17} height={17} /> : <SoundOff width={17} height={17} />}
           {sound ? t("soundOff") : blocked ? t("tapForSound") : t("soundOn")}
         </button>
         {/* Pause / play: anyone can stop the moving film (WCAG 2.2.2). */}
@@ -518,7 +519,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           aria-pressed={paused}
           aria-label={paused ? t("playFilm") : t("pauseFilm")}
           data-film-pause
-          className="inline-flex size-11 items-center justify-center rounded-full bg-basalt/55 text-bone ring-1 ring-bone/30 backdrop-blur-sm transition-colors hover:bg-basalt/75"
+          className="inline-flex size-11 items-center justify-center text-bone opacity-85 [filter:drop-shadow(0_1px_6px_rgb(28_22_14/0.6))] transition-opacity hover:opacity-100"
           data-track={paused ? "film_play" : "film_pause"}
         >
           {paused ? <Play width={16} height={16} /> : <Pause width={16} height={16} />}

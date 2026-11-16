@@ -7,7 +7,7 @@ test.describe("vendored components and the desktop menu", () => {
 
   test("header links keep their real names behind the TextRoll", async ({ page, isMobile }) => {
     test.skip(isMobile, "header links are desktop only");
-    await page.goto("/en");
+    await page.goto("/en/living");
     const link = page.locator("header nav").getByRole("link", { name: "Residences", exact: true });
     await expect(link).toBeVisible();
     await expect(link.locator("[aria-hidden=true]").first()).toBeAttached();
@@ -49,15 +49,16 @@ test.describe("vendored components and the desktop menu", () => {
     // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.
     const text = (await main.innerText()).toLowerCase();
     expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
-    await expect(page.locator("#hero h1")).toHaveText(/ora world, where longevity lives/i);
+    await expect(page.locator("#hero h1")).toHaveText(/a life to treasure/i);
     // Just this one line of text on the banner (plus the Inquire and sound buttons).
     // Client, 16 Nov (888.dolcegabbana.com opening): the line, then one place line under it.
-    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveCount(1);
-    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveText(/tesoro del mar · dorado, puerto rico/i);
+    // Client, 16 Nov: "ORA WORLD" on top of the title, and the place line under it.
+    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveText([/ora world/i, /tesoro del mar · dorado, puerto rico/i]);
     // One link in the banner, "Inquire", plus the film's sound toggle.
-    // One call to action on the banner (the "scroll to continue" cue is a scroll aid, not a call to action).
-    await expect(page.locator("#hero a:not([data-scroll-cue])")).toHaveCount(1);
-    await expect(page.locator("#hero a:not([data-scroll-cue])")).toHaveText(/inquire/i);
+    // Client, 16 Nov (888.dolcegabbana.com): nothing but words over the film; "Inquire" sits in the bar (top bar on
+    // desktop, bottom bar on phones). The "scroll to continue" cue is a scroll aid, not a call to action.
+    await expect(page.locator("#hero a:not([data-scroll-cue])")).toHaveCount(0);
+    await expect(page.locator('a[data-track="cta_inquire"]:visible').first()).toHaveText(/inquire/i);
     // Sound on when the page opens (client); one click on the button turns it off, and the choice is remembered.
     const sound = page.locator("#hero [data-film-sound]");
     await expect(sound).toBeVisible();
