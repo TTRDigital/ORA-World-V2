@@ -900,8 +900,9 @@ h1, h2, h3, h4 { font-weight: 500; letter-spacing: 0.01em; }
 .cta-ghost:hover { background: rgb(255 255 255 / 0.08); }
 /* "Images come alive": a slow drift and zoom while the card is on screen (Cipriani plays short clips). */
 @keyframes alive { 0% { transform: scale(1.04) translate3d(0, 0, 0); } 100% { transform: scale(1.14) translate3d(-2%, -1.5%, 0); } }
-.alive img, .alive video { animation: alive 16s ease-in-out infinite alternate; animation-play-state: paused; will-change: transform; }
-.alive[data-inview="true"] img, .alive[data-inview="true"] video { animation-play-state: running; }
+/* Stills drift slowly; films never do (their own camera move plus a drift and zoom read as shaking, client 16 Nov). */
+.alive img { animation: alive 16s ease-in-out infinite alternate; animation-play-state: paused; will-change: transform; }
+.alive[data-inview="true"] img { animation-play-state: running; }
 @media (prefers-reduced-motion: reduce) { .alive img, .alive video { animation: none; transform: none; } }
 .reduced-motion .alive img, .reduced-motion .alive video { animation: none; transform: none; }
 
