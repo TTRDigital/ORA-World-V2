@@ -122,7 +122,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
       <CipShowcase
         id="who"
         n="01"
-        eyebrow={x(cip.who.offerEyebrow)}
         title={x(cip.who.offerTitle)}
         intro={x(cip.who.offerIntro)}
         // Client, 16 Nov: no Amenities / Features cards here ("too busy"); the line, the specs and the gallery say it.
@@ -131,7 +130,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
         facts={home.hero.stats.map((st) => ({ value: st.value == null ? "" : st.value.toLocaleString("en-US"), label: x(st.label) }))}
         cta={inquire}
       >
-        <CardRail cards={whoCards} label={x(cip.who.galleryKicker)} hint={hint} locale={locale} ratio="5/4" />
+        {/* Client, 16 Nov: no numbered label and no "use arrows" hint in this section. */}
+        <CardRail cards={whoCards} label={x(cip.who.galleryKicker)} locale={locale} ratio="5/4" />
       </CipShowcase>
 
       {/* 02 Why ORA World: how it is different */}

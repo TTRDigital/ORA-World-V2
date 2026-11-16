@@ -27,7 +27,8 @@ export function CipShowcase({
 }: {
   id: string;
   n: string;
-  eyebrow: string;
+  /** the numbered label above the title; omit for none */
+  eyebrow?: string;
   title: string;
   intro: string;
   cards: ShowcaseCard[];
@@ -57,14 +58,16 @@ export function CipShowcase({
     >
       <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-14">
         <div className="min-w-0">
-          <p className="eyebrow" data-n={n} data-reveal>
-            <span className="rule" aria-hidden />
-            {eyebrow}
-          </p>
+          {eyebrow && (
+            <p className="eyebrow mb-5" data-n={n} data-reveal>
+              <span className="rule" aria-hidden />
+              {eyebrow}
+            </p>
+          )}
           <h2
             id={`${id}-title`}
             className={cn(
-              "display-l mt-5",
+              "display-l",
               longTitle
                 ? "!text-[1.75rem] !leading-[1.18] md:!text-[2.125rem] lg:!text-[2.375rem]"
                 : "lg:!text-[3rem]",
