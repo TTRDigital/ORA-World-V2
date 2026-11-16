@@ -35,6 +35,9 @@ test.describe("vendored components and the desktop menu", () => {
     // Client, 15 Nov: no founder card or quote on the homepage.
     await expect(page.locator("#who")).not.toContainText(/harvard|heard about anything like this/i);
     // Huddle: the Tesoro Del Mar property specs, as published.
+    // The figures count up when scrolled into view (client, 16 Nov).
+    await page.locator("#who dl").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(2200);
     for (const spec of [/10\s*acres/i, /129\s*residences/i, /42\s*hotel suites/i, /65,500\s*sq ft of amenities/i]) await expect(page.locator("#who")).toContainText(spec);
     // Brief details that are easy to drop.
     await expect(page.locator("#fitness")).toContainText(/an outlier/i);
