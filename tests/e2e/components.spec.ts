@@ -18,7 +18,7 @@ test.describe("vendored components and the desktop menu", () => {
     await page.locator("html:not(.no-js)").waitFor();
     // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "who", "why-ora-world", "residences", "virtual-tour", "floor-plans", "steps", "location", "inquire"]);
+    expect(ids).toEqual(["hero", "who", "gallery-large", "why-ora-world", "residences", "virtual-tour", "floor-plans", "steps", "location", "inquire"]);
     // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
     const main = page.locator("main");
     // Client, 16 Nov: the longevity and fitness sections moved to their own page (tested below).

@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { CipSection } from "@/components/cip/CipSection";
 import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { CipShowcase } from "@/components/cip/CipShowcase";
+import { BigGallery } from "@/components/cip/BigGallery";
 import { StackCards } from "@/components/cip/StackCards";
 import { InteriorsGallery } from "@/components/cip/InteriorsGallery";
 import { FloorExplorer } from "@/components/cip/FloorExplorer";
@@ -121,6 +122,12 @@ export async function CipHome({ locale }: { locale: Locale }) {
         {/* Client, 16 Nov: no numbered label and no "use arrows" hint in this section. */}
         <CardRail cards={whoCards} label={x(cip.who.galleryKicker)} locale={locale} ratio="5/4" />
       </CipShowcase>
+
+      {/* Option B for the gallery above (client, 16 Nov: "create another section under it, bigger pictures, a
+          different, clean design; don't delete anything"): the same slides, full width, one at a time. */}
+      <section id="gallery-large" aria-label={x(cip.who.galleryKicker)} className="border-b border-travertine-deep/60 bg-white pb-16 md:pb-24">
+        <BigGallery slides={whoCards} locale={locale} label={x(cip.who.galleryKicker)} />
+      </section>
 
       {/* 02 Why ORA World: how it is different */}
       <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
