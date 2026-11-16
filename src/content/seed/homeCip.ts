@@ -285,6 +285,8 @@ export const cip = {
       { label: { en: "Average", es: "Promedio" } as L, value: "$2,250" },
       { label: { en: "Higher units", es: "Unidades altas" } as L, value: "$2,500" },
     ],
+    startingFrom: { en: "Starting from", es: "Desde" } as L,
+    perSqFt: { en: "per sq ft", es: "por pie²" } as L,
     plansNote: {
       en: "Inquire for the full Phase 1 floor plans and brochure.",
       es: "Consulte para recibir los planos de la Fase 1 y el folleto.",
@@ -325,6 +327,23 @@ export const cip = {
       },
     ],
     address: { en: "Tesoro Del Mar, Dorado · Vega Alta, Puerto Rico 00692", es: "Tesoro Del Mar, Dorado · Vega Alta, Puerto Rico 00692" } as L,
+  },
+
+  /* Location, in the Cipriani "A branded address" layout (client, 16 Nov). Facts already on the site: the address,
+     30 minutes from San Juan's airport (published), Balneario Cerro Gordo within walking distance (places.ts), the
+     cove on the north coast and the national park beside the walking path. */
+  location: {
+    eyebrow: { en: "Location", es: "Ubicación" } as L,
+    title: { en: "Puerto Rico's north coast", es: "La costa norte de Puerto Rico" } as L,
+    intro: { en: "Dorado · Vega Alta, above a turquoise cove.", es: "Dorado · Vega Alta, sobre una cala turquesa." } as L,
+    addressLabel: { en: "Address", es: "Dirección" } as L,
+    address: { en: "Tesoro Del Mar, Dorado · Vega Alta, Puerto Rico 00692", es: "Tesoro Del Mar, Dorado · Vega Alta, Puerto Rico 00692" } as L,
+    bullets: [
+      { en: "About 30 minutes from San Juan's airport", es: "A unos 30 minutos del aeropuerto de San Juan" },
+      { en: "Balneario Cerro Gordo beach within walking distance", es: "La playa Balneario Cerro Gordo a pie" },
+      { en: "A two-mile garden path beside a national park", es: "Un sendero de dos millas junto a un parque nacional" },
+    ] as L[],
+    openMap: { en: "Open in Maps", es: "Abrir en Mapas" } as L,
   },
 
   /* 11 Inquire (brief §7: who he is talking to) */

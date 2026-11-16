@@ -13,7 +13,7 @@ export type RailCard = { key: string; kicker: string; title: string; text?: stri
  * alive": a slow drift and zoom while the card is on screen, or a muted looping clip when a `video` is supplied (it
  * loads only when about to be seen, plays while on screen and pauses off screen; reduced motion keeps the poster).
  */
-export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/3", fit = "cover", overlay = false }: { cards: RailCard[]; label: string; hint?: string; locale: Locale; dark?: boolean; ratio?: string; fit?: "cover" | "contain"; /** Cipriani style: round arrows over the middle of the picture (desktop). */ overlay?: boolean }) {
+export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/3", fit = "cover", overlay = true, variant = "card" }: { cards: RailCard[]; label: string; hint?: string; locale: Locale; dark?: boolean; ratio?: string; fit?: "cover" | "contain"; /** Cipriani style: round arrows over the middle of the picture (desktop). On by default. */ overlay?: boolean; /** "plan": the Cipriani floor-plan card, three across on desktop, the text on a dark band over the picture. */ variant?: "card" | "plan" }) {
   const track = useRef<HTMLUListElement>(null);
   const [edge, setEdge] = useState<{ start: boolean; end: boolean }>({ start: true, end: false });
   const [imgMid, setImgMid] = useState(0); // where the arrows sit: half the picture's height
@@ -21,7 +21,7 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
   useEffect(() => {
     if (!overlay) return;
     const el = track.current;
-    const pic = el?.querySelector<HTMLElement>(".alive");
+    const pic = el?.querySelector<HTMLElement>(".alive, [style*='aspect-ratio']");
     if (!pic) return;
     const ro = new ResizeObserver(() => setImgMid(pic.offsetHeight / 2));
     ro.observe(pic);
@@ -79,7 +79,26 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
         className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-2 md:-mx-10 md:scroll-px-10 md:px-10 lg:mx-0 lg:scroll-px-0 lg:px-0"
       >
         {cards.map((c) => {
-          const body = (
+          const plan = variant === "plan";
+          const body = plan ? (
+            <div className="relative overflow-hidden bg-white" style={{ aspectRatio: ratio }}>
+              <Image
+                src={c.image.src}
+                alt={c.image.alt[locale] || c.image.alt.en}
+                fill
+                sizes="(max-width: 639px) 82vw, (max-width: 1023px) 46vw, 420px"
+                quality={80}
+                className="object-contain p-3 opacity-90"
+                style={{ objectPosition: "50% 30%" }}
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-basalt via-basalt/90 to-basalt/0 px-5 pt-16 pb-5 text-bone">
+                <p className="text-[10px] font-semibold tracking-[0.24em] text-brass-light uppercase">{c.kicker}</p>
+                <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-[24px] leading-none">{c.title}</h3>
+                {c.meta && <p className="mt-2 text-[13px] text-bone/85">{c.meta}</p>}
+                {c.cta && <p className="mt-3 text-[10.5px] font-semibold tracking-[0.22em] text-bone uppercase">{c.cta} →</p>}
+              </div>
+            </div>
+          ) : (
             <>
               <div className={cn("alive relative overflow-hidden", fit === "contain" ? "bg-white" : "bg-travertine")} style={{ aspectRatio: ratio }}>
                 {c.video ? (
@@ -118,7 +137,7 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
             </>
           );
           return (
-            <li key={c.key} className="w-[82%] shrink-0 snap-start sm:w-[60%] lg:w-[78%] xl:w-[64%]">
+            <li key={c.key} className={cn("shrink-0 snap-start", plan ? "w-[82%] sm:w-[46%] lg:w-[calc((100%-32px)/3)]" : "w-[82%] sm:w-[60%] lg:w-[78%] xl:w-[64%]")}>
               {c.href ? (
                 <a href={c.href} className="block overflow-hidden rounded-[18px] bg-white shadow-[0_18px_40px_-28px_rgb(44_36_22/0.45)] ring-1 ring-travertine-deep/60 transition-transform duration-300 hover:-translate-y-0.5">
                   {body}

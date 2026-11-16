@@ -18,6 +18,7 @@ export function CipShowcase({
   cards,
   cta,
   dark = false,
+  tone,
   children,
 }: {
   id: string;
@@ -28,6 +29,8 @@ export function CipShowcase({
   cards: ShowcaseCard[];
   cta?: { href: string; label: string; track: string };
   dark?: boolean;
+  /** light sections: "white" (default) or "pale" (bone), to alternate like the reference */
+  tone?: "white" | "pale";
   children: ReactNode;
 }) {
   return (
@@ -35,7 +38,7 @@ export function CipShowcase({
       id={id}
       aria-labelledby={`${id}-title`}
       data-tone={dark ? "dark" : "light"}
-      className={cn("border-b px-5 py-16 md:px-10 md:py-24", dark ? "on-dark border-basalt bg-basalt text-bone" : "border-travertine-deep/60 bg-white")}
+      className={cn("border-b px-5 py-16 md:px-10 md:py-24", dark ? "on-dark border-basalt bg-basalt text-bone" : cn("border-travertine-deep/60", tone === "pale" ? "bg-bone" : "bg-white"))}
     >
       <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-14">
         <div className="min-w-0">

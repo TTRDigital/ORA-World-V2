@@ -13,6 +13,7 @@ import { TaxStats } from "@/components/cip/TaxStats";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
+import { Logo } from "@/components/layout/Logo";
 
 /** A quiet text link in tracked capitals (the page keeps one gold button: "Inquire"). */
 function TextLink({ href, children, dark = false, external = false }: { href: string; children: React.ReactNode; dark?: boolean; external?: boolean }) {
@@ -65,13 +66,19 @@ function SectionHead({ n, eyebrow, title, id, intro, dark = false, children }: {
  * and preventive health → fitness and nutrition → why Puerto
  * Rico (Act 60 and its tax benefits) → step inside (360° tour and film, full width) → residences → amenities (the
  * full list, ORA health services and the ghost kitchen) → private charters → floor plans and pricing → three steps →
- * Inquire. One layout throughout, after theresidencesatcipriani.com; one gold button, "Inquire".
+ * location → Inquire. One layout throughout, after theresidencesatcipriani.com; one gold button, "Inquire".
  */
 export async function CipHome({ locale }: { locale: Locale }) {
   const [settings, plans, home] = await Promise.all([getSiteSettings(), getFloorPlans(), getHome()]);
   const x = (l: Parameters<typeof t>[0]) => t(l, locale);
   const es = locale === "es";
-  const hint = es ? "Use las flechas o deslice" : "Use arrows or swipe";
+  const inquire = { href: "#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" };
+  const inquireBtn = (
+    <a href="#inquire" className="cta min-h-[52px] px-8" data-track="cta_inquire">
+      {inquire.label} <ArrowRight width={14} height={14} />
+    </a>
+  );
+  const hint = es ? "Use las flechas o deslice horizontalmente" : "Use arrows or swipe horizontally";
 
   // Who we are gallery (Cipriani layout). Captions from the image descriptions and the published specs.
   const whoCards: RailCard[] = [
@@ -131,7 +138,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
           // Tesoro Del Mar property specs, as published on oraworld.com (the huddle's "property specs").
           { label: x(cip.who.specsLabel), items: home.hero.stats.map((st) => `${st.value == null ? "" : st.value.toLocaleString("en-US")} ${x(st.label)}`) },
         ]}
-        cta={{ href: "#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" }}
+        cta={inquire}
       >
         <CardRail cards={whoCards} label={x(cip.who.galleryKicker)} hint={hint} locale={locale} ratio="5/4" overlay />
       </CipShowcase>
@@ -165,6 +172,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
         intro={x(cip.prevention.intro)}
         body={x(cip.prevention.body)}
         bullets={cip.prevention.bullets.map(x)}
+        cta={inquireBtn}
         wideVisual={false}
       >
         <figure className="relative overflow-hidden rounded-[22px]">
@@ -184,7 +192,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
       </CipSection>
 
       {/* 04 Fitness, nutrition and aging well */}
-      <CipSection id="fitness" n="04" eyebrow={x(cip.fitness.eyebrow)} title={x(cip.fitness.title)} intro={x(cip.fitness.intro)} body={x(cip.fitness.body)} bullets={cip.fitness.bullets.map(x)}>
+      <CipSection id="fitness" n="04" eyebrow={x(cip.fitness.eyebrow)} title={x(cip.fitness.title)} intro={x(cip.fitness.intro)} body={x(cip.fitness.body)} bullets={cip.fitness.bullets.map(x)} cta={inquireBtn}>
         <CardRail cards={fitnessCards} label={x(cip.fitness.eyebrow)} hint={hint} locale={locale} />
       </CipSection>
 
@@ -198,6 +206,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
         intro={x(cip.why.intro)}
         body={x(cip.why.body)}
         bullets={cip.why.bullets.map(x)}
+        cta={inquireBtn}
         note={x(cip.why.note)}
         wideVisual={false}
       >
@@ -218,34 +227,24 @@ export async function CipHome({ locale }: { locale: Locale }) {
       </section>
 
       {/* 07 Residences, with the penthouse */}
-      <CipSection id="residences" n="07" eyebrow={x(cip.residences.eyebrow)} title={x(cip.residences.title)} intro={x(cip.residences.intro)} bullets={cip.residences.bullets.map(x)}>
+      <CipSection id="residences" n="07" eyebrow={x(cip.residences.eyebrow)} title={x(cip.residences.title)} intro={x(cip.residences.intro)} bullets={cip.residences.bullets.map(x)} cta={inquireBtn}>
         <CardRail cards={residenceCards} label={x(cip.residences.eyebrow)} hint={hint} locale={locale} />
       </CipSection>
 
-      {/* 08 Amenities: the full list, with the ORA health services and the ghost kitchen */}
-      <section id="amenities" aria-labelledby="amenities-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
-        <div className="mx-auto max-w-[1280px]">
-          <SectionHead n="08" id="amenities-title" eyebrow={x(cip.amenities.eyebrow)} title={x(cip.amenities.title)} intro={x(cip.amenities.intro)} />
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {cip.amenities.groups.map((g, i) => (
-              <div key={i} className={i === 0 ? "rounded-[18px] bg-basalt p-6 text-bone" : "rounded-[18px] bg-white p-6 ring-1 ring-travertine-deep/60"} data-reveal style={{ "--reveal-delay": `${i * 70}ms` } as React.CSSProperties}>
-                <p className={i === 0 ? "text-[11px] font-semibold tracking-[0.22em] text-brass-light uppercase" : "text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase"}>{x(g.label)}</p>
-                <ul className="mt-4 space-y-2.5">
-                  {g.items.map((it, k) => (
-                    <li key={k} className={i === 0 ? "flex gap-2.5 text-[14px] leading-snug text-bone/90" : "flex gap-2.5 text-[14px] leading-snug text-charcoal-soft"}>
-                      <span aria-hidden className="mt-[7px] size-1 shrink-0 rounded-full bg-brass" />
-                      {x(it)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          <div className="mt-12">
-            <CardRail cards={amenityCards} label={x(cip.amenities.eyebrow)} hint={hint} locale={locale} />
-          </div>
-        </div>
-      </section>
+      {/* 08 Amenities, in the Cipriani "Amenities & features" layout: the four lists as cards on the left, the gallery on
+          the right (the full list, with the ORA health services and the ghost kitchen). */}
+      <CipShowcase
+        id="amenities"
+        n="08"
+        tone="pale"
+        eyebrow={x(cip.amenities.eyebrow)}
+        title={x(cip.amenities.title)}
+        intro={x(cip.amenities.intro)}
+        cards={cip.amenities.groups.map((g) => ({ label: x(g.label), items: g.items.map(x) }))}
+        cta={inquire}
+      >
+        <CardRail cards={amenityCards} label={x(cip.amenities.eyebrow)} hint={hint} locale={locale} ratio="5/4" />
+      </CipShowcase>
 
       {/* 09 Private charters, in the same Cipriani layout (client, 16 Nov: "we can do a lot better here on design"):
           flights and arrival as two cards, and a film card on the right (a slow push-in on the jet and the car). */}
@@ -260,7 +259,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
           { label: x(cip.charters.cardLabels[0]), items: cip.charters.bullets.slice(0, 2).map(x) },
           { label: x(cip.charters.cardLabels[1]), items: cip.charters.bullets.slice(2).map(x) },
         ]}
-        cta={{ href: "#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" }}
+        cta={inquire}
       >
         <div className="overflow-hidden rounded-[18px] bg-white shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)]">
           <LoopVideo
@@ -278,29 +277,31 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </CipShowcase>
 
-      {/* 10 Floor plans and pricing */}
-      <CipSection
-        id="floor-plans"
-        n="10"
-        eyebrow={x(cip.plans.eyebrow)}
-        title={x(cip.plans.title)}
-        intro={x(cip.plans.intro)}
-        body={x(cip.plans.plansNote)}
-        cta={<TextLink href="/residences/plans">{es ? "Biblioteca de planos" : "Floor plan library"}</TextLink>}
-      >
-        <div>
-          <dl className="mb-6 grid grid-cols-3 gap-2 sm:gap-3">
-            {cip.plans.tiers.map((tier, i) => (
-              <div key={tier.value} className={i === 1 ? "rounded-[16px] bg-basalt px-3 py-4 text-bone sm:p-5" : "rounded-[16px] bg-bone px-3 py-4 ring-1 ring-travertine-deep/70 sm:p-5"}>
-                <dt className={i === 1 ? "text-[10.5px] font-semibold tracking-[0.22em] text-brass-light uppercase" : "text-[10.5px] font-semibold tracking-[0.22em] text-brass-ink uppercase"}>{x(tier.label)}</dt>
-                <dd className="mt-2 font-[family-name:var(--font-display)] text-[26px] leading-none sm:text-[34px]">{tier.value}</dd>
-                <dd className={i === 1 ? "mt-1 text-[12px] text-bone/75" : "mt-1 text-[12px] text-charcoal-soft"}>{es ? "por pie²" : "per sq ft"}</dd>
-              </div>
-            ))}
-          </dl>
-          <CardRail cards={planCards} label={x(cip.plans.eyebrow)} hint={hint} locale={locale} ratio="22/17" fit="contain" />
+      {/* 10 Floor plans, in the Cipriani layout: "Starting from" centred, three plan cards across with the details on a
+          dark band, and one centred button. */}
+      <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
+        <div className="mx-auto max-w-[1280px]">
+          <p className="eyebrow" data-n="10" data-reveal>
+            <span className="rule" aria-hidden />
+            {x(cip.plans.eyebrow)}
+          </p>
+          <div className="mt-6 text-center" data-reveal>
+            <h2 id="floor-plans-title" className="text-[12px] font-semibold tracking-[0.3em] text-charcoal-soft uppercase md:text-[13px]">
+              {x(cip.plans.title)} · {x(cip.plans.startingFrom)}{" "}
+              <span className="font-[family-name:var(--font-display)] text-[30px] tracking-normal text-charcoal normal-case md:text-[36px]">{cip.plans.tiers[0].value}</span>{" "}
+              <span className="tracking-[0.2em]">{x(cip.plans.perSqFt)}</span>
+            </h2>
+            <p className="mx-auto mt-3 max-w-[60ch] text-[15px] leading-relaxed text-charcoal-soft">{x(cip.plans.intro)}</p>
+          </div>
+          <div className="mt-10">
+            <CardRail cards={planCards} label={x(cip.plans.eyebrow)} hint={hint} locale={locale} ratio="4/3" variant="plan" />
+          </div>
+          <div className="mt-10 flex flex-col items-center gap-4 text-center" data-reveal>
+            {inquireBtn}
+            <p className="text-[13px] text-charcoal-soft">{x(cip.plans.plansNote)}</p>
+          </div>
         </div>
-      </CipSection>
+      </section>
 
       {/* 11 Three steps */}
       <section id="steps" aria-labelledby="steps-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
@@ -328,10 +329,59 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 12 Inquire */}
+      {/* 12 Location, in the Cipriani "A branded address" layout: the map on the left; on the right the title, the
+          address card, the facts and one centred button. */}
+      <section id="location" aria-labelledby="location-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+        <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
+          <div className="relative overflow-hidden rounded-[20px] bg-travertine shadow-[0_24px_50px_-30px_rgb(44_36_22/0.5)] ring-1 ring-travertine-deep/60" style={{ aspectRatio: "4/3" }}>
+            <iframe
+              title={es ? "Mapa de Tesoro Del Mar" : "Map of Tesoro Del Mar"}
+              src={`https://www.google.com/maps?q=${settings.siteLat},${settings.siteLng}&z=13&output=embed&hl=${locale}`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 h-full w-full border-0"
+            />
+          </div>
+          <div className="min-w-0">
+            <p className="eyebrow" data-n="12" data-reveal>
+              <span className="rule" aria-hidden />
+              {x(cip.location.eyebrow)}
+            </p>
+            <h2 id="location-title" className="display-l mt-5 text-charcoal" data-reveal>
+              {x(cip.location.title)}
+            </h2>
+            <p className="mt-5 text-[16px] leading-relaxed text-charcoal" data-reveal>{x(cip.location.intro)}</p>
+            <div className="mt-7 rounded-[16px] bg-white px-6 py-5 ring-1 ring-travertine-deep/70" data-reveal>
+              <p className="text-[11px] font-semibold tracking-[0.26em] text-brass-ink uppercase">{x(cip.location.addressLabel)}</p>
+              <p className="mt-2 text-[17px] text-charcoal">{x(cip.location.address)}</p>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${settings.siteLat},${settings.siteLng}`}
+                target="_blank"
+                rel="noopener"
+                className="mt-3 inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal"
+              >
+                {x(cip.location.openMap)} <ArrowUpRight width={13} height={13} />
+              </a>
+            </div>
+            <ul className="mt-6 space-y-3" data-reveal>
+              {cip.location.bullets.map((b) => (
+                <li key={x(b)} className="flex gap-2.5 text-[15px] leading-snug text-charcoal">
+                  <span aria-hidden className="mt-[0.55em] size-1 shrink-0 rounded-full bg-brass" />
+                  {x(b)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="mt-12 flex justify-center" data-reveal>
+          {inquireBtn}
+        </div>
+      </section>
+
+      {/* 13 Inquire, in the Cipriani "Request pricing" layout: the form on a white card with the logo at the top. */}
       <CipSection
         id="inquire"
-        n="12"
+        n="13"
         tone="dark"
         eyebrow={x(cip.inquire.eyebrow)}
         title={x(cip.inquire.title)}
@@ -347,6 +397,9 @@ export async function CipHome({ locale }: { locale: Locale }) {
         }
       >
         <div data-tone="light" className="light-card rounded-[22px] bg-white p-6 text-charcoal shadow-lift md:p-8">
+          <div className="mb-6 border-b border-travertine-deep/60 pb-5">
+            <Logo variant="header" height={64} className="h-[56px]" />
+          </div>
           <LeadFormLazy variant="full" consentText={settings.consentText[locale]} submitLabel={es ? "Consultar" : "Inquire"} />
         </div>
       </CipSection>
