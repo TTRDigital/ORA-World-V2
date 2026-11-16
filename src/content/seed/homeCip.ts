@@ -33,18 +33,36 @@ export const cip = {
       en: "Communities in Puerto Rico where longevity, luxury and nature meet. Tesoro Del Mar, in Dorado, is the first.",
       es: "Comunidades en Puerto Rico donde se unen la longevidad, el lujo y la naturaleza. Tesoro Del Mar, en Dorado, es la primera.",
     } as L,
-    // Cipriani layout (client, 16 Nov): two cards on the left. The second card's figures come from the published specs.
-    promise: {
-      label: { en: "Our promise", es: "Nuestra promesa" } as L,
-      items: [
-        { en: "Longevity at the foundation", es: "La longevidad como base" },
-        { en: "Stronger, fitter, and feeling it", es: "Más fuerte, en forma y sintiéndolo" },
-        { en: "Longevity, luxury and nature together", es: "Longevidad, lujo y naturaleza juntos" },
-        { en: "ORA World makes it easy", es: "ORA World lo hace fácil" },
-      ] as L[],
-    },
-    specsLabel: { en: "Tesoro Del Mar", es: "Tesoro Del Mar" } as L,
-    galleryKicker: { en: "Tesoro Del Mar", es: "Tesoro Del Mar" } as L,
+    // Client, 16 Nov: section 01 says everything ORA World offers, like Cipriani's "Amenities & features" (all items
+    // from the amenities list, the ORA services and the charters on this page).
+    offerEyebrow: { en: "Amenities & features", es: "Amenidades y servicios" } as L,
+    offerTitle: { en: "Longevity, luxury and nature, at home", es: "Longevidad, lujo y naturaleza, en casa" } as L,
+    offerIntro: {
+      en: "65,500 sq ft of pools, dining, wellness and social spaces, and the services that make a longer, better life easy.",
+      es: "65,500 pies² de piscinas, gastronomía, bienestar y espacios sociales, y los servicios que facilitan una vida más larga y mejor.",
+    } as L,
+    offerCards: [
+      {
+        label: { en: "Amenities", es: "Amenidades" } as L,
+        items: [
+          { en: "Resort-style pools and a rooftop pool bar", es: "Piscinas estilo resort y bar en la azotea" },
+          { en: "Members-only Clubhouse with fine dining", es: "Clubhouse solo para miembros, con alta cocina" },
+          { en: "Spa, fitness center and pilates studio", es: "Spa, gimnasio y estudio de pilates" },
+          { en: "Beach club and an 18-hole putting course", es: "Club de playa y campo de putting de 18 hoyos" },
+          { en: "Two-mile garden walking path", es: "Sendero de dos millas entre jardines" },
+        ] as L[],
+      },
+      {
+        label: { en: "Features", es: "Servicios" } as L,
+        items: [
+          { en: "Total body scan and nutritionists for every member", es: "Escaneo corporal y nutricionistas para cada miembro" },
+          { en: "A ghost kitchen that cooks for you", es: "Una cocina fantasma que cocina para usted" },
+          { en: "Private charter flights through ORA World Jet", es: "Vuelos chárter privados con ORA World Jet" },
+          { en: "Lobby attended 24/7, valet and house car", es: "Vestíbulo 24/7, valet y auto de la casa" },
+        ] as L[],
+      },
+    ],
+    galleryKicker: { en: "Amenity gallery", es: "Galería de amenidades" } as L,
   },
 
   /* Why ORA World: how it is different (client call: "How is ORA World better?", "not just another apartment

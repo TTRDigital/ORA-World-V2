@@ -62,7 +62,7 @@ function SectionHead({ n, eyebrow, title, id, intro, dark = false, children }: {
 
 /**
  * The homepage story, following the owner's content brief and the client call (Nov 2026):
- * who we are (the core promise, the founder) → why ORA World (how it is different, why you can trust it) → longevity
+ * amenities & features (everything ORA World offers) → why ORA World (how it is different) → longevity
  * and preventive health → fitness and nutrition → why Puerto
  * Rico (Act 60 and its tax benefits) → step inside (360° tour and film, full width) → residences → amenities (the
  * full list, ORA health services and the ghost kitchen) → private charters → floor plans and pricing → three steps →
@@ -80,13 +80,19 @@ export async function CipHome({ locale }: { locale: Locale }) {
   );
   const hint = es ? "Use las flechas o deslice horizontalmente" : "Use arrows or swipe horizontally";
 
-  // Who we are gallery (Cipriani layout). Captions from the image descriptions and the published specs.
+  // Section 01 gallery: the amenities (client, 16 Nov: like Cipriani's amenity gallery). Captions from this page.
+  const k = x(cip.who.galleryKicker);
+  // Client's clips (16 Nov): the pool cabana, the lobby, the gym, the entrance and the cove play as films.
+  const v = (n: string) => ({ video: `/videos/amenity-${n}.mp4`, poster: `/videos/amenity-${n}-poster.jpg` });
   const whoCards: RailCard[] = [
-    { key: "towers", kicker: x(cip.who.galleryKicker), title: es ? "Las torres" : "The towers", text: es ? "Tesoro Del Mar, en Dorado, es la primera comunidad ORA World." : "Tesoro Del Mar, in Dorado, is the first ORA World community.", image: tdm.aerialTowers },
-    { key: "pool", kicker: x(cip.who.galleryKicker), title: es ? "La piscina" : "The pool", text: es ? "Las torres curvas sobre la piscina del resort." : "The curved towers above the resort pool.", image: tdm.exteriorPull },
-    { key: "coast", kicker: x(cip.who.galleryKicker), title: es ? "La costa" : "The coast", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast },
-    { key: "lobby", kicker: x(cip.who.galleryKicker), title: es ? "El vestíbulo" : "The lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium },
-    { key: "penthouse", kicker: x(cip.who.galleryKicker), title: "Penthouse", text: es ? "Piso 18, en dos niveles." : "Floor 18, on two levels.", image: tdm.penthouseLiving },
+    { key: "pool", kicker: k, title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...v("pool") },
+    { key: "lobby", kicker: k, title: es ? "Vestíbulo" : "Lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium, ...v("lobby") },
+    { key: "fitness", kicker: k, title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym, ...v("gym") },
+    { key: "arrival", kicker: k, title: es ? "Llegada" : "Arrival", text: es ? "Pórtico, valet y auto de la casa." : "Porte-cochère, valet and the house car.", image: tdm.entrance, ...v("entrance") },
+    { key: "beach", kicker: k, title: es ? "Club de playa" : "Beach club", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...v("cove") },
+    { key: "clubhouse", kicker: k, title: "Clubhouse", text: es ? "Club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
+    { key: "spa", kicker: k, title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: life.spa },
+    { key: "putting", kicker: k, title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf },
   ];
 
   // Client, 15 Nov: each card plays a short film (a camera move made from its picture), not a still.
@@ -125,22 +131,20 @@ export async function CipHome({ locale }: { locale: Locale }) {
 
   return (
     <div className="flex flex-col">
-      {/* 01 Who we are, in the Cipriani "Amenities & features" layout (client, 16 Nov): the promise and the property specs
-          as two cards, one Inquire button, and a swipeable gallery of Tesoro Del Mar on the right. */}
+      {/* 01 Amenities & features (client, 16 Nov: "like Cipriani, talking about everything ORA World offers"): one line,
+          two cards (amenities, features), the property specs, the button, and the amenity gallery on the right. */}
       <CipShowcase
         id="who"
         n="01"
-        eyebrow={x(cip.who.eyebrow)}
-        title={x(cip.who.title)}
-        intro={x(cip.who.intro)}
-        cards={[
-          { label: x(cip.who.promise.label), items: cip.who.promise.items.map(x) },
-          // Tesoro Del Mar property specs, as published on oraworld.com (the huddle's "property specs").
-          { label: x(cip.who.specsLabel), items: home.hero.stats.map((st) => `${st.value == null ? "" : st.value.toLocaleString("en-US")} ${x(st.label)}`) },
-        ]}
+        eyebrow={x(cip.who.offerEyebrow)}
+        title={x(cip.who.offerTitle)}
+        intro={x(cip.who.offerIntro)}
+        cards={cip.who.offerCards.map((c) => ({ label: x(c.label), items: c.items.map(x) }))}
+        // Tesoro Del Mar property specs, as published on oraworld.com (the huddle's "property specs").
+        facts={home.hero.stats.map((st) => ({ value: st.value == null ? "" : st.value.toLocaleString("en-US"), label: x(st.label) }))}
         cta={inquire}
       >
-        <CardRail cards={whoCards} label={x(cip.who.galleryKicker)} hint={hint} locale={locale} ratio="5/4" overlay />
+        <CardRail cards={whoCards} label={x(cip.who.galleryKicker)} hint={hint} locale={locale} ratio="5/4" />
       </CipShowcase>
 
       {/* 02 Why ORA World: how it is different */}

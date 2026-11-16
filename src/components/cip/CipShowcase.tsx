@@ -17,6 +17,7 @@ export function CipShowcase({
   intro,
   cards,
   body,
+  facts,
   cta,
   dark = false,
   tone,
@@ -28,6 +29,8 @@ export function CipShowcase({
   title: string;
   intro: string;
   cards: ShowcaseCard[];
+  /** a quiet row of figures under the cards (e.g. property specs) */
+  facts?: { value: string; label: string }[];
   /** a second paragraph under the intro */
   body?: string;
   cta?: { href: string; label: string; track: string };
@@ -75,6 +78,17 @@ export function CipShowcase({
               </div>
             ))}
           </div>
+          {facts && facts.length > 0 && (
+            <dl className={cn("mt-6 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4", dark ? "text-bone" : "text-charcoal")} data-reveal>
+              {facts.map((f) => (
+                <div key={f.label}>
+                  <dt className="sr-only">{f.label}</dt>
+                  <dd className="font-[family-name:var(--font-display)] text-[26px] leading-none">{f.value}</dd>
+                  <dd aria-hidden className={cn("mt-1 text-[12px] leading-snug", dark ? "text-bone/65" : "text-charcoal-soft")}>{f.label}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
           {cta && (
             <a href={cta.href} className="cta mt-8 min-h-[52px] px-8" data-track={cta.track} data-track-label={id} data-reveal>
               {cta.label} <ArrowRight width={14} height={14} />
