@@ -50,8 +50,8 @@ test.describe("vendored components and the desktop menu", () => {
     const text = (await main.innerText()).toLowerCase();
     expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
     await expect(page.locator("#hero h1")).toHaveText(/beyond expectations/i);
-    // Client, 16 Nov: only "Beyond expectations" in the middle, with the client's sentence under it.
-    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveText(/thoughtfully crafted communities where longevity, luxury, and nature exist in perfect harmony/i);
+    // Client, 16 Nov: only "Beyond expectations" on the banner, no other text.
+    await expect(page.locator("#hero p:not(.visually-hidden)")).toHaveCount(0);
     // No links over the film; "Inquire" is in the white bar at the top.
     await expect(page.locator("#hero a")).toHaveCount(0);
     await expect(page.locator('a[data-track="cta_inquire"]:visible').first()).toHaveText(/inquire/i);
