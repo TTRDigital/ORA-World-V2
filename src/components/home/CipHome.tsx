@@ -64,7 +64,7 @@ function SectionHead({ n, eyebrow, title, id, intro, dark = false, children }: {
 
 /**
  * The homepage story, following the owner's content brief and the client call (Nov 2026):
- * amenities & features (everything ORA World offers) → why ORA World → longevity
+ * amenities & features (everything ORA World offers) → why ORA World
  * and preventive health → fitness and nutrition → why Puerto
  * Rico (Act 60 and its tax benefits) → step inside (360° tour and film, full width) → residences → amenities (the
  * full list, ORA health services and the ghost kitchen) → private charters → floor plans and pricing → three steps →
@@ -97,13 +97,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
     { key: "putting", kicker: k, title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf },
   ];
 
-  // Client, 15 Nov: each card plays a short film (a camera move made from its picture), not a still.
-  const fitnessCards: RailCard[] = [
-    { key: "gym", kicker: es ? "Entrenamiento" : "Training", title: es ? "Gimnasio y pilates" : "Fitness and pilates", text: es ? "Un programa pensado para que sea fácil." : "A program designed to make it easy.", image: tdm.gym, video: "/videos/fitness-gym.mp4", poster: "/videos/fitness-gym-poster.jpg" },
-    { key: "spa", kicker: es ? "Recuperación" : "Recovery", title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: life.spa, video: "/videos/fitness-spa.mp4", poster: "/videos/fitness-spa-poster.jpg" },
-    { key: "walk", kicker: es ? "Movimiento" : "Movement", title: es ? "Sendero de dos millas" : "Two-mile walking path", text: es ? "Entre jardines, cerca del parque nacional." : "Through gardens, beside a national park.", image: tdm.aerialForest, video: "/videos/fitness-walk.mp4", poster: "/videos/fitness-walk-poster.jpg" },
-    { key: "putting", kicker: es ? "Movimiento" : "Movement", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, video: "/videos/fitness-putting.mp4", poster: "/videos/fitness-putting-poster.jpg" },
-  ];
 
 
 
@@ -156,60 +149,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 03 Longevity and preventive health, in the Cipriani layout (client, 16 Nov): the services as two cards, the gym
-          film on the right. */}
-      <CipShowcase
-        id="longevity"
-        n="03"
-        dark
-        eyebrow={x(cip.prevention.eyebrow)}
-        title={x(cip.prevention.title)}
-        // The owner's core promise (brief §1) opens the section; the redundancy lines and the check-up paragraph follow.
-        intro={x(cip.who.intro)}
-        body={`${x(cip.prevention.intro)} ${x(cip.prevention.body)}`}
-        cards={[
-          { label: x(cip.prevention.cardLabels[0]), items: cip.prevention.bullets.slice(0, 2).map(x) },
-          { label: x(cip.prevention.cardLabels[1]), items: cip.prevention.bullets.slice(2).map(x) },
-        ]}
-        cta={inquire}
-      >
-        <figure className="relative overflow-hidden rounded-[22px]">
-          {/* Client, 15 Nov: a film that walks into the Tesoro Del Mar gym instead of the still picture (made from the
-              gym rendering: a slow camera move from the entrance toward the window and the palms, looping). */}
-          <LoopVideo
-            src="/videos/longevity-gym.mp4"
-            poster="/videos/longevity-gym-poster.jpg"
-            ratio="4/5"
-            label={es ? "Recorrido por el gimnasio de Tesoro Del Mar, hacia el ventanal y las palmeras" : "Moving through the Tesoro Del Mar fitness center toward the window and the palms"}
-          />
-          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-basalt via-basalt/80 to-transparent p-6 pt-24 md:p-9 md:pt-32">
-            <p className="font-[family-name:var(--font-display)] text-[28px] leading-tight text-bone md:text-[36px]">“{x(cip.prevention.question)}”</p>
-            <p className="mt-3 max-w-[48ch] text-[14px] leading-relaxed text-bone/80">{x(cip.prevention.questionSub)}</p>
-          </figcaption>
-        </figure>
-      </CipShowcase>
-
-      {/* 04 Fitness, nutrition and aging well, in the Cipriani layout: two cards and the film gallery. */}
-      <CipShowcase
-        id="fitness"
-        n="04"
-        eyebrow={x(cip.fitness.eyebrow)}
-        title={x(cip.fitness.title)}
-        intro={x(cip.fitness.intro)}
-        body={x(cip.fitness.body)}
-        cards={[
-          { label: x(cip.fitness.cardLabels[0]), items: cip.fitness.bullets.slice(0, 3).map(x) },
-          { label: x(cip.fitness.cardLabels[1]), items: cip.fitness.bullets.slice(3).map(x) },
-        ]}
-        cta={inquire}
-      >
-        <CardRail cards={fitnessCards} label={x(cip.fitness.eyebrow)} hint={hint} locale={locale} ratio="5/4" />
-      </CipShowcase>
-
-      {/* 05 Why Puerto Rico: Act 60 and its tax benefits for residents */}
+      {/* 03 Why Puerto Rico: Act 60 and its tax benefits for residents */}
       <CipSection
         id="why-puerto-rico"
-        n="05"
+        n="03"
         tone="pale"
         eyebrow={x(cip.why.eyebrow)}
         title={x(cip.why.title)}
@@ -224,11 +167,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
         <TaxStats locale={locale} todayLabel={x(cip.why.stats[0].label)} janLabel={x(cip.why.stats[1].label)} decreeLabel={x(cip.why.stats[2].label)} />
       </CipSection>
 
-      {/* 06 Step inside: the 360° tour and the film, full width so people can see it big */}
+      {/* 04 Step inside: the 360° tour and the film, full width so people can see it big */}
       <section id="virtual-tour" aria-labelledby="virtual-tour-title" data-tone="dark" className="on-dark border-b border-basalt bg-basalt px-3 py-16 text-bone md:px-6 md:py-24">
         <div className="mx-auto max-w-[1400px]">
           <div className="px-2 md:px-4">
-            <SectionHead n="06" id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
+            <SectionHead n="04" id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
           </div>
           <div className="mt-10 md:mt-12">
             <HomeTourStage vrUrl={settings.vrTourUrl} filmId={settings.introFilmYoutubeId} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
@@ -236,13 +179,13 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 07 Interiors (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): heading and line on
+      {/* 05 Interiors (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): heading and line on
           the left, a counter between round arrows on the right, wide 16:9 slides running off the right edge, then two
           feature lists. Living and kitchen play as films. */}
       <section id="residences" aria-labelledby="residences-title" className="overflow-hidden border-b border-travertine-deep/60 bg-bone py-16 md:py-24">
         <div className="mx-auto grid max-w-[1280px] gap-8 px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-10 xl:px-0">
           <div className="grid gap-4">
-            <p className="eyebrow" data-n="07" data-reveal>
+            <p className="eyebrow" data-n="05" data-reveal>
               <span className="rule" aria-hidden />
               {x(cip.interiors.eyebrow)}
             </p>
@@ -290,11 +233,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 08 Amenities, in the Cipriani "Amenities & features" layout: the four lists as cards on the left, the gallery on
+      {/* 06 Amenities, in the Cipriani "Amenities & features" layout: the four lists as cards on the left, the gallery on
           the right (the full list, with the ORA health services and the ghost kitchen). */}
       <CipShowcase
         id="amenities"
-        n="08"
+        n="06"
         tone="pale"
         eyebrow={x(cip.amenities.eyebrow)}
         title={x(cip.amenities.title)}
@@ -305,11 +248,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
         <CardRail cards={amenityCards} label={x(cip.amenities.eyebrow)} hint={hint} locale={locale} ratio="5/4" />
       </CipShowcase>
 
-      {/* 09 Private charters, in the same Cipriani layout (client, 16 Nov: "we can do a lot better here on design"):
+      {/* 07 Private charters, in the same Cipriani layout (client, 16 Nov: "we can do a lot better here on design"):
           flights and arrival as two cards, and a film card on the right (a slow push-in on the jet and the car). */}
       <CipShowcase
         id="charters"
-        n="09"
+        n="07"
         dark
         eyebrow={x(cip.charters.eyebrow)}
         title={x(cip.charters.title)}
@@ -336,11 +279,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </CipShowcase>
 
-      {/* 10 Floor plans (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): bedroom filters,
+      {/* 08 Floor plans (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): bedroom filters,
           the tower, the level's residences and the plan with its figures. */}
       <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-travertine/40 px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <p className="eyebrow" data-n="10" data-reveal>
+          <p className="eyebrow" data-n="08" data-reveal>
             <span className="rule" aria-hidden />
             {x(cip.explorer.eyebrow)}
           </p>
@@ -356,10 +299,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 11 Three steps */}
+      {/* 09 Three steps */}
       <section id="steps" aria-labelledby="steps-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <p className="eyebrow" data-n="11" data-reveal>
+          <p className="eyebrow" data-n="09" data-reveal>
             <span className="rule" aria-hidden />
             {x(cip.steps.eyebrow)}
           </p>
@@ -382,7 +325,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 12 Location, in the Cipriani "A branded address" layout: the map on the left; on the right the title, the
+      {/* 10 Location, in the Cipriani "A branded address" layout: the map on the left; on the right the title, the
           address card, the facts and one centred button. */}
       <section id="location" aria-labelledby="location-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
@@ -396,7 +339,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
             />
           </div>
           <div className="min-w-0">
-            <p className="eyebrow" data-n="12" data-reveal>
+            <p className="eyebrow" data-n="10" data-reveal>
               <span className="rule" aria-hidden />
               {x(cip.location.eyebrow)}
             </p>
@@ -431,10 +374,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 13 Inquire, in the Cipriani "Request pricing" layout: the form on a white card with the logo at the top. */}
+      {/* 11 Inquire, in the Cipriani "Request pricing" layout: the form on a white card with the logo at the top. */}
       <CipSection
         id="inquire"
-        n="13"
+        n="11"
         tone="dark"
         eyebrow={x(cip.inquire.eyebrow)}
         title={x(cip.inquire.title)}

@@ -87,7 +87,7 @@ export const cip = {
           en: "A total body scan, nutritionists, a ghost kitchen that cooks for you and an easy fitness program.",
           es: "Escaneo corporal completo, nutricionistas, una cocina fantasma que cocina para usted y un programa de ejercicio fácil.",
         } as L,
-        href: "#longevity",
+        href: "/longevity",
         tags: [{ en: "Body scan", es: "Escaneo corporal" }, { en: "Nutritionists", es: "Nutricionistas" }, { en: "Ghost kitchen", es: "Cocina fantasma" }, { en: "Fitness program", es: "Ejercicio" }] as L[],
       },
       {

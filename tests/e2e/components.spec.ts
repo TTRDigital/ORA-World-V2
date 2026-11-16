@@ -18,17 +18,11 @@ test.describe("vendored components and the desktop menu", () => {
     await page.locator("html:not(.no-js)").waitFor();
     // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "who", "why-ora-world", "longevity", "fitness", "why-puerto-rico", "virtual-tour", "residences", "amenities", "charters", "floor-plans", "steps", "location", "inquire"]);
+    expect(ids).toEqual(["hero", "who", "why-ora-world", "why-puerto-rico", "virtual-tour", "residences", "amenities", "charters", "floor-plans", "steps", "location", "inquire"]);
     // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
     const main = page.locator("main");
-    for (const line of [
-      /act 60: the tax benefits of living here/i,
-      /planes don.t fall from the sky/i,
-      /two lungs, two kidneys/i,
-      /what is the value of an extra 10 years/i,
-      /don.t you want to have a better life/i,
-      /longevity is the foundation of our world/i,
-    ])
+    // Client, 16 Nov: the longevity and fitness sections moved to their own page (tested below).
+    for (const line of [/act 60: the tax benefits of living here/i])
       await expect(main.getByText(line).first()).toBeVisible();
     await expect(page.locator("#amenities")).toContainText(/ghost kitchen/i);
     await expect(page.locator("#amenities")).toContainText(/total body scan/i);
@@ -40,8 +34,6 @@ test.describe("vendored components and the desktop menu", () => {
     await page.waitForTimeout(2200);
     for (const spec of [/10\s*acres/i, /129\s*residences/i, /42\s*hotel suites/i, /65,500\s*sq ft of amenities/i]) await expect(page.locator("#who")).toContainText(spec);
     // Brief details that are easy to drop.
-    await expect(page.locator("#fitness")).toContainText(/an outlier/i);
-    await expect(page.locator("#fitness")).toContainText(/work on it in advance/i);
     await expect(page.locator("#why-puerto-rico")).toContainText(/bona fide resident/i);
     // Client, 15 Nov: no nine-day week anywhere on the homepage.
     await expect(page.locator("main")).not.toContainText(/nine-day week/i);
@@ -102,6 +94,27 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#steps li")).toHaveCount(3);
     await expect(page.locator("#inquire form")).toHaveCount(1);
     await expect(page.locator("#inquire").getByLabel(/what matters most to you/i)).toBeVisible();
+  });
+
+  test("Longevity page carries the owner's lines and the two sections", async ({ page }) => {
+    await page.goto("/en/longevity");
+    await page.locator("html:not(.no-js)").waitFor();
+    const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
+    expect(ids).toEqual(expect.arrayContaining(["longevity", "fitness"]));
+    const main = page.locator("main");
+    for (const line of [
+      /planes don.t fall from the sky/i,
+      /two lungs, two kidneys/i,
+      /what is the value of an extra 10 years/i,
+      /don.t you want to have a better life/i,
+      /longevity is the foundation of our world/i,
+    ])
+      await expect(main.getByText(line).first()).toBeVisible();
+    await expect(page.locator("#fitness")).toContainText(/an outlier/i);
+    await expect(page.locator("#fitness")).toContainText(/work on it in advance/i);
+    // In the menu, and gone from the homepage.
+    await page.goto("/en");
+    await expect(page.locator("#longevity, #fitness")).toHaveCount(0);
   });
 
   test("counters render real values in the server HTML", async ({ request }) => {
