@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import type { ImageRef, Locale } from "@/content/types";
-import { ArrowRight } from "@/components/ui/Icons";
 import { HealthCheck, TaxCalculator, TravelRoute } from "./WhyWidgets";
 
 export type StackCard = {
@@ -12,7 +11,6 @@ export type StackCard = {
   text: string;
   tags: string[];
   href: string;
-  linkLabel: string;
   image: ImageRef;
   /** the live panel on the card (client, 17 Nov) */
   kind: "health" | "tax" | "travel";
@@ -34,7 +32,7 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
     const items = Array.from(ol.querySelectorAll<HTMLElement>("[data-stack-item]"));
     let raf = 0;
     // Small phones: a card taller than the room under the header sticks a little higher, so its whole content
-    // (down to "Read more") is seen before the next card covers it.
+    // (down to its panel) is seen before the next card covers it.
     const fit = () => {
       items.forEach((item) => {
         item.style.top = "";
@@ -78,7 +76,6 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
     };
   }, []);
 
-  const total = String(cards.length).padStart(2, "0");
   return (
     <ol ref={list} className="relative mt-10 md:mt-14">
       {cards.map((c, i) => (
@@ -107,15 +104,11 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
             </div>
             <div className="grid gap-6 p-5 min-[400px]:p-6 md:min-h-[540px] md:grid-cols-[minmax(0,1fr)_minmax(0,25rem)] md:items-center md:gap-10 md:p-10 lg:p-12">
               <div>
-                <span className="inline-block rounded-full bg-bone/90 px-3 py-1 text-[11px] font-semibold tracking-[0.2em] text-charcoal">
-                  {String(i + 1).padStart(2, "0")} / {total}
-                </span>
-                <span aria-hidden className="mt-6 block h-px w-12 bg-brass-light" />
+                {/* Client, 17 Nov: no "01 / 03" number on the cards. */}
+                <span aria-hidden className="block h-px w-12 bg-brass-light" />
                 <h3 className="display-m mt-4 text-bone md:mt-5">{c.title}</h3>
                 <p className="mt-3 max-w-[44ch] text-[15px] leading-relaxed text-bone/85 md:text-[16px]">{c.text}</p>
-                <a href={c.href} className="mt-4 inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-light uppercase hover:text-bone md:mt-6">
-                  {c.linkLabel} <ArrowRight width={13} height={13} />
-                </a>
+                {/* Client, 17 Nov: no "Read more" link on the cards. */}
               </div>
               {c.kind === "tax" ? (
                 <TaxCalculator es={locale === "es"} />

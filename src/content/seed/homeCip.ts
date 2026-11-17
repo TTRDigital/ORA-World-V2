@@ -83,8 +83,20 @@ export const cip = {
       en: "Three things no ordinary condo offers: care for your health, a better place for your income, and easy travel.",
       es: "Tres cosas que ningún condominio común ofrece: cuidado de su salud, un mejor lugar para su ingreso y viajes fáciles.",
     } as L,
+    // Client, 17 Nov: travel first, then longevity, then Act 60.
     items: [
       {
+        kind: "travel" as const,
+        title: { en: "Travel, taken care of", es: "Viajes resueltos" } as L,
+        text: {
+          en: "Private charter flights between the US and your condo, a lobby attended 24/7 and a house car waiting.",
+          es: "Vuelos chárter privados entre Estados Unidos y su condominio, un vestíbulo atendido 24/7 y el auto de la casa.",
+        } as L,
+        href: "#inquire", // the charters section left the homepage
+        tags: [{ en: "Private charters", es: "Chárter privados" }, { en: "House car", es: "Auto de la casa" }] as L[],
+      },
+      {
+        kind: "health" as const,
         title: { en: "Longevity, built in", es: "Longevidad incluida" } as L,
         text: {
           en: "A total body scan, nutritionists, a ghost kitchen that cooks for you and an easy fitness program.",
@@ -94,6 +106,7 @@ export const cip = {
         tags: [{ en: "Body scan", es: "Escaneo corporal" }, { en: "Nutritionists", es: "Nutricionistas" }, { en: "Ghost kitchen", es: "Cocina fantasma" }, { en: "Fitness program", es: "Ejercicio" }] as L[],
       },
       {
+        kind: "tax" as const,
         // Client, 16 Nov: this card carries the Act 60 line; the tax section left the homepage.
         title: { en: "Act 60: the tax benefits of living here", es: "Ley 60: los beneficios fiscales de vivir aquí" } as L,
         text: {
@@ -102,15 +115,6 @@ export const cip = {
         } as L,
         href: "/faq",
         tags: [{ en: "Act 60", es: "Ley 60" }, { en: "0% or 4%", es: "0% o 4%" }, { en: "Accountants", es: "Contadores" }] as L[],
-      },
-      {
-        title: { en: "Travel, taken care of", es: "Viajes resueltos" } as L,
-        text: {
-          en: "Private charter flights between the US and your condo, a lobby attended 24/7 and a house car waiting.",
-          es: "Vuelos chárter privados entre Estados Unidos y su condominio, un vestíbulo atendido 24/7 y el auto de la casa.",
-        } as L,
-        href: "#inquire", // the charters section left the homepage
-        tags: [{ en: "Private charters", es: "Chárter privados" }, { en: "24/7 lobby", es: "Vestíbulo 24/7" }, { en: "House car", es: "Auto de la casa" }] as L[],
       },
     ],
   },

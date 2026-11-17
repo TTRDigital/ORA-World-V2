@@ -134,16 +134,15 @@ export async function CipHome({ locale }: { locale: Locale }) {
           {/* Client, 15 Nov: cards that stack on top of each other as you scroll, with more than plain text. */}
           <StackCards
             locale={locale}
-            cards={cip.different.items.map((item, i) => ({
+            cards={cip.different.items.map((item) => ({
               title: x(item.title),
               text: x(item.text),
               tags: item.tags.map((tag) => x(tag)),
               href: item.href,
-              linkLabel: item.href === "#inquire" ? inquire.label : es ? "Leer más" : "Read more",
-              // Client, 17 Nov: full-card pictures with their films: the gym; the aerial cove behind the Act 60 calculator;
-              // the ORA World jet arriving (the client's film, 3:1, its first frame as the still).
-              image: [tdm.gym, tdm.aerialCoast, jetArrival][i],
-              kind: (["health", "tax", "travel"] as const)[i],
+              // Client, 17 Nov: full-card pictures with their films: the ORA World jet arriving (the client's film, its
+              // first frame as the still); the gym; the aerial cove behind the Act 60 calculator.
+              image: { travel: jetArrival, health: tdm.gym, tax: tdm.aerialCoast }[item.kind],
+              kind: item.kind,
             }))}
           />
         </div>
