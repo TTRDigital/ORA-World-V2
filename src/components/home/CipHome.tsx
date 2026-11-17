@@ -59,14 +59,14 @@ export async function CipHome({ locale }: { locale: Locale }) {
   );
 
   // Section 01 gallery: the amenities (client, 16 Nov: like Cipriani's amenity gallery). Captions from this page.
-  const k = x(cip.who.galleryKicker);
+  const k = ""; // client, 17 Nov: no "Amenity gallery" label on each card (the carousel keeps it as its accessible name)
   // Client's clips (16 Nov): the pool cabana, the lobby, the gym, the entrance and the cove play as films.
   const v = (n: string) => ({ video: `/videos/amenity-${n}.mp4`, poster: `/videos/amenity-${n}-poster.jpg` });
   // Client, 17 Nov: the new short films made from each render.
   const c = (n: string) => ({ video: `/videos/clips/${n}.mp4`, poster: `/videos/clips/${n}-poster.jpg` });
   const whoCards: RailCard[] = [
     // Client, 16 Nov: the aerial cove film first, titled "View".
-    { key: "view", kicker: k, title: es ? "Vista" : "View", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...c("p08-aerial-cove") },
+    { key: "view", kicker: k, title: es ? "Vista al mar en cada unidad" : "Waterfront view for every unit", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...c("p08-aerial-cove") },
     // Client, 16 Nov: "Luxury Living" second: the penthouse living film, then the primary suite, then the kitchen.
     { key: "luxury", kicker: k, title: es ? "Vida de lujo" : "Luxury Living", text: es ? "El salón del penthouse, piso 18." : "The penthouse living room, floor 18.", image: tdm.penthouseLiving, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
     { key: "pool", kicker: k, title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...c("p10-pool-cabana") },
@@ -114,7 +114,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
             const acc = es ? "en perfecta armonía." : "in perfect harmony.";
             const head = line.endsWith(acc) ? line.slice(0, -acc.length) : line;
             return (
-              <h2 id="why-ora-world-title" className="mx-auto max-w-[26ch] text-center font-[family-name:var(--font-display)] text-[28px] leading-[1.22] font-normal text-balance text-charcoal md:max-w-[30ch] md:text-[44px] md:leading-[1.18]" data-reveal>
+              <h2 id="why-ora-world-title" className="mx-auto max-w-[28ch] text-center font-[family-name:var(--font-display)] text-[22px] leading-[1.3] font-normal text-balance text-charcoal md:max-w-[40ch] md:text-[30px] md:leading-[1.28]" data-reveal>
                 <span aria-hidden className="mx-auto mb-7 block h-px w-14 bg-brass md:mb-9" />
                 {head}
                 {head !== line && <em className="text-brass-ink italic">{acc}</em>}

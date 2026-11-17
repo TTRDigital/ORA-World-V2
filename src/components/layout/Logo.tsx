@@ -23,13 +23,31 @@ export function Logo({
   // Both lockups are trimmed to their edges and exported at 1200×845 (scripts/brand-build.mjs).
   const ratio = 1200 / 845;
   const width = Math.round(height * ratio);
+  // Client, 17 Nov: the leaves move a little. The header and white lockups are SVGs built from the official artwork by
+  // scripts/logo-leaves.py: each leaf cut from the original pixels, swinging about its branch with a breeze across the
+  // tree (SVG's own animation, so it runs in every browser, Safari included). Reduced motion gets the still PNG.
+  if (variant !== "gold") {
+    const still = variant === "header" ? "/brand/ora-world-logo-gold-header.png" : "/brand/ora-world-logo-white.png";
+    const moving = variant === "header" ? "/brand/ora-world-logo-gold-header-leaves.svg" : "/brand/ora-world-logo-white-leaves.svg";
+    return (
+      <picture>
+        <source media="(prefers-reduced-motion: reduce)" srcSet={still} />
+        <img
+          src={moving}
+          alt="ORA World · Puerto Rico"
+          width={width}
+          height={height}
+          fetchPriority={priority ? "high" : undefined}
+          data-logo-leaves
+          className={cn("w-auto", !responsive && "h-auto", className)}
+          style={responsive ? { width: "auto" } : { height, width: "auto" }}
+        />
+      </picture>
+    );
+  }
   return (
     <Image
-      // Client, 17 Nov: the leaves move a little. The header and white lockups are SVGs built from the official artwork
-      // by scripts/logo-leaves.py (each leaf cut from the original pixels, swaying about its branch; still for reduced
-      // motion). The SVG is served as is, so its own animation runs.
-      src={variant === "header" ? "/brand/ora-world-logo-gold-header-animated.svg" : variant === "gold" ? "/brand/ora-world-logo-gold.png" : "/brand/ora-world-logo-white-animated.svg"}
-      unoptimized={variant !== "gold"}
+      src="/brand/ora-world-logo-gold.png"
       alt="ORA World · Puerto Rico"
       width={width}
       height={height}

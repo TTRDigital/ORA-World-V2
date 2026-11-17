@@ -92,8 +92,8 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
                 style={{ objectPosition: "50% 30%" }}
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-basalt via-basalt/90 to-basalt/0 px-5 pt-16 pb-5 text-bone">
-                <p className="text-[10px] font-semibold tracking-[0.24em] text-brass-light uppercase">{c.kicker}</p>
-                <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-[24px] leading-none">{c.title}</h3>
+                {c.kicker && <p className="text-[10px] font-semibold tracking-[0.24em] text-brass-light uppercase">{c.kicker}</p>}
+                <h3 className={cn("font-[family-name:var(--font-display)] text-[24px] leading-none", c.kicker && "mt-1.5")}>{c.title}</h3>
                 {c.meta && <p className="mt-2 text-[13px] text-bone/85">{c.meta}</p>}
                 {c.cta && <p className="mt-3 text-[10.5px] font-semibold tracking-[0.22em] text-bone uppercase">{c.cta} →</p>}
               </div>
@@ -140,8 +140,8 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
                 )}
               </div>
               <div className="p-5 md:px-6 md:pt-7 md:pb-8">
-                <p className="text-[10px] font-semibold tracking-[0.28em] text-brass-ink uppercase">{c.kicker}</p>
-                <h3 className="display-s mt-3 text-charcoal">{c.title}</h3>
+                {c.kicker && <p className="text-[10px] font-semibold tracking-[0.28em] text-brass-ink uppercase">{c.kicker}</p>}
+                <h3 className={cn("display-s text-charcoal", c.kicker && "mt-3")}>{c.title}</h3>
                 {c.meta && <p className="mt-1 text-[14px] font-semibold text-charcoal">{c.meta}</p>}
                 {c.text && <p className="mt-3 text-[15px] leading-relaxed text-charcoal-soft">{c.text}</p>}
                 {c.cta && <p className="mt-3 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase">{c.cta} →</p>}

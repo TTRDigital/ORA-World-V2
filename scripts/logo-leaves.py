@@ -1,8 +1,8 @@
 """
 Animated logo (client, 17 Nov: "have those leaves moving around a little bit"). The official lockup is never
 redrawn: this cuts each leaf out of the original artwork's own pixels (the leaves are separate shapes), and writes an
-SVG with the rest of the lockup as one image and every leaf as its own small image that sways gently around the point
-where it meets its branch. Reduced motion keeps every leaf still.
+SVG with the rest of the lockup as one image and every leaf as its own small image that sways around the point
+where it meets its branch (SMIL, so it runs everywhere). Reduced motion: Logo.tsx serves the still PNG instead.
 
   python3 scripts/logo-leaves.py   (needs numpy, scipy, Pillow)
 """
@@ -57,28 +57,29 @@ def build(src: str, out: str, seed: int = 7) -> None:
         py, pxx = np.unravel_index(np.argmin(d), d.shape)
         leaves.append((x0, y0, x1 - x0, y1 - y0, pxx - x0, py - y0, Image.fromarray(crop)))
 
+    # SMIL rotation (runs in every browser, Safari included, even when the SVG is shown as an <img>). A breeze
+    # ripples across the tree from left to right; each leaf swings about the point where it meets its branch.
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">',
-        "<style>",
-        ".l{transform-box:view-box;animation-name:s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}",
-        "@keyframes s{from{transform:rotate(var(--a0))}to{transform:rotate(var(--a1))}}",
-        "@media (prefers-reduced-motion:reduce){.l{animation:none}}",
-        "</style>",
         f'<image href="{b64(Image.fromarray(base))}" width="{W}" height="{H}"/>',
     ]
+    spline = "0.45 0 0.55 1;0.45 0 0.55 1"
     for x, y, w, h, ox, oy, leaf in leaves:
-        amp = rnd.uniform(4.5, 8.0)
-        dur = rnd.uniform(2.6, 4.4)
-        delay = -rnd.uniform(0, dur)
+        cx, cy = x + ox, y + oy
+        amp = rnd.uniform(10.0, 15.0)
+        dur = rnd.uniform(2.8, 3.6)
+        delay = -((x / W) * 1.6 + rnd.uniform(0, 0.5))
         parts.append(
-            f'<image class="l" href="{b64(leaf)}" x="{x}" y="{y}" width="{w}" height="{h}" '
-            f'style="transform-origin:{x + ox}px {y + oy}px;--a0:{-amp:.1f}deg;--a1:{amp * 0.6:.1f}deg;'
-            f'animation-duration:{dur:.2f}s;animation-delay:{delay:.2f}s"/>'
+            f'<image href="{b64(leaf)}" x="{x}" y="{y}" width="{w}" height="{h}">'
+            f'<animateTransform attributeName="transform" type="rotate" '
+            f'values="{-amp:.1f} {cx} {cy};{amp * 0.7:.1f} {cx} {cy};{-amp:.1f} {cx} {cy}" '
+            f'dur="{dur:.2f}s" begin="{delay:.2f}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="{spline}"/>'
+            f"</image>"
         )
     parts.append("</svg>")
     open(out, "w").write("\n".join(parts))
     print(out, f"{len(leaves)} leaves", f"{sum(len(p) for p in parts) // 1024} KB", "areas:", sorted(int(s) for s in areas)[-6:])
 
 if __name__ == "__main__":
-    build("public/brand/ora-world-logo-gold-header.png", "public/brand/ora-world-logo-gold-header-animated.svg")
-    build("public/brand/ora-world-logo-white.png", "public/brand/ora-world-logo-white-animated.svg")
+    build("public/brand/ora-world-logo-gold-header.png", "public/brand/ora-world-logo-gold-header-leaves.svg")
+    build("public/brand/ora-world-logo-white.png", "public/brand/ora-world-logo-white-leaves.svg")
