@@ -423,19 +423,23 @@ export const cip = {
   /* Location, in the Cipriani "A branded address" layout (client, 16 Nov). Facts already on the site: the address,
      30 minutes from San Juan's airport (published), Balneario Cerro Gordo within walking distance (places.ts), the
      cove on the north coast and the national park beside the walking path. */
+  // Client, 17 Nov: the location, short and clean: a title, one line, the map and five places.
   location: {
     eyebrow: { en: "Location", es: "Ubicación" } as L,
-    title: { en: "Puerto Rico's north coast", es: "La costa norte de Puerto Rico" } as L,
-    intro: { en: "Dorado · Vega Alta, above a turquoise cove.", es: "Dorado · Vega Alta, sobre una cala turquesa." } as L,
-    addressLabel: { en: "Address", es: "Dirección" } as L,
+    title: { en: "Dorado, on the *north* coast", es: "Dorado, en la costa *norte*" } as L,
+    intro: {
+      en: "Steps from the beach and a national park, about 30 minutes from San Juan and its international airport.",
+      es: "A pasos de la playa y de un parque nacional, a unos 30 minutos de San Juan y su aeropuerto internacional.",
+    } as L,
+    places: ["cerro-gordo", "dorado-beach", "golf", "sju", "old-san-juan"],
+    walk: { en: "min walk", es: "min a pie" } as L,
+    drive: { en: "min drive", es: "min en auto" } as L,
+    note: { en: "* Approximate travel times.", es: "* Tiempos de viaje aproximados." } as L,
+    mapLabel: { en: "Map of Tesoro Del Mar and nearby places", es: "Mapa de Tesoro Del Mar y lugares cercanos" } as L,
     address: { en: "Tesoro Del Mar, Dorado · Vega Alta, Puerto Rico 00692", es: "Tesoro Del Mar, Dorado · Vega Alta, Puerto Rico 00692" } as L,
-    bullets: [
-      { en: "About 30 minutes from San Juan's airport", es: "A unos 30 minutos del aeropuerto de San Juan" },
-      { en: "Balneario Cerro Gordo beach within walking distance", es: "La playa Balneario Cerro Gordo a pie" },
-      { en: "A two-mile garden path beside a national park", es: "Un sendero de dos millas junto a un parque nacional" },
-    ] as L[],
     openMap: { en: "Open in Maps", es: "Abrir en Mapas" } as L,
   },
+
 
   /* 11 Inquire (brief §7: who he is talking to) */
   // Client, 17 Nov: the mission statement, near the end, just before the form.

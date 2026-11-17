@@ -86,7 +86,7 @@ function fit(map: maplibregl.Map, site: MapSite, pois: RailPoi[], scope: "dorado
 }
 
 /** Restyle OpenFreeMap "liberty" to the palette. Unknown layers are left alone; nothing here can throw. */
-function restyle(map: maplibregl.Map) {
+export function restyle(map: maplibregl.Map) {
   const layers = map.getStyle()?.layers ?? [];
   const set = (id: string, prop: string, value: unknown) => {
     try {

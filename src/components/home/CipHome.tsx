@@ -9,8 +9,10 @@ import { CipShowcase } from "@/components/cip/CipShowcase";
 import { StackCards } from "@/components/cip/StackCards";
 import { InteriorsGallery } from "@/components/cip/InteriorsGallery";
 import { FloorExplorer } from "@/components/cip/FloorExplorer";
+import { LocationExplorer } from "@/components/cip/LocationExplorer";
+import { pointsOfInterest } from "@/content/seed/places";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
-import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
+import { ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
 import { Logo } from "@/components/layout/Logo";
 
@@ -52,11 +54,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
   const x = (l: Parameters<typeof t>[0]) => t(l, locale);
   const es = locale === "es";
   const inquire = { href: "#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" };
-  const inquireBtn = (
-    <a href="#inquire" className="cta min-h-[52px] px-8" data-track="cta_inquire">
-      {inquire.label} <ArrowRight width={14} height={14} />
-    </a>
-  );
 
   // Section 01 gallery: the amenities (client, 16 Nov: like Cipriani's amenity gallery). Captions from this page.
   const k = ""; // client, 17 Nov: no "Amenity gallery" label on each card (the carousel keeps it as its accessible name)
@@ -233,52 +230,55 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 07 Location, in the Cipriani "A branded address" layout: the map on the left; on the right the title, the
-          address card, the facts and one centred button. */}
-      <section id="location" aria-labelledby="location-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
-        <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
-          <div className="relative overflow-hidden rounded-[20px] bg-travertine shadow-[0_24px_50px_-30px_rgb(44_36_22/0.5)] ring-1 ring-travertine-deep/60" style={{ aspectRatio: "4/3" }}>
-            <iframe
-              title={es ? "Mapa de Tesoro Del Mar" : "Map of Tesoro Del Mar"}
-              src={`https://www.google.com/maps?q=${settings.siteLat},${settings.siteLng}&z=13&output=embed&hl=${locale}`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="absolute inset-0 h-full w-full border-0"
+      {/* 07 Location (client, 17 Nov: like the other site's location, but short and clean): the title and one line,
+          then the map with five places and their travel times. */}
+      <section id="location" aria-labelledby="location-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-12">
+            <div>
+              <p className="eyebrow" data-n="07" data-reveal>
+                <span className="rule" aria-hidden />
+                {x(cip.location.eyebrow)}
+              </p>
+              <h2 id="location-title" className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[52px]" data-reveal>
+                {x(cip.location.title)
+                  .split("*")
+                  .map((part, k) => (k % 2 ? <em key={k} className="text-brass-ink italic">{part}</em> : <span key={k}>{part}</span>))}
+              </h2>
+            </div>
+            <p className="max-w-[46ch] text-[16px] leading-relaxed text-charcoal-soft md:text-[17px]" data-reveal>
+              {x(cip.location.intro)}
+            </p>
+          </div>
+          <div className="mt-10 md:mt-12">
+            <LocationExplorer
+              site={{ lat: settings.siteLat, lng: settings.siteLng, name: "ORA World · Tesoro Del Mar" }}
+              mapLabel={x(cip.location.mapLabel)}
+              note={x(cip.location.note)}
+              places={cip.location.places.map((slug) => {
+                const p = pointsOfInterest.find((q) => q.slug === slug)!;
+                const walk = p.walkMinutes != null;
+                return {
+                  slug,
+                  name: x(p.name),
+                  lat: p.lat,
+                  lng: p.lng,
+                  time: `${walk ? p.walkMinutes : p.driveMinutes} ${x(walk ? cip.location.walk : cip.location.drive)}${p.confirmed ? "" : "*"}`,
+                };
+              })}
             />
           </div>
-          <div className="min-w-0">
-            <p className="eyebrow" data-n="07" data-reveal>
-              <span className="rule" aria-hidden />
-              {x(cip.location.eyebrow)}
-            </p>
-            <h2 id="location-title" className="display-l mt-5 text-charcoal" data-reveal>
-              {x(cip.location.title)}
-            </h2>
-            <p className="mt-5 text-[16px] leading-relaxed text-charcoal" data-reveal>{x(cip.location.intro)}</p>
-            <div className="mt-7 rounded-[16px] bg-white px-6 py-5 ring-1 ring-travertine-deep/70" data-reveal>
-              <p className="text-[11px] font-semibold tracking-[0.26em] text-brass-ink uppercase">{x(cip.location.addressLabel)}</p>
-              <p className="mt-2 text-[17px] text-charcoal">{x(cip.location.address)}</p>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${settings.siteLat},${settings.siteLng}`}
-                target="_blank"
-                rel="noopener"
-                className="mt-3 inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal"
-              >
-                {x(cip.location.openMap)} <ArrowUpRight width={13} height={13} />
-              </a>
-            </div>
-            <ul className="mt-6 space-y-3" data-reveal>
-              {cip.location.bullets.map((b) => (
-                <li key={x(b)} className="flex gap-2.5 text-[15px] leading-snug text-charcoal">
-                  <span aria-hidden className="mt-[0.55em] size-1 shrink-0 rounded-full bg-brass" />
-                  {x(b)}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="mt-12 flex justify-center" data-reveal>
-          {inquireBtn}
+          <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-charcoal-soft">
+            {x(cip.location.address)}
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${settings.siteLat},${settings.siteLng}`}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal"
+            >
+              {x(cip.location.openMap)} <ArrowUpRight width={13} height={13} />
+            </a>
+          </p>
         </div>
       </section>
 
