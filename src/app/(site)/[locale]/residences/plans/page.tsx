@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getCollections, getFloorPlans } from "@/lib/content";
 import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
 import type { Locale } from "@/content/types";
 import { PageHero } from "@/components/ui/PageHero";
-import { PlanLibrary } from "@/components/plans/PlanLibrary";
 import { PillLink } from "@/components/ui/Pill";
 import { FloorExplorer } from "@/components/cip/FloorExplorer";
 import { cip } from "@/content/seed/homeCip";
@@ -19,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 export default async function PlansPage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [plans, collections, tp, tn] = await Promise.all([getFloorPlans(), getCollections(), getTranslations({ locale, namespace: "plans" }), getTranslations({ locale, namespace: "nav" })]);
+  const [tp, tn] = await Promise.all([getTranslations({ locale, namespace: "plans" }), getTranslations({ locale, namespace: "nav" })]);
   return (
     <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("residences"), path: "/residences" }, { name: tp("title"), path: "/residences/plans" }])} />
@@ -46,9 +44,7 @@ export default async function PlansPage({ params }: { params: Promise<{ locale: 
           <FloorExplorer locale={locale} />
         </div>
       </section>
-      <section className="panel panel-travertine container-x section-y" aria-label={tp("title")}>
-        <PlanLibrary plans={plans} collections={collections} locale={locale} />
-      </section>
+      {/* Client, 17 Nov: the plan-card library removed; the explorer above carries every residence. */}
     </div>
   );
 }
