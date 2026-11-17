@@ -47,9 +47,14 @@ test.describe("shell", () => {
     await page.locator("html:not(.no-js)").waitFor();
     await expect(page.locator("header")).toHaveAttribute("data-mode", "solid");
     if (!isMobile) await expect(page.locator("header nav").getByRole("link", { name: "Residences", exact: true })).toBeVisible();
-    const bar = await page.locator("header").boundingBox();
-    const hero = await page.locator("#hero").boundingBox();
-    expect(Math.abs(hero!.y - bar!.height)).toBeLessThanOrEqual(1); // the banner starts right under the bar (its 1px border)
+    // The banner starts right under the bar (its 1px border), once the page's entrance motion has settled.
+    await expect
+      .poll(async () => {
+        const bar = await page.locator("header").boundingBox();
+        const hero = await page.locator("#hero").boundingBox();
+        return Math.abs(hero!.y - bar!.height);
+      })
+      .toBeLessThanOrEqual(1);
   });
 
   test("mobile bottom sheet opens with tiles, traps focus, closes on Escape", async ({ page, isMobile }) => {

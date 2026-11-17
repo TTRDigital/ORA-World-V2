@@ -16,9 +16,17 @@ test.describe("vendored components and the desktop menu", () => {
   test("home tells the ORA World story with one call to action, Inquire", async ({ page }) => {
     await page.goto("/en");
     await page.locator("html:not(.no-js)").waitFor();
+    // Checked first, while the banner is on screen (mobile browsers pause muted films scrolled out of view).
+    // Client, 17 Nov: the banner plays "Tesoro Layout Film v5" (silent): no sound button; the pause button stops it.
+    await expect(page.locator("#hero [data-film-sound]")).toHaveCount(0);
+    const film = page.locator("#hero video").first();
+    await expect(film.locator("source")).toHaveAttribute("src", "/videos/hero-film.mp4");
+    await expect.poll(() => film.evaluate((v: HTMLVideoElement) => !v.paused)).toBe(true);
+    await page.locator("#hero [data-film-pause]").click();
+    await expect.poll(() => film.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
     // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "who", "gallery-large", "why-ora-world", "residences", "virtual-tour", "floor-plans", "steps", "location", "inquire"]);
+    expect(ids).toEqual(["hero", "who", "why-ora-world", "residences", "virtual-tour", "floor-plans", "steps", "location", "inquire"]);
     // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
     const main = page.locator("main");
     // Client, 16 Nov: the longevity and fitness sections moved to their own page (tested below).
@@ -50,17 +58,6 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#hero a:not([data-scroll-cue])")).toHaveCount(0);
     await expect(page.locator("#hero a[data-scroll-cue]")).toHaveAttribute("href", "#who");
     await expect(page.locator('a[data-track="cta_inquire"]:visible').first()).toHaveText(/inquire/i);
-    // Sound on when the page opens (client); one click on the button turns it off, and the choice is remembered.
-    const sound = page.locator("#hero [data-film-sound]");
-    await expect(sound).toBeVisible();
-    await page.waitForTimeout(2000); // the film mounts after load + idle and starts with sound where allowed
-    const pressedBefore = await sound.getAttribute("aria-pressed");
-    await sound.click();
-    await expect(sound).toHaveAttribute("aria-pressed", pressedBefore === "true" ? "false" : "true");
-    if (pressedBefore === "true") {
-      await expect(sound).toHaveText(/watch the film/i);
-      expect(await page.evaluate(() => localStorage.getItem("ora2_film_sound"))).toBe("off");
-    }
     // No other wording for the main action anywhere on the page.
     await expect(page.getByText(/get price list|book a visit/i)).toHaveCount(0);
     // Act 60 figures with the not-tax-advice note.

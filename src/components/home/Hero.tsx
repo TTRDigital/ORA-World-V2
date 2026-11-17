@@ -15,6 +15,7 @@ export async function Hero({ locale }: { locale: Locale }) {
   const words = tr(cip.hero.title, locale).split(" ");
 
   const es = locale === "es";
+  const heroPoster = { ...settings.filmPoster, src: "/videos/hero-film-poster.jpg", focal: "50% 50%", alt: { en: "Tesoro del Mar from the air, above a cove on the north coast of Puerto Rico", es: "Tesoro del Mar desde el aire, sobre una cala de la costa norte de Puerto Rico" } };
 
   return (
     <section
@@ -23,7 +24,9 @@ export async function Hero({ locale }: { locale: Locale }) {
       data-tone="dark"
       className="on-dark relative isolate flex h-[calc(100svh-80px)] min-h-[520px] flex-col justify-end overflow-hidden bg-basalt lg:h-[calc(100svh-96px)]"
     >
-      <HeroStage locale={locale} youtubeId={settings.filmYoutubeId} mp4={settings.filmMp4} webm={settings.filmWebm} poster={settings.filmPoster} />
+      {/* Client, 17 Nov: the banner plays "Tesoro Layout Film v5" (silent, self-hosted, in the server HTML so it starts
+          at once); the YouTube film no longer loads here. */}
+      <HeroStage locale={locale} youtubeId={null} mp4={null} webm={null} poster={heroPoster} />
       {/* Client, 16 Nov: the line bottom-left and easy to read: a light veil over the film, and a deeper shade rising
           from the bottom-left corner behind the words. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-[3] bg-[rgb(28_24_18/0.12)]" />

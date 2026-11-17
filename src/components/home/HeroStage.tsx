@@ -446,17 +446,16 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         className={cn("z-[2] object-cover transition-opacity duration-700 [transition-timing-function:var(--ease-out)]", playing || ambientOn ? "opacity-0" : "opacity-100")}
         style={{ objectPosition: poster.focal }}
       />
-      {/* The instant film (written as HTML so "muted" and "autoplay" are in the very first response: browsers only
-          autoplay muted video, and React leaves "muted" out of server HTML). Phones get the portrait cut. */}
+      {/* The banner film (client, 17 Nov: "Tesoro Layout Film v5", silent, 39 s, on a loop). The instant film (written as HTML so "muted" and "autoplay" are in the very first response: browsers only
+          autoplay muted video, and React leaves "muted" out of server HTML). */}
       <div
         ref={ambientWrap}
         aria-hidden="true"
         className={cn("pointer-events-none absolute inset-0 z-[1] transition-opacity duration-1000", playing ? "opacity-0" : "opacity-100")}
         dangerouslySetInnerHTML={{
           __html:
-            '<video autoplay muted loop playsinline preload="auto" disablepictureinpicture tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">' +
-            '<source src="/videos/hero-portrait.mp4" type="video/mp4" media="(orientation: portrait)">' +
-            '<source src="/videos/hero-landscape.mp4" type="video/mp4">' +
+            '<video autoplay muted loop playsinline preload="auto" poster="/videos/hero-film-poster.jpg" disablepictureinpicture tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">' +
+            '<source src="/videos/hero-film.mp4" type="video/mp4">' +
             "</video>",
         }}
       />
@@ -495,8 +494,9 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           {mp4 && <source src={mp4} type="video/mp4" />}
         </video>
       )}
-      {(youtubeId || selfHosted) && (
-        <div className="hero-fade absolute top-3 right-3 z-20 flex items-center gap-1 md:top-auto md:right-7 md:bottom-7" style={{ animationDelay: "1.2s" }}>
+      <div className="hero-fade absolute top-3 right-3 z-20 flex items-center gap-1 md:top-auto md:right-7 md:bottom-7" style={{ animationDelay: "1.2s" }}>
+        {/* The sound button only when the film has a soundtrack (the 17 Nov banner film is silent). */}
+        {(youtubeId || selfHosted) && (
         <button
           type="button"
           onClick={toggleSound}
@@ -512,6 +512,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
           {sound ? <SoundOn width={17} height={17} /> : <SoundOff width={17} height={17} />}
           {sound ? t("soundOff") : blocked ? t("tapForSound") : t("soundOn")}
         </button>
+        )}
         {/* Pause / play: anyone can stop the moving film (WCAG 2.2.2). */}
         <button
           type="button"
@@ -524,8 +525,7 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         >
           {paused ? <Play width={16} height={16} /> : <Pause width={16} height={16} />}
         </button>
-        </div>
-      )}
+      </div>
       <p className="visually-hidden" aria-live="polite">
         {playing ? t("filmPlaying") : ""}
       </p>
