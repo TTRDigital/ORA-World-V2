@@ -6,7 +6,7 @@ import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "@/components/ui/Icons";
 
-export type RailCard = { key: string; kicker: string; title: string; text?: string; image: ImageRef; video?: string; poster?: string; /** more films that play after `video`, one after another, then from the start */ playlist?: string[]; href?: string; meta?: string; cta?: string };
+export type RailCard = { key: string; kicker: string; title: string; text?: string; image: ImageRef; video?: string; poster?: string; /** more films that play after `video`, one after another, then from the start */ playlist?: string[]; /** where a wide film is framed in the card (CSS object-position) */ videoFocal?: string; href?: string; meta?: string; cta?: string };
 
 /**
  * Swipeable row of cards (scroll-snap, arrow buttons, arrow keys), the Cipriani gallery pattern. Card images "come
@@ -126,6 +126,7 @@ export function CardRail({ cards, label, hint, locale, dark = false, ratio = "4/
                     tabIndex={-1}
                     aria-label={c.image.alt[locale] || c.image.alt.en}
                     className="absolute inset-0 h-full w-full object-cover"
+                    style={c.videoFocal ? { objectPosition: c.videoFocal } : undefined}
                   />
                 ) : (
                   <Image
