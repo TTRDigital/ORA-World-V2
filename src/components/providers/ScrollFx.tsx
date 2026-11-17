@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
  * Scroll-linked motion for whole sections (transform and opacity only, one rAF per frame, active only while
  * elements are near the viewport):
  *
- *  - Sections: every panel in <main> and the footer rises a little (48px desktop, 24px phones) as it enters. Kept
+ *  - Sections: every panel in <main> rises a little (not the footer: its rise opened a strip of page colour above it) (48px desktop, 24px phones) as it enters. Kept
  *    deliberately calm after client feedback that the site felt busy. At rest the
  *    transform is removed entirely, so nothing becomes a containing block for fixed children.
  *  - Image parallax: frames whose focal point sits below 30% drift ±4% inside a 1.12 scale (6% overscan each
@@ -29,7 +29,7 @@ export function ScrollFx() {
     const mobile = window.matchMedia("(max-width: 767px)").matches;
     const rise = mobile ? 24 : 48;
 
-    const sections = Array.from(document.querySelectorAll<HTMLElement>("main section.panel, main > div > div > section.panel, body > footer.panel, footer.panel")).filter(
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("main section.panel, main > div > div > section.panel")).filter(
       (el, i, all) => all.indexOf(el) === i && !el.parentElement?.closest("section.panel"),
     );
     const frames = Array.from(document.querySelectorAll<HTMLElement>("main .frame[data-focal]")).filter((f) => {

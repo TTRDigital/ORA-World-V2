@@ -13,7 +13,7 @@ export function Footer({ settings, showPress }: { settings: SiteSettings; showPr
   const t = useTranslations();
   const locale = useLocale() as "en" | "es";
   return (
-    <footer data-tone="dark" className="panel panel-basalt on-dark container-x mt-3 py-12 md:py-16">
+    <footer data-tone="dark" className="panel panel-basalt on-dark container-x py-12 md:py-16">
       {/* Closing band: the client's published line, the address, and the two ways to continue. */}
       <div className="footer-band relative mb-12 grid gap-6 overflow-hidden rounded-[24px] bg-basalt-soft p-6 md:mb-14 md:p-10 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-7">

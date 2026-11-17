@@ -56,7 +56,7 @@ export function CipSection({
     >
       <div className={cn("mx-auto grid max-w-[1280px] gap-10 lg:items-start lg:gap-14", wideVisual ? "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]" : "lg:grid-cols-2")}>
         <div className="min-w-0">
-          <p className="eyebrow" data-n={n} data-reveal>
+          <p className="eyebrow" data-n={n || undefined} data-reveal>
             <span className="rule" aria-hidden />
             {eyebrow}
           </p>

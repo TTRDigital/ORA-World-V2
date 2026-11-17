@@ -17,11 +17,11 @@ import { HomeTourStage } from "./HomeTourStage";
 import { Logo } from "@/components/layout/Logo";
 
 /** Numbered eyebrow + serif capitals heading, for the full-width sections. */
-function SectionHead({ n, eyebrow, title, id, intro, dark = false, children }: { n: string; eyebrow: string; title: string; id: string; intro?: string; dark?: boolean; children?: React.ReactNode }) {
+function SectionHead({ eyebrow, title, id, intro, dark = false, children }: { eyebrow: string; title: string; id: string; intro?: string; dark?: boolean; children?: React.ReactNode }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-14">
       <div>
-        <p className="eyebrow" data-n={n} data-reveal>
+        <p className="eyebrow" data-reveal>
           <span className="rule" aria-hidden />
           {eyebrow}
         </p>
@@ -112,7 +112,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
       </CipShowcase>
 
       {/* 02 Why ORA World: how it is different */}
-      <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+      <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 pt-12 pb-16 md:px-10 md:pt-16 md:pb-24">
         <div className="mx-auto max-w-[1280px]">
           {/* Client, 16 Nov: no eyebrow, title or intro here; the script line heads the section, then the cards. */}
           {/* Client, 17 Nov: one line on wide screens (wraps on tablets and phones). */}
@@ -124,7 +124,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
             const head = line.endsWith(acc) ? line.slice(0, -acc.length) : line;
             return (
               <h2 id="why-ora-world-title" className="mx-auto max-w-[28ch] text-center font-[family-name:var(--font-display)] text-[22px] leading-[1.3] font-normal text-balance text-charcoal md:max-w-[40ch] md:text-[28px] md:leading-[1.28] xl:max-w-none xl:text-[27px] xl:whitespace-nowrap" data-reveal>
-                <span aria-hidden className="mx-auto mb-7 block h-px w-14 bg-brass md:mb-9" />
+                <span aria-hidden className="mx-auto mb-5 block h-px w-14 bg-brass md:mb-6" />
                 {head}
                 {head !== line && <em className="text-brass-ink italic">{acc}</em>}
               </h2>
@@ -153,10 +153,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
       <section id="residences" aria-labelledby="residences-title" className="overflow-hidden border-b border-travertine-deep/60 bg-bone py-16 md:py-24">
         <div className="mx-auto grid max-w-[1280px] gap-x-8 gap-y-6 px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-10 xl:px-0">
           <div className="grid gap-4">
-            <p className="eyebrow" data-n="03" data-reveal>
-              <span className="rule" aria-hidden />
-              {x(cip.interiors.eyebrow)}
-            </p>
+            {/* Client, 17 Nov: no "03 · Interiors" label above the title. */}
             <h2 id="residences-title" className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]" data-reveal>
               {x(cip.interiors.title)}
             </h2>
@@ -201,10 +198,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
       </section>
 
       {/* 04 Step inside: the 360° tour and the film, full width so people can see it big */}
-      <section id="virtual-tour" aria-labelledby="virtual-tour-title" data-tone="dark" className="on-dark border-b border-basalt bg-basalt px-3 py-16 text-bone md:px-6 md:py-24">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="px-2 md:px-4">
-            <SectionHead n="04" id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
+      <section id="virtual-tour" aria-labelledby="virtual-tour-title" data-tone="dark" className="on-dark border-b border-basalt bg-basalt px-5 py-16 text-bone md:px-10 md:py-24">
+        <div className="mx-auto max-w-[1280px]">
+          <div>
+            <SectionHead id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
           </div>
           <div className="mt-10 md:mt-12">
             <HomeTourStage vrUrl={settings.vrTourUrl} filmId={null /* client, 17 Nov: the "Welcome to ORA World" film tab removed; the 360° tour only */} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
@@ -216,7 +213,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
           the tower, the level's residences and the plan with its figures. */}
       <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-travertine/40 px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <p className="eyebrow" data-n="05" data-reveal>
+          <p className="eyebrow" data-reveal>
             <span className="rule" aria-hidden />
             {x(cip.explorer.eyebrow)}
           </p>
@@ -238,7 +235,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
         <div className="mx-auto max-w-[1280px]">
           <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-12">
             <div>
-              <p className="eyebrow" data-n="07" data-reveal>
+              <p className="eyebrow" data-reveal>
                 <span className="rule" aria-hidden />
                 {x(cip.location.eyebrow)}
               </p>
@@ -287,7 +284,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
       {/* Our mission (client, 17 Nov: at the end, before the form; "do better with the design, add our logo icon"): the
           gold tree with its moving leaves, the label between hairlines, the statement in the display serif with one
           brass italic phrase, the three commitments as numbered pillars, and the closing line; a faint tree behind. */}
-      <section id="mission" aria-labelledby="mission-title" className="relative isolate overflow-hidden border-b border-travertine-deep/60 bg-bone px-5 py-20 md:px-10 md:py-28">
+      <section id="mission" aria-labelledby="mission-title" className="relative isolate overflow-hidden border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
         {/* eslint-disable-next-line @next/next/no-img-element -- decorative watermark, the animated SVG as is */}
         <img src="/brand/ora-world-tree-leaves.svg" alt="" aria-hidden width={252} height={248} className="pointer-events-none absolute top-1/2 -right-24 -z-10 w-[520px] max-w-none -translate-y-1/2 opacity-[0.06] md:-right-16 md:w-[680px]" />
         <div className="mx-auto max-w-[980px] text-center">
@@ -305,7 +302,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
               .split("*")
               .map((part, k) => (k % 2 ? <em key={k} className="text-brass-ink italic">{part}</em> : <span key={k}>{part}</span>))}
           </h2>
-          <div className="mt-12 md:mt-16" data-reveal>
+          <div className="mt-10 md:mt-12" data-reveal>
             <p className="text-[11px] font-semibold tracking-[0.26em] text-charcoal-soft uppercase">{x(cip.mission.pillarsLabel)}</p>
             <ul className="mt-6 grid border-y border-travertine-deep sm:grid-cols-3">
               {cip.mission.pillars.map((pl, k) => (
@@ -316,7 +313,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
               ))}
             </ul>
           </div>
-          <p className="mx-auto mt-10 max-w-[56ch] text-[16px] leading-8 text-charcoal-soft md:mt-12 md:text-[17px]" data-reveal>
+          <p className="mx-auto mt-8 max-w-[56ch] text-[16px] leading-8 text-charcoal-soft md:mt-10 md:text-[17px]" data-reveal>
             {x(cip.mission.close)}
           </p>
         </div>
@@ -325,7 +322,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
       {/* 08 Inquire, in the Cipriani "Request pricing" layout: the form on a white card with the logo at the top. */}
       <CipSection
         id="inquire"
-        n="08"
+        n=""
         tone="dark"
         eyebrow={x(cip.inquire.eyebrow)}
         title={x(cip.inquire.title)}

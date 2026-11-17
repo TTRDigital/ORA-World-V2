@@ -77,7 +77,7 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
   }, []);
 
   return (
-    <ol ref={list} className="relative mt-10 md:mt-14">
+    <ol ref={list} className="relative mt-8 md:mt-10">
       {cards.map((c, i) => (
         <li
           key={c.href}
