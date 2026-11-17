@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
+import { ClipOverlay } from "./ClipOverlay";
 
 type Props = {
   image: ImageRef;
@@ -37,6 +38,7 @@ export function Picture({ image, locale, sizes, priority, className, imgClassNam
       ) : (
         <Image src={image.src} alt={alt} width={image.width} height={image.height} sizes={sizes} quality={80} priority={priority} fetchPriority={priority ? "high" : undefined} className={imgClassName} style={{ objectPosition: image.focal }} />
       )}
+      {fill && image.video && <ClipOverlay src={image.video} poster={image.poster} focal={image.focal} />}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import type { ImageRef, Locale } from "@/content/types";
 import { ArrowRight } from "@/components/ui/Icons";
 
@@ -95,6 +96,7 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
                 className="object-cover transition-transform duration-[1200ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.04]"
                 style={{ objectPosition: c.image.focal }}
               />
+              {c.image.video && <ClipOverlay src={c.image.video} poster={c.image.poster} focal={c.image.focal} />}
               <span className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold tracking-[0.2em] text-charcoal backdrop-blur-sm md:top-6 md:left-6">
                 {String(i + 1).padStart(2, "0")} / {total}
               </span>

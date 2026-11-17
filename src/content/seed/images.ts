@@ -199,6 +199,27 @@ export const tdm = {
   bedroomOcean: img("tdm-bedroom-ocean", "50% 50%", { en: "Bedroom with floor-to-ceiling glass facing the ocean", es: "Dormitorio con ventanal de piso a techo frente al mar" }, R),
   powderRoom: img("tdm-powder-room", "50% 50%", { en: "Powder room in warm wood and stone", es: "Medio baño en madera cálida y piedra" }, R),
 };
+/* ---- Short films made from the renders (client, 17 Nov: "short videos created to replace those images, to make
+   this site live"). Each plays over its still wherever that still is shown. ---- */
+const clip = (name: string) => ({ video: `/videos/clips/${name}.mp4`, poster: `/videos/clips/${name}-poster.jpg` });
+Object.assign(tdm.aerialCoast, clip("p08-aerial-cove"));
+Object.assign(tdm.exteriorRoad, clip("p09-towers-street"));
+Object.assign(tdm.exteriorPull, clip("p10-pool-cabana"));
+Object.assign(tdm.exteriorGolf, clip("p11-putting-green"));
+Object.assign(tdm.entrance, clip("p12-entrance"));
+Object.assign(tdm.foyerAtrium, clip("p13-foyer"));
+Object.assign(tdm.gym, clip("p14-gym"));
+Object.assign(tdm.aptLiving, clip("p15-apartment-living"));
+Object.assign(tdm.kitchenDining, clip("p15-apartment-living"));
+Object.assign(tdm.kitchenWine, clip("p16-apartment-kitchen"));
+Object.assign(tdm.masterSuite, clip("p17-primary-suite"));
+Object.assign(tdm.aptBedroom, clip("p18-guest-bedroom"));
+Object.assign(tdm.aptBath2, clip("p20-bathroom-tub"));
+Object.assign(tdm.aptBedroom2, clip("p21-bedroom-ocean"));
+Object.assign(tdm.bedroomOcean, clip("p21-bedroom-ocean"));
+Object.assign(tdm.powderRoom, clip("p22-bathroom-amber"));
+Object.assign(tdm.penthouseLiving, clip("p24-penthouse-living"));
+
 
 /* ---- Dorado Waterfalls (oraworld.com) ---- */
 export const dw = {

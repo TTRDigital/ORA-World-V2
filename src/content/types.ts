@@ -20,6 +20,10 @@ export interface ImageRef {
   /** Clearly marked placeholder, listed in CONTENT-TODO.md. A module whose content is still a placeholder stays hidden. */
   placeholder?: boolean;
   credit?: string;
+  /** A short film made from this still (client, 17 Nov): played over it, muted and on a loop, while on screen. */
+  video?: string;
+  /** The film's first frame. */
+  poster?: string;
 }
 
 export interface SiteSettings {

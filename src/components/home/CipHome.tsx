@@ -83,18 +83,20 @@ export async function CipHome({ locale }: { locale: Locale }) {
   const k = x(cip.who.galleryKicker);
   // Client's clips (16 Nov): the pool cabana, the lobby, the gym, the entrance and the cove play as films.
   const v = (n: string) => ({ video: `/videos/amenity-${n}.mp4`, poster: `/videos/amenity-${n}-poster.jpg` });
+  // Client, 17 Nov: the new short films made from each render.
+  const c = (n: string) => ({ video: `/videos/clips/${n}.mp4`, poster: `/videos/clips/${n}-poster.jpg` });
   const whoCards: RailCard[] = [
     // Client, 16 Nov: the aerial cove film first, titled "View".
-    { key: "view", kicker: k, title: es ? "Vista" : "View", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...v("cove") },
+    { key: "view", kicker: k, title: es ? "Vista" : "View", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...c("p08-aerial-cove") },
     // Client, 16 Nov: "Luxury Living" second: the penthouse living film, then the primary suite, then the kitchen.
     { key: "luxury", kicker: k, title: es ? "Vida de lujo" : "Luxury Living", text: es ? "El salón del penthouse, piso 18." : "The penthouse living room, floor 18.", image: tdm.penthouseLiving, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
-    { key: "pool", kicker: k, title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...v("pool") },
-    { key: "lobby", kicker: k, title: es ? "Vestíbulo" : "Lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium, ...v("lobby") },
-    { key: "fitness", kicker: k, title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym, ...v("gym") },
-    { key: "arrival", kicker: k, title: es ? "Llegada" : "Arrival", text: es ? "Pórtico, valet y auto de la casa." : "Porte-cochère, valet and the house car.", image: tdm.entrance, ...v("entrance") },
+    { key: "pool", kicker: k, title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...c("p10-pool-cabana") },
+    { key: "lobby", kicker: k, title: es ? "Vestíbulo" : "Lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium, ...c("p13-foyer") },
+    { key: "fitness", kicker: k, title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym, ...c("p14-gym") },
+    { key: "arrival", kicker: k, title: es ? "Llegada" : "Arrival", text: es ? "Pórtico, valet y auto de la casa." : "Porte-cochère, valet and the house car.", image: tdm.entrance, ...c("p12-entrance") },
     { key: "clubhouse", kicker: k, title: "Clubhouse", text: es ? "Club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
     { key: "spa", kicker: k, title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: life.spa },
-    { key: "putting", kicker: k, title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf },
+    { key: "putting", kicker: k, title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, ...c("p11-putting-green") },
   ];
 
 
@@ -167,32 +169,19 @@ export async function CipHome({ locale }: { locale: Locale }) {
             prevLabel={es ? "Imagen anterior" : "Previous image"}
             nextLabel={es ? "Imagen siguiente" : "Next image"}
             slides={[
-              { title: es ? "Sala y comedor" : "Living & dining", note: es ? "Interior de residencia" : "Residence interior", image: tdm.kitchenDining, video: "/videos/interior-living.mp4", poster: "/videos/interior-living-poster.jpg" },
-              { title: es ? "Cocina gourmet" : "Gourmet kitchen", note: es ? "Gabinetes italianos" : "Italian cabinetry", image: tdm.kitchenWine, video: "/videos/interior-kitchen.mp4", poster: "/videos/interior-kitchen-poster.jpg" },
-              { title: es ? "Suite principal" : "Primary suite", note: es ? "Interior de residencia" : "Residence interior", image: tdm.masterSuite },
-              { title: es ? "Dormitorio" : "Bedroom", note: es ? "Vista al mar" : "Ocean view", image: tdm.bedroomOcean },
-              { title: es ? "Baño principal" : "Primary bath", note: "Dornbracht", image: tdm.vanity },
-              { title: es ? "Medio baño" : "Powder room", note: es ? "Madera y piedra" : "Wood and stone", image: tdm.powderRoom },
+              { title: es ? "Sala y comedor" : "Living & dining", note: es ? "Interior de residencia" : "Residence interior", image: tdm.kitchenDining, ...c("p15-apartment-living") },
+              { title: es ? "Cocina gourmet" : "Gourmet kitchen", note: es ? "Gabinetes italianos" : "Italian cabinetry", image: tdm.kitchenWine, ...c("p16-apartment-kitchen") },
+              { title: es ? "Suite principal" : "Primary suite", note: es ? "Interior de residencia" : "Residence interior", image: tdm.masterSuite, ...c("p17-primary-suite") },
+              { title: es ? "Dormitorio de invitados" : "Guest bedroom", note: es ? "Interior de residencia" : "Residence interior", image: tdm.aptBedroom, ...c("p18-guest-bedroom") },
+              { title: es ? "Dormitorio" : "Bedroom", note: es ? "Vista al mar" : "Ocean view", image: tdm.bedroomOcean, ...c("p21-bedroom-ocean") },
+              { title: es ? "Baño principal" : "Primary bath", note: "Dornbracht", image: tdm.aptBath2, ...c("p20-bathroom-tub") },
+              { title: es ? "Medio baño" : "Powder room", note: es ? "Madera y piedra" : "Wood and stone", image: tdm.powderRoom, ...c("p22-bathroom-amber") },
               { title: es ? "Estudio" : "Study", note: es ? "Interior de residencia" : "Residence interior", image: tdm.aptStudy },
-              { title: "Penthouse", note: es ? "Piso 18, dos niveles" : "Floor 18, two levels", image: tdm.penthouseLiving },
+              { title: "Penthouse", note: es ? "Piso 18, dos niveles" : "Floor 18, two levels", image: tdm.penthouseLiving, ...c("p24-penthouse-living") },
             ]}
           />
         </div>
-        <div className="mx-auto mt-14 grid max-w-[1280px] gap-10 px-5 md:mt-20 md:grid-cols-2 md:gap-16 md:px-10 xl:px-0">
-          {cip.interiors.lists.map((l) => (
-            <div key={x(l.title)} data-reveal>
-              <h3 className="mb-4 font-[family-name:var(--font-display)] text-[28px] font-medium text-charcoal italic md:text-[32px]">{x(l.title)}</h3>
-              <ul className="border-t border-travertine-deep">
-                {l.items.map((it) => (
-                  <li key={x(it)} className="grid grid-cols-[2rem_minmax(0,1fr)] items-baseline border-b border-travertine-deep py-3.5 text-[15px] text-charcoal">
-                    <span aria-hidden className="text-brass">—</span>
-                    {x(it)}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        {/* Client, 17 Nov: the two feature lists (living spaces, kitchens) removed. */}
         <div className="mt-12 flex justify-center" data-reveal>
           {inquireBtn}
         </div>
