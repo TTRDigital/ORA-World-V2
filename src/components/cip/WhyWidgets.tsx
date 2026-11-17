@@ -251,3 +251,45 @@ export function TravelRoute({ es, items }: { es: boolean; items: string[] }) {
     </div>
   );
 }
+
+/* ---------------------------------------------------------------- Built to endure: the nine features */
+
+export function ResilienceGrid({ es, items }: { es: boolean; items: string[] }) {
+  const [ref, seen] = useSeen<HTMLDivElement>();
+  return (
+    <div ref={ref} className={panel} data-widget="resilience" data-seen={seen ? "" : undefined}>
+      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Resiliente por diseño" : "Resilient by design"}</p>
+      <dl className="mt-4 grid grid-cols-2 gap-3 border-b border-bone/15 pb-4">
+        <div>
+          <dt className="sr-only">{es ? "Ingeniería para huracanes" : "Hurricane-rated engineering"}</dt>
+          <dd className="font-[family-name:var(--font-display)] text-[34px] leading-none text-bone">{es ? "Cat. 5" : "Cat. 5"}</dd>
+          <dd aria-hidden className="mt-1.5 text-[11px] tracking-[0.12em] text-bone/70 uppercase">{es ? "Ingeniería para huracanes" : "Hurricane-rated"}</dd>
+        </div>
+        <div>
+          <dt className="sr-only">{es ? "Seguridad en el lugar" : "On-site security"}</dt>
+          <dd className="font-[family-name:var(--font-display)] text-[34px] leading-none text-bone">24/7</dd>
+          <dd aria-hidden className="mt-1.5 text-[11px] tracking-[0.12em] text-bone/70 uppercase">{es ? "Seguridad en el lugar" : "On-site security"}</dd>
+        </div>
+      </dl>
+      <ul className="mt-4 grid grid-cols-3 gap-2">
+        {items.map((it, i) => (
+          <li
+            key={it}
+            className="why-tick why-tile flex min-h-[64px] flex-col justify-between rounded-xl bg-bone/[0.07] p-2.5 text-[11.5px] leading-tight ring-1 ring-bone/10"
+            style={{ "--d": `${200 + i * 160}ms`, "--g": `${i * 0.5}s` } as React.CSSProperties}
+          >
+            <span className="flex items-center justify-between text-[10px] text-bone/60 tabular-nums">
+              {String(i + 1).padStart(2, "0")}
+              <span className="grid size-4 place-items-center rounded-full bg-brass-light text-basalt">
+                <svg viewBox="0 0 12 12" width="8" height="8" aria-hidden>
+                  <path d="M2.5 6.5 5 9l4.5-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </span>
+            <span className="mt-2 text-bone">{it}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

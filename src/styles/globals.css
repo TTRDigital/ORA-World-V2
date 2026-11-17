@@ -978,3 +978,7 @@ main section[id] { scroll-margin-top: 96px; }
   .why-ecg { animation: none; stroke-dashoffset: 0; }
   .why-tick { opacity: 1; transform: none; transition: none; }
 }
+/* Built to endure: once ticked in, a soft light passes over the nine tiles in turn. */
+@keyframes why-tile { 0%, 12%, 100% { box-shadow: inset 0 0 0 1px rgb(247 243 236 / 0.1); background-color: rgb(247 243 236 / 0.07); } 5% { box-shadow: inset 0 0 0 1px rgb(212 185 135 / 0.8); background-color: rgb(212 185 135 / 0.18); } }
+[data-seen] .why-tile { animation: why-tile 4.5s ease-in-out infinite; animation-delay: calc(1.8s + var(--g, 0s)); }
+@media (prefers-reduced-motion: reduce) { [data-seen] .why-tile { animation: none; } }

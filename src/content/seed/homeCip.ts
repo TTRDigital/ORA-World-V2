@@ -1,3 +1,4 @@
+import { resilienceFeatures } from "./home";
 import type { L } from "../types";
 
 /**
@@ -115,6 +116,17 @@ export const cip = {
         } as L,
         href: "/faq",
         tags: [{ en: "Act 60", es: "Ley 60" }, { en: "0% or 4%", es: "0% o 4%" }, { en: "Accountants", es: "Contadores" }] as L[],
+      },
+      {
+        // Client, 17 Nov: card 4, from the "Built to endure" section (oraworld.com, "Resilient by design").
+        kind: "resilience" as const,
+        title: { en: "Built to endure", es: "Construido para perdurar" } as L,
+        text: {
+          en: "Every ORA World development is built with resilience in mind, anticipating environmental challenges with future-forward structures that endure.",
+          es: "Cada desarrollo de ORA World se construye pensando en la resiliencia, anticipando los retos del entorno con estructuras preparadas para el futuro que perduran.",
+        } as L,
+        href: "/faq",
+        tags: resilienceFeatures.map((f) => (f.slug === "hurricane" ? ({ en: "Hurricanes", es: "Huracanes" } as L) : f.short)),
       },
     ],
   },

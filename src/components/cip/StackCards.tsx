@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import type { ImageRef, Locale } from "@/content/types";
-import { HealthCheck, TaxCalculator, TravelRoute } from "./WhyWidgets";
+import { HealthCheck, ResilienceGrid, TaxCalculator, TravelRoute } from "./WhyWidgets";
 
 export type StackCard = {
   title: string;
@@ -13,7 +13,7 @@ export type StackCard = {
   href: string;
   image: ImageRef;
   /** the live panel on the card (client, 17 Nov) */
-  kind: "health" | "tax" | "travel";
+  kind: "health" | "tax" | "travel" | "resilience";
 };
 
 /**
@@ -114,6 +114,8 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
                 <TaxCalculator es={locale === "es"} />
               ) : c.kind === "health" ? (
                 <HealthCheck es={locale === "es"} items={c.tags} />
+              ) : c.kind === "resilience" ? (
+                <ResilienceGrid es={locale === "es"} items={c.tags} />
               ) : (
                 <TravelRoute es={locale === "es"} items={c.tags} />
               )}
