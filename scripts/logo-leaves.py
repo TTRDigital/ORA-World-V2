@@ -80,6 +80,20 @@ def build(src: str, out: str, seed: int = 7) -> None:
     open(out, "w").write("\n".join(parts))
     print(out, f"{len(leaves)} leaves", f"{sum(len(p) for p in parts) // 1024} KB", "areas:", sorted(int(s) for s in areas)[-6:])
 
+def emblem(src: str, out: str) -> None:
+    """The tree on its own (no wordmark): the same moving-leaves SVG, cropped to the emblem."""
+    s = open(src).read()
+    x0, x1, y1 = 336 * W / 1200, 863 * W / 1200, 525 * W / 1200
+    pad = 3
+    box = f"{x0 - pad:.0f} 0 {x1 - x0 + 2 * pad:.0f} {y1 + pad:.0f}"
+    w, h = box.split()[2:]
+    import re
+    s = re.sub(r'viewBox="[^"]+" width="\d+" height="\d+"', f'viewBox="{box}" width="{w}" height="{h}"', s, count=1)
+    open(out, "w").write(s)
+    print(out, box)
+
+
 if __name__ == "__main__":
     build("public/brand/ora-world-logo-gold-header.png", "public/brand/ora-world-logo-gold-header-leaves.svg")
     build("public/brand/ora-world-logo-white.png", "public/brand/ora-world-logo-white-leaves.svg")
+    emblem("public/brand/ora-world-logo-gold-header-leaves.svg", "public/brand/ora-world-tree-leaves.svg")

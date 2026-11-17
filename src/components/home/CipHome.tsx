@@ -76,12 +76,13 @@ export async function CipHome({ locale }: { locale: Locale }) {
     // Client, 16 Nov: "Luxury Living" second: the penthouse living film, then the primary suite, then the kitchen.
     { key: "luxury", kicker: k, title: es ? "Vida de lujo" : "Luxury Living", text: es ? "El salón del penthouse, piso 18." : "The penthouse living room, floor 18.", image: tdm.penthouseLiving, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
     { key: "pool", kicker: k, title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...c("p10-pool-cabana") },
+    // Client, 17 Nov: the putting course right after the pool.
+    { key: "putting", kicker: k, title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, ...c("p11-putting-green") },
     { key: "lobby", kicker: k, title: es ? "Vestíbulo" : "Lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium, ...c("p13-foyer") },
     { key: "fitness", kicker: k, title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym, ...c("p14-gym") },
     { key: "arrival", kicker: k, title: es ? "Llegada" : "Arrival", text: es ? "Pórtico, valet y auto de la casa." : "Porte-cochère, valet and the house car.", image: tdm.entrance, ...c("p12-entrance") },
     { key: "clubhouse", kicker: k, title: "Clubhouse", text: es ? "Club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
     { key: "spa", kicker: k, title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: life.spa },
-    { key: "putting", kicker: k, title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, ...c("p11-putting-green") },
   ];
 
 
@@ -282,16 +283,41 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* Our mission (client, 17 Nov: "have it at the end, before the form"), set to the brand guideline: a label, a
-          brass hairline, the first sentence in the display serif, the rest in body text. */}
-      <section id="mission" aria-labelledby="mission-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-20 md:px-10 md:py-28">
-        <div className="mx-auto max-w-[880px] text-center" data-reveal>
-          <p className="text-[11px] font-semibold tracking-[0.28em] text-brass-ink uppercase">{x(cip.mission.label)}</p>
-          <span aria-hidden className="mx-auto mt-6 mb-8 block h-px w-14 bg-brass md:mb-10" />
-          <h2 id="mission-title" className="font-[family-name:var(--font-display)] text-[24px] leading-[1.32] font-normal text-balance text-charcoal md:text-[32px] md:leading-[1.3]">
-            {x(cip.mission.lead)}
+      {/* Our mission (client, 17 Nov: at the end, before the form; "do better with the design, add our logo icon"): the
+          gold tree with its moving leaves, the label between hairlines, the statement in the display serif with one
+          brass italic phrase, the three commitments as numbered pillars, and the closing line; a faint tree behind. */}
+      <section id="mission" aria-labelledby="mission-title" className="relative isolate overflow-hidden border-b border-travertine-deep/60 bg-bone px-5 py-20 md:px-10 md:py-28">
+        {/* eslint-disable-next-line @next/next/no-img-element -- decorative watermark, the animated SVG as is */}
+        <img src="/brand/ora-world-tree-leaves.svg" alt="" aria-hidden width={252} height={248} className="pointer-events-none absolute top-1/2 -right-24 -z-10 w-[520px] max-w-none -translate-y-1/2 opacity-[0.06] md:-right-16 md:w-[680px]" />
+        <div className="mx-auto max-w-[980px] text-center">
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcSet="/brand/ora-world-tree.png" />
+            <img src="/brand/ora-world-tree-leaves.svg" alt="ORA World" width={252} height={248} className="mx-auto h-[84px] w-auto md:h-[104px]" data-reveal />
+          </picture>
+          <p className="mt-8 flex items-center justify-center gap-4 text-[11px] font-semibold tracking-[0.3em] text-brass-ink uppercase" data-reveal>
+            <span aria-hidden className="h-px w-10 bg-brass/70" />
+            {x(cip.mission.label)}
+            <span aria-hidden className="h-px w-10 bg-brass/70" />
+          </p>
+          <h2 id="mission-title" className="mx-auto mt-8 max-w-[34ch] font-[family-name:var(--font-display)] text-[25px] leading-[1.32] font-normal text-balance text-charcoal md:text-[36px] md:leading-[1.26]" data-reveal>
+            {x(cip.mission.lead)
+              .split("*")
+              .map((part, k) => (k % 2 ? <em key={k} className="text-brass-ink italic">{part}</em> : <span key={k}>{part}</span>))}
           </h2>
-          <p className="mx-auto mt-7 max-w-[60ch] text-[16px] leading-8 text-charcoal-soft md:mt-9 md:text-[17px]">{x(cip.mission.body)}</p>
+          <div className="mt-12 md:mt-16" data-reveal>
+            <p className="text-[11px] font-semibold tracking-[0.26em] text-charcoal-soft uppercase">{x(cip.mission.pillarsLabel)}</p>
+            <ul className="mt-6 grid border-y border-travertine-deep sm:grid-cols-3">
+              {cip.mission.pillars.map((pl, k) => (
+                <li key={k} className="flex flex-col items-center gap-2 border-travertine-deep px-4 py-6 not-last:border-b sm:not-last:border-r sm:not-last:border-b-0 md:py-8">
+                  <span className="font-[family-name:var(--font-display)] text-[30px] leading-none text-brass [font-variant-numeric:lining-nums] md:text-[36px]">{String(k + 1).padStart(2, "0")}</span>
+                  <span className="font-[family-name:var(--font-display)] text-[21px] text-charcoal md:text-[24px]">{x(pl)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p className="mx-auto mt-10 max-w-[56ch] text-[16px] leading-8 text-charcoal-soft md:mt-12 md:text-[17px]" data-reveal>
+            {x(cip.mission.close)}
+          </p>
         </div>
       </section>
 
