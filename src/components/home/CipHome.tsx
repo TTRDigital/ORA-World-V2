@@ -64,6 +64,15 @@ export async function CipHome({ locale }: { locale: Locale }) {
   const v = (n: string) => ({ video: `/videos/amenity-${n}.mp4`, poster: `/videos/amenity-${n}-poster.jpg` });
   // Client, 17 Nov: the new short films made from each render.
   const c = (n: string) => ({ video: `/videos/clips/${n}.mp4`, poster: `/videos/clips/${n}-poster.jpg` });
+  const jetArrival = {
+    src: "/videos/clips/jet-arrival-poster.jpg",
+    width: 1632,
+    height: 544,
+    focal: "24% 60%",
+    alt: { en: "The ORA World jet on the apron, guests stepping down to the tarmac", es: "El jet de ORA World en la plataforma, con huéspedes bajando a la pista" },
+    rendering: true,
+    ...c("jet-arrival"),
+  };
   const whoCards: RailCard[] = [
     // Client, 16 Nov: the aerial cove film first, titled "View".
     { key: "view", kicker: k, title: es ? "Vista al mar en cada unidad" : "Waterfront view for every unit", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...c("p08-aerial-cove") },
@@ -130,9 +139,9 @@ export async function CipHome({ locale }: { locale: Locale }) {
               tags: item.tags.map((tag) => x(tag)),
               href: item.href,
               linkLabel: item.href === "#inquire" ? inquire.label : es ? "Leer más" : "Read more",
-              // Client, 17 Nov: full-card pictures, so sharp renders with their films (the gym; the aerial cove behind the
-              // Act 60 calculator; the arrival).
-              image: [tdm.gym, tdm.aerialCoast, tdm.entrance][i],
+              // Client, 17 Nov: full-card pictures with their films: the gym; the aerial cove behind the Act 60 calculator;
+              // the ORA World jet arriving (the client's film, 3:1, its first frame as the still).
+              image: [tdm.gym, tdm.aerialCoast, jetArrival][i],
               kind: (["health", "tax", "travel"] as const)[i],
             }))}
           />
