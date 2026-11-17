@@ -152,7 +152,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
           the left, a counter between round arrows on the right, wide 16:9 slides running off the right edge, then two
           feature lists. Living and kitchen play as films. */}
       <section id="residences" aria-labelledby="residences-title" className="overflow-hidden border-b border-travertine-deep/60 bg-bone py-16 md:py-24">
-        <div className="mx-auto grid max-w-[1280px] gap-8 px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-10 xl:px-0">
+        <div className="mx-auto grid max-w-[1280px] gap-x-8 gap-y-6 px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-10 xl:px-0">
           <div className="grid gap-4">
             <p className="eyebrow" data-n="03" data-reveal>
               <span className="rule" aria-hidden />

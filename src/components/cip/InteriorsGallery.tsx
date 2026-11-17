@@ -79,6 +79,7 @@ export function InteriorsGallery({ locale, slides, prevLabel, nextLabel, label }
         ref={track}
         tabIndex={0}
         aria-label={label}
+        // Client, 17 Nov: the slides sit right under the arrows, so it is clear they move the gallery.
         onKeyDown={(e) => {
           if (e.key === "ArrowRight") {
             e.preventDefault();
@@ -89,7 +90,7 @@ export function InteriorsGallery({ locale, slides, prevLabel, nextLabel, label }
             go(i - 1);
           }
         }}
-        className="interiors-track no-scrollbar col-span-full mt-10 mr-[calc(50%-50vw)] pr-5 md:pr-10 grid snap-x snap-mandatory auto-cols-[86vw] grid-flow-col gap-4 overflow-x-auto md:mt-14 md:auto-cols-[min(72vw,980px)] md:gap-7"
+        className="interiors-track no-scrollbar col-span-full mt-0 mr-[calc(50%-50vw)] pr-5 md:pr-10 grid snap-x snap-mandatory auto-cols-[86vw] grid-flow-col gap-4 overflow-x-auto md:-mt-1 md:auto-cols-[min(72vw,980px)] md:gap-7"
       >
         {slides.map((s) => (
           <figure key={s.title} className="m-0 snap-start">
