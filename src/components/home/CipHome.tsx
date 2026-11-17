@@ -74,7 +74,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
     // Client, 16 Nov: the aerial cove film first, titled "View".
     { key: "view", kicker: k, title: es ? "Vista al mar en cada unidad" : "Waterfront view for every unit", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...c("p08-aerial-cove") },
     // Client, 16 Nov: "Luxury Living" second: the penthouse living film, then the primary suite, then the kitchen.
-    { key: "luxury", kicker: k, title: es ? "Vida de lujo" : "Luxury Living", text: es ? "El salón del penthouse, piso 18." : "The penthouse living room, floor 18.", image: tdm.penthouseLiving, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
+    // Client, 17 Nov: no "penthouse" on this card; the line is from the Tesoro del Mar presentation.
+    { key: "luxury", kicker: k, title: es ? "Vida de lujo" : "Luxury Living", text: es ? "Fachadas de vidrio y terrazas envolventes, pensadas para vivir dentro y fuera." : "Glass façades and wraparound terraces, designed for indoor and outdoor living.", image: { ...tdm.penthouseLiving, alt: { en: "A double-height living room with a floating marble stair", es: "Un salón de doble altura con escalera flotante de mármol" } }, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
     { key: "pool", kicker: k, title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...c("p10-pool-cabana") },
     // Client, 17 Nov: the putting course right after the pool.
     { key: "putting", kicker: k, title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, ...c("p11-putting-green") },
