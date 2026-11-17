@@ -59,7 +59,7 @@ export function CipShowcase({
       <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-14">
         <div className="min-w-0">
           {eyebrow && (
-            <p className="eyebrow mb-5" data-n={n} data-reveal>
+            <p className="eyebrow mb-5" data-n={n || undefined} data-reveal>
               <span className="rule" aria-hidden />
               {eyebrow}
             </p>

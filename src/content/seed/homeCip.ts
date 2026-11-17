@@ -25,6 +25,8 @@ export const cip = {
   /* 01 The core promise and who we are (brief §1, §5; oraworld.com) */
   who: {
     eyebrow: { en: "Who we are", es: "Quiénes somos" } as L,
+    // Client, 17 Nov: the label over section 01 (it presents the amenities).
+    label: { en: "Amenities", es: "Amenidades" } as L,
     title: { en: "A longer life. A better life.", es: "Una vida más larga. Una vida mejor." } as L,
     intro: {
       en: "Longevity is the foundation of our world. If you live longer, you'll want to live better: stronger, fitter, and feeling it. ORA World makes it easy.",

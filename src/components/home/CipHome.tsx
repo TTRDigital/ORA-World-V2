@@ -99,7 +99,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
           two cards (amenities, features), the property specs, the button, and the amenity gallery on the right. */}
       <CipShowcase
         id="who"
-        n="01"
+        n=""
+        eyebrow={x(cip.who.label)}
         title={x(cip.who.offerTitle)}
         intro={x(cip.who.offerIntro)}
         // Client, 16 Nov: no Amenities / Features cards here ("too busy"); the line, the specs and the gallery say it.
@@ -119,13 +120,18 @@ export async function CipHome({ locale }: { locale: Locale }) {
           {/* Client, 17 Nov: one line on wide screens (wraps on tablets and phones). */}
           {/* Client, 17 Nov: the "Thoughtfully crafted" line, set to the brand guideline (DESIGN.md §4–5): the display
               serif in Deep Earth, sentence case, a fine brass hairline above, and one italic accent in brass-ink. */}
+          <p className="eyebrow mb-5 justify-center md:mb-6" data-reveal>
+            <span className="rule" aria-hidden />
+            {x(cip.different.eyebrow)}
+            <span className="rule" aria-hidden />
+          </p>
           {(() => {
             const line = x(cip.different.script);
             const acc = es ? "en perfecta armonía." : "in perfect harmony.";
             const head = line.endsWith(acc) ? line.slice(0, -acc.length) : line;
             return (
               <h2 id="why-ora-world-title" className="mx-auto max-w-[28ch] text-center font-[family-name:var(--font-display)] text-[22px] leading-[1.3] font-normal text-balance text-charcoal md:max-w-[40ch] md:text-[28px] md:leading-[1.28] xl:max-w-none xl:text-[27px] xl:whitespace-nowrap" data-reveal>
-                <span aria-hidden className="mx-auto mb-5 block h-px w-14 bg-brass md:mb-6" />
+                
                 {head}
                 {head !== line && <em className="text-brass-ink italic">{acc}</em>}
               </h2>
@@ -154,7 +160,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
       <section id="residences" aria-labelledby="residences-title" className="overflow-hidden border-b border-travertine-deep/60 bg-bone py-16 md:py-24">
         <div className="mx-auto grid max-w-[1280px] gap-x-8 gap-y-6 px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-10 xl:px-0">
           <div className="grid gap-4">
-            {/* Client, 17 Nov: no "03 · Interiors" label above the title. */}
+            {/* Client, 17 Nov: the label without a number, like Location. */}
+            <p className="eyebrow" data-reveal>
+              <span className="rule" aria-hidden />
+              {x(cip.interiors.eyebrow)}
+            </p>
             <h2 id="residences-title" className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]" data-reveal>
               {x(cip.interiors.title)}
             </h2>
