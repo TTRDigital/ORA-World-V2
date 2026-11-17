@@ -56,7 +56,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
   const inquire = { href: "#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" };
 
   // Section 01 gallery: the amenities (client, 16 Nov: like Cipriani's amenity gallery). Captions from this page.
-  const k = ""; // client, 17 Nov: no "Amenity gallery" label on each card (the carousel keeps it as its accessible name)
   // Client's clips (16 Nov): the pool cabana, the lobby, the gym, the entrance and the cove play as films.
   const v = (n: string) => ({ video: `/videos/amenity-${n}.mp4`, poster: `/videos/amenity-${n}-poster.jpg` });
   // Client, 17 Nov: the new short films made from each render.
@@ -70,21 +69,18 @@ export async function CipHome({ locale }: { locale: Locale }) {
     rendering: true,
     ...c("jet-arrival"),
   };
+  // Client, 17 Nov: the gallery tells the story of a stay: arrive, the view, step inside, the things to do, then
+  // your place. The word over each title carries the story.
   const whoCards: RailCard[] = [
-    // Client, 16 Nov: the aerial cove film first, titled "View".
-    { key: "view", kicker: k, title: es ? "Vista al mar en cada unidad" : "Waterfront view for every unit", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...c("p08-aerial-cove") },
-    // Client, 16 Nov: "Luxury Living" second: the penthouse living film, then the primary suite, then the kitchen.
-    // Client, 17 Nov: no "penthouse" on this card; the line is from the Tesoro del Mar presentation.
-    { key: "luxury", kicker: k, title: es ? "Vida de lujo" : "Luxury Living", text: es ? "Fachadas de vidrio y terrazas envolventes, pensadas para vivir dentro y fuera." : "Glass façades and wraparound terraces, designed for indoor and outdoor living.", image: { ...tdm.penthouseLiving, alt: { en: "A double-height living room with a floating marble stair", es: "Un salón de doble altura con escalera flotante de mármol" } }, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
-    { key: "pool", kicker: k, title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...c("p10-pool-cabana") },
-    // Client, 17 Nov: the putting course right after the pool.
-    { key: "putting", kicker: k, title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, ...c("p11-putting-green") },
-    { key: "lobby", kicker: k, title: es ? "Vestíbulo" : "Lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium, ...c("p13-foyer") },
-    { key: "fitness", kicker: k, title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym, ...c("p14-gym") },
-    // Client, 17 Nov: Arrival is the jet film, about the private jet and the house car.
-    { key: "arrival", kicker: k, title: es ? "Llegada" : "Arrival", text: es ? "Jet privado chárter y el auto de la casa esperándole." : "Private jet charters and a house car waiting.", image: jetArrival, ...c("jet-arrival"), videoFocal: jetArrival.focal },
-    { key: "clubhouse", kicker: k, title: "Clubhouse", text: es ? "Club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
-    { key: "spa", kicker: k, title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: life.spa },
+    { key: "arrival", kicker: es ? "Llegar" : "Arrive", title: es ? "Llegada" : "Arrival", text: es ? "Jet privado chárter y el auto de la casa esperándole." : "Private jet charters and a house car waiting.", image: jetArrival, ...c("jet-arrival"), videoFocal: jetArrival.focal },
+    { key: "view", kicker: es ? "Contemplar" : "Take in the view", title: es ? "Vista al mar en cada unidad" : "Waterfront view for every unit", text: es ? "Sobre una cala turquesa de la costa norte." : "Above a turquoise cove on the north coast.", image: tdm.aerialCoast, ...c("p08-aerial-cove") },
+    { key: "lobby", kicker: es ? "Entrar" : "Step inside", title: es ? "Vestíbulo" : "Lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium, ...c("p13-foyer") },
+    { key: "pool", kicker: es ? "Relajarse" : "Unwind", title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...c("p10-pool-cabana") },
+    { key: "putting", kicker: es ? "Jugar" : "Play", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, ...c("p11-putting-green") },
+    { key: "fitness", kicker: es ? "Moverse" : "Move", title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym, ...c("p14-gym") },
+    { key: "spa", kicker: es ? "Renovarse" : "Restore", title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: life.spa },
+    { key: "clubhouse", kicker: es ? "Reunirse" : "Gather", title: "Clubhouse", text: es ? "Club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
+    { key: "luxury", kicker: es ? "Volver a casa" : "Come home", title: es ? "Vida de lujo" : "Luxury Living", text: es ? "Fachadas de vidrio y terrazas envolventes, pensadas para vivir dentro y fuera." : "Glass façades and wraparound terraces, designed for indoor and outdoor living.", image: { ...tdm.penthouseLiving, alt: { en: "A double-height living room with a floating marble stair", es: "Un salón de doble altura con escalera flotante de mármol" } }, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
   ];
 
 
