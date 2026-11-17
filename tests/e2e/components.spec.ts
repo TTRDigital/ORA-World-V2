@@ -26,7 +26,7 @@ test.describe("vendored components and the desktop menu", () => {
     await expect.poll(() => film.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
     // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "who", "why-ora-world", "residences", "virtual-tour", "floor-plans", "location", "mission", "inquire"]);
+    expect(ids).toEqual(["hero", "who", "why-ora-world", "residences", "virtual-tour", "explorer", "location", "mission", "inquire"]);
     // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
     const main = page.locator("main");
     // Client, 16 Nov: the longevity and fitness sections moved to their own page (tested below).
@@ -74,16 +74,9 @@ test.describe("vendored components and the desktop menu", () => {
     await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);
     // Interiors: the counter follows the arrows.
     await page.locator("#residences").getByRole("button", { name: "Next image" }).click();
-    await expect(page.locator("#residences")).toContainText("02 / 10");
-    // Floor-plan explorer: pricing line, the default residence, a bedroom filter and a level.
-    await expect(page.locator("#floor-plans")).toContainText("$2,000");
-    await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1002/i);
-    await page.locator("#floor-plans").getByRole("button", { name: "4 Bed", exact: true }).click();
-    await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1301/i);
-    const ph = page.locator("#floor-plans").getByRole("button", { name: /^PH/ });
-    await ph.evaluate((el) => el.scrollIntoView({ block: "nearest", inline: "center" }));
-    await ph.click();
-    await expect(page.locator("#floor-plans h3").first()).toHaveText(/the penthouse/i);
+    await expect(page.locator("#residences")).toContainText("02 / 11");
+    // Client, 17 Nov: the tower explorer ("Choose your altitude") in place of the floor plans.
+    await expect(page.locator("#explorer")).toContainText(/choose your altitude/i);
     await expect(page.locator("#mission")).toContainText(/revolutionize puerto rico.s real estate landscape/i);
     await expect(page.locator("#inquire form")).toHaveCount(1);
     await expect(page.locator("#inquire").getByLabel(/what matters most to you/i)).toBeVisible();
@@ -116,13 +109,40 @@ test.describe("vendored components and the desktop menu", () => {
     expect(html).toContain("335,995");
   });
 
-  test("gallery coverflow carousel has labelled, clickable pagination", async ({ page }) => {
-    await page.goto("/en/place/gallery");
-    const carousel = page.getByTestId("featured-carousel");
-    await carousel.scrollIntoViewIfNeeded();
-    const bullets = carousel.getByRole("button", { name: /Go to render/ });
-    await expect(bullets.first()).toBeVisible();
-    await bullets.nth(2).click();
-    await expect(bullets.nth(2)).toHaveClass(/swiper-pagination-bullet-active/);
+  test("floor plans page carries the floor-plan explorer (moved from the homepage)", async ({ page }) => {
+    await page.goto("/en/residences/plans");
+    // Floor-plan explorer: pricing line, the default residence, a bedroom filter and a level.
+    await expect(page.locator("#floor-plans")).toContainText("$2,000");
+    await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1002/i);
+    await page.locator("#floor-plans").getByRole("button", { name: "4 Bed", exact: true }).click();
+    await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1301/i);
+    const ph = page.locator("#floor-plans").getByRole("button", { name: /^PH/ });
+    await ph.evaluate((el) => el.scrollIntoView({ block: "nearest", inline: "center" }));
+    await ph.click();
+    await expect(page.locator("#floor-plans h3").first()).toHaveText(/the penthouse/i);
   });
+
+  test("gallery: in the top navigation, filters, and the full-screen view", async ({ page, isMobile }) => {
+    await page.goto("/en/place/gallery");
+    await expect(page).toHaveURL(/\/en\/gallery$/);
+    await expect(page.locator("h1")).toHaveText(/gallery/i);
+    const tiles = page.locator("main ul li");
+    const all = await tiles.count();
+    expect(all).toBeGreaterThan(20);
+    await page.getByRole("button", { name: /^Films/ }).click();
+    await expect.poll(() => tiles.count()).toBeLessThan(all);
+    await tiles.first().getByRole("button").click();
+    const dialog = page.locator("dialog[open]");
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText(/01 \/ /);
+    await page.keyboard.press("ArrowRight");
+    await expect(dialog).toContainText(/02 \/ /);
+    await page.keyboard.press("Escape");
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
+    if (!isMobile) {
+      await page.goto("/en");
+      await expect(page.locator("header nav").getByRole("link", { name: "Gallery" })).toHaveAttribute("href", "/en/gallery");
+    }
+  });
+
 });

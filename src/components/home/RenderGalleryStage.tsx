@@ -103,7 +103,7 @@ export function RenderGalleryStage({
           {t("count", { n: pad(active + 1), total: pad(items.length) })}: {items[active]?.title}
         </p>
         <p className="small max-w-md text-bone/70">{t("hint")}</p>
-        <Link href="/place/gallery" className="pill pill-brass">
+        <Link href="/gallery" className="pill pill-brass">
           {t("open")}
           <ArrowRight />
         </Link>

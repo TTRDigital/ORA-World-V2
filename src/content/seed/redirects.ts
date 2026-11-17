@@ -19,7 +19,8 @@ export const redirects: Redirect[] = [
   { from: "/contact-us", to: "/visit", permanent: true },
   { from: "/contact", to: "/visit", permanent: true },
   { from: "/location", to: "/place", permanent: true },
-  { from: "/gallery", to: "/place/gallery", permanent: true },
+  // Client, 17 Nov: the gallery is a top-level page now.
+  { from: "/place/gallery", to: "/gallery", permanent: true },
   { from: "/virtual-tour", to: "/place/tour", permanent: true },
   { from: "/floor-plans", to: "/residences/plans", permanent: true },
   { from: "/the-team", to: "/portfolio", permanent: true },

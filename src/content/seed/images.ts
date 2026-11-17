@@ -220,6 +220,8 @@ Object.assign(tdm.bedroomOcean, clip("p21-bedroom-ocean"));
 Object.assign(tdm.powderRoom, clip("p22-bathroom-amber"));
 Object.assign(tdm.penthouseLiving, clip("p24-penthouse-living"));
 Object.assign(tdm.aptStudy, clip("p23-study"));
+Object.assign(tdm.vanity, clip("p19-bathroom-vanity"));
+Object.assign(tdm.aptBath, clip("p19-bathroom-vanity"));
 
 
 /* ---- Dorado Waterfalls (oraworld.com) ---- */

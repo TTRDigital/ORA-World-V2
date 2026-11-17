@@ -6,6 +6,9 @@ import type { Locale } from "@/content/types";
 import { PageHero } from "@/components/ui/PageHero";
 import { PlanLibrary } from "@/components/plans/PlanLibrary";
 import { PillLink } from "@/components/ui/Pill";
+import { FloorExplorer } from "@/components/cip/FloorExplorer";
+import { cip } from "@/content/seed/homeCip";
+import { t } from "@/lib/localize";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -25,6 +28,24 @@ export default async function PlansPage({ params }: { params: Promise<{ locale: 
         <PillLink href="/#inquire" tone="brass">{locale === "es" ? "Consultar" : "Inquire"}</PillLink>
         <PillLink href="/residences/compare" tone="ghost">{tp("compare")}</PillLink>
       </PageHero>
+      {/* Client, 17 Nov: the floor-plan explorer moved here from the homepage. */}
+      <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+        <div className="mx-auto max-w-[1280px]">
+          <p className="eyebrow">
+            <span className="rule" aria-hidden />
+            {t(cip.explorer.eyebrow, locale)}
+          </p>
+          <div className="mt-5 mb-8 flex flex-wrap items-end justify-between gap-4">
+            <h2 id="floor-plans-title" className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]">
+              {t(cip.explorer.title, locale)}
+            </h2>
+            <p className="text-[12px] font-semibold tracking-[0.24em] text-charcoal-soft uppercase">
+              {t(cip.plans.title, locale)} · {t(cip.plans.startingFrom, locale)} <span className="font-[family-name:var(--font-display)] text-[24px] tracking-normal text-charcoal normal-case">{cip.plans.tiers[0].value}</span> {t(cip.plans.perSqFt, locale)}
+            </p>
+          </div>
+          <FloorExplorer locale={locale} />
+        </div>
+      </section>
       <section className="panel panel-travertine container-x section-y" aria-label={tp("title")}>
         <PlanLibrary plans={plans} collections={collections} locale={locale} />
       </section>

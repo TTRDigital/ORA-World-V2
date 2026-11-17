@@ -45,12 +45,12 @@ test.describe("shell", () => {
   test("homepage keeps the white bar at the top, with the banner below it", async ({ page, isMobile }) => {
     await page.goto("/en");
     await page.locator("html:not(.no-js)").waitFor();
-    await expect(page.locator("header")).toHaveAttribute("data-mode", "solid");
+    await expect(page.locator("header[data-mode]")).toHaveAttribute("data-mode", "solid");
     if (!isMobile) await expect(page.locator("header nav").getByRole("link", { name: "Residences", exact: true })).toBeVisible();
     // The banner starts right under the bar (its 1px border), once the page's entrance motion has settled.
     await expect
       .poll(async () => {
-        const bar = await page.locator("header").boundingBox();
+        const bar = await page.locator("header[data-mode]").boundingBox();
         const hero = await page.locator("#hero").boundingBox();
         return Math.abs(hero!.y - bar!.height);
       })

@@ -8,12 +8,12 @@ import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { CipShowcase } from "@/components/cip/CipShowcase";
 import { StackCards } from "@/components/cip/StackCards";
 import { InteriorsGallery } from "@/components/cip/InteriorsGallery";
-import { FloorExplorer } from "@/components/cip/FloorExplorer";
 import { LocationExplorer } from "@/components/cip/LocationExplorer";
 import { pointsOfInterest } from "@/content/seed/places";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
+import { Explorer } from "./Explorer";
 import { Logo } from "@/components/layout/Logo";
 
 /** Numbered eyebrow + serif capitals heading, for the full-width sections. */
@@ -182,6 +182,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
               { title: es ? "Dormitorio de invitados" : "Guest bedroom", note: es ? "Interior de residencia" : "Residence interior", image: tdm.aptBedroom, ...c("p18-guest-bedroom") },
               { title: es ? "Dormitorio" : "Bedroom", note: es ? "Vista al mar" : "Ocean view", image: tdm.bedroomOcean, ...c("p21-bedroom-ocean") },
               { title: es ? "Baño principal" : "Primary bath", note: "Dornbracht", image: tdm.aptBath2, ...c("p20-bathroom-tub") },
+              // Client, 17 Nov: the vanity film, after the primary bath.
+              { title: es ? "Lavabo doble" : "Double vanity", note: es ? "Mármol" : "Marble", image: tdm.vanity, ...c("p19-bathroom-vanity") },
               { title: es ? "Medio baño" : "Powder room", note: es ? "Madera y piedra" : "Wood and stone", image: tdm.powderRoom, ...c("p22-bathroom-amber") },
               { title: es ? "Estudio" : "Study", note: es ? "Interior de residencia" : "Residence interior", image: tdm.aptStudy, ...c("p23-study") },
               // Client, 17 Nov: the second penthouse film last (no matching still: its first frame is the picture).
@@ -216,25 +218,9 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 05 Floor plans (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): bedroom filters,
-          the tower, the level's residences and the plan with its figures. */}
-      <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-travertine/40 px-5 py-16 md:px-10 md:py-24">
-        <div className="mx-auto max-w-[1280px]">
-          <p className="eyebrow" data-reveal>
-            <span className="rule" aria-hidden />
-            {x(cip.explorer.eyebrow)}
-          </p>
-          <div className="mt-5 mb-8 flex flex-wrap items-end justify-between gap-4">
-            <h2 id="floor-plans-title" className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]" data-reveal>
-              {x(cip.explorer.title)}
-            </h2>
-            <p className="text-[12px] font-semibold tracking-[0.24em] text-charcoal-soft uppercase">
-              {x(cip.plans.title)} · {x(cip.plans.startingFrom)} <span className="font-[family-name:var(--font-display)] text-[24px] tracking-normal text-charcoal normal-case">{cip.plans.tiers[0].value}</span> {x(cip.plans.perSqFt)}
-            </p>
-          </div>
-          <FloorExplorer locale={locale} />
-        </div>
-      </section>
+      {/* Residence explorer (client, 17 Nov: "this section instead of the floor plans"; the floor-plan explorer moved to
+          the Floor plans page): the tower drawing whose bands choose a collection. */}
+      <Explorer locale={locale} />
 
       {/* 07 Location (client, 17 Nov: like the other site's location, but short and clean): the title and one line,
           then the map with five places and their travel times. */}
