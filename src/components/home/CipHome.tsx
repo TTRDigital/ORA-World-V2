@@ -116,6 +116,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
       <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
           {/* Client, 16 Nov: no eyebrow, title or intro here; the script line heads the section, then the cards. */}
+          {/* Client, 17 Nov: one line on wide screens (wraps on tablets and phones). */}
           {/* Client, 17 Nov: the "Thoughtfully crafted" line, set to the brand guideline (DESIGN.md §4–5): the display
               serif in Deep Earth, sentence case, a fine brass hairline above, and one italic accent in brass-ink. */}
           {(() => {
@@ -123,7 +124,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
             const acc = es ? "en perfecta armonía." : "in perfect harmony.";
             const head = line.endsWith(acc) ? line.slice(0, -acc.length) : line;
             return (
-              <h2 id="why-ora-world-title" className="mx-auto max-w-[28ch] text-center font-[family-name:var(--font-display)] text-[22px] leading-[1.3] font-normal text-balance text-charcoal md:max-w-[40ch] md:text-[30px] md:leading-[1.28]" data-reveal>
+              <h2 id="why-ora-world-title" className="mx-auto max-w-[28ch] text-center font-[family-name:var(--font-display)] text-[22px] leading-[1.3] font-normal text-balance text-charcoal md:max-w-[40ch] md:text-[28px] md:leading-[1.28] xl:max-w-none xl:text-[27px] xl:whitespace-nowrap" data-reveal>
                 <span aria-hidden className="mx-auto mb-7 block h-px w-14 bg-brass md:mb-9" />
                 {head}
                 {head !== line && <em className="text-brass-ink italic">{acc}</em>}
@@ -171,6 +172,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
             prevLabel={es ? "Imagen anterior" : "Previous image"}
             nextLabel={es ? "Imagen siguiente" : "Next image"}
             slides={[
+              // Client, 17 Nov: the penthouse living room first.
+              { title: "Penthouse", note: es ? "Piso 18, dos niveles" : "Floor 18, two levels", image: tdm.penthouseLiving, ...c("p24-penthouse-living") },
               { title: es ? "Sala y comedor" : "Living & dining", note: es ? "Interior de residencia" : "Residence interior", image: tdm.kitchenDining, ...c("p15-apartment-living") },
               { title: es ? "Cocina gourmet" : "Gourmet kitchen", note: es ? "Gabinetes italianos" : "Italian cabinetry", image: tdm.kitchenWine, ...c("p16-apartment-kitchen") },
               { title: es ? "Suite principal" : "Primary suite", note: es ? "Interior de residencia" : "Residence interior", image: tdm.masterSuite, ...c("p17-primary-suite") },
@@ -179,7 +182,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
               { title: es ? "Baño principal" : "Primary bath", note: "Dornbracht", image: tdm.aptBath2, ...c("p20-bathroom-tub") },
               { title: es ? "Medio baño" : "Powder room", note: es ? "Madera y piedra" : "Wood and stone", image: tdm.powderRoom, ...c("p22-bathroom-amber") },
               { title: es ? "Estudio" : "Study", note: es ? "Interior de residencia" : "Residence interior", image: tdm.aptStudy, ...c("p23-study") },
-              { title: "Penthouse", note: es ? "Piso 18, dos niveles" : "Floor 18, two levels", image: tdm.penthouseLiving, ...c("p24-penthouse-living") },
             ]}
           />
         </div>
