@@ -36,16 +36,26 @@ export async function Hero({ locale }: { locale: Locale }) {
       <div className="relative z-10 w-full px-5 pb-[104px] md:px-10 md:pb-24 lg:px-14 lg:pb-20">
         <div className="mx-auto max-w-[1440px]">
           <h1 id="hero-title" className="hero-title max-w-[12ch] text-left text-bone [text-shadow:0_2px_24px_rgb(28_22_14/0.55)]">
-            {words.map((w, i) => (
-              <span key={i}>
-                {i > 0 && " "}
-                <span className="hero-word" style={{ "--w": i } as React.CSSProperties}>
-                  {w}
+            {/* Client, 17 Nov: the line types itself in when the page opens. Every letter is in the HTML from the start
+                (search engines and screen readers read the whole line; nothing shifts); each one appears in turn with
+                a caret just after it, then the caret blinks and fades. Reduced motion shows the line at once. */}
+            {words.map((w, i) => {
+              const before = words.slice(0, i).reduce((n, x) => n + x.length + 1, 0);
+              return (
+                <span key={i}>
+                  {i > 0 && " "}
+                  <span className="whitespace-nowrap">
+                    {Array.from(w).map((ch, j) => (
+                      <span key={j} className="type-ch" data-last={i === words.length - 1 && j === w.length - 1 ? "" : undefined} style={{ "--c": before + j } as React.CSSProperties}>
+                        {ch}
+                      </span>
+                    ))}
+                  </span>
                 </span>
-              </span>
-            ))}
+              );
+            })}
           </h1>
-          <span aria-hidden className="hero-fade mt-6 block h-px w-24 bg-brass-light" style={{ animationDelay: "900ms" }} />
+          <span aria-hidden className="hero-fade mt-6 block h-px w-24 bg-brass-light" style={{ animationDelay: "2500ms" }} />
         </div>
       </div>
 
@@ -54,7 +64,7 @@ export async function Hero({ locale }: { locale: Locale }) {
         href="#who"
         data-scroll-cue
         className="hero-fade absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-[11px] font-semibold tracking-[0.28em] whitespace-nowrap text-bone uppercase [text-shadow:0_1px_8px_rgb(28_22_14/0.6)] hover:text-white md:bottom-7"
-        style={{ animationDelay: "1300ms" }}
+        style={{ animationDelay: "2800ms" }}
       >
         {es ? "Desplácese" : "Scroll down"}
         <span className="scroll-cue-ring flex size-10 items-center justify-center rounded-full ring-1 ring-bone/70 backdrop-blur-[2px]">

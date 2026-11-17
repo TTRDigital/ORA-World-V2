@@ -25,7 +25,11 @@ export function Logo({
   const width = Math.round(height * ratio);
   return (
     <Image
-      src={variant === "header" ? "/brand/ora-world-logo-gold-header.png" : variant === "gold" ? "/brand/ora-world-logo-gold.png" : "/brand/ora-world-logo-white.png"}
+      // Client, 17 Nov: the leaves move a little. The header and white lockups are SVGs built from the official artwork
+      // by scripts/logo-leaves.py (each leaf cut from the original pixels, swaying about its branch; still for reduced
+      // motion). The SVG is served as is, so its own animation runs.
+      src={variant === "header" ? "/brand/ora-world-logo-gold-header-animated.svg" : variant === "gold" ? "/brand/ora-world-logo-gold.png" : "/brand/ora-world-logo-white-animated.svg"}
+      unoptimized={variant !== "gold"}
       alt="ORA World · Puerto Rico"
       width={width}
       height={height}

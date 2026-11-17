@@ -3,7 +3,6 @@ import { getHome, getSiteSettings } from "@/lib/content";
 import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
 import { tdm, life } from "@/content/seed/images";
-import { Link } from "@/i18n/navigation";
 import { CipSection } from "@/components/cip/CipSection";
 import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { CipShowcase } from "@/components/cip/CipShowcase";
@@ -14,26 +13,6 @@ import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
 import { Logo } from "@/components/layout/Logo";
-
-/** A quiet text link in tracked capitals (the page keeps one gold button: "Inquire"). */
-function TextLink({ href, children, dark = false, external = false }: { href: string; children: React.ReactNode; dark?: boolean; external?: boolean }) {
-  const cls = `inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] uppercase ${dark ? "text-brass-light hover:text-bone" : "text-brass-ink hover:text-charcoal"}`;
-  if (external)
-    return (
-      <a href={href} target="_blank" rel="noopener" className={cls}>
-        {children} <ArrowUpRight width={13} height={13} />
-      </a>
-    );
-  return href.startsWith("#") ? (
-    <a href={href} className={cls}>
-      {children} <ArrowRight width={13} height={13} />
-    </a>
-  ) : (
-    <Link href={href} className={cls}>
-      {children} <ArrowRight width={13} height={13} />
-    </Link>
-  );
-}
 
 /** Numbered eyebrow + serif capitals heading, for the full-width sections. */
 function SectionHead({ n, eyebrow, title, id, intro, dark = false, children }: { n: string; eyebrow: string; title: string; id: string; intro?: string; dark?: boolean; children?: React.ReactNode }) {
@@ -192,10 +171,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
             ]}
           />
         </div>
-        {/* Client, 17 Nov: the two feature lists (living spaces, kitchens) removed. */}
-        <div className="mt-12 flex justify-center" data-reveal>
-          {inquireBtn}
-        </div>
+        {/* Client, 17 Nov: the two feature lists (living spaces, kitchens) and the Inquire button under them removed. */}
       </section>
 
       {/* 04 Step inside: the 360° tour and the film, full width so people can see it big */}
@@ -205,7 +181,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
             <SectionHead n="04" id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
           </div>
           <div className="mt-10 md:mt-12">
-            <HomeTourStage vrUrl={settings.vrTourUrl} filmId={settings.introFilmYoutubeId} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
+            <HomeTourStage vrUrl={settings.vrTourUrl} filmId={null /* client, 17 Nov: the "Welcome to ORA World" film tab removed; the 360° tour only */} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
           </div>
         </div>
       </section>
@@ -227,32 +203,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
             </p>
           </div>
           <FloorExplorer locale={locale} />
-        </div>
-      </section>
-
-      {/* 06 Three steps */}
-      <section id="steps" aria-labelledby="steps-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
-        <div className="mx-auto max-w-[1280px]">
-          <p className="eyebrow" data-n="06" data-reveal>
-            <span className="rule" aria-hidden />
-            {x(cip.steps.eyebrow)}
-          </p>
-          <h2 id="steps-title" className="display-l mt-5 text-charcoal" data-reveal>
-            {x(cip.steps.title)}
-          </h2>
-          <ol className="mt-10 grid gap-4 md:grid-cols-3 md:gap-6">
-            {cip.steps.items.map((step, i) => (
-              <li key={step.href} className="flex flex-col rounded-[20px] bg-white p-6 ring-1 ring-travertine-deep/60 md:p-8" data-reveal style={{ "--reveal-delay": `${i * 90}ms` } as React.CSSProperties}>
-                <span className="font-[family-name:var(--font-display)] text-[44px] leading-none text-brass">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="display-s mt-4 text-charcoal">{x(step.title)}</h3>
-                <p className="mt-2 flex-1 text-[15px] leading-relaxed text-charcoal-soft">{x(step.text)}</p>
-                {i === 2 && <p className="mt-3 text-[13px] text-charcoal-soft">{x(cip.steps.address)}</p>}
-                <div className="mt-4">
-                  <TextLink href={step.href}>{x(step.link)}</TextLink>
-                </div>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 

@@ -939,8 +939,17 @@ main section[id] { scroll-margin-top: 96px; }
 .hero-word { display: inline-block; animation: hero-word 1100ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--hero-start, 300ms) + var(--w, 0) * 140ms); }
 @keyframes hero-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .hero-fade { animation: hero-fade 900ms ease-out both; }
+/* Typed headline (client, 17 Nov: "when you land on the website, have it type 'Beyond expectations'"). */
+.type-ch { position: relative; opacity: 0; animation: type-ch 1ms linear forwards; animation-delay: calc(var(--type-start, 600ms) + var(--c, 0) * var(--type-step, 95ms)); }
+.type-ch::after { content: ""; position: absolute; top: 0.14em; bottom: 0.06em; right: -0.07em; width: 0.045em; min-width: 2px; background: currentColor; opacity: 0; animation: type-caret var(--type-step, 95ms) steps(1, end) forwards; animation-delay: inherit; }
+.type-ch[data-last]::after { animation: type-caret-end 2600ms steps(1, end) forwards; animation-delay: inherit; }
+@keyframes type-ch { to { opacity: 1; } }
+@keyframes type-caret { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes type-caret-end { 0%, 18%, 40%, 62% { opacity: 1; } 9%, 29%, 51%, 73%, 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   .hero-word, .hero-fade { animation: none; }
+  .type-ch { opacity: 1; animation: none; }
+  .type-ch::after { display: none; }
 }
 
 /* Reference-style title: a light serif in capitals, wide, calm. */
