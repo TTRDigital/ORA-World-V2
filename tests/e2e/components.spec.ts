@@ -74,7 +74,7 @@ test.describe("vendored components and the desktop menu", () => {
     await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(before);
     // Interiors: the counter follows the arrows.
     await page.locator("#residences").getByRole("button", { name: "Next image" }).click();
-    await expect(page.locator("#residences")).toContainText("02 / 09");
+    await expect(page.locator("#residences")).toContainText("02 / 10");
     // Floor-plan explorer: pricing line, the default residence, a bedroom filter and a level.
     await expect(page.locator("#floor-plans")).toContainText("$2,000");
     await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1002/i);

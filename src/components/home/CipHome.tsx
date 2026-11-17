@@ -182,6 +182,20 @@ export async function CipHome({ locale }: { locale: Locale }) {
               { title: es ? "Baño principal" : "Primary bath", note: "Dornbracht", image: tdm.aptBath2, ...c("p20-bathroom-tub") },
               { title: es ? "Medio baño" : "Powder room", note: es ? "Madera y piedra" : "Wood and stone", image: tdm.powderRoom, ...c("p22-bathroom-amber") },
               { title: es ? "Estudio" : "Study", note: es ? "Interior de residencia" : "Residence interior", image: tdm.aptStudy, ...c("p23-study") },
+              // Client, 17 Nov: the second penthouse film last (no matching still: its first frame is the picture).
+              {
+                title: es ? "Salón del penthouse" : "Penthouse living",
+                note: es ? "Piso 18, dos niveles" : "Floor 18, two levels",
+                image: {
+                  src: "/videos/clips/p25-penthouse-living-a-poster.jpg",
+                  width: 1248,
+                  height: 704,
+                  focal: "50% 50%",
+                  alt: { en: "The two-level penthouse living room with its floating stair", es: "El salón de dos niveles del penthouse con su escalera flotante" },
+                  rendering: true,
+                },
+                ...c("p25-penthouse-living-a"),
+              },
             ]}
           />
         </div>
