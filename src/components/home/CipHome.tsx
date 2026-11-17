@@ -128,9 +128,20 @@ export async function CipHome({ locale }: { locale: Locale }) {
       <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
           {/* Client, 16 Nov: no eyebrow, title or intro here; the script line heads the section, then the cards. */}
-          <h2 id="why-ora-world-title" className="text-center font-[family-name:var(--font-script)] text-[30px] leading-snug font-normal text-charcoal md:text-[44px]" data-reveal>
-            {x(cip.different.script)}
-          </h2>
+          {/* Client, 17 Nov: the "Thoughtfully crafted" line, set to the brand guideline (DESIGN.md §4–5): the display
+              serif in Deep Earth, sentence case, a fine brass hairline above, and one italic accent in brass-ink. */}
+          {(() => {
+            const line = x(cip.different.script);
+            const acc = es ? "en perfecta armonía." : "in perfect harmony.";
+            const head = line.endsWith(acc) ? line.slice(0, -acc.length) : line;
+            return (
+              <h2 id="why-ora-world-title" className="mx-auto max-w-[26ch] text-center font-[family-name:var(--font-display)] text-[28px] leading-[1.22] font-normal text-balance text-charcoal md:max-w-[30ch] md:text-[44px] md:leading-[1.18]" data-reveal>
+                <span aria-hidden className="mx-auto mb-7 block h-px w-14 bg-brass md:mb-9" />
+                {head}
+                {head !== line && <em className="text-brass-ink italic">{acc}</em>}
+              </h2>
+            );
+          })()}
           {/* Client, 15 Nov: cards that stack on top of each other as you scroll, with more than plain text. */}
           <StackCards
             locale={locale}
