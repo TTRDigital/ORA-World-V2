@@ -109,7 +109,7 @@ export const cip = {
           en: "Private charter flights between the US and your condo, a lobby attended 24/7 and a house car waiting.",
           es: "Vuelos chárter privados entre Estados Unidos y su condominio, un vestíbulo atendido 24/7 y el auto de la casa.",
         } as L,
-        href: "#charters",
+        href: "#inquire", // the charters section left the homepage
         tags: [{ en: "Private charters", es: "Chárter privados" }, { en: "24/7 lobby", es: "Vestíbulo 24/7" }, { en: "House car", es: "Auto de la casa" }] as L[],
       },
     ],

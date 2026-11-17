@@ -961,3 +961,20 @@ main section[id] { scroll-margin-top: 96px; }
 @keyframes scroll-cue-arrow { 0%, 100% { transform: translateY(-2px); opacity: 0.8; } 50% { transform: translateY(4px); opacity: 1; } }
 .scroll-cue-arrow { animation: scroll-cue-arrow 1.6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .scroll-cue-arrow { animation: none; } }
+
+/* "Why ORA World" live panels (client, 17 Nov: "more like a flashing thing"). */
+@keyframes why-glow { 0%, 100% { text-shadow: 0 0 0 rgb(212 185 135 / 0); } 50% { text-shadow: 0 0 22px rgb(212 185 135 / 0.55); } }
+.why-glow { animation: why-glow 2.6s ease-in-out infinite; }
+@keyframes why-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.7); } }
+.why-pulse { animation: why-pulse 1.6s ease-in-out infinite; }
+@keyframes why-ecg { 0% { stroke-dashoffset: 100; opacity: 1; } 70% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.why-ecg { stroke-dasharray: 100; stroke-dashoffset: 100; animation: why-ecg 2.4s ease-out infinite; }
+@keyframes why-ping { 0% { r: 5; opacity: 0.9; } 100% { r: 16; opacity: 0; } }
+.why-ping { animation: why-ping 1.8s ease-out infinite; }
+.why-tick { opacity: 0; transform: translateX(-8px); transition: opacity 500ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1); transition-delay: var(--d, 0ms); }
+[data-seen] .why-tick { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .why-glow, .why-pulse, .why-ping { animation: none; }
+  .why-ecg { animation: none; stroke-dashoffset: 0; }
+  .why-tick { opacity: 1; transform: none; transition: none; }
+}

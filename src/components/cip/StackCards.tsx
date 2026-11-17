@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import type { ImageRef, Locale } from "@/content/types";
 import { ArrowRight } from "@/components/ui/Icons";
+import { HealthCheck, TaxCalculator, TravelRoute } from "./WhyWidgets";
 
 export type StackCard = {
   title: string;
@@ -13,6 +14,8 @@ export type StackCard = {
   href: string;
   linkLabel: string;
   image: ImageRef;
+  /** the live panel on the card (client, 17 Nov) */
+  kind: "health" | "tax" | "travel";
 };
 
 /**
@@ -85,36 +88,42 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
           className="sticky mb-6 last:mb-0 md:mb-10 [top:calc(96px+var(--i)*14px)] lg:[top:calc(120px+var(--i)*20px)]"
           style={{ "--i": i } as React.CSSProperties}
         >
-          <article className="relative grid origin-top overflow-hidden rounded-[24px] bg-white shadow-[0_24px_60px_-34px_rgb(44_36_22/0.55)] ring-1 ring-travertine-deep/60 will-change-transform md:min-h-[420px] md:grid-cols-[1.1fr_1fr] md:rounded-[28px]">
-            <div className="group relative aspect-[2/1] overflow-hidden md:aspect-auto md:h-full">
+          {/* Client, 17 Nov: picture and words together: the picture (or its film) fills the card, the words sit on a
+              shade over it on the left, and a live panel sits on the right (the tax calculator, the health check, the
+              route). */}
+          <article className="relative isolate origin-top overflow-hidden rounded-[24px] bg-basalt text-bone shadow-[0_24px_60px_-34px_rgb(44_36_22/0.55)] will-change-transform md:min-h-[540px] md:rounded-[28px]">
+            <div className="group absolute inset-0 -z-10">
               <Image
                 src={c.image.src}
                 alt={c.image.alt[locale] || c.image.alt.en}
                 fill
-                sizes="(max-width: 767px) calc(100vw - 40px), 640px"
+                sizes="(max-width: 1279px) calc(100vw - 40px), 1280px"
                 quality={80}
-                className="object-cover transition-transform duration-[1200ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.04]"
+                className="object-cover"
                 style={{ objectPosition: c.image.focal }}
               />
               {c.image.video && <ClipOverlay src={c.image.video} poster={c.image.poster} focal={c.image.focal} />}
-              <span className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold tracking-[0.2em] text-charcoal backdrop-blur-sm md:top-6 md:left-6">
-                {String(i + 1).padStart(2, "0")} / {total}
-              </span>
+              <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgb(28_24_18/0.35),rgb(28_24_18/0.82)_55%)] md:bg-[linear-gradient(90deg,rgb(28_24_18/0.86),rgb(28_24_18/0.55)_50%,rgb(28_24_18/0.25))]" />
             </div>
-            <div className="flex flex-col justify-center p-5 min-[400px]:p-6 md:p-10 lg:p-12">
-              <span aria-hidden className="h-px w-12 bg-brass" />
-              <h3 className="display-m mt-4 text-charcoal md:mt-5">{c.title}</h3>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-charcoal-soft md:text-[16px]">{c.text}</p>
-              <ul className="mt-4 flex flex-wrap gap-1.5 md:mt-5 md:gap-2" aria-label={c.title}>
-                {c.tags.map((tag) => (
-                  <li key={tag} className="rounded-full bg-bone px-2.5 py-1 text-[11.5px] font-medium whitespace-nowrap text-charcoal ring-1 ring-brass/35 min-[400px]:text-[12px] md:px-3 md:py-1.5">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-              <a href={c.href} className="mt-3 inline-flex md:mt-6 min-h-11 items-center gap-2 self-start text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal">
-                {c.linkLabel} <ArrowRight width={13} height={13} />
-              </a>
+            <div className="grid gap-6 p-5 min-[400px]:p-6 md:min-h-[540px] md:grid-cols-[minmax(0,1fr)_minmax(0,25rem)] md:items-center md:gap-10 md:p-10 lg:p-12">
+              <div>
+                <span className="inline-block rounded-full bg-bone/90 px-3 py-1 text-[11px] font-semibold tracking-[0.2em] text-charcoal">
+                  {String(i + 1).padStart(2, "0")} / {total}
+                </span>
+                <span aria-hidden className="mt-6 block h-px w-12 bg-brass-light" />
+                <h3 className="display-m mt-4 text-bone md:mt-5">{c.title}</h3>
+                <p className="mt-3 max-w-[44ch] text-[15px] leading-relaxed text-bone/85 md:text-[16px]">{c.text}</p>
+                <a href={c.href} className="mt-4 inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-light uppercase hover:text-bone md:mt-6">
+                  {c.linkLabel} <ArrowRight width={13} height={13} />
+                </a>
+              </div>
+              {c.kind === "tax" ? (
+                <TaxCalculator es={locale === "es"} />
+              ) : c.kind === "health" ? (
+                <HealthCheck es={locale === "es"} items={c.tags} />
+              ) : (
+                <TravelRoute es={locale === "es"} items={c.tags} />
+              )}
             </div>
             {/* The shade the card takes on as the next one slides over it. */}
             <span aria-hidden className="pointer-events-none absolute inset-0 bg-basalt [opacity:var(--stack-shade,0)]" />

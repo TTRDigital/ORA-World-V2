@@ -129,8 +129,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
               text: x(item.text),
               tags: item.tags.map((tag) => x(tag)),
               href: item.href,
-              linkLabel: es ? "Leer más" : "Read more",
-              image: [life.spa, tdm.exteriorRoad, life.jet][i],
+              linkLabel: item.href === "#inquire" ? inquire.label : es ? "Leer más" : "Read more",
+              // Client, 17 Nov: full-card pictures, so sharp renders with their films (the gym; the towers; the arrival).
+              image: [tdm.gym, tdm.exteriorRoad, tdm.entrance][i],
+              kind: (["health", "tax", "travel"] as const)[i],
             }))}
           />
         </div>
