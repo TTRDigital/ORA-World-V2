@@ -207,11 +207,12 @@ export async function CipHome({ locale }: { locale: Locale }) {
       </section>
 
       {/* 04 Step inside: the 360° tour and the film, full width so people can see it big */}
-      <section id="virtual-tour" aria-labelledby="virtual-tour-title" data-tone="dark" className="on-dark border-b border-basalt bg-basalt px-5 py-16 text-bone md:px-10 md:py-24">
-        <div className="mx-auto max-w-[1280px]">
-          <div>
-            <SectionHead id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
-          </div>
+      {/* Client, 17 Nov: the tour wider on screen: the heading keeps the page column, the frame runs nearly edge to edge. */}
+      <section id="virtual-tour" aria-labelledby="virtual-tour-title" data-tone="dark" className="on-dark border-b border-basalt bg-basalt py-16 text-bone md:py-24">
+        <div className="mx-auto max-w-[1280px] px-5 md:px-10 xl:px-0">
+          <SectionHead id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
+        </div>
+        <div className="mx-auto max-w-[1840px] px-3 md:px-6">
           <div className="mt-10 md:mt-12">
             <HomeTourStage vrUrl={settings.vrTourUrl} filmId={null /* client, 17 Nov: the "Welcome to ORA World" film tab removed; the 360° tour only */} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
           </div>

@@ -217,8 +217,8 @@ export const cip = {
     eyebrow: { en: "Step inside", es: "Recorra" } as L,
     title: { en: "See it for yourself", es: "Véalo usted mismo" } as L,
     intro: {
-      en: "Walk the 360° collection at your own pace, or watch the short film.",
-      es: "Recorra la colección 360° a su ritmo, o vea la película corta.",
+      en: "Walk the 360° collection at your own pace.",
+      es: "Recorra la colección 360° a su ritmo.",
     } as L,
   },
 
