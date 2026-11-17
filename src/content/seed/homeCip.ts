@@ -422,6 +422,18 @@ export const cip = {
   },
 
   /* 11 Inquire (brief §7: who he is talking to) */
+  // Client, 17 Nov: the mission statement, near the end, just before the form.
+  mission: {
+    label: { en: "Our mission", es: "Nuestra misión" } as L,
+    lead: {
+      en: "Our mission is to revolutionize Puerto Rico’s real estate landscape by creating luxurious, eco-friendly developments that seamlessly blend modern elegance with the island’s natural beauty.",
+      es: "Nuestra misión es revolucionar el panorama inmobiliario de Puerto Rico creando desarrollos de lujo y ecológicos que integran la elegancia moderna con la belleza natural de la isla.",
+    } as L,
+    body: {
+      en: "We are committed to delivering exceptional quality, innovative design, and unparalleled comfort in every project. We aim to enhance the lives of our residents and contribute positively to the island’s vibrant culture and economy.",
+      es: "Nos comprometemos a ofrecer calidad excepcional, diseño innovador y un confort sin igual en cada proyecto. Buscamos mejorar la vida de nuestros residentes y contribuir positivamente a la vibrante cultura y economía de la isla.",
+    } as L,
+  },
   inquire: {
     eyebrow: { en: "Inquire", es: "Consultar" } as L,
     title: { en: "Inquire about Tesoro Del Mar", es: "Consulte por Tesoro Del Mar" } as L,

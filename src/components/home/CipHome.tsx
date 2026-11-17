@@ -255,6 +255,19 @@ export async function CipHome({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      {/* Our mission (client, 17 Nov: "have it at the end, before the form"), set to the brand guideline: a label, a
+          brass hairline, the first sentence in the display serif, the rest in body text. */}
+      <section id="mission" aria-labelledby="mission-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-20 md:px-10 md:py-28">
+        <div className="mx-auto max-w-[880px] text-center" data-reveal>
+          <p className="text-[11px] font-semibold tracking-[0.28em] text-brass-ink uppercase">{x(cip.mission.label)}</p>
+          <span aria-hidden className="mx-auto mt-6 mb-8 block h-px w-14 bg-brass md:mb-10" />
+          <h2 id="mission-title" className="font-[family-name:var(--font-display)] text-[24px] leading-[1.32] font-normal text-balance text-charcoal md:text-[32px] md:leading-[1.3]">
+            {x(cip.mission.lead)}
+          </h2>
+          <p className="mx-auto mt-7 max-w-[60ch] text-[16px] leading-8 text-charcoal-soft md:mt-9 md:text-[17px]">{x(cip.mission.body)}</p>
+        </div>
+      </section>
+
       {/* 08 Inquire, in the Cipriani "Request pricing" layout: the form on a white card with the logo at the top. */}
       <CipSection
         id="inquire"

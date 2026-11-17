@@ -26,7 +26,7 @@ test.describe("vendored components and the desktop menu", () => {
     await expect.poll(() => film.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
     // Client call, 10 Nov 2026: who → why Puerto Rico → longevity → what ORA World offers → how it helps → Inquire.
     const ids = await page.evaluate(() => Array.from(document.querySelectorAll("main section[id]")).map((s) => s.id));
-    expect(ids).toEqual(["hero", "who", "why-ora-world", "residences", "virtual-tour", "floor-plans", "location", "inquire"]);
+    expect(ids).toEqual(["hero", "who", "why-ora-world", "residences", "virtual-tour", "floor-plans", "location", "mission", "inquire"]);
     // Owner's content brief: his ready-to-use lines, the services and the ghost kitchen are on the page.
     const main = page.locator("main");
     // Client, 16 Nov: the longevity and fitness sections moved to their own page (tested below).
@@ -84,6 +84,7 @@ test.describe("vendored components and the desktop menu", () => {
     await ph.evaluate((el) => el.scrollIntoView({ block: "nearest", inline: "center" }));
     await ph.click();
     await expect(page.locator("#floor-plans h3").first()).toHaveText(/the penthouse/i);
+    await expect(page.locator("#mission")).toContainText(/revolutionize puerto rico.s real estate landscape/i);
     await expect(page.locator("#inquire form")).toHaveCount(1);
     await expect(page.locator("#inquire").getByLabel(/what matters most to you/i)).toBeVisible();
   });
