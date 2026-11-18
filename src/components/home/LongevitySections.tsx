@@ -6,7 +6,6 @@ import { CipShowcase } from "@/components/cip/CipShowcase";
 import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { LoopVideo } from "@/components/cip/LoopVideo";
 import { ArrowRight } from "@/components/ui/Icons";
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 
 /**
@@ -107,19 +106,28 @@ export function LongevitySections({ locale }: { locale: Locale }) {
               {x(lp.programIntro)}
             </p>
           </div>
-          <ol className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-12 lg:grid-cols-4">
-            {lp.program.map((it, k) => (
-              <li key={k} className="flex min-h-[200px] flex-col rounded-[20px] bg-bone p-6 ring-1 ring-travertine-deep/70" data-reveal>
-                <span className="font-[family-name:var(--font-display)] text-[34px] leading-none text-brass [font-variant-numeric:lining-nums]">{pad(k + 1)}</span>
-                <h3 className="mt-auto pt-8 font-[family-name:var(--font-display)] text-[23px] leading-tight text-charcoal">{x(it.title)}</h3>
-                <p className="mt-2 text-[14.5px] leading-relaxed text-charcoal-soft">{x(it.text)}</p>
-              </li>
-            ))}
-            <li className="relative min-h-[200px] overflow-hidden rounded-[20px] bg-travertine" data-reveal>
-              <Image src={tdm.kitchenWine.src} alt={tdm.kitchenWine.alt[locale] || tdm.kitchenWine.alt.en} fill sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1023px) 50vw, 310px" quality={80} className="object-cover" style={{ objectPosition: tdm.kitchenWine.focal }} />
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-basalt/80 to-transparent p-5 pt-16 text-[13px] font-semibold tracking-[0.16em] text-bone uppercase">{x(lp.program[4].title)}</span>
-            </li>
-          </ol>
+          {/* Client, 18 Nov ("you can do better on design"): an editorial layout: the kitchen film stays in view on the
+              left while the seven steps run down the right as a numbered timeline. */}
+          <div className="mt-10 grid gap-10 md:mt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
+            <figure className="relative overflow-hidden rounded-[22px] bg-travertine lg:sticky lg:top-[120px] lg:self-start">
+              <LoopVideo src="/videos/clips/p16-apartment-kitchen.mp4" poster="/videos/clips/p16-apartment-kitchen-poster.jpg" ratio="4/5" label={tdm.kitchenWine.alt[locale] || tdm.kitchenWine.alt.en} flat />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-basalt/85 via-basalt/40 to-transparent p-6 pt-24 md:p-8 md:pt-32">
+                <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{pad(5)} · {x(lp.program[4].title)}</p>
+                <p className="mt-2 max-w-[30ch] font-[family-name:var(--font-display)] text-[24px] leading-snug text-bone md:text-[28px]">{x(lp.program[4].text)}</p>
+              </figcaption>
+            </figure>
+            <ol className="border-t border-travertine-deep">
+              {lp.program.map((it, k) => (
+                <li key={k} className="group grid grid-cols-[4.5rem_minmax(0,1fr)] items-baseline gap-x-4 border-b border-travertine-deep py-7 transition-colors md:grid-cols-[6rem_minmax(0,1fr)] md:py-8" data-reveal>
+                  <span className="font-[family-name:var(--font-display)] text-[44px] leading-none text-brass transition-colors [font-variant-numeric:lining-nums] group-hover:text-brass-ink md:text-[56px]">{pad(k + 1)}</span>
+                  <div>
+                    <h3 className="font-[family-name:var(--font-display)] text-[26px] leading-tight text-charcoal md:text-[30px]">{x(it.title)}</h3>
+                    <p className="mt-2 text-[15.5px] leading-relaxed text-charcoal-soft">{x(it.text)}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
 
