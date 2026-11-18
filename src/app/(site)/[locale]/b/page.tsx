@@ -10,10 +10,9 @@ import { tdm } from "@/content/seed/images";
 import { pointsOfInterest } from "@/content/seed/places";
 import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import { LocationExplorer } from "@/components/cip/LocationExplorer";
+import { FloorExplorer } from "@/components/cip/FloorExplorer";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { Link } from "@/i18n/navigation";
-import { Logo } from "@/components/layout/Logo";
-import { V2Header } from "@/components/v2/V2Header";
 import { ScrollStatement } from "@/components/v2/ScrollStatement";
 
 /**
@@ -51,14 +50,6 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
   const x = (l: L) => t(l, locale);
   const settings = await getSiteSettings();
 
-  const links = [
-    { href: "#about", label: es ? "Nosotros" : "About" },
-    { href: "#longevity", label: es ? "Longevidad" : "Longevity" },
-    { href: "#amenities", label: es ? "Amenidades" : "Amenities" },
-    { href: "#location", label: es ? "Ubicación" : "Location" },
-    { href: "#act-60", label: es ? "Ley 60" : "Act 60" },
-    { href: "#residences", label: es ? "Residencias" : "Residences" },
-  ];
 
   const jet = { ...still("/videos/clips/jet-arrival-poster.jpg", 1632, 544, "The ORA World jet on the apron", "El jet de ORA World en la plataforma"), focal: "24% 60%", ...clip("jet-arrival") };
   const spa = { ...still("/videos/clips/spa-ocean-poster.jpg", 1248, 704, "An ocean-view treatment room at the spa", "Una sala de tratamientos con vista al mar en el spa"), ...clip("spa-ocean") };
@@ -94,8 +85,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
   ];
 
   return (
-    <div data-version-b id="top" className="bg-[var(--v2-cream)] text-[var(--v2-green)]">
-      <V2Header links={links} inquire={es ? "Consultar" : "Inquire"} versionA={es ? "Versión A" : "Version A"} lang={es ? { href: "/b", label: "English" } : { href: "/b", label: "Español" }} />
+    <>
 
       {/* 1 · The film and the wordmark */}
       <section aria-label="Tesoro del Mar" className="relative isolate flex h-[100svh] min-h-[620px] flex-col items-center justify-center overflow-hidden text-white">
@@ -122,14 +112,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
 
       {/* 2 · The statement band */}
       <section id="about" aria-label={es ? "Nosotros" : "About"} className="scroll-mt-20">
-        <ScrollStatement
-          text={es ? "Más allá de lo esperado. Donde vive la longevidad." : "Beyond expectations. Where longevity lives."}
-          images={[
-            { src: tdm.masterSuite.src, alt: "", className: "top-[8%] left-[8%] h-[150px] w-[120px] md:h-[230px] md:w-[180px]", speed: 160 },
-            { src: tdm.exteriorPull.src, alt: "", className: "right-[6%] bottom-[10%] h-[120px] w-[180px] md:h-[180px] md:w-[270px]", speed: -200 },
-            { src: tdm.exteriorRoad.src, alt: "", className: "top-[10%] right-[24%] hidden h-[200px] w-[150px] md:block", speed: 120 },
-          ]}
-        />
+        <ScrollStatement text={es ? "Más allá de lo esperado. Donde vive la longevidad." : "Beyond expectations. Where longevity lives."} />
       </section>
 
       {/* 3 · Why ORA World, on deep green */}
@@ -299,6 +282,20 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
         </div>
       </section>
 
+      {/* Floor plans (client, 18 Nov: "put the floor plan like Version A"): the same explorer. */}
+      <section id="floor-plans" aria-labelledby="b-plans" className="scroll-mt-20 border-t border-[var(--v2-green)]/10 px-5 py-20 md:px-10 md:py-28">
+        <div className="mx-auto max-w-[1440px]">
+          <Eyebrow>{es ? "Planos · Torre 1" : "Floor plans · Tower 1"}</Eyebrow>
+          <div className="mt-6 mb-10 flex flex-wrap items-end justify-between gap-4">
+            <h2 id="b-plans" className="font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[64px]">{x(cip.explorer.title)}</h2>
+            <p className="text-[12px] tracking-[0.24em] uppercase opacity-75">
+              {x(cip.plans.startingFrom)} <span className="font-[family-name:var(--font-display)] text-[24px] tracking-normal normal-case">{cip.plans.tiers[0].value}</span> {x(cip.plans.perSqFt)}
+            </p>
+          </div>
+          <FloorExplorer locale={locale} />
+        </div>
+      </section>
+
       {/* 10 · Inquire */}
       <section id="inquire" aria-labelledby="b-inq" className="scroll-mt-20 bg-[var(--v2-sand)] px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
@@ -340,45 +337,6 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
           ))}
         </dl>
       </section>
-
-      {/* 12 · Footer, deep green */}
-      <footer className="bg-basalt px-5 py-16 text-[var(--v2-cream)] md:px-10">
-        <div className="mx-auto grid max-w-[1440px] gap-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)]">
-          <div>
-            <Logo variant="white" height={110} className="h-[100px] w-auto" />
-            <p className="mt-6 text-[11px] tracking-[0.3em] uppercase opacity-70">{es ? "Más allá de lo esperado" : "Beyond expectations"}</p>
-          </div>
-          <div>
-            <p className="text-[11px] tracking-[0.28em] text-brass-light uppercase">{es ? "Visite y consulte" : "Visit & inquire"}</p>
-            <p className="mt-4 text-[14px] leading-relaxed opacity-80">{x(cip.location.address)}</p>
-            {settings.phone && <p className="mt-2 text-[14px] opacity-80">{settings.phone}</p>}
-          </div>
-          <div>
-            <p className="text-[11px] tracking-[0.28em] text-brass-light uppercase">{es ? "Explorar" : "Explore"}</p>
-            <ul className="mt-4 grid gap-2 text-[14px] opacity-85">
-              {[
-                ["/residences/plans", es ? "Planos" : "Floor plans"],
-                ["/finishes", es ? "Acabados" : "Finishes"],
-                ["/longevity", es ? "Longevidad" : "Longevity"],
-                ["/act-60", es ? "Ley 60" : "Act 60"],
-                ["/living", es ? "Vivir" : "Living"],
-                ["/", es ? "Versión A del sitio" : "Version A of the site"],
-              ].map(([href, label]) => (
-                <li key={href}>
-                  <Link href={href} className="hover:opacity-100 hover:underline">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <p className="mx-auto mt-14 max-w-[1440px] border-t border-[var(--v2-cream)]/15 pt-6 text-[11.5px] leading-relaxed opacity-55">
-          {es
-            ? "Las imágenes son representaciones conceptuales del artista. La información está sujeta a cambios; consulte el Plan de Oferta. © 2026 ORA World Puerto Rico."
-            : "Images are artist's conceptual renderings. Information is subject to change; see the Offering Plan. © 2026 ORA World Puerto Rico."}
-        </p>
-      </footer>
-    </div>
+    </>
   );
 }
