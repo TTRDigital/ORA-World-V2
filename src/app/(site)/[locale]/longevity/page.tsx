@@ -19,11 +19,12 @@ export default async function LongevityPage({ params }: { params: Promise<{ loca
   const { locale } = await params;
   setRequestLocale(locale);
   const tn = await getTranslations({ locale, namespace: "nav" });
-  const card = cip.different.items[0];
+  // Client, 18 Nov: the page is all about longevity: the Longevity card, found by kind (not by position, which changed).
+  const card = cip.different.items.find((it) => it.kind === "health")!;
   return (
     <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("longevity"), path: "/longevity" }])} />
-      <PageHero locale={locale} label="ORA World" headline={t(card.title, locale)} intro={t(card.text, locale)} image={life.spa} />
+      <PageHero locale={locale} label={tn("longevity")} headline={t(card.title, locale)} intro={t(card.text, locale)} image={life.spa} />
       <LongevitySections locale={locale} />
     </div>
   );

@@ -129,7 +129,8 @@ test.describe("vendored components and the desktop menu", () => {
     const tiles = page.locator("main ul li");
     const all = await tiles.count();
     expect(all).toBeGreaterThan(20);
-    await page.getByRole("button", { name: /^Films/ }).click();
+    await expect(page.locator("main video")).toHaveCount(0); // client, 18 Nov: images, not videos
+    await page.getByRole("button", { name: /^Residences/ }).click();
     await expect.poll(() => tiles.count()).toBeLessThan(all);
     await tiles.first().getByRole("button").click();
     const dialog = page.locator("dialog[open]");

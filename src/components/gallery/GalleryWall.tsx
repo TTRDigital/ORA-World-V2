@@ -3,25 +3,24 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import type { ImageRef, Locale } from "@/content/types";
-import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import { cn } from "@/lib/utils";
 
-export type WallItem = { key: string; title: string; group: "residences" | "amenities" | "architecture"; image: ImageRef; video?: string; poster?: string };
+export type WallItem = { key: string; title: string; group: "residences" | "amenities" | "architecture" | "finishes" | "lifestyle"; image: ImageRef };
 
-const GROUPS = ["all", "films", "residences", "amenities", "architecture"] as const;
+const GROUPS = ["all", "architecture", "amenities", "residences", "finishes", "lifestyle"] as const;
 type Group = (typeof GROUPS)[number];
 
 /**
  * The Tesoro del Mar gallery (client, 17 Nov: "a gallery at the top of the page, showing all the images and everything
- * from the presentation"): every render and film, filtered by kind, in a calm masonry; films play silently while on
- * screen. A tile opens the full-screen view with arrows, keys and swipe; films play there with their controls.
+ * from the presentation"): every render (18 Nov: the still images, not the films), filtered by kind, in a calm
+ * masonry. A tile opens the full-screen view with arrows, keys and swipe.
  */
-export function GalleryWall({ items, locale, labels }: { items: WallItem[]; locale: Locale; labels: Record<Group | "film" | "close" | "prev" | "next", string> }) {
+export function GalleryWall({ items, locale, labels }: { items: WallItem[]; locale: Locale; labels: Record<Group | "close" | "prev" | "next", string> }) {
   const [group, setGroup] = useState<Group>("all");
   const [open, setOpen] = useState<number | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const touch = useRef<number | null>(null);
-  const shown = useMemo(() => items.filter((it) => group === "all" || (group === "films" ? !!it.video : it.group === group)), [items, group]);
+  const shown = useMemo(() => items.filter((it) => group === "all" || it.group === group), [items, group]);
   const pad = (n: number) => String(n).padStart(2, "0");
 
   const show = (i: number) => {
@@ -68,7 +67,7 @@ export function GalleryWall({ items, locale, labels }: { items: WallItem[]; loca
             )}
           >
             {labels[g]}
-            <span className={cn("ml-2 tabular-nums", group === g ? "text-bone/75" : "text-charcoal-soft")}>{g === "all" ? items.length : items.filter((it) => (g === "films" ? !!it.video : it.group === g)).length}</span>
+            <span className={cn("ml-2 tabular-nums", group === g ? "text-bone/75" : "text-charcoal-soft")}>{g === "all" ? items.length : items.filter((it) => it.group === g).length}</span>
           </button>
         ))}
       </div>
@@ -87,15 +86,6 @@ export function GalleryWall({ items, locale, labels }: { items: WallItem[]; loca
                   className="object-cover transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:scale-[1.03]"
                   style={{ objectPosition: it.image.focal }}
                 />
-                {it.video && <ClipOverlay src={it.video} poster={it.poster} focal={it.image.focal} />}
-                {it.video && (
-                  <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-basalt/70 px-2.5 py-1 text-[10px] font-semibold tracking-[0.18em] text-bone uppercase backdrop-blur-sm">
-                    <svg viewBox="0 0 10 10" width="8" height="8" aria-hidden>
-                      <path d="M2 1.2v7.6L8.6 5z" fill="currentColor" />
-                    </svg>
-                    {labels.film}
-                  </span>
-                )}
               </span>
               <span className="mt-2.5 block text-[11px] tracking-[0.2em] text-charcoal-soft uppercase transition-colors group-hover:text-charcoal">{it.title}</span>
             </button>
@@ -131,11 +121,7 @@ export function GalleryWall({ items, locale, labels }: { items: WallItem[]; loca
               </button>
             </div>
             <div className="relative mx-auto h-full w-full max-w-[1600px] px-3 md:px-20">
-              {cur.video ? (
-                <video key={cur.key} src={cur.video} poster={cur.poster} controls autoPlay muted loop playsInline className="h-full w-full object-contain" aria-label={alt(cur.image)} />
-              ) : (
-                <Image key={cur.key} src={cur.image.src} alt={alt(cur.image)} fill sizes="100vw" quality={85} className="object-contain" />
-              )}
+              <Image key={cur.key} src={cur.image.src} alt={alt(cur.image)} fill sizes="100vw" quality={85} className="object-contain" />
               <button type="button" onClick={() => step(-1)} aria-label={labels.prev} className="absolute top-1/2 left-2 hidden size-12 -translate-y-1/2 place-items-center rounded-full bg-bone/10 ring-1 ring-bone/30 backdrop-blur-sm hover:bg-bone/20 md:left-5 md:grid">
                 ←
               </button>
