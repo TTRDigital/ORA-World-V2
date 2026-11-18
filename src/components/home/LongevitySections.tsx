@@ -44,13 +44,13 @@ export function LongevitySections({ locale }: { locale: Locale }) {
         cta={inquire}
       >
         <figure className="relative overflow-hidden rounded-[22px]">
-          {/* Client, 15 Nov: a film that walks into the Tesoro Del Mar gym instead of the still picture (made from the
-              gym rendering: a slow camera move from the entrance toward the window and the palms, looping). */}
+          {/* Client, 18 Nov: the gym film with the woman walking on the treadmill, framed on her. */}
           <LoopVideo
-            src="/videos/longevity-gym.mp4"
-            poster="/videos/longevity-gym-poster.jpg"
+            src="/videos/clips/p14-gym.mp4"
+            poster="/videos/clips/p14-gym-poster.jpg"
             ratio="4/5"
-            label={es ? "Recorrido por el gimnasio de Tesoro Del Mar, hacia el ventanal y las palmeras" : "Moving through the Tesoro Del Mar fitness center toward the window and the palms"}
+            focal="72% 50%"
+            label={es ? "Una residente camina en la cinta del gimnasio de Tesoro Del Mar, con vista al jardín" : "A resident walking on a treadmill in the Tesoro Del Mar fitness center, with garden views"}
           />
           <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-basalt via-basalt/80 to-transparent p-6 pt-24 md:p-9 md:pt-32">
             <p className="font-[family-name:var(--font-display)] text-[28px] leading-tight text-bone md:text-[36px]">“{x(cip.prevention.question)}”</p>
