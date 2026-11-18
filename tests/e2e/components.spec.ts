@@ -123,6 +123,16 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#floor-plans h3").first()).toHaveText(/the penthouse/i);
   });
 
+  test("Version B (/en/b) has its own header and footer and every section", async ({ page }) => {
+    await page.goto("/en/b");
+    await expect(page.locator("[data-version-b]")).toHaveCount(1);
+    await expect(page.locator("header")).toHaveCount(1); // Version B's own header only
+    await expect(page.locator("h1")).toHaveText(/tesoro del mar/i);
+    for (const id of ["about", "amenities", "longevity", "location", "act-60", "residences", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    await expect(page.locator("#inquire form")).toHaveCount(1);
+    await expect(page.locator("main")).not.toContainText(/nobody can take|you keep|183 minus/i);
+  });
+
   test("gallery page removed (client, 18 Nov): old addresses go home, no Gallery link", async ({ page, isMobile }) => {
     await page.goto("/en/gallery");
     await expect(page).toHaveURL(/\/en\/?$/);

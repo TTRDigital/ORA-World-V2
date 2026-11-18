@@ -7,6 +7,7 @@ import { display, sans, script } from "@/lib/fonts";
 import { SITE_URL, IS_PROD } from "@/lib/utils";
 import { getFaqs, getPress, getSiteSettings } from "@/lib/content";
 import { tdm, life } from "@/content/seed/images";
+import { ChromeGate } from "@/components/v2/ChromeGate";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
@@ -55,12 +56,12 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       <body>
         <NextIntlClientProvider>
           <SkipLink />
-          <Header tiles={tiles} />
+          <ChromeGate><Header tiles={tiles} /></ChromeGate>
           <main id="main" className="pt-[80px] lg:pt-[96px]">
             <PageTransition>{children}</PageTransition>
           </main>
-          <Footer settings={settings} showPress={press.length > 0} />
-          <AskOra faqs={faqs} phone={settings.phone} whatsapp={settings.whatsapp} consentText={settings.consentText[locale as "en" | "es"]} />
+          <ChromeGate><Footer settings={settings} showPress={press.length > 0} /></ChromeGate>
+          <ChromeGate><AskOra faqs={faqs} phone={settings.phone} whatsapp={settings.whatsapp} consentText={settings.consentText[locale as "en" | "es"]} /></ChromeGate>
           <Consent />
           <MotionInit />
           <ScrollFx />
