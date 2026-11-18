@@ -21,10 +21,12 @@ export default async function LongevityPage({ params }: { params: Promise<{ loca
   const tn = await getTranslations({ locale, namespace: "nav" });
   // Client, 18 Nov: the page is all about longevity: the Longevity card, found by kind (not by position, which changed).
   const card = cip.different.items.find((it) => it.kind === "health")!;
+  // Client, 18 Nov: the ocean-view spa film in the banner (its first frame as the still).
+  const spaFilm = { ...life.spa, src: "/videos/clips/spa-ocean-poster.jpg", width: 1248, height: 704, focal: "50% 50%", alt: { en: "An ocean-view treatment room at the spa", es: "Una sala de tratamientos con vista al mar en el spa" }, video: "/videos/clips/spa-ocean.mp4", poster: "/videos/clips/spa-ocean-poster.jpg" };
   return (
     <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("longevity"), path: "/longevity" }])} />
-      <PageHero locale={locale} label={tn("longevity")} headline={t(card.title, locale)} intro={t(card.text, locale)} image={life.spa} />
+      <PageHero locale={locale} label={tn("longevity")} headline={t(card.title, locale)} intro={t(card.text, locale)} image={spaFilm} />
       <LongevitySections locale={locale} />
     </div>
   );

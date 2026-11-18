@@ -9,6 +9,7 @@ import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { TaxCalculator } from "@/components/cip/WhyWidgets";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 
 /**
@@ -100,6 +101,24 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
             <TaxCalculator es={es} />
           </div>
         </div>
+      </section>
+
+      {/* Residency (client, 18 Nov, from the client's graphic): "Easy to meet residency requirements: 183 minus 30 days,
+          with one minute counted for the day". */}
+      <section aria-labelledby="residency-title" className="relative isolate overflow-hidden border-b border-travertine-deep/60 bg-white px-5 py-16 text-center md:px-10 md:py-24">
+        <Image src={tdm.exteriorPull.src} alt="" fill sizes="100vw" quality={70} className="-z-10 object-cover opacity-[0.09]" style={{ objectPosition: tdm.exteriorPull.focal }} />
+        <h2 id="residency-title" className="font-[family-name:var(--font-display)] text-[20px] tracking-[0.08em] text-brass-ink uppercase md:text-[28px]">
+          {es ? "Requisitos de residencia fáciles de cumplir" : "Easy to meet residency requirements"}
+        </h2>
+        <p className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-[family-name:var(--font-display)] text-brass md:mt-10 md:gap-x-10">
+          <span className="text-[88px] leading-none [font-variant-numeric:lining-nums] md:text-[150px]">183</span>
+          <span className="text-[26px] tracking-[0.08em] text-brass-ink uppercase md:text-[44px]">{es ? "menos" : "minus"}</span>
+          <span className="text-[88px] leading-none [font-variant-numeric:lining-nums] md:text-[150px]">30</span>
+          <span className="text-[26px] tracking-[0.08em] text-brass-ink uppercase md:text-[44px]">{es ? "días" : "days"}</span>
+        </p>
+        <p className="mt-8 text-[13px] tracking-[0.32em] text-charcoal-soft uppercase md:mt-10 md:text-[18px]">
+          {es ? "Con un minuto contado como el día" : "With one minute counted for the day"}
+        </p>
       </section>
 
       {/* How to qualify. */}
