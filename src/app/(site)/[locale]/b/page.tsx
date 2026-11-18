@@ -14,6 +14,8 @@ import { FloorExplorer } from "@/components/cip/FloorExplorer";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { Link } from "@/i18n/navigation";
 import { ScrollStatement } from "@/components/v2/ScrollStatement";
+import { InteriorsGallery } from "@/components/cip/InteriorsGallery";
+import { interiorSlides } from "@/content/seed/interiorSlides";
 
 /**
  * Version B (client, 18 Nov: "a second version of the site, like parksidebrickell.com, with ORA World's content and
@@ -76,7 +78,6 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
     { title: es ? "El club" : "The clubhouse", text: es ? "Un club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
     { title: es ? "La entrada" : "The entrance", text: es ? "Pórtico y valet bajo las torres." : "Porte-cochère and valet beneath the towers.", image: tdm.entrance },
   ];
-  const homes = [tdm.kitchenWine, tdm.masterSuite, tdm.bedroomOcean];
   const facts = [
     { label: es ? "Ubicación" : "Location", value: "Dorado · Vega Alta" },
     { label: es ? "Residencias" : "Residences", value: "129" },
@@ -254,31 +255,26 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
         </div>
       </section>
 
-      {/* 9 · The residences, on cream */}
-      <section id="residences" aria-labelledby="b-res" className="scroll-mt-20 px-5 py-20 md:px-10 md:py-28">
-        <div className="mx-auto max-w-[1440px] text-center">
-          <Eyebrow>{es ? "Las residencias" : "The residences"}</Eyebrow>
+      {/* 9 · The residences (client, 18 Nov: "do this in Version B too"): the Inspired living spaces slides, with the
+          Version B type: centred heading, the counter and arrows under it, the films running off the right edge. */}
+      <section id="residences" aria-labelledby="b-res" className="scroll-mt-20 overflow-hidden py-20 md:py-28">
+        <div className="mx-auto max-w-[1440px] px-5 text-center md:px-10">
+          <Eyebrow>{x(cip.interiors.eyebrow)}</Eyebrow>
           <h2 id="b-res" className="mx-auto mt-6 max-w-[20ch] font-[family-name:var(--font-display)] text-[40px] leading-[1.08] font-normal md:text-[64px]">
-            {es ? <>Interiores que se sienten como en casa. <em className="italic">Desde el primer momento.</em></> : <>Interiors that feel like home. <em className="italic">From the first moment.</em></>}
+            {x(cip.interiors.title)}
           </h2>
-          <p className="mx-auto mt-6 max-w-[54ch] text-[16px] leading-relaxed opacity-80 md:text-[17px]">
-            {es ? "Fachadas de vidrio y terrazas envolventes, gabinetes italianos y grifería Dornbracht: pensadas para vivir dentro y fuera." : "Glass façades and wraparound terraces, Italian cabinetry and Dornbracht fixtures: designed for indoor and outdoor living."}
-          </p>
-          <ul className="mt-14 grid gap-5 text-left md:grid-cols-3">
-            {homes.map((h, k) => (
-              <li key={h.src} className={k === 1 ? "md:translate-y-10" : ""}>
-                <Media image={h} locale={locale} sizes="(max-width: 767px) calc(100vw - 40px), 460px" className="aspect-[4/5]" />
-              </li>
-            ))}
-          </ul>
-          <div className="mt-20 flex flex-wrap justify-center gap-3">
-            <Link href="/residences/plans" className="inline-flex min-h-11 items-center bg-[var(--v2-green)] px-6 text-[11px] tracking-[0.26em] text-[var(--v2-cream)] uppercase hover:bg-[var(--v2-green-2)]">
-              {es ? "Planos" : "Floor plans"}
-            </Link>
-            <Link href="/finishes" className="inline-flex min-h-11 items-center border border-[var(--v2-green)]/50 px-6 text-[11px] tracking-[0.26em] uppercase hover:bg-[var(--v2-green)] hover:text-[var(--v2-cream)]">
-              {es ? "Acabados" : "Finishes"}
-            </Link>
-          </div>
+          <p className="mx-auto mt-6 max-w-[54ch] text-[16px] leading-relaxed opacity-80 md:text-[17px]">{x(cip.interiors.intro)}</p>
+        </div>
+        <div className="b-interiors mx-auto mt-12 grid max-w-[1440px] justify-items-center gap-8 pl-5 md:pl-10">
+          <InteriorsGallery locale={locale} label={x(cip.interiors.title)} prevLabel={es ? "Imagen anterior" : "Previous image"} nextLabel={es ? "Imagen siguiente" : "Next image"} slides={interiorSlides(es)} />
+        </div>
+        <div className="mt-14 flex flex-wrap justify-center gap-3 px-5">
+          <Link href="/residences/plans" className="inline-flex min-h-11 items-center bg-[var(--v2-green)] px-6 text-[11px] tracking-[0.26em] text-[var(--v2-cream)] uppercase hover:bg-[var(--v2-green-2)]">
+            {es ? "Planos" : "Floor plans"}
+          </Link>
+          <Link href="/finishes" className="inline-flex min-h-11 items-center border border-[var(--v2-green)]/50 px-6 text-[11px] tracking-[0.26em] uppercase hover:bg-[var(--v2-green)] hover:text-[var(--v2-cream)]">
+            {es ? "Acabados" : "Finishes"}
+          </Link>
         </div>
       </section>
 

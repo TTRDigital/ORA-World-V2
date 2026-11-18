@@ -994,3 +994,7 @@ main section[id] { scroll-margin-top: 96px; }
 main:has([data-version-b]) { padding-top: 0; }
 /* Client, 18 Nov: Version B uses the same ORA brand palette as Version A (Deep Earth, bone, brass), not green. */
 [data-version-b] { --v2-green: var(--color-basalt); --v2-green-2: var(--color-basalt-soft); --v2-cream: var(--color-bone); --v2-sand: var(--color-bone-deep); }
+
+/* Version B interiors: the counter and arrows centred above the slides. */
+.b-interiors > :first-child { justify-self: center; }
+.b-interiors > .interiors-track { justify-self: stretch; width: auto; }
