@@ -63,13 +63,10 @@ export function LongevitySections({ locale }: { locale: Locale }) {
         dark
         eyebrow={x(cip.prevention.eyebrow)}
         title={x(cip.prevention.title)}
-        // The owner's core promise (brief §1) opens the section; the redundancy lines and the check-up paragraph follow.
-        intro={x(cip.who.intro)}
-        body={`${x(cip.prevention.intro)} ${x(cip.prevention.body)}`}
-        cards={[
-          { label: x(cip.prevention.cardLabels[0]), items: cip.prevention.bullets.slice(0, 2).map(x) },
-          { label: x(cip.prevention.cardLabels[1]), items: cip.prevention.bullets.slice(2).map(x) },
-        ]}
+        // Client, 18 Nov ("cleaner, not too much info"): the redundancy line and one sentence; the services are in the program.
+        intro={x(cip.prevention.intro)}
+        body={es ? "ORA le revisa antes de que algo se rompa, para detectar a tiempo lo que importa." : "ORA checks you before anything breaks, so what matters is caught early."}
+        cards={[]}
         cta={inquire}
       >
         <figure className="relative overflow-hidden rounded-[22px]">
@@ -137,12 +134,9 @@ export function LongevitySections({ locale }: { locale: Locale }) {
         n=""
         eyebrow={x(cip.fitness.eyebrow)}
         title={x(cip.fitness.title)}
-        intro={x(cip.fitness.intro)}
-        body={x(cip.fitness.body)}
-        cards={[
-          { label: x(cip.fitness.cardLabels[0]), items: cip.fitness.bullets.slice(0, 3).map(x) },
-          { label: x(cip.fitness.cardLabels[1]), items: cip.fitness.bullets.slice(3).map(x) },
-        ]}
+        // Client, 18 Nov ("cleaner"): one line; nutrition and fitness are in the program above.
+        intro={es ? "Algunos aparentan 60 a los 80. Su cuerpo se hace a sí mismo: ORA le ayuda a ser uno de ellos." : "Some people look 60 at 80. Your body is self-made, and ORA helps you be one of them."}
+        cards={[]}
         cta={inquire}
       >
         <CardRail cards={fitnessCards} label={x(cip.fitness.eyebrow)} locale={locale} ratio="5/4" />
