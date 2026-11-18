@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import type { ImageRef, Locale } from "@/content/types";
-import { HealthCheck, ResilienceGrid, TaxCalculator, TravelRoute } from "./WhyWidgets";
+import { FinishesShowcase, HealthCheck, ResilienceGrid, TaxCalculator, TravelRoute } from "./WhyWidgets";
+import { scavolini } from "@/content/seed/finishes";
 
 export type StackCard = {
   title: string;
@@ -13,7 +14,7 @@ export type StackCard = {
   href: string;
   image: ImageRef;
   /** the live panel on the card (client, 17 Nov) */
-  kind: "health" | "tax" | "travel" | "resilience";
+  kind: "health" | "tax" | "travel" | "resilience" | "finishes";
 };
 
 /**
@@ -114,6 +115,19 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
                 <TaxCalculator es={locale === "es"} />
               ) : c.kind === "health" ? (
                 <HealthCheck es={locale === "es"} items={c.tags} />
+              ) : c.kind === "finishes" ? (
+                <FinishesShowcase
+                  es={locale === "es"}
+                  brands={["Scavolini", "Neolith", "Gaggenau", "Dornbracht", "Rimadesio", "Lutron", "Crestron"]}
+                  materials={[
+                    { name: "Calacatta", kind: locale === "es" ? "Encimera Neolith" : "Neolith counter", src: "/images/finishes/sw-calacatta.jpg" },
+                    { name: "Sofia Cuprum", kind: locale === "es" ? "Encimera Neolith" : "Neolith counter", src: "/images/finishes/sw-sofia-cuprum.jpg" },
+                    { name: "Mont Blanc", kind: locale === "es" ? "Encimera Neolith" : "Neolith counter", src: "/images/finishes/sw-mont-blanc.jpg" },
+                    ...[0, 2, 5, 7, 8, 11, 17].map((k) => ({ name: scavolini[k].name, kind: locale === "es" ? "Gabinete Scavolini" : "Scavolini cabinetry", src: scavolini[k].src })),
+                    { name: "Brushed Brass", kind: locale === "es" ? "Teclado Crestron" : "Crestron keypad", color: "linear-gradient(135deg,#e7cf98,#b8975a)" },
+                    { name: "Dark Bronze", kind: locale === "es" ? "Teclado Crestron" : "Crestron keypad", color: "linear-gradient(135deg,#9a8378,#5d4a42)" },
+                  ]}
+                />
               ) : c.kind === "resilience" ? (
                 <ResilienceGrid es={locale === "es"} items={c.tags} />
               ) : (

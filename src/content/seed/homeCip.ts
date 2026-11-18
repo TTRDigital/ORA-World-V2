@@ -130,6 +130,17 @@ export const cip = {
         href: "/faq",
         tags: resilienceFeatures.map((f) => (f.slug === "hurricane" ? ({ en: "Hurricanes", es: "Huracanes" } as L) : f.short)),
       },
+      {
+        // Client, 18 Nov: card 5, the finishes (from the Tesoro del Mar presentation's finish boards).
+        kind: "finishes" as const,
+        title: { en: "Finished to the last detail", es: "Acabado hasta el último detalle" } as L,
+        text: {
+          en: "Italian cabinetry in 71 finishes, sintered-stone counters, a Gaggenau kitchen and Dornbracht fixtures in brushed champagne. You choose; we help.",
+          es: "Gabinetes italianos en 71 acabados, encimeras de piedra sinterizada, cocina Gaggenau y grifería Dornbracht en champán cepillado. Usted elige; le ayudamos.",
+        } as L,
+        href: "/finishes",
+        tags: [] as L[],
+      },
     ],
   },
 

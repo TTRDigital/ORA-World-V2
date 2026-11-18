@@ -294,3 +294,55 @@ export function ResilienceGrid({ es, items }: { es: boolean; items: string[] }) 
     </div>
   );
 }
+
+/* ---------------------------------------------------------------- Finishes: the materials, one after another */
+
+export type Material = { name: string; kind: string; src?: string; color?: string };
+
+export function FinishesShowcase({ es, materials, brands }: { es: boolean; materials: Material[]; brands: string[] }) {
+  const [ref, seen] = useSeen<HTMLDivElement>();
+  const [i, setI] = useState(0);
+  const [hold, setHold] = useState(false);
+  useEffect(() => {
+    if (!seen || hold || reduced()) return;
+    const id = window.setInterval(() => setI((k) => (k + 1) % materials.length), 2200);
+    return () => window.clearInterval(id);
+  }, [seen, hold, materials.length]);
+  const cur = materials[i];
+  const bg = (m: Material) => (m.src ? { backgroundImage: `url(${m.src})`, backgroundSize: "cover", backgroundPosition: "center" } : { background: m.color });
+  return (
+    <div ref={ref} className={panel} data-widget="finishes" onMouseLeave={() => setHold(false)}>
+      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Sus acabados" : "Your finishes"}</p>
+      <div className="mt-4 flex items-center gap-4">
+        <div key={cur.name} className="why-swatch size-24 shrink-0 rounded-[14px] ring-2 ring-brass-light/80 md:size-28" style={bg(cur)} role="img" aria-label={cur.name} />
+        <div aria-live="polite">
+          <p className="text-[11px] tracking-[0.18em] text-bone/65 uppercase">{cur.kind}</p>
+          <p className="mt-1 font-[family-name:var(--font-display)] text-[26px] leading-tight text-bone">{cur.name}</p>
+        </div>
+      </div>
+      <ul className="mt-5 grid grid-cols-6 gap-1.5">
+        {materials.map((m, k) => (
+          <li key={m.name}>
+            <button
+              type="button"
+              onMouseEnter={() => {
+                setHold(true);
+                setI(k);
+              }}
+              onFocus={() => {
+                setHold(true);
+                setI(k);
+              }}
+              onClick={() => setI(k)}
+              aria-label={`${m.kind}: ${m.name}`}
+              aria-pressed={k === i}
+              className={cn("block aspect-square w-full rounded-[8px] ring-1 transition-transform duration-300 hover:scale-110", k === i ? "scale-105 ring-2 ring-brass-light" : "ring-bone/15")}
+              style={bg(m)}
+            />
+          </li>
+        ))}
+      </ul>
+      <p className="mt-5 border-t border-bone/15 pt-4 text-[11px] leading-relaxed tracking-[0.16em] text-bone/75 uppercase">{brands.join(" · ")}</p>
+    </div>
+  );
+}

@@ -144,7 +144,7 @@ export async function CipHome({ locale }: { locale: Locale }) {
               href: item.href,
               // Client, 17 Nov: full-card pictures with their films: the ORA World jet arriving (the client's film, its
               // first frame as the still); the gym; the aerial cove behind the Act 60 calculator; the towers (Built to endure).
-              image: { travel: jetArrival, health: tdm.gym, tax: tdm.aerialCoast, resilience: tdm.exteriorRoad }[item.kind],
+              image: { travel: jetArrival, health: tdm.gym, tax: tdm.aerialCoast, resilience: tdm.exteriorRoad, finishes: tdm.kitchenWine }[item.kind],
               kind: item.kind,
             }))}
           />
