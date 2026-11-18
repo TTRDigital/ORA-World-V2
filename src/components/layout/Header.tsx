@@ -56,7 +56,8 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
           <Link href="/" aria-label={t("home")} className="flex shrink-0 items-center">
             <Logo variant="header" height={96} priority responsive className="h-[64px] lg:h-[80px]" />
           </Link>
-          <ul className="hidden items-center lg:flex">
+          {/* Eight links fit on one line from 1280px; narrower screens use the menu (client added Act 60 and Finishes, 18 Nov). */}
+          <ul className="hidden items-center xl:flex">
             {primaryNav.map((item) => (
               <li key={item.key}>
                 {/* Skiper UI TextRoll: letters roll on hover. The roll is aria-hidden (every letter renders twice),
@@ -66,7 +67,7 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
                   aria-label={t(item.key)}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
-                    "inline-flex min-h-11 items-center px-3 text-[12px] font-semibold tracking-[0.22em] uppercase transition-colors hover:text-brass-ink xl:px-4",
+                    "inline-flex min-h-11 items-center px-2.5 text-[12px] font-semibold tracking-[0.2em] whitespace-nowrap uppercase transition-colors hover:text-brass-ink 2xl:px-4",
                     isActive(item.href) ? "text-brass-ink" : "text-charcoal",
                   )}
                 >
@@ -91,7 +92,7 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={t("openMenu")}
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-bone-deep text-charcoal lg:hidden"
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-bone-deep text-charcoal xl:hidden"
             >
               <Menu />
             </button>
