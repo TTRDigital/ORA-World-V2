@@ -992,4 +992,5 @@ main section[id] { scroll-margin-top: 96px; }
 
 /* Version B (client, 18 Nov: a second version of the site, in the manner of parksidebrickell.com). */
 main:has([data-version-b]) { padding-top: 0; }
-[data-version-b] { --v2-green: #15281e; --v2-green-2: #1d3426; --v2-cream: #f2ede3; --v2-sand: #e6dfd1; }
+/* Client, 18 Nov: Version B uses the same ORA brand palette as Version A (Deep Earth, bone, brass), not green. */
+[data-version-b] { --v2-green: var(--color-basalt); --v2-green-2: var(--color-basalt-soft); --v2-cream: var(--color-bone); --v2-sand: var(--color-bone-deep); }

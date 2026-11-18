@@ -45,7 +45,7 @@ export function ScrollStatement({ text, images }: { text: string; images: { src:
           ref={(n) => {
             floats.current[k] = n;
           }}
-          className={`absolute overflow-hidden shadow-[0_30px_60px_-30px_rgb(21_40_30/0.45)] ${im.className}`}
+          className={`absolute overflow-hidden shadow-[0_30px_60px_-30px_rgb(44_36_22/0.45)] ${im.className}`}
         >
           <Image src={im.src} alt={im.alt} fill sizes="320px" quality={80} className="object-cover" style={{ objectPosition: "50% 50%" }} />
         </div>

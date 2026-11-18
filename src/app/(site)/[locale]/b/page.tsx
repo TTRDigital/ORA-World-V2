@@ -35,7 +35,7 @@ function Media({ image, locale, sizes, className = "", video = true }: { image: 
 }
 
 const Eyebrow = ({ children, light = false }: { children: React.ReactNode; light?: boolean }) => (
-  <p className={`text-[11px] tracking-[0.32em] uppercase ${light ? "text-[#d9c9a3]" : "text-[#684d25]"}`}>{children}</p>
+  <p className={`text-[11px] tracking-[0.32em] uppercase ${light ? "text-brass-light" : "text-brass-ink"}`}>{children}</p>
 );
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
@@ -106,7 +106,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
             __html: '<video autoplay muted loop playsinline preload="auto" poster="/videos/hero-film-poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><source src="/videos/hero-film.mp4" type="video/mp4"></video>',
           }}
         />
-        <span aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(10_20_14/0.45),rgb(10_20_14/0.2)_60%),linear-gradient(180deg,rgb(10_20_14/0.35),transparent_30%,transparent_70%,rgb(10_20_14/0.5))]" />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(28_24_18/0.45),rgb(28_24_18/0.2)_60%),linear-gradient(180deg,rgb(28_24_18/0.35),transparent_30%,transparent_70%,rgb(28_24_18/0.5))]" />
         <p className="hero-fade text-[11px] tracking-[0.42em] uppercase opacity-90">ORA World · Dorado, Puerto Rico</p>
         <h1 className="hero-fade mt-6 px-5 text-center font-[family-name:var(--font-display)] text-[64px] leading-[0.92] font-normal tracking-[0.02em] md:text-[120px] lg:text-[150px]" style={{ animationDelay: "200ms" }}>
           Tesoro del Mar
@@ -157,7 +157,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       {/* 4 · Life here feels different: words over the penthouse film */}
       <section aria-labelledby="b-diff" className="relative isolate overflow-hidden px-5 py-24 text-white md:px-10 md:py-36">
         <Media image={tdm.penthouseLiving} locale={locale} sizes="100vw" className="!absolute inset-0 -z-10" />
-        <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(10_20_14/0.82),rgb(10_20_14/0.45)_60%,rgb(10_20_14/0.2))]" />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(28_24_18/0.82),rgb(28_24_18/0.45)_60%,rgb(28_24_18/0.2))]" />
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow light>{es ? "La diferencia ORA" : "The ORA difference"}</Eyebrow>
           <h2 id="b-diff" className="mt-6 max-w-[14ch] font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[64px]">
@@ -201,7 +201,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       {/* 6 · Longevity, a full-bleed quote over the gym film */}
       <section id="longevity" aria-labelledby="b-long" className="relative isolate flex min-h-[86svh] scroll-mt-20 items-center justify-center overflow-hidden px-5 py-24 text-center text-white md:px-10">
         <Media image={{ ...tdm.gym, ...clip("p14-gym") }} locale={locale} sizes="100vw" className="!absolute inset-0 -z-10" />
-        <span aria-hidden className="absolute inset-0 -z-10 bg-[rgb(10_20_14/0.55)]" />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-[rgb(28_24_18/0.55)]" />
         <div className="max-w-[920px]">
           <Eyebrow light>{es ? "La longevidad es una forma de vivir" : "Longevity is a way of living"}</Eyebrow>
           <h2 id="b-long" className="mt-6 font-[family-name:var(--font-display)] text-[40px] leading-[1.1] font-normal md:text-[64px]">
@@ -210,7 +210,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
           <p className="mx-auto mt-6 max-w-[54ch] text-[16px] leading-relaxed text-white/85 md:text-[18px]">
             {es ? "Los aviones no se caen del cielo: redundancia y mantenimiento preventivo. ORA le revisa antes de que algo se rompa." : "Planes don't fall from the sky: redundancy and preventive maintenance. ORA checks you before anything breaks."}
           </p>
-          <p className="mt-10 font-[family-name:var(--font-display)] text-[26px] text-[#e8d8b0] italic md:text-[32px]">
+          <p className="mt-10 font-[family-name:var(--font-display)] text-[26px] text-brass-light italic md:text-[32px]">
             “{es ? "¿Cuánto valen para usted 10 años más?" : "What is the value of an extra 10 years for you?"}”
           </p>
           <Link href="/longevity" className="mt-10 inline-flex min-h-11 items-center border border-white/70 px-6 text-[11px] tracking-[0.26em] uppercase hover:bg-white hover:text-[var(--v2-green)]">
@@ -259,7 +259,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
             {cip.why.stats.map((st) => (
               <div key={st.value}>
                 <dt className="sr-only">{x(st.label)}</dt>
-                <dd className="font-[family-name:var(--font-display)] text-[72px] leading-none text-[#e8d8b0] [font-variant-numeric:lining-nums] md:text-[96px]">{st.value}</dd>
+                <dd className="font-[family-name:var(--font-display)] text-[72px] leading-none text-brass-light [font-variant-numeric:lining-nums] md:text-[96px]">{st.value}</dd>
                 <dd aria-hidden className="mt-3 max-w-[32ch] text-[14px] leading-relaxed text-[var(--v2-cream)]/70">{x(st.label)}</dd>
               </div>
             ))}
@@ -318,13 +318,13 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       {/* 11 · A quiet coast: the closing call */}
       <section aria-labelledby="b-close" className="relative isolate overflow-hidden px-5 pt-28 pb-12 text-center text-white md:px-10 md:pt-40">
         <Media image={tdm.exteriorRoad} locale={locale} sizes="100vw" className="!absolute inset-0 -z-10" />
-        <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(10_20_14/0.35),rgb(10_20_14/0.7))]" />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(28_24_18/0.35),rgb(28_24_18/0.7))]" />
         <Eyebrow light>{es ? "Venga a casa, a ORA World" : "Come home to ORA World"}</Eyebrow>
         <h2 id="b-close" className="mx-auto mt-6 max-w-[16ch] font-[family-name:var(--font-display)] text-[40px] leading-[1.08] font-normal md:text-[64px]">
           {es ? "Una costa tranquila. Una vida más larga." : "A quiet coast. A longer life."}
         </h2>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href="#inquire" className="inline-flex min-h-11 items-center bg-[#b8975a] px-6 text-[11px] tracking-[0.26em] text-[var(--v2-green)] uppercase hover:bg-[#d1b67c]">
+          <a href="#inquire" className="inline-flex min-h-11 items-center bg-brass px-6 text-[11px] tracking-[0.26em] text-[var(--v2-green)] uppercase hover:bg-brass-light">
             {es ? "Consultar" : "Inquire"}
           </a>
           <Link href="/residences/plans" className="inline-flex min-h-11 items-center border border-white/70 px-6 text-[11px] tracking-[0.26em] uppercase hover:bg-white hover:text-[var(--v2-green)]">
@@ -342,19 +342,19 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 12 · Footer, deep green */}
-      <footer className="bg-[#0f1f16] px-5 py-16 text-[var(--v2-cream)] md:px-10">
+      <footer className="bg-basalt px-5 py-16 text-[var(--v2-cream)] md:px-10">
         <div className="mx-auto grid max-w-[1440px] gap-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div>
             <Logo variant="white" height={110} className="h-[100px] w-auto" />
             <p className="mt-6 text-[11px] tracking-[0.3em] uppercase opacity-70">{es ? "Más allá de lo esperado" : "Beyond expectations"}</p>
           </div>
           <div>
-            <p className="text-[11px] tracking-[0.28em] text-[#d9c9a3] uppercase">{es ? "Visite y consulte" : "Visit & inquire"}</p>
+            <p className="text-[11px] tracking-[0.28em] text-brass-light uppercase">{es ? "Visite y consulte" : "Visit & inquire"}</p>
             <p className="mt-4 text-[14px] leading-relaxed opacity-80">{x(cip.location.address)}</p>
             {settings.phone && <p className="mt-2 text-[14px] opacity-80">{settings.phone}</p>}
           </div>
           <div>
-            <p className="text-[11px] tracking-[0.28em] text-[#d9c9a3] uppercase">{es ? "Explorar" : "Explore"}</p>
+            <p className="text-[11px] tracking-[0.28em] text-brass-light uppercase">{es ? "Explorar" : "Explore"}</p>
             <ul className="mt-4 grid gap-2 text-[14px] opacity-85">
               {[
                 ["/residences/plans", es ? "Planos" : "Floor plans"],

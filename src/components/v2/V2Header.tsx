@@ -20,7 +20,7 @@ export function V2Header({ links, inquire, versionA, lang }: { links: { href: st
   }, []);
   const dark = !solid && !open;
   return (
-    <header className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-500", solid || open ? "bg-[var(--v2-cream)]/95 text-[var(--v2-green)] shadow-[0_1px_0_rgb(21_40_30/0.12)] backdrop-blur-md" : "bg-transparent text-white")}>
+    <header className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-500", solid || open ? "bg-[var(--v2-cream)]/95 text-[var(--v2-green)] shadow-[0_1px_0_rgb(44_36_22/0.12)] backdrop-blur-md" : "bg-transparent text-white")}>
       <div className="mx-auto flex h-[76px] max-w-[1600px] items-center justify-between gap-6 px-5 md:px-10">
         <a href="#top" aria-label="ORA World" className="shrink-0">
           {dark ? <Logo variant="white" height={56} className="h-[52px] w-auto" /> : <Logo variant="header" height={56} className="h-[52px] w-auto" />}
