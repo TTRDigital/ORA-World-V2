@@ -19,7 +19,7 @@ import { SelectionTray } from "@/components/finishes/SelectionTray";
  */
 type Swatch = { name: string; src?: string; color?: string; group?: string };
 type Prod = { name: L; maker?: string; spec?: L; src: string; photo?: boolean };
-type Chapter = { photos?: string[]; products?: Prod[]; id: string; group: L; label: L; title: L; intro: L; brands: string; board: ImageRef; items: L[]; swatches?: Swatch[]; swatchLabel?: L };
+type Chapter = { wide?: { src: string; w: number; h: number }; photos?: string[]; products?: Prod[]; id: string; group: L; label: L; title: L; intro: L; brands: string; board: ImageRef; items: L[]; swatches?: Swatch[]; swatchLabel?: L };
 
 const board = (file: string, en: string, es: string): ImageRef => ({ src: `/images/presentation/${file}.jpg`, width: 1600, height: 776, focal: "50% 50%", alt: { en, es } });
 const KITCHEN: L = { en: "Kitchen", es: "Cocina" };
@@ -159,7 +159,8 @@ const CHAPTERS: Chapter[] = [
   },
   {
     id: "closets",
-    photos: ["/images/finishes/p/closet-2.jpg","/images/finishes/p/closet-1.jpg"],
+    // Client, 18 Nov: "make it large, a big image, like we had it before".
+    wide: { src: "/images/presentation/fin-closets.jpg", w: 1600, h: 776 },
     group: { en: "Closets", es: "Vestidores" },
     label: { en: "Closets", es: "Vestidores" },
     title: { en: "Walk-in closets, built in", es: "Vestidores a medida" },
@@ -326,6 +327,11 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
 
             {/* Client, 18 Nov: the finishes as part of the site, not as brochure boards: lifestyle photos as a clean
                 mosaic, each product on its own card (a card opens a pop-up). */}
+            {c.wide && (
+              <div className="mt-10 overflow-hidden rounded-[22px] bg-travertine md:mt-12">
+                <Image src={c.wide.src} alt={x(c.board.alt)} width={c.wide.w} height={c.wide.h} sizes="(max-width: 1279px) calc(100vw - 40px), 1280px" quality={88} className="h-auto w-full" />
+              </div>
+            )}
             {c.photos && (
               <div className={cn("mt-10 grid gap-3 md:mt-12 md:gap-4", c.photos.length === 3 ? "md:grid-cols-[1.4fr_1fr] md:grid-rows-2" : "md:grid-cols-[1.5fr_1fr]")}>
                 {c.photos.map((src, k) => (
