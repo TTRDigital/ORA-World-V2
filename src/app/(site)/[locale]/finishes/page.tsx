@@ -231,7 +231,7 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
   const es = locale === "es";
   const x = (l: L) => l[locale] || l.en;
   const tn = await getTranslations({ locale, namespace: "nav" });
-  const zoomLabels = { open: es ? "Ampliar" : "Enlarge", close: es ? "Cerrar" : "Close", zoom: es ? "Haga clic para acercar" : "Click to zoom in" };
+  const zoomLabels = { open: es ? "Ampliar" : "Enlarge", close: es ? "Cerrar" : "Close" };
   const paletteLabels = { all: es ? "Todos" : "All", add: es ? "Añadir a mi selección" : "Add to my selection", added: es ? "En mi selección" : "In my selection", preview: es ? "Vista previa" : "Preview" };
   const paletteGroups: [string, string][] = [
     ["wood", es ? "Maderas" : "Woods"],
