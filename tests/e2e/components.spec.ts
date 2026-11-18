@@ -122,28 +122,10 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#floor-plans h3").first()).toHaveText(/the penthouse/i);
   });
 
-  test("gallery: in the top navigation, filters, and the full-screen view", async ({ page, isMobile }) => {
-    await page.goto("/en/place/gallery");
-    await expect(page).toHaveURL(/\/en\/gallery$/);
-    await expect(page.locator("h1")).toHaveText(/gallery/i);
-    const tiles = page.locator("main ul li");
-    const all = await tiles.count();
-    expect(all).toBeGreaterThan(20);
-    await expect(page.locator("main video")).toHaveCount(0); // client, 18 Nov: images, not videos
-    await page.getByRole("button", { name: /^Residences/ }).click();
-    await expect.poll(() => tiles.count()).toBeLessThan(all);
-    await tiles.first().getByRole("button").click();
-    const dialog = page.locator("dialog[open]");
-    await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText(/01 \/ /);
-    await page.keyboard.press("ArrowRight");
-    await expect(dialog).toContainText(/02 \/ /);
-    await page.keyboard.press("Escape");
-    await expect(page.locator("dialog[open]")).toHaveCount(0);
-    if (!isMobile) {
-      await page.goto("/en");
-      await expect(page.locator("header nav").getByRole("link", { name: "Gallery" })).toHaveAttribute("href", "/en/gallery");
-    }
+  test("gallery page removed (client, 18 Nov): old addresses go home, no Gallery link", async ({ page, isMobile }) => {
+    await page.goto("/en/gallery");
+    await expect(page).toHaveURL(/\/en\/?$/);
+    if (!isMobile) await expect(page.locator("header nav").getByRole("link", { name: "Gallery" })).toHaveCount(0);
   });
 
 });

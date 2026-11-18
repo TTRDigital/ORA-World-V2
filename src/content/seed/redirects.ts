@@ -20,7 +20,9 @@ export const redirects: Redirect[] = [
   { from: "/contact", to: "/visit", permanent: true },
   { from: "/location", to: "/place", permanent: true },
   // Client, 17 Nov: the gallery is a top-level page now.
-  { from: "/place/gallery", to: "/gallery", permanent: true },
+  { from: "/place/gallery", to: "/", permanent: true },
+  // Client, 18 Nov: the gallery page removed.
+  { from: "/gallery", to: "/", permanent: true },
   { from: "/virtual-tour", to: "/place/tour", permanent: true },
   { from: "/floor-plans", to: "/residences/plans", permanent: true },
   { from: "/the-team", to: "/portfolio", permanent: true },

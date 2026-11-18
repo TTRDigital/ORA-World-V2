@@ -2,8 +2,6 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import { ArrowRight } from "@/components/ui/Icons";
 import { cn } from "@/lib/utils";
 import {
   PerspectiveCarousel,
@@ -103,10 +101,6 @@ export function RenderGalleryStage({
           {t("count", { n: pad(active + 1), total: pad(items.length) })}: {items[active]?.title}
         </p>
         <p className="small max-w-md text-bone/70">{t("hint")}</p>
-        <Link href="/gallery" className="pill pill-brass">
-          {t("open")}
-          <ArrowRight />
-        </Link>
       </div>
     </div>
   );

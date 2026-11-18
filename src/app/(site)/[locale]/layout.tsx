@@ -50,7 +50,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     { key: "act60" as const, href: "/act-60", image: tdm.aerialCoast },
     { key: "living" as const, href: "/living", image: life.poolTerrace },
     { key: "place" as const, href: "/place", image: tdm.aerialCoast },
-    { key: "gallery" as const, href: "/gallery", image: tdm.penthouseLiving },
   ];
   return (
     <html lang={locale} className={`${display.variable} ${sans.variable} ${script.variable} no-js`} suppressHydrationWarning>

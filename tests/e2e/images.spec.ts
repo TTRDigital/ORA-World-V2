@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import manifest from "../../src/content/images.json" with { type: "json" };
 
-const PAGES = ["/en", "/en/residences", "/en/residences/villas", "/en/residences/plans", "/en/longevity", "/en/living", "/en/place", "/en/place/tesoro-del-mar", "/en/gallery", "/en/finishes", "/en/portfolio", "/en/visit", "/es", "/es/living"];
+const PAGES = ["/en", "/en/residences", "/en/residences/villas", "/en/residences/plans", "/en/longevity", "/en/living", "/en/place", "/en/place/tesoro-del-mar", "/en/finishes", "/en/portfolio", "/en/visit", "/es", "/es/living"];
 const originals = new Map(Object.values(manifest).map((m) => [m.src, m.width]));
 
 /**
