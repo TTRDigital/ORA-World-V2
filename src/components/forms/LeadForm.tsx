@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
@@ -9,6 +9,7 @@ import { leadSchema, type LeadInput, type LeadVariant } from "@/lib/lead-schema"
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { Check } from "@/components/ui/Icons";
+import { readPicks, picksMessage, onPicks } from "@/lib/finish-selection";
 
 type Props = {
   variant: LeadVariant;
@@ -46,11 +47,28 @@ export function LeadForm({
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
     defaultValues: { variant, locale, page: pathname, role: "buyer", consent: undefined, ...defaults },
   });
+
+  // Client, 18 Nov: finishes picked on the Finishes page arrive in the message, ready to send (the visitor can edit it).
+  useEffect(() => {
+    let last = "";
+    const fill = () => {
+      const msg = picksMessage(readPicks(), locale === "es");
+      const cur = getValues("message") ?? "";
+      if (msg && (!cur || cur === last)) {
+        setValue("message", msg);
+        last = msg;
+      }
+    };
+    fill();
+    return onPicks(fill);
+  }, [getValues, setValue, locale]);
 
   const onSubmit = async (data: LeadInput) => {
     setStatus("busy");

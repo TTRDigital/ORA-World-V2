@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { ImageRef, L, Locale } from "@/content/types";
 import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
@@ -7,19 +6,22 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "@/components/ui/Icons";
 import { cn } from "@/lib/utils";
+import { scavolini } from "@/content/seed/finishes";
+import { FinishPalette } from "@/components/finishes/FinishPalette";
+import { ZoomBoard } from "@/components/finishes/ZoomBoard";
+import { SelectionTray } from "@/components/finishes/SelectionTray";
 
 /**
  * Finishes (client, 18 Nov: "a page all about the finishes in the presentation, really nice and clean, divided like the
  * presentation: kitchen finishes, kitchen appliances, counters, closets..."). Every brand, product and finish name is
  * as printed on the presentation's finish boards; selections are subject to the Offering Plan.
  */
-type Swatch = { name: string; src?: string; color?: string };
+type Swatch = { name: string; src?: string; color?: string; group?: string };
 type Chapter = { id: string; group: L; label: L; title: L; intro: L; brands: string; board: ImageRef; items: L[]; swatches?: Swatch[]; swatchLabel?: L };
 
 const board = (file: string, en: string, es: string): ImageRef => ({ src: `/images/presentation/${file}.jpg`, width: 1600, height: 776, focal: "50% 50%", alt: { en, es } });
 const KITCHEN: L = { en: "Kitchen", es: "Cocina" };
 
-const WOODS = ["Noce Tussah", "Noce Ulster", "Noce Saxony", "Noce Royal", "Noce Sunset", "Rovere Caffè", "Rovere Carbone", "Rovere Grafite", "Rovere Grano", "Rovere Dune", "Piana"];
 
 const CHAPTERS: Chapter[] = [
   {
@@ -39,8 +41,8 @@ const CHAPTERS: Chapter[] = [
       { en: "Matt and glossy lacquers", es: "Lacados mate y brillante" },
       { en: "Glass-front display cabinets", es: "Vitrinas con frente de vidrio" },
     ],
-    swatchLabel: { en: "A few of the woods", es: "Algunas de las maderas" },
-    swatches: WOODS.map((name, k) => ({ name, src: `/images/finishes/wood-${k}.jpg` })),
+    swatchLabel: { en: "All 71 finishes", es: "Los 71 acabados" },
+    swatches: scavolini,
   },
   {
     id: "countertops",
@@ -229,6 +231,14 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
   const es = locale === "es";
   const x = (l: L) => l[locale] || l.en;
   const tn = await getTranslations({ locale, namespace: "nav" });
+  const zoomLabels = { open: es ? "Ampliar" : "Enlarge", close: es ? "Cerrar" : "Close", zoom: es ? "Haga clic para acercar" : "Click to zoom in" };
+  const paletteLabels = { all: es ? "Todos" : "All", add: es ? "Añadir a mi selección" : "Add to my selection", added: es ? "En mi selección" : "In my selection", preview: es ? "Vista previa" : "Preview" };
+  const paletteGroups: [string, string][] = [
+    ["wood", es ? "Maderas" : "Woods"],
+    ["lacquer", es ? "Lacados" : "Lacquers"],
+    ["texture", es ? "Texturas" : "Textures"],
+    ["colour", es ? "Colores suaves" : "Soft colours"],
+  ];
   const hero: ImageRef = { src: "/images/presentation/kitchen.jpg", width: 2000, height: 1126, focal: "50% 50%", alt: { en: "The gourmet kitchen with Scavolini cabinetry and a glass wine wall", es: "La cocina gourmet con gabinetes Scavolini y cava de vidrio" } };
   return (
     <div className="flex flex-col">
@@ -274,42 +284,38 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
               </div>
             </div>
 
-            <figure className="mt-10 overflow-hidden rounded-[20px] bg-white ring-1 ring-travertine-deep/60 md:mt-12">
-              <Image src={c.board.src} alt={x(c.board.alt)} width={c.board.width} height={c.board.height} sizes="(max-width: 1279px) calc(100vw - 40px), 1280px" quality={85} className="h-auto w-full" />
-            </figure>
-
-            <div className={cn("mt-10 grid gap-10 md:mt-12", c.swatches ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-16" : "")}>
-              <ul className={cn("border-t border-travertine-deep", !c.swatches && "md:grid md:grid-cols-2 md:gap-x-12")}>
-                {c.items.map((it) => (
-                  <li key={it.en} className="grid grid-cols-[1.75rem_minmax(0,1fr)] items-baseline border-b border-travertine-deep py-3.5 text-[15px] text-charcoal">
-                    <span aria-hidden className="text-brass">—</span>
-                    {x(it)}
-                  </li>
-                ))}
-              </ul>
-              {c.swatches && (
-                <div>
-                  <p className="text-[11px] font-semibold tracking-[0.24em] text-charcoal-soft uppercase">{c.swatchLabel && x(c.swatchLabel)}</p>
-                  <ul className={cn("mt-4 grid gap-3", c.swatches.length > 6 ? "grid-cols-4 sm:grid-cols-6" : "grid-cols-2 sm:grid-cols-4")}>
-                    {c.swatches.map((s) => (
-                      <li key={s.name}>
-                        <span
-                          className={cn("relative block overflow-hidden rounded-[12px] ring-1 ring-travertine-deep/70", c.swatches!.length > 6 ? "aspect-square" : "aspect-[4/5]")}
-                          style={s.color ? { background: s.color } : undefined}
-                        >
-                          {/* Small sample chips, served as they are (no resizing). */}
-                          {s.src && <Image src={s.src} alt="" fill unoptimized className="object-cover" style={{ objectPosition: "50% 50%" }} />}
-                        </span>
-                        <span className="mt-2 block text-[12px] leading-tight text-charcoal">{s.name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+            <div className="mt-10 md:mt-12">
+              <ZoomBoard src={c.board.src} alt={x(c.board.alt)} width={c.board.width} height={c.board.height} labels={zoomLabels} />
             </div>
+
+            {c.swatches && (
+              <div className="mt-12 md:mt-14">
+                <FinishPalette chips={c.swatches} category={x(c.label)} dense={c.swatches.length > 8} groups={c.swatches.length > 8 ? paletteGroups : undefined} labels={{ ...paletteLabels, preview: c.swatchLabel ? x(c.swatchLabel) : paletteLabels.preview }} />
+              </div>
+            )}
+
+            <ul className="mt-10 border-t border-travertine-deep md:mt-12 md:grid md:grid-cols-2 md:gap-x-12">
+              {c.items.map((it) => (
+                <li key={it.en} className="grid grid-cols-[1.75rem_minmax(0,1fr)] items-baseline border-b border-travertine-deep py-3.5 text-[15px] text-charcoal">
+                  <span aria-hidden className="text-brass">—</span>
+                  {x(it)}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       ))}
+
+      <SelectionTray
+        labels={{
+          mine: es ? "Mi selección" : "My selection",
+          send: es ? "Enviar con mi consulta" : "Send with my inquiry",
+          clear: es ? "Borrar" : "Clear",
+          remove: es ? "Quitar" : "Remove",
+          show: es ? "Ver" : "Show",
+          hide: es ? "Ocultar" : "Hide",
+        }}
+      />
 
       <section aria-labelledby="finishes-close" data-tone="dark" className="on-dark bg-basalt px-5 py-16 text-center text-bone md:px-10 md:py-20">
         <div className="mx-auto max-w-[880px]">
@@ -317,7 +323,7 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
             {es ? "Elija sus acabados con nosotros" : "Choose your finishes with us"}
           </h2>
           <p className="mx-auto mt-4 max-w-[52ch] text-[16px] leading-relaxed text-bone/80">
-            {es ? "Le acompañamos en cada selección, de la madera de los gabinetes al acabado de los teclados." : "We walk you through every selection, from the cabinet wood to the keypad finish."}
+            {es ? "Añada a su selección los acabados que le gusten y envíela con su consulta; le acompañamos en cada elección." : "Add the finishes you like to your selection and send it with your inquiry; we walk you through every choice."}
           </p>
           <Link href="/#inquire" className="cta mt-8 inline-flex min-h-[52px] px-8" data-track="cta_inquire" data-track-label="finishes">
             {es ? "Consultar" : "Inquire"} <ArrowRight width={14} height={14} />
