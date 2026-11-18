@@ -472,25 +472,20 @@ export const cip = {
 
   /* 11 Inquire (brief §7: who he is talking to) */
   // Client, 17 Nov: the mission statement, near the end, just before the form.
+  // Client, 18 Nov: the ORA Mission text, word for word from the client's mission graphic.
   mission: {
-    label: { en: "Our mission", es: "Nuestra misión" } as L,
-    // The client's statement, word for word; *…* is set in brass italic.
-    lead: {
-      en: "Our mission is to revolutionize Puerto Rico’s real estate landscape by creating *luxurious, eco-friendly developments* that seamlessly blend modern elegance with the island’s natural beauty.",
-      es: "Nuestra misión es revolucionar el panorama inmobiliario de Puerto Rico creando *desarrollos de lujo y ecológicos* que integran la elegancia moderna con la belleza natural de la isla.",
+    label: { en: "ORA Mission", es: "Misión ORA" } as L,
+    lead: { en: "A world *beyond expectation*", es: "Un mundo *más allá de lo esperado*" } as L,
+    body: {
+      en: "More than a destination, Ora World is a movement. We exist to erase limitations and create a future where living is effortless, exhilarating and endlessly rewarding.",
+      es: "Más que un destino, Ora World es un movimiento. Existimos para borrar los límites y crear un futuro donde vivir sea fácil, emocionante e infinitamente gratificante.",
     } as L,
-    // "We are committed to delivering exceptional quality, innovative design, and unparalleled comfort in every project."
-    pillarsLabel: { en: "In every project", es: "En cada proyecto" } as L,
-    pillars: [
-      { en: "Exceptional quality", es: "Calidad excepcional" },
-      { en: "Innovative design", es: "Diseño innovador" },
-      { en: "Unparalleled comfort", es: "Confort sin igual" },
-    ] as L[],
     close: {
-      en: "We aim to enhance the lives of our residents and contribute positively to the island’s vibrant culture and economy.",
-      es: "Buscamos mejorar la vida de nuestros residentes y contribuir positivamente a la vibrante cultura y economía de la isla.",
+      en: "Our vision is to create the most extraordinary places to live on the planet, where luxury, longevity, and limitless opportunity converge.",
+      es: "Nuestra visión es crear los lugares más extraordinarios para vivir en el planeta, donde convergen el lujo, la longevidad y las oportunidades sin límites.",
     } as L,
   },
+
 
   inquire: {
     eyebrow: { en: "Inquire", es: "Consultar" } as L,

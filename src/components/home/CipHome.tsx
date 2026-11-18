@@ -78,7 +78,8 @@ export async function CipHome({ locale }: { locale: Locale }) {
     { key: "pool", kicker: es ? "Relajarse" : "Unwind", title: es ? "Piscina" : "Pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and poolside bar.", image: tdm.exteriorPull, ...c("p10-pool-cabana") },
     { key: "putting", kicker: es ? "Jugar" : "Play", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, ...c("p11-putting-green") },
     { key: "fitness", kicker: es ? "Moverse" : "Move", title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym, ...c("p14-gym") },
-    { key: "spa", kicker: es ? "Renovarse" : "Restore", title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: life.spa },
+    // Client, 18 Nov: the ocean-view spa film.
+    { key: "spa", kicker: es ? "Renovarse" : "Restore", title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: { ...life.spa, src: "/videos/clips/spa-ocean-poster.jpg", width: 1248, height: 704, focal: "50% 50%", alt: { en: "An ocean-view treatment room at the spa", es: "Una sala de tratamientos con vista al mar en el spa" } }, ...c("spa-ocean") },
     { key: "clubhouse", kicker: es ? "Reunirse" : "Gather", title: "Clubhouse", text: es ? "Club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
     { key: "luxury", kicker: es ? "Volver a casa" : "Come home", title: es ? "Vida de lujo" : "Luxury Living", text: es ? "Fachadas de vidrio y terrazas envolventes, pensadas para vivir dentro y fuera." : "Glass façades and wraparound terraces, designed for indoor and outdoor living.", image: { ...tdm.penthouseLiving, alt: { en: "A double-height living room with a floating marble stair", es: "Un salón de doble altura con escalera flotante de mármol" } }, ...v("penthouse"), playlist: ["/videos/luxury-suite.mp4", "/videos/luxury-kitchen.mp4"] },
   ];
@@ -291,23 +292,16 @@ export async function CipHome({ locale }: { locale: Locale }) {
             {x(cip.mission.label)}
             <span aria-hidden className="h-px w-10 bg-brass/70" />
           </p>
-          <h2 id="mission-title" className="mx-auto mt-8 max-w-[34ch] font-[family-name:var(--font-display)] text-[25px] leading-[1.32] font-normal text-balance text-charcoal md:text-[36px] md:leading-[1.26]" data-reveal>
+          <h2 id="mission-title" className="mx-auto mt-8 max-w-[22ch] font-[family-name:var(--font-display)] text-[34px] leading-[1.12] font-normal text-balance text-charcoal md:text-[56px] md:leading-[1.06]" data-reveal>
             {x(cip.mission.lead)
               .split("*")
               .map((part, k) => (k % 2 ? <em key={k} className="text-brass-ink italic">{part}</em> : <span key={k}>{part}</span>))}
           </h2>
-          <div className="mt-10 md:mt-12" data-reveal>
-            <p className="text-[11px] font-semibold tracking-[0.26em] text-charcoal-soft uppercase">{x(cip.mission.pillarsLabel)}</p>
-            <ul className="mt-6 grid border-y border-travertine-deep sm:grid-cols-3">
-              {cip.mission.pillars.map((pl, k) => (
-                <li key={k} className="flex flex-col items-center gap-2 border-travertine-deep px-4 py-6 not-last:border-b sm:not-last:border-r sm:not-last:border-b-0 md:py-8">
-                  <span className="font-[family-name:var(--font-display)] text-[30px] leading-none text-brass [font-variant-numeric:lining-nums] md:text-[36px]">{String(k + 1).padStart(2, "0")}</span>
-                  <span className="font-[family-name:var(--font-display)] text-[21px] text-charcoal md:text-[24px]">{x(pl)}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <p className="mx-auto mt-8 max-w-[56ch] text-[16px] leading-8 text-charcoal-soft md:mt-10 md:text-[17px]" data-reveal>
+          <p className="mx-auto mt-8 max-w-[58ch] text-[17px] leading-8 text-charcoal md:mt-10 md:text-[19px]" data-reveal>
+            {x(cip.mission.body)}
+          </p>
+          <span aria-hidden className="mx-auto mt-8 block h-px w-14 bg-brass md:mt-10" />
+          <p className="mx-auto mt-8 max-w-[52ch] font-[family-name:var(--font-display)] text-[21px] leading-snug text-charcoal-soft italic md:mt-10 md:text-[25px]" data-reveal>
             {x(cip.mission.close)}
           </p>
         </div>

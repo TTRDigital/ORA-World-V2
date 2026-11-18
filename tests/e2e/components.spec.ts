@@ -77,7 +77,7 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#residences")).toContainText("02 / 11");
     // Client, 17 Nov: the tower explorer ("Choose your altitude") in place of the floor plans.
     await expect(page.locator("#explorer")).toContainText(/choose your altitude/i);
-    await expect(page.locator("#mission")).toContainText(/revolutionize puerto rico.s real estate landscape/i);
+    await expect(page.locator("#mission")).toContainText(/more than a destination, ora world is a movement/i);
     await expect(page.locator("#inquire form")).toHaveCount(1);
     await expect(page.locator("#inquire").getByLabel(/what matters most to you/i)).toBeVisible();
   });
