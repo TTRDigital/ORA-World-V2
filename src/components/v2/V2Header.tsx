@@ -23,9 +23,10 @@ export function V2Header({ links, inquire, versionA, otherLocale, otherLabel }: 
   const dark = !solid && !open;
   return (
     <header className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-500", solid || open ? "bg-[var(--v2-cream)]/95 text-[var(--v2-green)] shadow-[0_1px_0_rgb(44_36_22/0.12)] backdrop-blur-md" : "bg-transparent text-white")}>
-      <div className="mx-auto flex h-[76px] max-w-[1600px] items-center justify-between gap-6 px-5 md:px-10">
+      <div className="mx-auto flex h-[84px] max-w-[1600px] lg:h-[104px] items-center justify-between gap-6 px-5 md:px-10">
         <Link href="/b" aria-label="ORA World" className="shrink-0">
-          {dark ? <Logo variant="white" height={56} className="h-[52px] w-auto" /> : <Logo variant="header" height={56} className="h-[52px] w-auto" />}
+          {/* Client, 18 Nov: a bigger logo, the size of Version A's. */}
+          {dark ? <Logo variant="white" height={96} responsive className="h-[64px] w-auto drop-shadow-[0_1px_8px_rgb(28_24_18/0.45)] lg:h-[80px]" /> : <Logo variant="header" height={96} responsive className="h-[64px] w-auto lg:h-[80px]" />}
         </Link>
         <nav aria-label="Version B" className="hidden xl:block">
           <ul className="flex items-center gap-6">
@@ -54,7 +55,7 @@ export function V2Header({ links, inquire, versionA, otherLocale, otherLabel }: 
         </div>
       </div>
       {open && (
-        <div className="h-[calc(100dvh-76px)] overflow-y-auto bg-[var(--v2-cream)] px-5 pt-6 pb-10 xl:hidden">
+        <div className="h-[calc(100dvh-84px)] overflow-y-auto bg-[var(--v2-cream)] px-5 pt-6 pb-10 xl:hidden">
           <ul className="grid gap-1">
             {links.map((l) => (
               <li key={l.href}>

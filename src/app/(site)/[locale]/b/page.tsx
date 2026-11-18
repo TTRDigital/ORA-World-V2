@@ -14,6 +14,7 @@ import { FloorExplorer } from "@/components/cip/FloorExplorer";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { Link } from "@/i18n/navigation";
 import { ScrollStatement } from "@/components/v2/ScrollStatement";
+import { BHeroFilm } from "@/components/v2/BHeroFilm";
 import { InteriorsGallery } from "@/components/cip/InteriorsGallery";
 import { interiorSlides } from "@/content/seed/interiorSlides";
 
@@ -90,16 +91,11 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
 
       {/* 1 · The film and the wordmark */}
       <section aria-label="Tesoro del Mar" className="relative isolate flex h-[100svh] min-h-[620px] flex-col items-center justify-center overflow-hidden text-white">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10"
-          dangerouslySetInnerHTML={{
-            __html: '<video autoplay muted loop playsinline preload="auto" poster="/videos/hero-film-poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><source src="/videos/hero-film.mp4" type="video/mp4"></video>',
-          }}
-        />
-        <span aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(28_24_18/0.45),rgb(28_24_18/0.2)_60%),linear-gradient(180deg,rgb(28_24_18/0.35),transparent_30%,transparent_70%,rgb(28_24_18/0.5))]" />
+        <BHeroFilm alt={es ? "Tesoro del Mar desde el aire, sobre una cala de la costa norte de Puerto Rico" : "Tesoro del Mar from the air, above a cove on the north coast of Puerto Rico"} pauseLabel={es ? "Pausar la película" : "Pause the film"} playLabel={es ? "Reproducir la película" : "Play the film"} />
+        {/* Client, 18 Nov: the film bright, as on Version A: only a soft shade behind the words and under the header. */}
+        <span aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_55%_40%_at_center,rgb(28_24_18/0.32),transparent_75%),linear-gradient(180deg,rgb(28_24_18/0.5),transparent_24%,transparent_82%,rgb(28_24_18/0.3))]" />
         <p className="hero-fade text-[11px] tracking-[0.42em] uppercase opacity-90">ORA World · Dorado, Puerto Rico</p>
-        <h1 className="hero-fade mt-6 px-5 text-center font-[family-name:var(--font-display)] text-[64px] leading-[0.92] font-normal tracking-[0.02em] md:text-[120px] lg:text-[150px]" style={{ animationDelay: "200ms" }}>
+        <h1 className="hero-fade mt-6 px-5 text-center [text-shadow:0_2px_30px_rgb(28_24_18/0.35)] font-[family-name:var(--font-display)] text-[64px] leading-[0.92] font-normal tracking-[0.02em] md:text-[120px] lg:text-[150px]" style={{ animationDelay: "200ms" }}>
           Tesoro del Mar
         </h1>
         <p className="hero-fade mt-6 text-[13px] tracking-[0.3em] uppercase opacity-90" style={{ animationDelay: "400ms" }}>
@@ -112,7 +108,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 2 · The statement band */}
-      <section id="about" aria-label={es ? "Nosotros" : "About"} className="scroll-mt-20">
+      <section id="about" aria-label={es ? "Nosotros" : "About"} className="scroll-mt-24 lg:scroll-mt-28">
         <ScrollStatement text={es ? "Más allá de lo esperado. Donde vive la longevidad." : "Beyond expectations. Where longevity lives."} />
       </section>
 
@@ -159,7 +155,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 5 · Amenities, on deep green */}
-      <section id="amenities" aria-labelledby="b-amen" className="scroll-mt-20 bg-[var(--v2-green)] px-5 py-20 text-[var(--v2-cream)] md:px-10 md:py-28">
+      <section id="amenities" aria-labelledby="b-amen" className="scroll-mt-24 lg:scroll-mt-28 bg-[var(--v2-green)] px-5 py-20 text-[var(--v2-cream)] md:px-10 md:py-28">
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow light>{es ? "Amenidades" : "Amenities"}</Eyebrow>
           <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-16">
@@ -183,7 +179,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 6 · Longevity, a full-bleed quote over the gym film */}
-      <section id="longevity" aria-labelledby="b-long" className="relative isolate flex min-h-[86svh] scroll-mt-20 items-center justify-center overflow-hidden px-5 py-24 text-center text-white md:px-10">
+      <section id="longevity" aria-labelledby="b-long" className="relative isolate flex min-h-[86svh] scroll-mt-24 lg:scroll-mt-28 items-center justify-center overflow-hidden px-5 py-24 text-center text-white md:px-10">
         <Media image={{ ...tdm.gym, ...clip("p14-gym") }} locale={locale} sizes="100vw" className="!absolute inset-0 -z-10" />
         <span aria-hidden className="absolute inset-0 -z-10 bg-[rgb(28_24_18/0.55)]" />
         <div className="max-w-[920px]">
@@ -204,7 +200,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 7 · Location, on cream */}
-      <section id="location" aria-labelledby="b-loc" className="scroll-mt-20 px-5 py-20 md:px-10 md:py-28">
+      <section id="location" aria-labelledby="b-loc" className="scroll-mt-24 lg:scroll-mt-28 px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow>{es ? "La ubicación" : "The location"}</Eyebrow>
           <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-16">
@@ -232,7 +228,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 8 · Act 60, on deep green (the audit brief's approved wording) */}
-      <section id="act-60" aria-labelledby="b-act" className="scroll-mt-20 bg-[var(--v2-green)] px-5 py-20 text-[var(--v2-cream)] md:px-10 md:py-28">
+      <section id="act-60" aria-labelledby="b-act" className="scroll-mt-24 lg:scroll-mt-28 bg-[var(--v2-green)] px-5 py-20 text-[var(--v2-cream)] md:px-10 md:py-28">
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow light>{es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"}</Eyebrow>
           <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-16">
@@ -257,7 +253,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
 
       {/* 9 · The residences (client, 18 Nov: "do this in Version B too"): the Inspired living spaces slides, with the
           Version B type: centred heading, the counter and arrows under it, the films running off the right edge. */}
-      <section id="residences" aria-labelledby="b-res" className="scroll-mt-20 overflow-hidden py-20 md:py-28">
+      <section id="residences" aria-labelledby="b-res" className="scroll-mt-24 lg:scroll-mt-28 overflow-hidden py-20 md:py-28">
         <div className="mx-auto max-w-[1440px] px-5 text-center md:px-10">
           <Eyebrow>{x(cip.interiors.eyebrow)}</Eyebrow>
           <h2 id="b-res" className="mx-auto mt-6 max-w-[20ch] font-[family-name:var(--font-display)] text-[40px] leading-[1.08] font-normal md:text-[64px]">
@@ -279,7 +275,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* Floor plans (client, 18 Nov: "put the floor plan like Version A"): the same explorer. */}
-      <section id="floor-plans" aria-labelledby="b-plans" className="scroll-mt-20 border-t border-[var(--v2-green)]/10 px-5 py-20 md:px-10 md:py-28">
+      <section id="floor-plans" aria-labelledby="b-plans" className="scroll-mt-24 lg:scroll-mt-28 border-t border-[var(--v2-green)]/10 px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow>{es ? "Planos · Torre 1" : "Floor plans · Tower 1"}</Eyebrow>
           <div className="mt-6 mb-10 flex flex-wrap items-end justify-between gap-4">
@@ -293,7 +289,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 10 · Inquire */}
-      <section id="inquire" aria-labelledby="b-inq" className="scroll-mt-20 bg-[var(--v2-sand)] px-5 py-20 md:px-10 md:py-28">
+      <section id="inquire" aria-labelledby="b-inq" className="scroll-mt-24 lg:scroll-mt-28 bg-[var(--v2-sand)] px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
           <div>
             <Eyebrow>{es ? "Consultar" : "Inquire"}</Eyebrow>

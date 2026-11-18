@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
       <BChapter tone="light" eyebrow={x(lp.programLabel)} title={x(lp.programTitle)} intro={x(lp.programIntro)}>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
           <BNumbered items={lp.program.map((it) => ({ title: x(it.title), text: x(it.text) }))} />
-          <div className="grid content-start gap-4 lg:sticky lg:top-[100px]">
+          <div className="grid content-start gap-4 lg:sticky lg:top-[128px]">
             <BMedia image={{ ...tdm.kitchenWine, ...clip("p16-apartment-kitchen") }} locale={locale} sizes="(max-width: 1023px) calc(100vw - 40px), 620px" className="aspect-[4/5]" />
             <p className="text-[12px] tracking-[0.22em] text-charcoal-soft uppercase">{x(lp.program[4].title)} · {x(lp.program[4].text)}</p>
           </div>

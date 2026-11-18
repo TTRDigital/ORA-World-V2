@@ -77,7 +77,7 @@ export function BChapter({
 }) {
   const dark = tone === "dark";
   return (
-    <section id={id} data-tone={dark ? "dark" : undefined} className={cn("scroll-mt-20 px-5 py-20 md:px-10 md:py-28", dark ? "on-dark bg-basalt text-bone" : tone === "sand" ? "bg-bone-deep text-basalt" : "bg-bone text-basalt")}>
+    <section id={id} data-tone={dark ? "dark" : undefined} className={cn("scroll-mt-24 lg:scroll-mt-28 px-5 py-20 md:px-10 md:py-28", dark ? "on-dark bg-basalt text-bone" : tone === "sand" ? "bg-bone-deep text-basalt" : "bg-bone text-basalt")}>
       <div className="mx-auto max-w-[1440px]">
         <Eyebrow light={dark}>{eyebrow}</Eyebrow>
         <div className={cn("mt-6", split && intro && "grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-16")}>

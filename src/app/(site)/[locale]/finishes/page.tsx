@@ -17,6 +17,7 @@ import { SelectionTray } from "@/components/finishes/SelectionTray";
  * as printed on the presentation's finish boards; selections are subject to the Offering Plan.
  */
 import { CHAPTERS } from "@/content/seed/finishChapters";
+import { tdm } from "@/content/seed/images";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -45,7 +46,8 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
     ["texture", es ? "Texturas" : "Textures"],
     ["colour", es ? "Colores suaves" : "Soft colours"],
   ];
-  const hero: ImageRef = { src: "/images/presentation/kitchen.jpg", width: 2000, height: 1126, focal: "50% 50%", alt: { en: "The gourmet kitchen with Scavolini cabinetry and a glass wine wall", es: "La cocina gourmet con gabinetes Scavolini y cava de vidrio" } };
+  // Client, 18 Nov: the banner plays the kitchen film, as on Version B.
+  const hero: ImageRef = { ...tdm.kitchenWine, video: "/videos/clips/p16-apartment-kitchen.mp4", poster: "/videos/clips/p16-apartment-kitchen-poster.jpg" };
   return (
     <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("finishes"), path: "/finishes" }])} />

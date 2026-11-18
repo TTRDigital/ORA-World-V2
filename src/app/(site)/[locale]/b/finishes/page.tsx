@@ -46,9 +46,9 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
       <BStatement text={es ? "Scavolini. Gaggenau. Dornbracht. Rimadesio." : "Scavolini. Gaggenau. Dornbracht. Rimadesio."} sub={es ? "Las marcas que eligen los mejores hogares del mundo, en cada residencia." : "The names the world's finest homes choose, in every residence."} />
 
       {CHAPTERS.map((c, i) => (
-        <section key={c.id} id={c.id} aria-labelledby={`b-${c.id}`} className={cn("scroll-mt-20 px-5 py-20 md:px-10 md:py-28", i % 2 ? "bg-bone-deep" : "bg-bone")}>
+        <section key={c.id} id={c.id} aria-labelledby={`b-${c.id}`} className={cn("scroll-mt-24 lg:scroll-mt-28 px-5 py-20 md:px-10 md:py-28", i % 2 ? "bg-bone-deep" : "bg-bone")}>
           <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.4fr)] lg:gap-16">
-            <div className="lg:sticky lg:top-[110px] lg:self-start">
+            <div className="lg:sticky lg:top-[128px] lg:self-start">
               <span aria-hidden className={cn("block font-[family-name:var(--font-display)] text-[88px] leading-none [font-variant-numeric:lining-nums] md:text-[120px]", i % 2 ? "text-brass-ink" : "text-brass")}>
                 {String(i + 1).padStart(2, "0")}
               </span>
