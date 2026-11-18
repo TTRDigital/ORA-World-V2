@@ -12,8 +12,6 @@ import { TowerStack } from "./TowerStack";
 import { TowerHint } from "./TowerHint";
 
 const BEDROOMS = ["any", "1", "2", "3", "4+"] as const;
-const VIEWS = ["ocean", "garden", "mountain"] as const;
-type View = (typeof VIEWS)[number];
 
 export function ExplorerStage({ locale, collections, note }: { locale: Locale; collections: Collection[]; note: string }) {
   const tx = useTranslations("explorer");
@@ -23,7 +21,6 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
   // The animated guide over the tower shows until the first hover, tap or pick.
   const [interacted, setInteracted] = useState(false);
   const [bedrooms, setBedrooms] = useState<(typeof BEDROOMS)[number]>("any");
-  const [view, setView] = useState<View | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [reduced, setReduced] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -57,11 +54,10 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
     const set = new Set<string>();
     for (const c of collections) {
       const bedOk = bedrooms === "any" || c.bedroomOptions.some((n) => (bedrooms === "4+" ? n >= 4 : n === Number(bedrooms)));
-      const viewOk = !view || c.views.includes(view);
-      if (bedOk && viewOk) set.add(c.slug);
+      if (bedOk) set.add(c.slug);
     }
     return set;
-  }, [collections, bedrooms, view]);
+  }, [collections, bedrooms]);
 
   // Keep the selection inside the matching set.
   const effectiveSelected = matching.has(selected) ? selected : (collections.find((c) => matching.has(c.slug))?.slug ?? selected);
@@ -85,16 +81,7 @@ export function ExplorerStage({ locale, collections, note }: { locale: Locale; c
             ))}
           </div>
         </div>
-        <div role="group" aria-label={tx("view")} className="flex items-center gap-2">
-          <span className="label mr-1 shrink-0">{tx("view")}</span>
-          <div className="no-scrollbar flex gap-2 overflow-x-auto">
-            {VIEWS.map((v) => (
-              <button key={v} type="button" className="chip shrink-0" aria-pressed={view === v} onClick={() => setView(view === v ? null : v)}>
-                {tx(v)}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Client, 18 Nov: no "View" (ocean / garden / mountain) filter. */}
       </div>
 
       {/* Tower stack, with the animated guide until the visitor interacts */}

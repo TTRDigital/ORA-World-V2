@@ -45,7 +45,7 @@ export const collections: Collection[] = [
   {
     slug: "residences",
     name: { en: "The Residences", es: "Las Residencias" },
-    tagline: { en: "129 contemporary apartments with ocean and garden views", es: "129 apartamentos contemporáneos con vistas al mar y al jardín" },
+    tagline: { en: "129 contemporary apartments with ocean views", es: "129 apartamentos contemporáneos con vistas al mar" },
     description: {
       en: [
         "Open-concept layouts that encourage flow and connection. Floor-to-ceiling windows invite the outdoors in, filling each space with light, views and serenity.",
