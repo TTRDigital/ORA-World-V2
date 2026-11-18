@@ -45,6 +45,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const tiles = [
     { key: "residences" as const, href: "/residences", image: tdm.aptLiving },
     { key: "longevity" as const, href: "/longevity", image: tdm.gym },
+    { key: "act60" as const, href: "/act-60", image: tdm.aerialCoast },
     { key: "living" as const, href: "/living", image: life.poolTerrace },
     { key: "place" as const, href: "/place", image: tdm.aerialCoast },
     { key: "plans" as const, href: "/residences/plans", image: tdm.kitchenDining },

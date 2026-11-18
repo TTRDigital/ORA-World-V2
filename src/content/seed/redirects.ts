@@ -12,9 +12,9 @@ export const redirects: Redirect[] = [
   { from: "/dorado-waterfalls", to: "/place/dorado-waterfalls", permanent: true },
   // The Invest page was removed (client, 15 Nov): its old addresses open the FAQ (its Act 60 answers).
   { from: "/invest", to: "/faq", permanent: false },
-  { from: "/tax-incentive", to: "/faq", permanent: true },
-  { from: "/incentives", to: "/faq", permanent: true },
-  { from: "/investment", to: "/faq", permanent: true },
+  { from: "/tax-incentive", to: "/act-60", permanent: true },
+  { from: "/incentives", to: "/act-60", permanent: true },
+  { from: "/investment", to: "/act-60", permanent: true },
   { from: "/resilience", to: "/faq", permanent: true },
   { from: "/contact-us", to: "/visit", permanent: true },
   { from: "/contact", to: "/visit", permanent: true },

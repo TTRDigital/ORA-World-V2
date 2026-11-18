@@ -24,7 +24,7 @@ export default async function PlansPage({ params }: { params: Promise<{ locale: 
       <PageHero locale={locale} label={tn("residences")} headline={tp("title")} intro={locale === "es" ? "Fase 1, Torre 1, pisos 5 al 18: 60 residencias en 15 distribuciones, de un dormitorio con estudio al penthouse de dos niveles. Todas con techos de 10 pies. Planos sujetos a cambios." : "Phase 1, Tower 1, floors 5 to 18: 60 residences in 15 layouts, from one bedroom with den to the two-level penthouse. Every residence has 10' ceilings. Plans are subject to change."} compact>
         {/* Client: the complete PDF is sent by the sales team after an inquiry, so the page offers "Inquire". */}
         <PillLink href="/#inquire" tone="brass">{locale === "es" ? "Consultar" : "Inquire"}</PillLink>
-        <PillLink href="/residences/compare" tone="ghost">{tp("compare")}</PillLink>
+        {/* Client, 18 Nov: no "Compare" button here. */}
       </PageHero>
       {/* Client, 17 Nov: the floor-plan explorer moved here from the homepage. */}
       <section id="floor-plans" aria-labelledby="floor-plans-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">

@@ -161,6 +161,33 @@ export const cip = {
   },
 
   /* 03 Fitness, nutrition and aging well (brief §3, §4) */
+  // Client, 18 Nov: the Longevity page made better from the owner's content brief (§1 promise, §4 services, §9 lines).
+  // No guaranteed outcome is stated (brief note); the owner is not named.
+  longevityPage: {
+    promiseLabel: { en: "The promise", es: "La promesa" } as L,
+    promiseTitle: { en: "A longer life. A better life.", es: "Una vida más larga. Una vida mejor." } as L,
+    steps: [
+      { title: { en: "Live longer", es: "Vivir más" }, text: { en: "Longevity is the foundation of our world.", es: "La longevidad es la base de nuestro mundo." } },
+      { title: { en: "Live better", es: "Vivir mejor" }, text: { en: "If you already have a longer life, don't you want to have a better life?", es: "Si ya tiene una vida más larga, ¿no quiere tener una vida mejor?" } },
+      { title: { en: "Stronger and fitter", es: "Más fuerte y en forma" }, text: { en: "A better life means being stronger and fitter, and feeling it.", es: "Una vida mejor es estar más fuerte y en forma, y sentirlo." } },
+      { title: { en: "Made easy", es: "Fácil" }, text: { en: "ORA World makes all of this easy for you.", es: "ORA World le facilita todo esto." } },
+    ] as { title: L; text: L }[],
+    promiseQuote: { en: "Have you heard about anything like this? Never. That's ORA World.", es: "¿Ha oído hablar de algo así? Nunca. Eso es ORA World." } as L,
+    programLabel: { en: "Your ORA program", es: "Su programa ORA" } as L,
+    programTitle: { en: "Seven things, done for you", es: "Siete cosas, hechas para usted" } as L,
+    programIntro: { en: "From the first scan to the meals on your table: the whole program, in the order you meet it.", es: "Del primer escaneo a las comidas en su mesa: todo el programa, en el orden en que lo vive." } as L,
+    program: [
+      { title: { en: "Total body scan", es: "Escaneo corporal completo" }, text: { en: "For every member, before anything hurts.", es: "Para cada miembro, antes de que algo duela." } },
+      { title: { en: "Personal interview", es: "Entrevista personal" }, text: { en: "Your goals, in your words: live longer, get fit.", es: "Sus metas, en sus palabras: vivir más, ponerse en forma." } },
+      { title: { en: "Nutritionists on staff", es: "Nutricionistas en el equipo" }, text: { en: "They set the specifics, like your daily protein.", es: "Fijan lo específico, como su proteína diaria." } },
+      { title: { en: "Meals you like", es: "Comidas a su gusto" }, text: { en: "Many options built around you, not one plan.", es: "Muchas opciones pensadas para usted, no un solo plan." } },
+      { title: { en: "The ghost kitchen", es: "La cocina fantasma" }, text: { en: "On the premises, cooking for you.", es: "En el lugar, cocinando para usted." } },
+      { title: { en: "A fitness program", es: "Un programa de ejercicio" }, text: { en: "Designed to make getting fit easy.", es: "Pensado para que ponerse en forma sea fácil." } },
+      { title: { en: "Cardiologists", es: "Cardiólogos" }, text: { en: "A connection to a list of heart specialists.", es: "Conexión con una lista de especialistas del corazón." } },
+    ] as { title: L; text: L }[],
+    closing: { en: "Longevity is the foundation of our world.", es: "La longevidad es la base de nuestro mundo." } as L,
+    closingSub: { en: "Tell us your goals; we'll show you how ORA World makes them easy.", es: "Cuéntenos sus metas; le mostraremos cómo ORA World las hace fáciles." } as L,
+  },
   fitness: {
     eyebrow: { en: "Fitness and nutrition", es: "Forma física y nutrición" } as L,
     title: { en: "Your body is self-made", es: "Su cuerpo se hace a sí mismo" } as L,
