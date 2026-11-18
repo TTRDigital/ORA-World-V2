@@ -9,49 +9,76 @@ import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
 import { TaxCalculator } from "@/components/cip/WhyWidgets";
 import { Link } from "@/i18n/navigation";
-import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 
 /**
- * Act 60 (client, 18 Nov: "a page about Act 60: tax, all about that and money saving"). Facts as already published on
- * the site (Act 60 as amended by Act 38-2026: 0% for applications filed by 31 Dec 2026, 4% from 1 Jan 2027, program to
- * 2055) and the owner's brief (§6: you only need to apply; an official, public law; accountants to guide you). The
- * calculator is an illustration. Tax team to confirm before go-live (CONTENT-TODO.md).
+ * Act 60 (client, 18 Nov). Copy follows the Act 60 audit brief ("ORA World | Act 60 publication review", Nov 17 2026):
+ * qualifying Puerto Rico income-tax treatment only, 0% through 2035 kept apart from 4% through 2055, no guarantees, bona
+ * fide residency explained (no day-count shortcut), deadline and decree caveats, illustrative calculator, primary
+ * sources linked. Puerto Rico tax counsel to approve before promotion; Spanish to be reviewed separately.
  */
+const SOURCES = [
+  { en: "Puerto Rico Act 38-2026 (official text)", es: "Ley 38-2026 de Puerto Rico (texto oficial)", href: "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf" },
+  { en: "DDEC Informative Bulletin 2026-004", es: "Boletín Informativo del DDEC 2026-004", href: "https://docs.pr.gov/files/DDEC/Aviso%20Pu%CC%81blico/Informative%20Bulletin%20DDEC%20NO.%202026-004%20Final.pdf" },
+  { en: "IRS Publication 570: bona fide residence", es: "Publicación 570 del IRS: residencia bona fide", href: "https://www.irs.gov/publications/p570" },
+  { en: "DDEC Incentives Portal", es: "Portal de Incentivos del DDEC", href: "https://incentives.ddec.pr.gov/" },
+];
 const COPY = {
   label: { en: "Act 60", es: "Ley 60" },
   headline: { en: "Keep more of what you earn", es: "Conserve más de lo que gana" },
-  figuresLabel: { en: "The numbers", es: "Las cifras" },
-  calcTitle: { en: "See what you keep", es: "Vea lo que conserva" },
+  figuresLabel: { en: "The program", es: "El programa" },
+  calcTitle: { en: "An illustrative comparison", es: "Una comparación ilustrativa" },
   calcText: {
-    en: "Move the slider to your investment gains. The bars compare the top federal rate on the mainland with Act 60, and the figure below is the money you keep.",
-    es: "Mueva el control hasta sus ganancias de inversión. Las barras comparan la tasa federal máxima en EE. UU. con la Ley 60, y la cifra de abajo es el dinero que conserva.",
+    en: "Explore an illustrative comparison of possible federal long-term capital gains tax and preferential Puerto Rico income-tax treatment for fully qualifying post-residency gains. These figures are examples, not estimates of your personal tax liability or guaranteed savings.",
+    es: "Explore una comparación ilustrativa entre un posible impuesto federal sobre ganancias de capital a largo plazo y el tratamiento preferencial del impuesto sobre la renta de Puerto Rico para ganancias posteriores a la residencia que califiquen por completo. Son ejemplos, no estimaciones de su obligación fiscal ni ahorros garantizados.",
   },
+  resLabel: { en: "Residency", es: "Residencia" },
+  resTitle: { en: "Establish bona fide Puerto Rico residency", es: "Establezca residencia bona fide en Puerto Rico" },
+  resIntro: {
+    en: "The IRS generally requires all three of the following. Other presence tests and year-of-move rules may apply; day counting alone is not enough.",
+    es: "El IRS generalmente exige las tres condiciones siguientes. Pueden aplicar otras pruebas de presencia y reglas del año de la mudanza; contar días no basta.",
+  },
+  resTests: [
+    { title: { en: "Presence", es: "Presencia" }, text: { en: "A qualifying presence test, often 183 days in Puerto Rico in the tax year.", es: "Una prueba de presencia que califique, a menudo 183 días en Puerto Rico en el año fiscal." } },
+    { title: { en: "Tax home", es: "Domicilio fiscal" }, text: { en: "Your tax home, your main place of work or business, is in Puerto Rico.", es: "Su domicilio fiscal, su lugar principal de trabajo o negocio, está en Puerto Rico." } },
+    { title: { en: "Closer connection", es: "Conexión más cercana" }, text: { en: "No closer connection to the United States or another foreign country.", es: "Sin una conexión más cercana con Estados Unidos u otro país extranjero." } },
+  ],
   qualifyLabel: { en: "How to qualify", es: "Cómo calificar" },
-  qualifyTitle: { en: "Four steps to your decree", es: "Cuatro pasos hacia su decreto" },
-  applyLine: { en: "You don't need to move now. You just need to apply.", es: "No necesita mudarse ahora. Solo necesita solicitar." },
-  applySub: {
-    en: "If your application is in by December 31, 2026, you keep the 0% rate, even if the process finishes next year.",
-    es: "Si su solicitud se presenta antes del 31 de diciembre de 2026, conserva la tasa del 0%, aunque el proceso termine el año siguiente.",
+  qualifyTitle: { en: "Four steps to a decree", es: "Cuatro pasos hacia un decreto" },
+  homeNote: {
+    en: "The primary-residence commitment is generally to acquire a home within two years after the decree; applications filed from 2027 have specific ownership and title rules. Buying a residence, including at Tesoro del Mar, does not by itself qualify you or automatically satisfy the rule.",
+    es: "El compromiso de residencia principal generalmente consiste en adquirir una vivienda dentro de los dos años posteriores al decreto; las solicitudes desde 2027 tienen reglas específicas de titularidad. Comprar una residencia, también en Tesoro del Mar, no le califica por sí solo ni cumple la regla automáticamente.",
   },
-  trust: [
+  features: [
     {
-      title: { en: "An official law", es: "Una ley oficial" },
-      text: { en: "Your decree is approved by the government of Puerto Rico, and nobody can take it away.", es: "Su decreto lo aprueba el gobierno de Puerto Rico, y nadie se lo puede quitar." },
+      kicker: { en: "2026 application deadline", es: "Fecha límite de solicitud 2026" },
+      title: { en: "December 31", es: "31 de diciembre" },
+      text: {
+        en: "DDEC guidance states that eligible applications received by 11:59 p.m. on December 31, 2026, based on the Incentives Portal filing-fee timestamp, retain the substantive terms in effect at filing even if approved later. Timely filing does not guarantee approval or replace residency and compliance requirements.",
+        es: "La guía del DDEC indica que las solicitudes elegibles recibidas hasta las 11:59 p. m. del 31 de diciembre de 2026, según la hora del pago de la tarifa en el Portal de Incentivos, conservan los términos vigentes al presentarlas aunque se aprueben después. Presentar a tiempo no garantiza la aprobación ni sustituye los requisitos de residencia y cumplimiento.",
+      },
     },
     {
-      title: { en: "Public and easy to verify", es: "Público y fácil de verificar" },
-      text: { en: "Look the law up yourself on the government's site, desarrollo.pr.gov.", es: "Consulte la ley usted mismo en el sitio del gobierno, desarrollo.pr.gov." },
-      href: "https://www.desarrollo.pr.gov",
+      kicker: { en: "Government decree", es: "Decreto del gobierno" },
+      title: { en: "Established under Puerto Rico law", es: "Establecido por la ley de Puerto Rico" },
+      text: {
+        en: "Act 60 tax decrees are issued by the Government of Puerto Rico and define the applicable benefits and obligations. Decrees remain subject to eligibility, compliance, governing law and potential revocation.",
+        es: "Los decretos de la Ley 60 los emite el Gobierno de Puerto Rico y definen los beneficios y obligaciones aplicables. Siguen sujetos a la elegibilidad, el cumplimiento, la ley aplicable y una posible revocación.",
+      },
     },
     {
-      title: { en: "Our accountants guide you", es: "Nuestros contadores le guían" },
-      text: { en: "Every situation is specific. ORA's team of accountants walks you through yours.", es: "Cada situación es específica. El equipo de contadores de ORA le acompaña en la suya." },
+      kicker: { en: "Advice", es: "Asesoría" },
+      title: { en: "Independent tax advisers", es: "Asesores fiscales independientes" },
+      text: {
+        en: "Every situation is specific. ORA World can connect you with independent Puerto Rico tax advisers to review yours.",
+        es: "Cada situación es específica. ORA World puede ponerle en contacto con asesores fiscales independientes de Puerto Rico para revisar la suya.",
+      },
     },
   ],
+  sourcesLabel: { en: "Official sources", es: "Fuentes oficiales" },
   faqLabel: { en: "Questions", es: "Preguntas" },
   faqTitle: { en: "Act 60, answered", es: "La Ley 60, respondida" },
-  closing: { en: "Start your application with ORA", es: "Comience su solicitud con ORA" },
+  closing: { en: "Talk to us about Act 60 and Tesoro del Mar", es: "Hable con nosotros sobre la Ley 60 y Tesoro del Mar" },
 } satisfies Record<string, unknown>;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
@@ -60,7 +87,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
     locale,
     path: "/act-60",
     title: locale === "es" ? "Ley 60: los beneficios fiscales de vivir en Puerto Rico" : "Act 60: the tax benefits of living in Puerto Rico",
-    description: t(cip.why.intro, locale),
+    description: t(cip.why.short, locale),
   });
 }
 
@@ -75,7 +102,7 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
   return (
     <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("act60"), path: "/act-60" }])} />
-      <PageHero locale={locale} label={x(COPY.label)} headline={x(COPY.headline)} intro={x(cip.why.intro)} image={tdm.aerialCoast} />
+      <PageHero locale={locale} label={x(COPY.label)} headline={x(COPY.headline)} intro={x(cip.why.short)} image={tdm.aerialCoast} />
 
       {/* The numbers and the calculator, on the dark band. */}
       <section id="calculator" aria-labelledby="calc-title" data-tone="dark" className="on-dark bg-basalt px-5 py-16 text-bone md:px-10 md:py-24">
@@ -84,7 +111,8 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
             <span className="rule" aria-hidden />
             {x(COPY.figuresLabel)}
           </p>
-          <dl className="mt-8 grid gap-8 border-b border-bone/15 pb-12 sm:grid-cols-3 md:pb-16">
+          <p className="mt-6 max-w-[72ch] text-[16px] leading-relaxed text-bone/85 md:text-[18px]">{x(cip.why.intro)}</p>
+          <dl className="mt-10 grid gap-8 sm:grid-cols-3 md:mt-12">
             {cip.why.stats.map((st) => (
               <div key={st.value}>
                 <dt className="sr-only">{x(st.label)}</dt>
@@ -93,6 +121,7 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
               </div>
             ))}
           </dl>
+          <p className="mt-8 max-w-[90ch] border-b border-bone/15 pb-12 text-[12.5px] leading-relaxed text-bone/65 md:pb-16">{x(cip.why.statsNote)}</p>
           <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:items-center lg:gap-16">
             <div>
               <h2 id="calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-bone md:text-[52px]">{x(COPY.calcTitle)}</h2>
@@ -103,22 +132,34 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      {/* Residency (client, 18 Nov, from the client's graphic): "Easy to meet residency requirements: 183 minus 30 days,
-          with one minute counted for the day". */}
-      <section aria-labelledby="residency-title" className="relative isolate overflow-hidden border-b border-travertine-deep/60 bg-white px-5 py-16 text-center md:px-10 md:py-24">
-        <Image src={tdm.exteriorPull.src} alt="" fill sizes="100vw" quality={70} className="-z-10 object-cover opacity-[0.09]" style={{ objectPosition: tdm.exteriorPull.focal }} />
-        <h2 id="residency-title" className="font-[family-name:var(--font-display)] text-[20px] tracking-[0.08em] text-brass-ink uppercase md:text-[28px]">
-          {es ? "Requisitos de residencia fáciles de cumplir" : "Easy to meet residency requirements"}
-        </h2>
-        <p className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-[family-name:var(--font-display)] text-brass md:mt-10 md:gap-x-10">
-          <span className="text-[88px] leading-none [font-variant-numeric:lining-nums] md:text-[150px]">183</span>
-          <span className="text-[26px] tracking-[0.08em] text-brass-ink uppercase md:text-[44px]">{es ? "menos" : "minus"}</span>
-          <span className="text-[88px] leading-none [font-variant-numeric:lining-nums] md:text-[150px]">30</span>
-          <span className="text-[26px] tracking-[0.08em] text-brass-ink uppercase md:text-[44px]">{es ? "días" : "days"}</span>
-        </p>
-        <p className="mt-8 text-[13px] tracking-[0.32em] text-charcoal-soft uppercase md:mt-10 md:text-[18px]">
-          {es ? "Con un minuto contado como el día" : "With one minute counted for the day"}
-        </p>
+      {/* Residency (Act 60 audit brief, 18 Nov: the "183 minus 30 days" graphic removed; bona fide residency explained). */}
+      <section aria-labelledby="residency-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-12">
+            <div>
+              <p className="eyebrow">
+                <span className="rule" aria-hidden />
+                {x(COPY.resLabel)}
+              </p>
+              <h2 id="residency-title" className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[52px]">
+                {x(COPY.resTitle)}
+              </h2>
+            </div>
+            <p className="max-w-[48ch] text-[16px] leading-relaxed text-charcoal-soft md:text-[17px]">{x(COPY.resIntro)}</p>
+          </div>
+          <ol className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3">
+            {COPY.resTests.map((r, k) => (
+              <li key={r.title.en} className="rounded-[20px] bg-white p-7 ring-1 ring-travertine-deep/70 md:p-8">
+                <span className="font-[family-name:var(--font-display)] text-[40px] leading-none text-brass [font-variant-numeric:lining-nums]">{String(k + 1).padStart(2, "0")}</span>
+                <h3 className="mt-6 font-[family-name:var(--font-display)] text-[26px] leading-tight text-charcoal">{x(r.title)}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-charcoal-soft">{x(r.text)}</p>
+              </li>
+            ))}
+          </ol>
+          <a href="https://www.irs.gov/publications/p570" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal">
+            {es ? "IRS Publicación 570" : "IRS Publication 570"} <ArrowUpRight width={13} height={13} />
+          </a>
+        </div>
       </section>
 
       {/* How to qualify. */}
@@ -137,30 +178,35 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
               </li>
             ))}
           </ol>
+          <p className="mt-6 max-w-[90ch] text-[14px] leading-relaxed text-charcoal-soft">{x(COPY.homeNote)}</p>
         </div>
       </section>
 
-      {/* "You just need to apply", and why it can be trusted. */}
-      <section aria-labelledby="apply-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
+      {/* Deadline, decree and advice (Act 60 audit brief, 18 Nov), with the official sources. */}
+      <section aria-labelledby="deadline-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <h2 id="apply-title" className="mx-auto max-w-[24ch] text-center font-[family-name:var(--font-display)] text-[32px] leading-[1.15] font-normal text-charcoal md:text-[48px]">
-            {x(COPY.applyLine)}
-          </h2>
-          <p className="mx-auto mt-5 max-w-[56ch] text-center text-[16px] leading-relaxed text-charcoal-soft md:text-[17px]">{x(COPY.applySub)}</p>
-          <ul className="mt-12 grid gap-4 md:mt-14 md:grid-cols-3">
-            {COPY.trust.map((tr) => (
-              <li key={tr.title.en} className="rounded-[20px] bg-bone p-6 ring-1 ring-travertine-deep/70 md:p-7">
-                <span aria-hidden className="block h-px w-10 bg-brass" />
-                <h3 className="mt-5 font-[family-name:var(--font-display)] text-[24px] leading-tight text-charcoal">{x(tr.title)}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-charcoal-soft">{x(tr.text)}</p>
-                {"href" in tr && tr.href && (
-                  <a href={tr.href} target="_blank" rel="noopener" className="mt-4 inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal">
-                    desarrollo.pr.gov <ArrowUpRight width={13} height={13} />
-                  </a>
-                )}
+          <h2 id="deadline-title" className="sr-only">{es ? "Fecha límite, decreto y asesoría" : "Deadline, decree and advice"}</h2>
+          <ul className="grid gap-4 md:grid-cols-3">
+            {COPY.features.map((f, k) => (
+              <li key={f.kicker.en} className={k === 0 ? "rounded-[20px] bg-basalt p-7 text-bone md:p-8" : "rounded-[20px] bg-bone p-7 ring-1 ring-travertine-deep/70 md:p-8"}>
+                <p className={`text-[11px] font-semibold tracking-[0.22em] uppercase ${k === 0 ? "text-brass-light" : "text-brass-ink"}`}>{x(f.kicker)}</p>
+                <h3 className={`mt-4 font-[family-name:var(--font-display)] leading-tight ${k === 0 ? "text-[40px] text-bone" : "text-[26px] text-charcoal"}`}>{x(f.title)}</h3>
+                <p className={`mt-3 text-[14.5px] leading-relaxed ${k === 0 ? "text-bone/80" : "text-charcoal-soft"}`}>{x(f.text)}</p>
               </li>
             ))}
           </ul>
+          <div className="mt-10 border-t border-travertine-deep pt-6">
+            <p className="text-[11px] font-semibold tracking-[0.24em] text-charcoal-soft uppercase">{x(COPY.sourcesLabel)}</p>
+            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-1">
+              {SOURCES.map((src) => (
+                <li key={src.href}>
+                  <a href={src.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-[14px] text-brass-ink underline-offset-4 hover:text-charcoal hover:underline">
+                    {es ? src.es : src.en} <ArrowUpRight width={12} height={12} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 

@@ -48,7 +48,8 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("main")).not.toContainText(/nine-day week/i);
     await expect(page.locator("#inquire")).toContainText(/brochure/i);
     // Never on the site: the owner's name, a guaranteed health outcome, helicopter promises.
-    const text = (await main.innerText()).toLowerCase();
+    // The tax calculator's legal disclaimer ("not ... guaranteed savings", Act 60 audit brief) is excluded from this guard.
+    const text = (await main.evaluate((el) => { const c = el.cloneNode(true) as HTMLElement; c.querySelectorAll("[data-widget=tax]").forEach((w) => w.remove()); return c.innerText || c.textContent || ""; })).toLowerCase();
     expect(text).not.toMatch(/dr\.? ?yan|guarantee|helicopter|helipad/);
     await expect(page.locator("#hero h1")).toHaveText(/beyond expectations/i);
     // Client, 16 Nov: only "Beyond expectations" on the banner, no other text.
@@ -96,8 +97,8 @@ test.describe("vendored components and the desktop menu", () => {
       /longevity is the foundation of our world/i,
     ])
       await expect(main.getByText(line).first()).toBeVisible();
-    await expect(page.locator("#fitness")).toContainText(/an outlier/i);
-    await expect(page.locator("#fitness")).toContainText(/work on it in advance/i);
+    // Client, 18 Nov: cleaner: one line in the fitness section.
+    await expect(page.locator("#fitness")).toContainText(/your body is self-made/i);
     // In the menu, and gone from the homepage.
     await page.goto("/en");
     await expect(page.locator("#longevity, #fitness")).toHaveCount(0);

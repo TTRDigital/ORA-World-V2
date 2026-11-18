@@ -113,11 +113,11 @@ export const cip = {
         // Client, 16 Nov: this card carries the Act 60 line; the tax section left the homepage.
         title: { en: "Act 60: the tax benefits of living here", es: "Ley 60: los beneficios fiscales de vivir aquí" } as L,
         text: {
-          en: "Puerto Rico's Act 60: 0% or 4% on investment income for residents, with our accountants to guide you.",
-          es: "La Ley 60 de Puerto Rico: 0% o 4% sobre ingresos de inversión para residentes, con nuestros contadores para guiarle.",
+          en: "Act 60 may offer qualifying residents preferential Puerto Rico tax on certain investment income. We can connect you with independent tax advisers.",
+          es: "La Ley 60 puede ofrecer a los residentes que califiquen un impuesto preferencial de Puerto Rico sobre ciertos ingresos de inversión. Podemos ponerle en contacto con asesores fiscales independientes.",
         } as L,
         href: "/faq",
-        tags: [{ en: "Act 60", es: "Ley 60" }, { en: "0% or 4%", es: "0% o 4%" }, { en: "Accountants", es: "Contadores" }] as L[],
+        tags: [{ en: "Act 60", es: "Ley 60" }, { en: "Qualifying income", es: "Ingresos que califiquen" }, { en: "Tax advisers", es: "Asesores fiscales" }] as L[],
       },
       {
         // Client, 17 Nov: card 4, from the "Built to endure" section (oraworld.com, "Resilient by design").
@@ -214,30 +214,43 @@ export const cip = {
      Act 38-2026 (signed 10 Mar 2026; incorp.com, thecfoassociates.com, procopio.com): resident-investor applications
      filed by 31 Dec 2026 keep 0% on interest, dividends and post-move capital gains, through 2035; filed from
      1 Jan 2027, 4%, with the program running to 2055. Tax team to confirm before go-live (CONTENT-TODO.md). */
+  // Client, 18 Nov: rewritten to the Act 60 audit brief ("ORA World | Act 60 publication review", Nov 17 2026): qualifying
+  // income and Puerto Rico tax only, 0% through 2035 kept apart from 4% through 2055, no guarantees. Sources: Act 38-2026,
+  // DDEC Bulletin 2026-004, IRS Pub. 570. Puerto Rico tax counsel to approve; Spanish to be reviewed separately.
   why: {
     eyebrow: { en: "Why Puerto Rico", es: "Por qué Puerto Rico" } as L,
     title: { en: "Act 60: the tax benefits of living here", es: "Ley 60: los beneficios fiscales de vivir aquí" } as L,
     intro: {
-      en: "Move to Puerto Rico, become a resident, and Act 60 lets you keep more of what you earn. Interest, dividends and capital gains made after you move are taxed at 0% if you apply by December 31, 2026, or 4% if you apply from 2027. And it is part of the United States: same passport, same dollar.",
-      es: "Múdese a Puerto Rico, hágase residente y la Ley 60 le permite conservar más de lo que gana. Los intereses, dividendos y ganancias de capital generados después de mudarse tributan al 0% si solicita hasta el 31 de diciembre de 2026, o al 4% si solicita desde 2027. Y es parte de Estados Unidos: el mismo pasaporte, el mismo dólar.",
+      en: "Puerto Rico's Act 60 Resident Individual Investor program may offer preferential Puerto Rico income-tax treatment to eligible individuals who establish bona fide residency. Qualifying applicants filing by December 31, 2026 may receive 0% Puerto Rico income tax on certain interest, dividends and post-residency capital appreciation through December 31, 2035. Applications filed beginning January 1, 2027 generally fall under a 4% regime extending through December 31, 2055. Eligibility, income sourcing, federal tax rules and decree compliance apply.",
+      es: "El programa de Inversionista Residente Individual de la Ley 60 de Puerto Rico puede ofrecer un tratamiento preferencial del impuesto sobre la renta de Puerto Rico a las personas elegibles que establezcan residencia bona fide. Quienes califiquen y soliciten hasta el 31 de diciembre de 2026 pueden recibir un 0% de impuesto sobre la renta de Puerto Rico sobre ciertos intereses, dividendos y plusvalías posteriores a la residencia hasta el 31 de diciembre de 2035. Las solicitudes presentadas desde el 1 de enero de 2027 generalmente entran en un régimen del 4% que se extiende hasta el 31 de diciembre de 2055. Aplican la elegibilidad, el origen de los ingresos, las reglas fiscales federales y el cumplimiento del decreto.",
     } as L,
-    body: { en: "To qualify, you:", es: "Para calificar, usted:" } as L,
+    // A short version for the hero, the homepage card and the page description.
+    short: {
+      en: "Act 60 may offer qualifying residents preferential Puerto Rico income-tax treatment on certain interest, dividends and post-residency capital appreciation.",
+      es: "La Ley 60 puede ofrecer a los residentes que califiquen un tratamiento preferencial del impuesto sobre la renta de Puerto Rico sobre ciertos intereses, dividendos y plusvalías posteriores a la residencia.",
+    } as L,
+    body: { en: "The four steps:", es: "Los cuatro pasos:" } as L,
     bullets: [
-      { en: "Become a bona fide resident (generally at least 183 days a year in Puerto Rico)", es: "Se convierte en residente bona fide (en general, al menos 183 días al año en Puerto Rico)" },
-      { en: "Buy a home in Puerto Rico within two years of your decree, such as a residence at Tesoro Del Mar", es: "Compra una vivienda en Puerto Rico dentro de los dos años del decreto, como una residencia en Tesoro Del Mar" },
-      { en: "Make a yearly donation to Puerto Rico nonprofits and file a yearly report", es: "Hace una donación anual a organizaciones sin fines de lucro de Puerto Rico y presenta un informe anual" },
-      { en: "Apply for your decree, with ORA's accountants guiding you", es: "Solicita su decreto, con la guía de los contadores de ORA" },
+      { en: "Review eligibility with an independent Puerto Rico tax professional.", es: "Revise su elegibilidad con un profesional tributario independiente de Puerto Rico." },
+      { en: "Submit a complete decree application through the official DDEC Incentives Portal.", es: "Presente una solicitud de decreto completa por el Portal de Incentivos oficial del DDEC." },
+      { en: "Establish bona fide Puerto Rico residency and satisfy the applicable primary-residence acquisition requirement.", es: "Establezca residencia bona fide en Puerto Rico y cumpla el requisito aplicable de adquirir una residencia principal." },
+      { en: "Maintain the decree's annual reporting, charitable-contribution and other compliance obligations.", es: "Mantenga los informes anuales, la contribución benéfica y las demás obligaciones de cumplimiento del decreto." },
     ] as L[],
     stats: [
-      { value: "0%", label: { en: "on interest, dividends and capital gains, if you apply by December 31, 2026", es: "sobre intereses, dividendos y ganancias de capital, si solicita hasta el 31 de diciembre de 2026" } as L },
-      { value: "4%", label: { en: "on the same income, if you apply from January 1, 2027", es: "sobre los mismos ingresos, si solicita desde el 1 de enero de 2027" } as L },
-      { value: "2055", label: { en: "the year the program now runs to", es: "el año hasta el que ahora llega el programa" } as L },
+      { value: "0%", label: { en: "Potential Puerto Rico rate for qualifying 2026 applicants; benefits generally expire December 31, 2035.", es: "Tasa potencial de Puerto Rico para solicitantes de 2026 que califiquen; los beneficios generalmente vencen el 31 de diciembre de 2035." } as L },
+      { value: "4%", label: { en: "Preferential Puerto Rico rate for qualifying applications filed from January 1, 2027.", es: "Tasa preferencial de Puerto Rico para solicitudes que califiquen presentadas desde el 1 de enero de 2027." } as L },
+      { value: "2055", label: { en: "End of the extended 4% program period, not the end date of the original 0% decree.", es: "Fin del período extendido del programa al 4%, no la fecha de vencimiento del decreto original al 0%." } as L },
     ],
+    statsNote: {
+      en: "Rates apply only to qualifying Puerto Rico income-tax treatment under an approved decree; they are not US federal rates. The 0% and 4% regimes are separate: a 2026 decree does not continue automatically at 4% after 2035.",
+      es: "Las tasas aplican solo al tratamiento que califique del impuesto sobre la renta de Puerto Rico bajo un decreto aprobado; no son tasas federales de EE. UU. Los regímenes del 0% y del 4% son distintos: un decreto de 2026 no continúa automáticamente al 4% después de 2035.",
+    } as L,
     note: {
-      en: "General information, not tax or legal advice. Based on Act 60 as amended by Act 38-2026; ORA's accountants will confirm what applies to you.",
-      es: "Información general, no asesoría fiscal ni legal. Basado en la Ley 60, enmendada por la Ley 38-2026; los contadores de ORA confirmarán lo que aplica a su caso.",
+      en: "General information, not tax or legal advice, and not an offer of tax results. Based on Act 60 as amended by Act 38-2026, DDEC Bulletin 2026-004 and IRS Publication 570. ORA World can connect you with independent Puerto Rico tax advisers; consult qualified tax counsel about your situation.",
+      es: "Información general, no asesoría fiscal ni legal, ni una oferta de resultados fiscales. Basado en la Ley 60 enmendada por la Ley 38-2026, el Boletín del DDEC 2026-004 y la Publicación 570 del IRS. ORA World puede ponerle en contacto con asesores fiscales independientes de Puerto Rico; consulte a un asesor fiscal calificado sobre su caso.",
     } as L,
   },
+
 
   /* 05 Step inside: tour and film */
   tour: {

@@ -65,7 +65,8 @@ const panel = "rounded-[20px] bg-basalt/55 p-5 text-bone ring-1 ring-bone/15 bac
 /* ---------------------------------------------------------------- Act 60: the tax calculator */
 
 // Long-term capital gains on the mainland at the top federal bracket: 20% + 3.8% net investment income tax (before
-// any state tax). Act 60: 0% for applications filed by 31 Dec 2026, 4% from 1 Jan 2027 (Act 38-2026, see the FAQ).
+// any state tax). Act 60: 0% for applications filed by 31 Dec 2026 (through 2035), 4% from 1 Jan 2027 (through 2055).
+// Labels and caveats per the Act 60 audit brief (18 Nov): illustrative, no "you keep", no guaranteed savings.
 const MAINLAND = 0.238;
 
 export function TaxCalculator({ es }: { es: boolean }) {
@@ -93,7 +94,7 @@ export function TaxCalculator({ es }: { es: boolean }) {
               onClick={() => setRate(r)}
               className={cn("min-h-8 rounded-full px-2.5 font-semibold transition-colors", rate === r ? "bg-bone text-basalt" : "text-bone/80 hover:text-bone")}
             >
-              {r === 0 ? (es ? "0% · hasta 2026" : "0% · by 2026") : es ? "4% · desde 2027" : "4% · from 2027"}
+              {r === 0 ? (es ? "0% · solicitudes 2026" : "0% · 2026 applications") : es ? "4% · desde 2027" : "4% · from 2027"}
             </button>
           ))}
         </div>
@@ -101,7 +102,7 @@ export function TaxCalculator({ es }: { es: boolean }) {
 
       <label className="mt-5 block">
         <span className="flex items-baseline justify-between text-[13px] text-bone/80">
-          {es ? "Ganancias de inversión" : "Investment gains"}
+          {es ? "Ganancias posteriores a la residencia que califiquen" : "Fully qualifying post-residency gains"}
           <b className="font-[family-name:var(--font-display)] text-[22px] font-normal text-bone tabular-nums">{money.format(gain)}</b>
         </span>
         <input
@@ -117,20 +118,20 @@ export function TaxCalculator({ es }: { es: boolean }) {
       </label>
 
       <div className="mt-4 grid gap-3 text-[13px]">
-        <Bar label={es ? "Impuesto federal en EE. UU. (23.8%)" : "US mainland federal tax (23.8%)"} value={money.format(shownMain)} pct={seen ? 100 : 0} tone="muted" />
-        <Bar label={`${es ? "En Puerto Rico con Ley 60" : "In Puerto Rico with Act 60"} (${rate === 0 ? "0%" : "4%"})`} value={money.format(shownPr)} pct={seen ? (rate / MAINLAND) * 100 : 0} tone="brass" />
+        <Bar label={es ? "Impuesto federal ilustrativo en EE. UU. (23.8%)" : "Illustrative mainland federal tax (23.8%)"} value={money.format(shownMain)} pct={seen ? 100 : 0} tone="muted" />
+        <Bar label={`${es ? "Impuesto ilustrativo de Puerto Rico, régimen elegido" : "Illustrative Puerto Rico tax under selected regime"} (${rate === 0 ? "0%" : "4%"})`} value={money.format(shownPr)} pct={seen ? (rate / MAINLAND) * 100 : 0} tone="brass" />
       </div>
 
       <div className="mt-5 flex items-end justify-between gap-3 border-t border-bone/15 pt-4">
-        <p className="text-[13px] text-bone/80">{es ? "Usted conserva" : "You keep"}</p>
-        <p className="why-glow font-[family-name:var(--font-display)] text-[34px] leading-none text-brass-light tabular-nums md:text-[40px]" aria-live="polite">
+        <p className="text-[13px] text-bone/80">{es ? "Diferencia fiscal ilustrativa" : "Illustrative tax difference"}</p>
+        <p className="font-[family-name:var(--font-display)] text-[34px] leading-none text-brass-light tabular-nums md:text-[40px]" aria-live="polite">
           {money.format(saved)}
         </p>
       </div>
       <p className="mt-3 text-[10.5px] leading-snug text-bone/60">
         {es
-          ? "Ilustración: ganancias de capital a largo plazo; tasa federal máxima 20% + 3.8% NIIT, sin impuestos estatales. No es asesoría fiscal."
-          : "Illustration: long-term capital gains; top federal rate 20% + 3.8% NIIT, before state tax. Not tax advice."}
+          ? "Comparación ilustrativa entre un posible impuesto federal a largo plazo (tasa máxima 20% + 3.8% NIIT) y el tratamiento preferencial de Puerto Rico para ganancias posteriores a la residencia que califiquen por completo. Son ejemplos, no una estimación de su obligación fiscal ni un ahorro garantizado; el resultado real depende de la residencia fiscal, el origen de los ingresos, la plusvalía previa a la mudanza, las reglas federales y de Puerto Rico y los términos del decreto. Consulte a un asesor fiscal calificado."
+          : "An illustrative comparison of possible federal long-term capital gains tax (top 20% rate + 3.8% NIIT) and preferential Puerto Rico income-tax treatment for fully qualifying post-residency gains. These figures are examples, not estimates of your personal tax liability or guaranteed savings. Actual treatment depends on tax residency, sourcing, pre-relocation appreciation, federal and Puerto Rico rules, and decree terms. Consult qualified tax counsel."}
       </p>
     </div>
   );
