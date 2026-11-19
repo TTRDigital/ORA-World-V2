@@ -2,8 +2,8 @@
 
 import { usePathname } from "next/navigation";
 
-/** Version B (/en/b, /es/b) brings its own header and footer: hide Version A's shared chrome there. */
-export const isVersionB = (path: string | null) => !!path && /^\/(en|es)\/b(\/|$)/.test(path);
+/** Versions B (/en/b) and C (/en/c) bring their own header and footer: hide Version A's shared chrome there. */
+export const isVersionB = (path: string | null) => !!path && /^\/(en|es)\/(b|c)(\/|$)/.test(path);
 
 export function ChromeGate({ children }: { children: React.ReactNode }) {
   const path = usePathname();

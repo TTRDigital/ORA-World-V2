@@ -136,6 +136,20 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("main")).not.toContainText(/nobody can take|you keep|183 minus/i);
   });
 
+  test("Version C (/en/c) has its own header and footer, the three chapters, and keeps visitors inside", async ({ page }) => {
+    await page.goto("/en/c");
+    await expect(page.locator("[data-version-c]")).toHaveCount(1);
+    await expect(page.locator("header")).toHaveCount(1); // Version C's own masthead only
+    await expect(page.locator("h1")).toHaveText(/a private residence for a longer, better life/i);
+    for (const id of ["health", "wealth", "home", "setting", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    await expect(page.locator("#inquire form")).toHaveCount(1);
+    await expect(page.locator('a[href^="tel:"]').first()).toBeAttached();
+    // Shared links point to Version C pages, not Version A.
+    await expect.poll(() => page.locator('[data-version-c] a[href="/en/act-60"]:not([data-keep])').count()).toBe(0);
+    await expect(page.locator('[data-version-c] a[href="/en/c/act-60"]').first()).toBeAttached();
+    await expect(page.locator("main")).not.toContainText(/nobody can take|you keep|183 minus/i);
+  });
+
   test("gallery page removed (client, 18 Nov): old addresses go home, no Gallery link", async ({ page, isMobile }) => {
     await page.goto("/en/gallery");
     await expect(page).toHaveURL(/\/en\/?$/);
