@@ -15,7 +15,6 @@ export default async function VersionCLayout({ children, params }: { children: R
     { href: "/c/longevity", label: es ? "Longevidad" : "Longevity" },
     { href: "/c/act-60", label: es ? "Ley 60" : "Act 60" },
     { href: "/c/finishes", label: es ? "Acabados" : "Finishes" },
-    { href: "/c#amenities", label: es ? "Amenidades" : "Amenities" },
     { href: "/c#location", label: es ? "Ubicación" : "Location" },
   ];
   return (
