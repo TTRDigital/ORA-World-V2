@@ -57,16 +57,18 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
   const jet = { ...still("/videos/clips/jet-arrival-poster.jpg", 1632, 544, "The ORA World jet on the apron", "El jet de ORA World en la plataforma"), focal: "24% 60%", ...clip("jet-arrival") };
   const spa = { ...still("/videos/clips/spa-ocean-poster.jpg", 1248, 704, "An ocean-view treatment room at the spa", "Una sala de tratamientos con vista al mar en el spa"), ...clip("spa-ocean") };
   const lobby = { ...tdm.foyerAtrium, ...clip("lobby-combined") };
+  // Client, 19 Nov: the gym film framed on the woman walking on the treadmill (she sits right of centre).
+  const gym = { ...tdm.gym, focal: "78% 50%", ...clip("p14-gym") };
 
   const pillars = [
-    { title: es ? "Longevidad incluida" : "Longevity, built in", text: es ? "Escaneo corporal completo, nutricionistas, una cocina fantasma y un programa de ejercicio fácil." : "A total body scan, nutritionists, a ghost kitchen and an easy fitness program.", image: tdm.gym },
+    { title: es ? "Longevidad incluida" : "Longevity, built in", text: es ? "Escaneo corporal completo, nutricionistas, una cocina fantasma y un programa de ejercicio fácil." : "A total body scan, nutritionists, a ghost kitchen and an easy fitness program.", image: gym },
     { title: es ? "El mar a su puerta" : "The sea at your door", text: es ? "Sobre una cala turquesa de la costa norte de Puerto Rico." : "Above a turquoise cove on Puerto Rico's north coast.", image: tdm.aerialCoast },
     { title: es ? "Todo, resuelto" : "Everything, made easy", text: es ? "Un vestíbulo atendido 24/7, el auto de la casa y vuelos chárter privados." : "A lobby attended 24/7, a house car and private charter flights.", image: lobby },
   ];
   const amenities = [
     { title: es ? "La piscina" : "The pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and pool bar.", image: tdm.exteriorPull },
     { title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos entre las torres." : "Eighteen holes between the towers.", image: tdm.exteriorGolf },
-    { title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: tdm.gym },
+    { title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: gym },
     { title: "Spa", text: es ? "Masajes, tratamientos y salón, frente al mar." : "Massage, treatments and salon, facing the sea.", image: spa },
     { title: es ? "Vestíbulo" : "The lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: lobby },
     { title: es ? "Llegada privada" : "Private arrival", text: es ? "Vuelos chárter privados y el auto de la casa." : "Private charter flights and a house car.", image: jet },
@@ -173,7 +175,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
 
       {/* 6 · Longevity, a full-bleed quote over the gym film */}
       <section id="longevity" aria-labelledby="b-long" className="relative isolate flex min-h-[86svh] scroll-mt-24 lg:scroll-mt-28 items-center justify-center overflow-hidden px-5 py-24 text-center text-white md:px-10">
-        <Media image={{ ...tdm.gym, ...clip("p14-gym") }} locale={locale} sizes="100vw" className="!absolute inset-0 -z-10" />
+        <Media image={gym} locale={locale} sizes="100vw" className="!absolute inset-0 -z-10" />
         <span aria-hidden className="absolute inset-0 -z-10 bg-[rgb(28_24_18/0.55)]" />
         <div className="max-w-[920px]">
           <Eyebrow light>{es ? "La longevidad es una forma de vivir" : "Longevity is a way of living"}</Eyebrow>

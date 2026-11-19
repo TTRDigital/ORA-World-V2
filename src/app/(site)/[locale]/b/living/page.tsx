@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
           items={[
             { kicker: es ? "Mañana" : "Morning", title: es ? "La piscina" : "The pool", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and pool bar.", image: { ...tdm.exteriorPull, ...clip("p10-pool-cabana") } },
             { kicker: es ? "Mediodía" : "Midday", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos entre las torres." : "Eighteen holes between the towers.", image: { ...tdm.exteriorGolf, ...clip("p11-putting-green") } },
-            { kicker: es ? "Tarde" : "Afternoon", title: es ? "Gimnasio" : "Fitness", text: es ? "Con vista al jardín." : "With garden views.", image: { ...tdm.gym, ...clip("p14-gym") } },
+            { kicker: es ? "Tarde" : "Afternoon", title: es ? "Gimnasio" : "Fitness", text: es ? "Con vista al jardín." : "With garden views.", image: { ...tdm.gym, focal: "78% 50%", ...clip("p14-gym") } },
             { kicker: es ? "Atardecer" : "Sunset", title: "Spa", text: es ? "Tratamientos frente al mar." : "Treatments facing the sea.", image: { ...spa, ...clip("spa-ocean") } },
           ]}
         />

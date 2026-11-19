@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
           ))}
         </ul>
       </BChapter>
-      <BFullBleed image={{ ...tdm.gym, ...clip("p14-gym") }} locale={locale} eyebrow={x(cip.prevention.eyebrow)} title={x(cip.prevention.title)}>
+      <BFullBleed image={{ ...tdm.gym, focal: "78% 50%", ...clip("p14-gym") }} locale={locale} eyebrow={x(cip.prevention.eyebrow)} title={x(cip.prevention.title)}>
         <p className="mt-6 max-w-[48ch] text-[16px] leading-relaxed text-white/85 md:text-[18px]">{x(cip.prevention.intro)}</p>
         <p className="mt-10 max-w-[24ch] font-[family-name:var(--font-display)] text-[28px] leading-snug text-brass-light italic md:text-[36px]">“{x(cip.prevention.question)}”</p>
       </BFullBleed>
