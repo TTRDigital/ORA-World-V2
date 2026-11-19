@@ -214,27 +214,33 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
         </div>
       </section>
 
-      {/* 8 · Act 60, on deep green (the audit brief's approved wording) */}
-      <section id="act-60" aria-labelledby="b-act" className="scroll-mt-24 lg:scroll-mt-28 bg-[var(--v2-green)] px-5 py-20 text-[var(--v2-cream)] md:px-10 md:py-28">
-        <div className="mx-auto max-w-[1440px]">
+      {/* 8 · Act 60 (client, 19 Nov: "make it better", then "too busy"): centred and quiet: the title, one line, the three
+          figures in a row with their qualifying labels (cip.why, the audit brief's wording), one call to the Act 60 page
+          and a single line of fine print; the full notes and sources are on that page. */}
+      <section id="act-60" aria-labelledby="b-act" className="scroll-mt-24 lg:scroll-mt-28 bg-[var(--v2-green)] px-5 py-24 text-center text-[var(--v2-cream)] md:px-10 md:py-32">
+        <div className="mx-auto max-w-[1200px]">
           <Eyebrow light>{es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"}</Eyebrow>
-          <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-16">
-            <h2 id="b-act" className="font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[64px]">{es ? "Conserve más de lo que gana." : "Keep more of what you earn."}</h2>
-            <p className="max-w-[52ch] text-[16px] leading-relaxed text-[var(--v2-cream)]/75">{x(cip.why.short)}</p>
-          </div>
-          <dl className="mt-14 grid gap-10 border-t border-[var(--v2-cream)]/20 pt-10 sm:grid-cols-3">
+          <h2 id="b-act" className="mt-6 font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[64px]">
+            {es ? "Conserve más de lo que gana." : "Keep more of what you earn."}
+          </h2>
+          <p className="mx-auto mt-6 max-w-[52ch] text-[16px] leading-relaxed text-[var(--v2-cream)]/70 md:text-[17px]">{x(cip.why.short)}</p>
+          <dl className="mt-16 grid gap-12 md:grid-cols-3 md:gap-0 md:divide-x md:divide-[var(--v2-cream)]/15">
             {cip.why.stats.map((st) => (
-              <div key={st.value}>
+              <div key={st.value} className="md:px-10">
                 <dt className="sr-only">{x(st.label)}</dt>
                 <dd className="font-[family-name:var(--font-display)] text-[72px] leading-none text-brass-light [font-variant-numeric:lining-nums] md:text-[96px]">{st.value}</dd>
-                <dd aria-hidden className="mt-3 max-w-[32ch] text-[14px] leading-relaxed text-[var(--v2-cream)]/70">{x(st.label)}</dd>
+                <dd aria-hidden className="mx-auto mt-5 max-w-[30ch] text-[14px] leading-relaxed text-[var(--v2-cream)]/65">{x(st.label)}</dd>
               </div>
             ))}
           </dl>
-          <p className="mt-8 max-w-[90ch] text-[12.5px] leading-relaxed text-[var(--v2-cream)]/55">{x(cip.why.statsNote)} {x(cip.why.note)}</p>
-          <Link href="/act-60" className="mt-8 inline-flex min-h-11 items-center border border-[var(--v2-cream)]/60 px-6 text-[11px] tracking-[0.26em] uppercase hover:bg-[var(--v2-cream)] hover:text-[var(--v2-green)]">
+          <Link href="/act-60" className="mt-16 inline-flex min-h-11 items-center border border-[var(--v2-cream)]/50 px-7 text-[11px] tracking-[0.26em] uppercase transition-colors hover:bg-[var(--v2-cream)] hover:text-[var(--v2-green)]">
             {es ? "La Ley 60, en detalle" : "Act 60, in detail"}
           </Link>
+          <p className="mx-auto mt-10 max-w-[80ch] text-[12px] leading-relaxed text-[var(--v2-cream)]/50">
+            {es
+              ? "Tasas de Puerto Rico bajo un decreto aprobado, no tasas federales de EE. UU. Información general, no asesoría fiscal ni legal; consulte a un asesor fiscal calificado."
+              : "Puerto Rico rates under an approved decree, not US federal rates. General information, not tax or legal advice; consult qualified tax counsel."}
+          </p>
         </div>
       </section>
 
