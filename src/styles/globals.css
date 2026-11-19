@@ -942,11 +942,14 @@ main section[id] { scroll-margin-top: 96px; }
 .hero-fade { animation: hero-fade 900ms ease-out both; }
 /* Typed headline (client, 17 Nov: "when you land on the website, have it type 'Beyond expectations'"). */
 .type-ch { position: relative; opacity: 0; animation: type-ch 1ms linear forwards; animation-delay: calc(var(--type-start, 600ms) + var(--c, 0) * var(--type-step, 95ms)); }
-.type-ch::after { content: ""; position: absolute; top: 0.14em; bottom: 0.06em; right: -0.07em; width: 0.045em; min-width: 2px; background: currentColor; opacity: 0; animation: type-caret var(--type-step, 95ms) steps(1, end) forwards; animation-delay: inherit; }
-.type-ch[data-last]::after { animation: type-caret-end 2600ms steps(1, end) forwards; animation-delay: inherit; }
+/* Client, 19 Nov (iPhone): Safari kept every letter's caret showing ("B|e|y|o|n|d"). The caret keyframes now end at
+   opacity 0 with linear timing (no step end-values for Safari to hold), and each caret's delay is computed on the
+   pseudo-element itself rather than inherited. */
+.type-ch::after { content: ""; position: absolute; top: 0.14em; bottom: 0.06em; right: -0.07em; width: 0.045em; min-width: 2px; background: currentColor; opacity: 0; animation: type-caret var(--type-step, 95ms) linear forwards; animation-delay: calc(var(--type-start, 600ms) + var(--c, 0) * var(--type-step, 95ms)); }
+.type-ch[data-last]::after { animation: type-caret-end 2600ms linear forwards; animation-delay: calc(var(--type-start, 600ms) + var(--c, 0) * var(--type-step, 95ms)); }
 @keyframes type-ch { to { opacity: 1; } }
-@keyframes type-caret { 0% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes type-caret-end { 0%, 18%, 40%, 62% { opacity: 1; } 9%, 29%, 51%, 73%, 100% { opacity: 0; } }
+@keyframes type-caret { 0%, 99% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes type-caret-end { 0%, 17.9% { opacity: 1; } 18%, 28.9% { opacity: 0; } 29%, 39.9% { opacity: 1; } 40%, 50.9% { opacity: 0; } 51%, 61.9% { opacity: 1; } 62%, 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   .hero-word, .hero-fade { animation: none; }
   .type-ch { opacity: 1; animation: none; }
