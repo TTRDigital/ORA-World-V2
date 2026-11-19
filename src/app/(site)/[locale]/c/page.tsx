@@ -129,18 +129,15 @@ export default async function VersionC({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* Introduction (client, 19 Nov: "on the right, a slice that goes by itself every two seconds, like flashcards"):
-          the words, then the index beside a panel that slides through its cards on its own. */}
+          the words and the index on the left, a small card on the right that changes on its own (19 Nov: "very small, one clean section"). */}
       <section aria-labelledby="c-intro" className="bg-white px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto max-w-[1200px]">
-          <div className="max-w-[760px]">
+          <CReel locale={locale} items={reel}>
             <CEyebrow>Tesoro del Mar</CEyebrow>
             <CTitle id="c-intro" caps={es ? "Donde vive" : "Where longevity"} accent={es ? "la longevidad" : "lives"} className="mt-5 text-[34px] leading-[1.15] md:text-[46px]" />
             <p className="mt-6 text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">{x(cip.who.intro)}</p>
             <p className="mt-4 text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">{x(cip.who.body)}</p>
-          </div>
-          <div className="mt-12">
-            <CReel locale={locale} items={reel} />
-          </div>
+          </CReel>
         </div>
       </section>
 
