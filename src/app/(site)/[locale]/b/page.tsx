@@ -107,15 +107,18 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 3 · Why ORA World, on deep green */}
-      <section aria-labelledby="b-why" className="bg-[var(--v2-green)] px-5 py-20 text-[var(--v2-cream)] md:px-10 md:py-28">
+      <section aria-labelledby="b-why" className="bg-[var(--v2-green)] px-5 py-16 text-[var(--v2-cream)] md:px-10 md:py-24">
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow light>{es ? "Por qué ORA World" : "Why ORA World"}</Eyebrow>
-          <h2 id="b-why" className="mt-6 max-w-[16ch] font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[64px]">
-            {es ? "Creamos una vida más larga y mejor." : "We set out to create a longer, better life."}
-          </h2>
-          <p className="mt-6 max-w-[56ch] text-[16px] leading-relaxed text-[var(--v2-cream)]/75 md:text-[17px]">
-            {es ? "Tres ideas guían cada detalle: la longevidad incluida, el mar a su puerta y una vida en la que todo es fácil." : "Three ideas shape every detail: longevity built in, the sea at your door, and a life where everything is made easy."}
-          </p>
+          {/* Client, 19 Nov: no empty right side: the heading and its line side by side. */}
+          <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-16">
+            <h2 id="b-why" className="max-w-[16ch] font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[56px] lg:text-[64px]">
+              {es ? "Creamos una vida más larga y mejor." : "We set out to create a longer, better life."}
+            </h2>
+            <p className="max-w-[48ch] text-[16px] leading-relaxed text-[var(--v2-cream)]/75 md:text-[17px]">
+              {es ? "Tres ideas guían cada detalle: la longevidad incluida, el mar a su puerta y una vida en la que todo es fácil." : "Three ideas shape every detail: longevity built in, the sea at your door, and a life where everything is made easy."}
+            </p>
+          </div>
           <ul className="mt-12 grid gap-10 md:mt-14 md:grid-cols-3 md:gap-5">
             {pillars.map((p) => (
               <li key={p.title}>
@@ -145,7 +148,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 5 · Amenities, on deep green */}
-      <section id="amenities" aria-labelledby="b-amen" className="scroll-mt-24 lg:scroll-mt-28 bg-bone px-5 py-20 md:px-10 md:py-28">
+      <section id="amenities" aria-labelledby="b-amen" className="scroll-mt-24 lg:scroll-mt-28 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow>{es ? "Amenidades" : "Amenities"}</Eyebrow>
           <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-16">
@@ -187,7 +190,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 7 · Location, on cream */}
-      <section id="location" aria-labelledby="b-loc" className="scroll-mt-24 lg:scroll-mt-28 bg-bone-deep px-5 py-20 md:px-10 md:py-28">
+      <section id="location" aria-labelledby="b-loc" className="scroll-mt-24 lg:scroll-mt-28 bg-bone-deep px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow>{es ? "La ubicación" : "The location"}</Eyebrow>
           <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-16">
@@ -217,7 +220,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       {/* 8 · Act 60 (client, 19 Nov: "make it better", then "too busy"): centred and quiet: the title, one line, the three
           figures in a row with their qualifying labels (cip.why, the audit brief's wording), one call to the Act 60 page
           and a single line of fine print; the full notes and sources are on that page. */}
-      <section id="act-60" aria-labelledby="b-act" className="scroll-mt-24 lg:scroll-mt-28 bg-[var(--v2-green)] px-5 py-24 text-center text-[var(--v2-cream)] md:px-10 md:py-32">
+      <section id="act-60" aria-labelledby="b-act" className="scroll-mt-24 lg:scroll-mt-28 bg-[var(--v2-green)] px-5 py-16 text-center text-[var(--v2-cream)] md:px-10 md:py-24">
         <div className="mx-auto max-w-[1200px]">
           <Eyebrow light>{es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"}</Eyebrow>
           <h2 id="b-act" className="mt-6 font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[64px]">
@@ -246,7 +249,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
 
       {/* 9 · The residences (client, 18 Nov: "do this in Version B too"): the Inspired living spaces slides, with the
           Version B type: centred heading, the counter and arrows under it, the films running off the right edge. */}
-      <section id="residences" aria-labelledby="b-res" className="scroll-mt-24 lg:scroll-mt-28 overflow-hidden py-20 md:py-28">
+      <section id="residences" aria-labelledby="b-res" className="scroll-mt-24 lg:scroll-mt-28 overflow-hidden py-16 md:py-24">
         <div className="mx-auto max-w-[1440px] px-5 text-center md:px-10">
           <Eyebrow>{x(cip.interiors.eyebrow)}</Eyebrow>
           <h2 id="b-res" className="mx-auto mt-6 max-w-[20ch] font-[family-name:var(--font-display)] text-[40px] leading-[1.08] font-normal md:text-[64px]">
@@ -265,7 +268,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* Floor plans (client, 18 Nov: "put the floor plan like Version A"): the same explorer. */}
-      <section id="floor-plans" aria-labelledby="b-plans" className="scroll-mt-24 lg:scroll-mt-28 bg-bone-deep px-5 py-20 md:px-10 md:py-28">
+      <section id="floor-plans" aria-labelledby="b-plans" className="scroll-mt-24 lg:scroll-mt-28 bg-bone-deep px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1440px]">
           <Eyebrow>{es ? "Planos · Torre 1" : "Floor plans · Tower 1"}</Eyebrow>
           <div className="mt-6 mb-10 flex flex-wrap items-end justify-between gap-4">
@@ -279,7 +282,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
       </section>
 
       {/* 10 · Inquire */}
-      <section id="inquire" aria-labelledby="b-inq" className="scroll-mt-24 lg:scroll-mt-28 bg-bone px-5 py-20 md:px-10 md:py-28">
+      <section id="inquire" aria-labelledby="b-inq" className="scroll-mt-24 lg:scroll-mt-28 bg-bone px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
           <div>
             <Eyebrow>{es ? "Consultar" : "Inquire"}</Eyebrow>
