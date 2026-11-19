@@ -1,108 +1,161 @@
 import Image from "next/image";
 import type { ImageRef, Locale } from "@/content/types";
-import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 /**
- * Version C building blocks (client, 19 Nov: "very basic, old money luxury; for an older audience; less going on,
- * simple, laid out properly, showing what really matters"). Bone paper, charcoal ink, brass rules; large readable
- * type; framed photographs with captions; ledgers for figures; plain words for links. Little motion.
+ * Version C building blocks, in the manner of ciprianiresidences-brickell.com (client, 19 Nov: "do it like this", and
+ * "use images, not all videos": only the homepage banner is a film). Thin, widely spaced capitals with one italic serif
+ * accent; a short brass rule before each eyebrow; photographs with a caption line under them; ruled lists; square
+ * buttons with an arrow. ORA's palette: Deep Earth for the dark notes, bone and white, brass.
  */
 
-/** A thin rule with the ORA tree between (the house mark, used as a printer's ornament). */
-export function Ornament({ className }: { className?: string }) {
+/** The title manner: CAPITALS in a thin sans, then an italic serif accent. */
+export function CTitle({ caps, accent, light = false, className, as: H = "h2", id }: { caps: string; accent?: string; light?: boolean; className?: string; as?: "h1" | "h2" | "h3"; id?: string }) {
   return (
-    <div aria-hidden className={cn("flex items-center justify-center gap-5", className)}>
-      <span className="h-px w-14 bg-brass/60 md:w-20" />
-      {/* eslint-disable-next-line @next/next/no-img-element -- the small tree mark */}
-      <img src="/brand/ora-world-tree.png" alt="" width={30} height={30} className="h-[30px] w-auto opacity-90" />
-      <span className="h-px w-14 bg-brass/60 md:w-20" />
-    </div>
+    <H id={id} className={cn("text-balance", light ? "text-white" : "text-charcoal", className)}>
+      <span className="font-[family-name:var(--font-sans)] font-extralight tracking-[0.12em] uppercase">{caps}</span>
+      {accent && (
+        <>
+          {" "}
+          <em className="font-[family-name:var(--font-display)] font-medium tracking-normal normal-case italic">{accent}</em>
+        </>
+      )}
+    </H>
   );
 }
 
-export const CEyebrow = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <p className={cn("text-[12.5px] font-semibold tracking-[0.26em] text-brass-ink uppercase", className)}>{children}</p>
+/** The eyebrow: a short brass rule, then small spaced capitals. */
+export const CEyebrow = ({ children, light = false, className }: { children: React.ReactNode; light?: boolean; className?: string }) => (
+  <p className={cn("flex items-center gap-4 text-[11.5px] font-semibold tracking-[0.3em] uppercase", light ? "text-brass-light" : "text-brass-ink", className)}>
+    <span aria-hidden className={cn("h-px w-9", light ? "bg-brass-light" : "bg-brass")} />
+    {children}
+  </p>
 );
 
-/** A centred chapter heading: ornament, eyebrow, serif title and an optional introduction. */
-export function CHeading({ eyebrow, title, intro, level = 2, id, ornament = true }: { eyebrow?: string; title: React.ReactNode; intro?: React.ReactNode; level?: 1 | 2; id?: string; ornament?: boolean }) {
-  const H = level === 1 ? "h1" : "h2";
+/** A section heading: eyebrow, title (capitals + italic accent) and a line, left-aligned or centred. */
+export function CHeading({ eyebrow, caps, accent, intro, level = 2, id, center = false, light = false }: { eyebrow?: string; caps: string; accent?: string; intro?: React.ReactNode; level?: 1 | 2; id?: string; center?: boolean; light?: boolean }) {
   return (
-    <div className="mx-auto max-w-[820px] text-center">
-      {ornament && <Ornament className="mb-8" />}
-      {eyebrow && <CEyebrow>{eyebrow}</CEyebrow>}
-      <H id={id} className={cn("font-[family-name:var(--font-display)] font-medium text-balance text-charcoal", eyebrow && "mt-5", level === 1 ? "text-[44px] leading-[1.08] md:text-[68px]" : "text-[38px] leading-[1.1] md:text-[54px]")}>
-        {title}
-      </H>
-      {intro && <p className="mx-auto mt-6 max-w-[60ch] text-[18px] leading-[1.75] text-charcoal-soft md:text-[19px]">{intro}</p>}
+    <div className={cn(center && "mx-auto max-w-[820px] text-center")}>
+      {eyebrow && <CEyebrow light={light} className={cn(center && "justify-center")}>{eyebrow}</CEyebrow>}
+      <CTitle as={level === 1 ? "h1" : "h2"} id={id} caps={caps} accent={accent} light={light} className={cn("mt-5 text-[34px] leading-[1.15] md:text-[46px]", level === 1 && "md:text-[54px]")} />
+      {intro && <p className={cn("mt-6 max-w-[62ch] text-[16px] leading-[1.75] md:text-[17px]", light ? "text-white/85" : "text-charcoal-soft", center && "mx-auto")}>{intro}</p>}
     </div>
   );
 }
 
-/** A photograph set like a print: a white mount, a hairline frame and an italic caption. Films play quietly. */
-export function CFrame({ image, locale, sizes, ratio = "aspect-[3/2]", caption, className }: { image: ImageRef; locale: Locale; sizes: string; ratio?: string; caption?: string; className?: string }) {
+/** A photograph with the caption line under it: what it shows on the left, its group on the right. */
+export function CPhoto({ image, locale, sizes, ratio = "aspect-[3/2]", caption, tag, className }: { image: ImageRef; locale: Locale; sizes: string; ratio?: string; caption?: string; tag?: string; className?: string }) {
   return (
     <figure className={cn("m-0", className)}>
-      <div className="border border-travertine-deep bg-white p-2 shadow-[0_18px_40px_-28px_rgb(44_36_22/0.35)] md:p-3">
-        <div className={cn("relative overflow-hidden bg-travertine", ratio)}>
-          <Image src={image.src} alt={image.alt[locale] || image.alt.en} fill sizes={sizes} quality={82} className="object-cover" style={{ objectPosition: image.focal }} />
-          {image.video && <ClipOverlay src={image.video} poster={image.poster} focal={image.focal} />}
-        </div>
+      <div className={cn("relative overflow-hidden bg-travertine", ratio)}>
+        <Image src={image.src} alt={image.alt[locale] || image.alt.en} fill sizes={sizes} quality={82} className="object-cover" style={{ objectPosition: image.focal }} />
       </div>
-      {caption && <figcaption className="mt-4 text-center font-[family-name:var(--font-display)] text-[18px] text-charcoal-soft italic">{caption}</figcaption>}
+      {(caption || tag) && (
+        <figcaption className="mt-3 flex justify-between gap-4 text-[12.5px] text-charcoal-soft">
+          <span>{caption}</span>
+          {tag && <span className="tracking-[0.12em]">{tag}</span>}
+        </figcaption>
+      )}
     </figure>
   );
 }
 
-/** A ledger: figures or facts in ruled rows, the figure in serif, its meaning in plain words beside it. */
-export function CLedger({ rows, figures = false }: { rows: { label: string; value: string }[]; figures?: boolean }) {
+/** A ruled list: the name on the left, the detail in small capitals on the right (travel times, facts). */
+export function CList({ rows, light = false }: { rows: { label: string; value: string }[]; light?: boolean }) {
   return (
-    <dl className="border-t-[3px] border-double border-brass/50">
+    <dl className={cn("border-t", light ? "border-white/25" : "border-travertine-deep")}>
       {rows.map((r) => (
-        <div key={r.label} className={cn("grid items-baseline gap-x-8 border-b border-travertine-deep py-5", figures ? "grid-cols-[6.5rem_minmax(0,1fr)] md:grid-cols-[10rem_minmax(0,1fr)]" : "grid-cols-[minmax(0,1fr)_auto]")}>
-          {figures ? (
-            <>
-              <dt className="sr-only">{r.label}</dt>
-              <dd className="font-[family-name:var(--font-display)] text-[44px] leading-none font-medium text-brass-ink [font-variant-numeric:lining-nums] md:text-[60px]">{r.value}</dd>
-              <dd aria-hidden className="text-[17px] leading-relaxed text-charcoal">{r.label}</dd>
-            </>
-          ) : (
-            <>
-              <dt className="text-[17px] text-charcoal-soft">{r.label}</dt>
-              <dd className="text-right font-[family-name:var(--font-display)] text-[22px] font-medium text-charcoal [font-variant-numeric:lining-nums] md:text-[24px]">{r.value}</dd>
-            </>
-          )}
+        <div key={r.label} className={cn("flex items-baseline justify-between gap-6 border-b py-4", light ? "border-white/25" : "border-travertine-deep")}>
+          <dt className={cn("text-[15.5px]", light ? "text-white" : "text-charcoal")}>{r.label}</dt>
+          <dd className={cn("text-right text-[12px] font-semibold tracking-[0.18em] uppercase", light ? "text-white/75" : "text-charcoal-soft")}>{r.value}</dd>
         </div>
       ))}
     </dl>
   );
 }
 
-/** A plain, underlined text link with an arrow: easy to see and to tap. */
-export function CLink({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
+/** A small-capitals text link with an arrow, underlined. */
+export function CLink({ href, children, className, light = false }: { href: string; children: React.ReactNode; className?: string; light?: boolean }) {
   return (
-    <Link href={href} className={cn("inline-flex min-h-11 items-center gap-2 border-b border-brass-ink/60 text-[15px] font-semibold tracking-[0.14em] text-charcoal uppercase transition-colors hover:border-charcoal", className)}>
+    <Link href={href} className={cn("inline-flex min-h-11 items-center gap-2 border-b text-[12px] font-semibold tracking-[0.22em] uppercase transition-colors", light ? "border-white/70 text-white hover:border-white" : "border-charcoal/60 text-charcoal hover:border-charcoal", className)}>
       {children} <span aria-hidden>→</span>
     </Link>
   );
 }
 
-/** The one solid button (Inquire / arrange a visit). */
-export function CButton({ href, children, light = false }: { href: string; children: React.ReactNode; light?: boolean }) {
+/** Square buttons: solid (Deep Earth, or white over a picture) or outlined. */
+export function CButton({ href, children, variant = "solid", external }: { href: string; children: React.ReactNode; variant?: "solid" | "outline" | "white" | "outline-light"; external?: boolean }) {
+  const cls = cn(
+    "inline-flex min-h-12 items-center gap-2 px-6 text-[12px] font-semibold tracking-[0.22em] uppercase transition-colors",
+    variant === "solid" && "bg-basalt text-bone hover:bg-basalt-soft",
+    variant === "outline" && "border border-charcoal/50 text-charcoal hover:bg-charcoal hover:text-bone",
+    variant === "white" && "bg-white text-charcoal hover:bg-bone",
+    variant === "outline-light" && "border border-white/70 text-white hover:bg-white hover:text-charcoal",
+  );
+  if (external)
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+        {children}
+      </a>
+    );
   return (
-    <Link href={href} className={cn("inline-flex min-h-[52px] items-center px-8 text-[14px] font-semibold tracking-[0.2em] uppercase transition-colors", light ? "bg-bone text-charcoal hover:bg-white" : "bg-basalt text-bone hover:bg-basalt-soft")}>
+    <Link href={href} className={cls}>
       {children}
     </Link>
   );
 }
 
-/** A section of the page on bone, paper-white or sand. */
-export function CSection({ id, tone = "bone", children, labelledBy, className }: { id?: string; tone?: "bone" | "paper" | "sand"; children: React.ReactNode; labelledBy?: string; className?: string }) {
+/** The figures strip: large serif figures with small capitals under them, divided by hairlines. */
+export function CStats({ items }: { items: { value: string; unit?: string; label: string }[] }) {
   return (
-    <section id={id} aria-labelledby={labelledBy} className={cn("scroll-mt-24 px-5 py-20 md:px-10 md:py-28", tone === "paper" ? "bg-white" : tone === "sand" ? "bg-bone-deep" : "bg-bone", className)}>
+    <dl className="mx-auto grid max-w-[1200px] grid-cols-2 border-b border-travertine-deep md:grid-cols-5">
+      {items.map((s, k) => (
+        <div key={s.label} className={cn("flex flex-col items-center justify-start px-3 py-8 text-center md:py-10", k > 0 && "md:border-l md:border-travertine-deep", k % 2 === 1 && "border-l border-travertine-deep md:border-l", k >= 2 && "border-t border-travertine-deep md:border-t-0", k === 4 && "col-span-2 md:col-span-1")}>
+          <dt className="sr-only">{s.label}</dt>
+          <dd className="font-[family-name:var(--font-display)] text-[40px] leading-none font-medium text-charcoal [font-variant-numeric:lining-nums] md:text-[48px]">
+            {s.value}
+            {s.unit && <span className="ml-1 text-[18px] text-charcoal-soft">{s.unit}</span>}
+          </dd>
+          <dd aria-hidden className="mt-4 max-w-[18ch] text-[10.5px] leading-relaxed font-semibold tracking-[0.2em] text-charcoal-soft uppercase">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/** An inner-page opener: the photograph full width, the words at the bottom left. */
+export function CPageHero({ image, locale, place, caps, accent, line }: { image: ImageRef; locale: Locale; place: string; caps: string; accent?: string; line?: string }) {
+  return (
+    <section aria-label={caps} className="relative isolate flex min-h-[72svh] items-end overflow-hidden px-5 pt-40 pb-14 text-white md:px-10 md:pb-20">
+      <Image src={image.src} alt={image.alt[locale] || image.alt.en} fill priority sizes="100vw" quality={82} className="-z-10 object-cover" style={{ objectPosition: image.focal }} />
+      <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(28_24_18/0.55),rgb(28_24_18/0.1)_30%,rgb(28_24_18/0.25)_55%,rgb(28_24_18/0.75))]" />
+      <div className="mx-auto w-full max-w-[1200px]">
+        <p className="text-[11.5px] font-semibold tracking-[0.3em] uppercase opacity-90">{place}</p>
+        <CTitle as="h1" caps={caps} accent={accent} light className="mt-4 text-[38px] leading-[1.1] md:text-[60px]" />
+        {line && <p className="mt-5 max-w-[60ch] text-[16px] leading-relaxed text-white/90 md:text-[17px]">{line}</p>}
+      </div>
+    </section>
+  );
+}
+
+/** A section on white, bone or sand. */
+export function CSection({ id, tone = "white", children, labelledBy, className }: { id?: string; tone?: "white" | "bone" | "sand"; children: React.ReactNode; labelledBy?: string; className?: string }) {
+  return (
+    <section id={id} aria-labelledby={labelledBy} className={cn("scroll-mt-24 px-5 py-20 md:px-10 md:py-28", tone === "bone" ? "bg-bone" : tone === "sand" ? "bg-bone-deep" : "bg-white", className)}>
       <div className="mx-auto max-w-[1200px]">{children}</div>
+    </section>
+  );
+}
+
+/** The quote band: the tree mark and a quotation in spaced capitals. */
+export function CQuote({ text, by }: { text: string; by?: string }) {
+  return (
+    <section aria-label={by || "ORA World"} className="bg-bone-deep px-5 py-20 text-center md:px-10 md:py-28">
+      {/* eslint-disable-next-line @next/next/no-img-element -- the small tree mark */}
+      <img src="/brand/ora-world-tree.png" alt="" width={44} height={44} className="mx-auto h-[44px] w-auto" />
+      <p className="mx-auto mt-8 max-w-[34ch] text-[22px] leading-[1.45] font-extralight tracking-[0.12em] text-charcoal uppercase md:text-[30px]">“{text}”</p>
+      {by && <p className="mt-6 text-[11px] font-semibold tracking-[0.3em] text-brass-ink uppercase">{by}</p>}
     </section>
   );
 }

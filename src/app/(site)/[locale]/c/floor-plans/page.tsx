@@ -3,13 +3,11 @@ import { setRequestLocale } from "next-intl/server";
 import type { L, Locale } from "@/content/types";
 import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
-import { tdm } from "@/content/seed/images";
+import { cImg } from "@/content/seed/imagesC";
 import { FloorExplorer } from "@/components/cip/FloorExplorer";
-import { CHeading, CFrame, CLedger, CSection, CButton, Ornament } from "@/components/v3/C";
+import { CPageHero, CHeading, CTitle, CList, CButton, CSection } from "@/components/v3/C";
 
-/** Version C · Residences: Phase One pricing as a ledger, then the same floor-by-floor explorer as Version A. */
-const clip = (n: string) => ({ video: `/videos/clips/${n}.mp4`, poster: `/videos/clips/${n}-poster.jpg` });
-
+/** Version C · Residences: Phase One pricing as a ruled list, then the floor-by-floor explorer. */
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
   const { locale } = await params;
   return { title: locale === "es" ? "Residencias · Versión C" : "Residences · Version C", robots: { index: false, follow: false } };
@@ -23,32 +21,29 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
   const p = cip.plans;
   return (
     <>
-      <section aria-labelledby="c-res" className="px-5 pt-16 pb-20 md:px-10 md:pt-20 md:pb-28">
-        <div className="mx-auto max-w-[1200px]">
-          <CHeading level={1} id="c-res" eyebrow={es ? "Las residencias" : "The residences"} title={x(cip.explorer.title)} intro={x(p.intro)} ornament={false} />
-          <CFrame image={{ ...tdm.penthouseLiving, ...clip("p24-penthouse-living") }} locale={locale} sizes="(max-width: 1199px) calc(100vw - 40px), 1200px" ratio="aspect-[4/3] md:aspect-[21/9]" caption={es ? "El salón del penthouse, en dos niveles." : "The penthouse living room, on two levels."} className="mt-14" />
-        </div>
-      </section>
-      <CSection tone="paper" labelledBy="c-price">
-        <CHeading id="c-price" eyebrow={x(p.eyebrow)} title={x(p.title)} />
-        <div className="mx-auto mt-14 max-w-[720px]">
-          <CLedger rows={p.tiers.map((tier) => ({ label: x(tier.label), value: `${tier.value} ${x(p.perSqFt)}` }))} />
-          <p className="mt-6 text-center text-[16px] text-charcoal-soft">{x(p.plansNote)}</p>
+      <CPageHero image={cImg.diningPiano} locale={locale} place={es ? "Residencias · Torre 1" : "Residences · Tower 1"} caps={es ? "Encuentre" : "Find your"} accent={es ? "su residencia" : "residence"} line={x(p.intro)} />
+      <CSection labelledBy="c-price">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-20">
+          <CHeading id="c-price" eyebrow={x(p.eyebrow)} caps={es ? "Fase Uno" : "Phase"} accent={es ? "Torre 1" : "One"} intro={x(p.plansNote)} />
+          <CList rows={p.tiers.map((tier) => ({ label: x(tier.label), value: `${tier.value} ${x(p.perSqFt)}` }))} />
         </div>
       </CSection>
-      <CSection id="explorer" labelledBy="c-floor">
-        <CHeading id="c-floor" eyebrow={es ? "Torre 1 · Piso a piso" : "Tower 1 · Floor by floor"} title={es ? "Elija un piso, luego una residencia." : "Choose a floor, then a residence."} />
-        <div className="mt-14">
+      <CSection id="explorer" tone="bone" labelledBy="c-floor">
+        <CHeading id="c-floor" eyebrow={es ? "Piso a piso" : "Floor by floor"} caps={es ? "Elija un piso," : "Choose a floor,"} accent={es ? "luego una residencia" : "then a residence"} />
+        <div className="mt-12">
           <FloorExplorer locale={locale} />
         </div>
       </CSection>
-      <section aria-label={es ? "Consultar" : "Inquire"} className="bg-bone-deep px-5 py-20 text-center md:px-10 md:py-24">
-        <Ornament />
-        <p className="mx-auto mt-8 max-w-[26ch] font-[family-name:var(--font-display)] text-[30px] leading-snug text-charcoal md:text-[40px]">{es ? "Reciba los planos completos de la Fase 1." : "Receive the full Phase 1 floor plans."}</p>
-        <div className="mt-10">
-          <CButton href="/c#inquire">{es ? "Consultar" : "Inquire"}</CButton>
+      <CSection tone="sand" labelledBy="c-close">
+        <div className="text-center">
+          <CTitle id="c-close" caps={es ? "Reciba los planos" : "Receive the full"} accent={es ? "de la Fase 1" : "Phase 1 floor plans"} className="text-[34px] leading-[1.15] md:text-[44px]" />
+          <div className="mt-8">
+            <CButton href="/c#inquire">
+              {es ? "Agende una presentación" : "Schedule a presentation"} <span aria-hidden>→</span>
+            </CButton>
+          </div>
         </div>
-      </section>
+      </CSection>
     </>
   );
 }

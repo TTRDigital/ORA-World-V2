@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
 import type { L, Locale } from "@/content/types";
-import { tdm } from "@/content/seed/images";
 import { CHAPTERS } from "@/content/seed/finishChapters";
 import { FinishPalette } from "@/components/finishes/FinishPalette";
 import { ProductGrid } from "@/components/finishes/ProductGrid";
 import { SelectionTray } from "@/components/finishes/SelectionTray";
-import { CHeading, CFrame, CSection, CEyebrow, CButton, Ornament } from "@/components/v3/C";
+import { CPageHero, CHeading, CTitle, CSection, CEyebrow, CButton } from "@/components/v3/C";
+import { cImg } from "@/content/seed/imagesC";
 import { cn } from "@/lib/utils";
 
-/** Version C · Finishes: a contents list, then each chapter centred and plainly titled, as in a printed catalogue. */
-const clip = (n: string) => ({ video: `/videos/clips/${n}.mp4`, poster: `/videos/clips/${n}-poster.jpg` });
+/** Version C · Finishes: a contents list, then each chapter with its products, photographs and palette. */
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -32,18 +31,17 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
   ];
   return (
     <>
-      <section aria-labelledby="c-fin" className="px-5 pt-16 pb-20 md:px-10 md:pt-20 md:pb-28">
+      <CPageHero image={cImg.kitchenWine} locale={locale} place={es ? "Acabados · Tesoro del Mar" : "Finishes · Tesoro del Mar"} caps={es ? "Cada línea fluye" : "Every line flows"} accent={es ? "con propósito" : "with purpose"} line={es ? "De los gabinetes italianos a la casa inteligente: todo lo que puede elegir." : "From Italian cabinetry to the smart home: everything you can choose."} />
+      <section aria-label={es ? "Contenido" : "Contents"} className="bg-white px-5 pt-20 md:px-10 md:pt-28">
         <div className="mx-auto max-w-[1200px]">
-          <CHeading level={1} id="c-fin" eyebrow={es ? "Acabados" : "Finishes"} title={es ? "Cada línea fluye con propósito." : "Every line flows with purpose."} intro={es ? "De los gabinetes italianos a la casa inteligente: todo lo que puede elegir." : "From Italian cabinetry to the smart home: everything you can choose."} ornament={false} />
-          <CFrame image={{ ...tdm.kitchenWine, ...clip("p16-apartment-kitchen") }} locale={locale} sizes="(max-width: 1199px) calc(100vw - 40px), 1200px" ratio="aspect-[4/3] md:aspect-[21/9]" caption={es ? "La cocina, con gabinetes Scavolini." : "The kitchen, with Scavolini cabinetry."} className="mt-14" />
           {/* Contents. */}
-          <nav aria-label={es ? "Contenido" : "Contents"} className="mx-auto mt-16 max-w-[720px]">
-            <CEyebrow className="text-center">{es ? "Contenido" : "Contents"}</CEyebrow>
-            <ol className="mt-6 border-t-[3px] border-double border-brass/50">
+          <nav aria-label={es ? "Contenido" : "Contents"} className="mx-auto max-w-[760px]">
+            <CEyebrow className="justify-center">{es ? "Contenido" : "Contents"}</CEyebrow>
+            <ol className="mt-6 border-t border-travertine-deep">
               {CHAPTERS.map((c, i) => (
                 <li key={c.id} className="border-b border-travertine-deep">
                   <a href={`#${c.id}`} className="grid min-h-14 grid-cols-[3rem_minmax(0,1fr)_auto] items-center gap-x-4 py-3 text-[18px] text-charcoal hover:text-brass-ink">
-                    <span className="font-[family-name:var(--font-display)] text-[22px] text-brass-ink">{i + 1}.</span>
+                    <span className="text-[11px] font-semibold tracking-[0.18em] text-charcoal-soft">{String(i + 1).padStart(2, "0")}</span>
                     <span>
                       {x(c.label)}
                       {x(c.group) !== x(c.label) && <span className="text-charcoal-soft"> · {x(c.group)}</span>}
@@ -58,22 +56,20 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
       </section>
 
       {CHAPTERS.map((c, i) => (
-        <CSection key={c.id} id={c.id} tone={i % 2 ? "bone" : "paper"} labelledBy={`c-${c.id}`}>
-          <CHeading id={`c-${c.id}`} eyebrow={`${i + 1} · ${x(c.group)}${x(c.group) !== x(c.label) ? ` · ${x(c.label)}` : ""}`} title={x(c.title)} intro={x(c.intro)} />
+        <CSection key={c.id} id={c.id} tone={i % 2 ? "bone" : "white"} labelledBy={`c-${c.id}`}>
+          <CHeading id={`c-${c.id}`} center eyebrow={`${String(i + 1).padStart(2, "0")} · ${x(c.group)}${x(c.group) !== x(c.label) ? ` · ${x(c.label)}` : ""}`} caps={x(c.label)} accent={x(c.title)} intro={x(c.intro)} />
           <p className="mt-5 text-center text-[14px] font-semibold tracking-[0.2em] text-brass-ink uppercase">{c.brands}</p>
           <div className="mt-12 grid gap-10">
             {c.wide && (
-              <div className="border border-travertine-deep bg-white p-2 md:p-3">
+              <div className="bg-travertine">
                 <Image src={c.wide.src} alt={x(c.board.alt)} width={c.wide.w} height={c.wide.h} sizes="(max-width: 1199px) calc(100vw - 40px), 1200px" quality={88} className="h-auto w-full" />
               </div>
             )}
             {c.photos && (
               <div className={cn("grid gap-4", c.photos.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
                 {c.photos.map((src) => (
-                  <div key={src} className="border border-travertine-deep bg-white p-2">
-                    <div className="relative aspect-[4/3] overflow-hidden bg-travertine">
-                      <Image src={src} alt="" fill unoptimized className="object-cover" style={{ objectPosition: "50% 50%" }} />
-                    </div>
+                  <div key={src} className="relative aspect-[4/3] overflow-hidden bg-travertine">
+                    <Image src={src} alt="" fill unoptimized className="object-cover" style={{ objectPosition: "50% 50%" }} />
                   </div>
                 ))}
               </div>
@@ -96,13 +92,16 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
 
       <SelectionTray labels={{ mine: es ? "Mi selección" : "My selection", send: es ? "Enviar con mi consulta" : "Send with my inquiry", clear: es ? "Borrar" : "Clear", remove: es ? "Quitar" : "Remove", show: es ? "Ver" : "Show", hide: es ? "Ocultar" : "Hide" }} />
 
-      <section aria-label={es ? "Consultar" : "Inquire"} className="bg-bone-deep px-5 py-20 text-center md:px-10 md:py-24">
-        <Ornament />
-        <p className="mx-auto mt-8 max-w-[26ch] font-[family-name:var(--font-display)] text-[30px] leading-snug text-charcoal md:text-[40px]">{es ? "Elija sus acabados con nosotros." : "Choose your finishes with us."}</p>
-        <div className="mt-10">
-          <CButton href="/c#inquire">{es ? "Consultar" : "Inquire"}</CButton>
+      <CSection tone="sand" labelledBy="c-close">
+        <div className="text-center">
+          <CTitle id="c-close" caps={es ? "Elija sus acabados" : "Choose your finishes"} accent={es ? "con nosotros" : "with us"} className="text-[34px] leading-[1.15] md:text-[44px]" />
+          <div className="mt-8">
+            <CButton href="/c#inquire">
+              {es ? "Agende una presentación" : "Schedule a presentation"} <span aria-hidden>→</span>
+            </CButton>
+          </div>
         </div>
-      </section>
+      </CSection>
     </>
   );
 }

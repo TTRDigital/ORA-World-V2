@@ -3,9 +3,9 @@ import { setRequestLocale } from "next-intl/server";
 import type { L, Locale } from "@/content/types";
 import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
-import { tdm } from "@/content/seed/images";
 import { getFaqs } from "@/lib/content";
-import { CHeading, CFrame, CLedger, CSection, CEyebrow, CButton, Ornament } from "@/components/v3/C";
+import { CPageHero, CHeading, CTitle, CSection, CEyebrow, CButton } from "@/components/v3/C";
+import { cImg } from "@/content/seed/imagesC";
 
 /** Version C · Act 60: explained plainly, in the Act 60 audit brief's reviewed wording (as on Versions A and B). */
 const SOURCES = [
@@ -33,15 +33,10 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
   ];
   return (
     <>
-      <section aria-labelledby="c-act" className="px-5 pt-16 pb-20 md:px-10 md:pt-20 md:pb-28">
-        <div className="mx-auto max-w-[1200px]">
-          <CHeading level={1} id="c-act" eyebrow={es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"} title={es ? "Conserve más de lo que gana." : "Keep more of what you earn."} intro={x(cip.why.short)} ornament={false} />
-          <CFrame image={tdm.aerialCoast} locale={locale} sizes="(max-width: 1199px) calc(100vw - 40px), 1200px" ratio="aspect-[4/3] md:aspect-[21/9]" caption={es ? "Tesoro del Mar, sobre una cala de la costa norte." : "Tesoro del Mar, above a cove on the north coast."} className="mt-14" />
-        </div>
-      </section>
+      <CPageHero image={cImg.aerialCove} locale={locale} place={es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"} caps={es ? "Conserve más" : "Keep more"} accent={es ? "de lo que gana" : "of what you earn"} line={x(cip.why.short)} />
 
       {/* The program and the figures. */}
-      <CSection tone="paper" labelledBy="c-program">
+      <CSection tone="bone" labelledBy="c-program">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
           <div>
             <CEyebrow>{es ? "El programa" : "The program"}</CEyebrow>
@@ -51,7 +46,15 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
             <p className="mt-6 text-[18px] leading-[1.8] text-charcoal">{x(cip.why.intro)}</p>
           </div>
           <div>
-            <CLedger figures rows={cip.why.stats.map((st) => ({ value: st.value, label: x(st.label) }))} />
+            <dl className="border-t border-travertine-deep">
+              {cip.why.stats.map((st) => (
+                <div key={st.value} className="grid grid-cols-[6rem_minmax(0,1fr)] items-baseline gap-x-6 border-b border-travertine-deep py-5 md:grid-cols-[8.5rem_minmax(0,1fr)]">
+                  <dt className="sr-only">{x(st.label)}</dt>
+                  <dd className="font-[family-name:var(--font-display)] text-[44px] leading-none font-medium text-charcoal md:text-[56px]">{st.value}</dd>
+                  <dd aria-hidden className="text-[15.5px] leading-relaxed text-charcoal">{x(st.label)}</dd>
+                </div>
+              ))}
+            </dl>
             <p className="mt-6 text-[15px] leading-relaxed text-charcoal-soft">{x(cip.why.statsNote)}</p>
           </div>
         </div>
@@ -59,10 +62,10 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
 
       {/* Residency. */}
       <CSection labelledBy="c-res">
-        <CHeading id="c-res" eyebrow={es ? "Residencia" : "Residency"} title={es ? "Establecer residencia bona fide." : "Establishing bona fide residency."} intro={es ? "El IRS generalmente exige las tres condiciones; pueden aplicar otras pruebas de presencia y reglas del año de la mudanza. Contar días no basta." : "The IRS generally requires all three; other presence tests and year-of-move rules may apply. Day counting alone is not enough."} />
+        <CHeading id="c-res" center eyebrow={es ? "Residencia" : "Residency"} caps={es ? "Residencia" : "Bona fide"} accent={es ? "bona fide" : "residency"} intro={es ? "El IRS generalmente exige las tres condiciones; pueden aplicar otras pruebas de presencia y reglas del año de la mudanza. Contar días no basta." : "The IRS generally requires all three; other presence tests and year-of-move rules may apply. Day counting alone is not enough."} />
         <ol className="mx-auto mt-16 grid max-w-[1100px] gap-10 md:grid-cols-3">
           {tests.map((it, k) => (
-            <li key={it.title} className="border-t-[3px] border-double border-brass/50 pt-6 text-center">
+            <li key={it.title} className="border-t border-travertine-deep pt-6 text-center">
               <p className="font-[family-name:var(--font-display)] text-[28px] leading-none text-brass-ink">{["I", "II", "III"][k]}</p>
               <h3 className="mt-4 font-[family-name:var(--font-display)] text-[28px] leading-tight font-medium text-charcoal">{it.title}</h3>
               <p className="mt-3 text-[17.5px] leading-[1.7] text-charcoal-soft">{it.text}</p>
@@ -72,14 +75,14 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
       </CSection>
 
       {/* How to qualify, the deadline and advice. */}
-      <CSection tone="paper" labelledBy="c-steps">
+      <CSection tone="bone" labelledBy="c-steps">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
           <div>
             <CEyebrow>{es ? "Cómo calificar" : "How to qualify"}</CEyebrow>
             <h2 id="c-steps" className="mt-5 font-[family-name:var(--font-display)] text-[38px] leading-[1.1] font-medium text-charcoal md:text-[50px]">
               {es ? "Cuatro pasos hacia un decreto." : "Four steps to a decree."}
             </h2>
-            <ol className="mt-10 border-t-[3px] border-double border-brass/50">
+            <ol className="mt-10 border-t border-travertine-deep">
               {cip.why.bullets.map((b, k) => (
                 <li key={k} className="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4 border-b border-travertine-deep py-5 text-[18px] leading-relaxed text-charcoal">
                   <span className="font-[family-name:var(--font-display)] text-[26px] leading-none text-brass-ink">{k + 1}.</span>
@@ -110,8 +113,8 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
 
       {/* Questions. */}
       <CSection labelledBy="c-faq">
-        <CHeading id="c-faq" eyebrow={es ? "Preguntas" : "Questions"} title={es ? "Preguntas frecuentes." : "Frequently asked questions."} />
-        <div className="mx-auto mt-14 max-w-[880px] border-t-[3px] border-double border-brass/50">
+        <CHeading id="c-faq" center eyebrow={es ? "Preguntas" : "Questions"} caps={es ? "Preguntas" : "Frequently asked"} accent={es ? "frecuentes" : "questions"} />
+        <div className="mx-auto mt-14 max-w-[880px] border-t border-travertine-deep">
           {faqs.map((f) => (
             <details key={f.slug} className="group border-b border-travertine-deep">
               <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-6 font-[family-name:var(--font-display)] text-[24px] leading-snug font-medium text-charcoal md:text-[27px] [&::-webkit-details-marker]:hidden">
@@ -143,13 +146,16 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
         </div>
       </CSection>
 
-      <section aria-label={es ? "Consultar" : "Inquire"} className="bg-bone-deep px-5 py-20 text-center md:px-10 md:py-24">
-        <Ornament />
-        <p className="mx-auto mt-8 max-w-[26ch] font-[family-name:var(--font-display)] text-[30px] leading-snug text-charcoal md:text-[40px]">{es ? "Hable con nosotros sobre la Ley 60." : "Talk to us about Act 60."}</p>
-        <div className="mt-10">
-          <CButton href="/c#inquire">{es ? "Consultar" : "Inquire"}</CButton>
+      <CSection tone="sand" labelledBy="c-close">
+        <div className="text-center">
+          <CTitle id="c-close" caps={es ? "Hable con nosotros" : "Talk to us"} accent={es ? "sobre la Ley 60" : "about Act 60"} className="text-[34px] leading-[1.15] md:text-[44px]" />
+          <div className="mt-8">
+            <CButton href="/c#inquire">
+              {es ? "Agende una presentación" : "Schedule a presentation"} <span aria-hidden>→</span>
+            </CButton>
+          </div>
         </div>
-      </section>
+      </CSection>
     </>
   );
 }

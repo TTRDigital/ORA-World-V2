@@ -8,122 +8,76 @@ import { cn } from "@/lib/utils";
 type NavLink = { href: string; label: string };
 
 /**
- * Version C header (old-money, for an older reader): a thin top line with the telephone number; the logo centred with a
- * plain row of words under it; once the visitor scrolls, a slim bar stays at the top. On phones a "Menu" button (a
- * word, not an icon) opens large links and the number to call.
+ * Version C header, in the manner of ciprianiresidences-brickell.com: transparent over the opening picture with the
+ * white logo, small spaced capitals and an outlined "Inquire"; after a short scroll it turns bone with the gold logo.
+ * Phones get a "Menu" button that opens the links full screen, with the number to call.
  */
-export function CHeader({ links, inquire, phone, place, otherLocale, otherLabel, menu, close }: { links: NavLink[]; inquire: string; phone: string; place: string; otherLocale: "en" | "es"; otherLabel: string; menu: string; close: string }) {
+export function CHeader({ links, inquire, phone, otherLocale, otherLabel, menu, close }: { links: NavLink[]; inquire: string; phone: string; otherLocale: "en" | "es"; otherLabel: string; menu: string; close: string }) {
   const path = usePathname();
-  const [scrolled, setScrolled] = useState(false);
+  const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 220);
+    const on = () => setSolid(window.scrollY > 40);
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
+  const light = !solid;
   const tel = `tel:${phone.replace(/[^\d+]/g, "")}`;
-  const active = (href: string) => !href.includes("#") && path === href.replace(/^\/c/, "/c");
   return (
-    <>
-      {/* Top line: where, and the number to call. */}
-      <div className="bg-basalt px-5 text-bone md:px-10">
-        <div className="mx-auto flex min-h-10 max-w-[1200px] items-center justify-between gap-4 text-[13px] tracking-[0.08em]">
-          <span className="hidden sm:inline">{place}</span>
-          {phone ? (
-            <a href={tel} className="inline-flex min-h-10 items-center gap-2 hover:underline">
-              <span aria-hidden>☏</span> {phone}
-            </a>
-          ) : (
-            <span />
-          )}
-          <Link href={path} locale={otherLocale} className="inline-flex min-h-10 items-center hover:underline">
-            {otherLabel}
-          </Link>
-        </div>
-      </div>
-
-      {/* The masthead: the logo centred, the words under it. */}
-      <header className="border-b border-travertine-deep bg-bone px-5 md:px-10">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="flex items-center justify-between py-5 lg:justify-center lg:py-7">
-            <Link href="/c" aria-label="ORA World" className="shrink-0">
-              <Logo variant="header" height={110} responsive className="h-[70px] w-auto lg:h-[96px]" />
-            </Link>
-            <button type="button" onClick={() => setOpen(true)} aria-expanded={open} className="inline-flex min-h-12 items-center gap-3 border border-charcoal/40 px-5 text-[14px] font-semibold tracking-[0.18em] text-charcoal uppercase lg:hidden">
-              {menu}
-            </button>
-          </div>
-          <nav aria-label="Version C" className="hidden border-t border-travertine-deep lg:block">
-            <ul className="flex items-center justify-center gap-10 py-4">
-              {links.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} aria-current={active(l.href) ? "page" : undefined} className={cn("inline-flex min-h-11 items-center text-[14px] font-semibold tracking-[0.18em] text-charcoal uppercase hover:text-brass-ink", active(l.href) && "underline decoration-brass underline-offset-[10px]")}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/c#inquire" className="inline-flex min-h-11 items-center bg-basalt px-6 text-[13px] font-semibold tracking-[0.2em] text-bone uppercase hover:bg-basalt-soft">
-                  {inquire}
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
-      {/* After the masthead scrolls away: a slim bar that stays. */}
-      <div aria-hidden={!scrolled} className={cn("fixed inset-x-0 top-0 z-50 border-b border-travertine-deep bg-bone/97 px-5 backdrop-blur-sm transition-transform duration-300 md:px-10", scrolled ? "translate-y-0" : "-translate-y-full")}>
-        <div className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between gap-6">
-          <Link href="/c" aria-label="ORA World" tabIndex={scrolled ? 0 : -1} className="shrink-0">
-            <Logo variant="header" height={60} responsive className="h-[50px] w-auto" />
-          </Link>
-          <ul className="hidden items-center gap-8 lg:flex">
+    <header className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-500", solid ? "border-b border-travertine-deep bg-bone/97 text-charcoal backdrop-blur-sm" : "bg-gradient-to-b from-[rgb(28_24_18/0.45)] to-transparent text-white")}>
+      <div className="mx-auto flex h-[84px] max-w-[1440px] items-center justify-between gap-6 px-5 md:px-10 lg:h-[96px]">
+        <Link href="/c" aria-label="ORA World" className="shrink-0">
+          {light ? <Logo variant="white" height={96} responsive className="h-[60px] w-auto lg:h-[72px]" /> : <Logo variant="header" height={96} responsive className="h-[60px] w-auto lg:h-[72px]" />}
+        </Link>
+        <nav aria-label="Version C" className="hidden xl:block">
+          <ul className="flex items-center gap-8">
             {links.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} tabIndex={scrolled ? 0 : -1} className="text-[13px] font-semibold tracking-[0.16em] text-charcoal uppercase hover:text-brass-ink">
+                <Link href={l.href} aria-current={path === l.href ? "page" : undefined} className={cn("inline-flex min-h-11 items-center text-[12px] font-medium tracking-[0.24em] uppercase transition-opacity hover:opacity-70", path === l.href && "underline underline-offset-[10px]")}>
                   {l.label}
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="flex items-center gap-3">
-            <Link href="/c#inquire" tabIndex={scrolled ? 0 : -1} className="hidden min-h-11 items-center bg-basalt px-5 text-[13px] font-semibold tracking-[0.2em] text-bone uppercase hover:bg-basalt-soft sm:inline-flex">
-              {inquire}
-            </Link>
-            <button type="button" tabIndex={scrolled ? 0 : -1} onClick={() => setOpen(true)} className="inline-flex min-h-11 items-center border border-charcoal/40 px-4 text-[13px] font-semibold tracking-[0.18em] text-charcoal uppercase lg:hidden">
-              {menu}
-            </button>
-          </div>
+        </nav>
+        <div className="flex items-center gap-4">
+          <Link href={path} locale={otherLocale} className="hidden text-[12px] font-medium tracking-[0.24em] uppercase hover:opacity-70 md:inline">
+            {otherLabel}
+          </Link>
+          <Link href="/c#inquire" className={cn("hidden min-h-11 items-center border px-6 text-[12px] font-semibold tracking-[0.24em] uppercase transition-colors sm:inline-flex", light ? "border-white/80 hover:bg-white hover:text-charcoal" : "border-charcoal/60 hover:bg-charcoal hover:text-bone")}>
+            {inquire}
+          </Link>
+          <button type="button" onClick={() => setOpen(true)} aria-expanded={open} className={cn("inline-flex min-h-11 items-center border px-4 text-[12px] font-semibold tracking-[0.22em] uppercase xl:hidden", light ? "border-white/80" : "border-charcoal/60")}>
+            {menu}
+          </button>
         </div>
       </div>
-
-      {/* The menu on phones and tablets. */}
       {open && (
-        <div role="dialog" aria-modal="true" aria-label={menu} className="fixed inset-0 z-[60] overflow-y-auto bg-bone px-6 pt-6 pb-12" onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>
+        <div role="dialog" aria-modal="true" aria-label={menu} className="fixed inset-0 z-[60] overflow-y-auto bg-basalt px-6 pt-6 pb-12 text-bone" onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>
           <div className="flex items-center justify-between">
-            <Logo variant="header" height={60} responsive className="h-[54px] w-auto" />
-            <button type="button" autoFocus onClick={() => setOpen(false)} className="inline-flex min-h-12 items-center border border-charcoal/40 px-5 text-[14px] font-semibold tracking-[0.18em] text-charcoal uppercase">
+            <Logo variant="white" height={60} responsive className="h-[54px] w-auto" />
+            <button type="button" autoFocus onClick={() => setOpen(false)} className="inline-flex min-h-12 items-center border border-bone/60 px-5 text-[12px] font-semibold tracking-[0.22em] uppercase">
               {close}
             </button>
           </div>
-          <ul className="mt-10 border-t border-travertine-deep">
+          <ul className="mt-12">
             {[...links, { href: "/c#inquire", label: inquire }].map((l) => (
-              <li key={l.href} className="border-b border-travertine-deep">
-                <Link href={l.href} onClick={() => setOpen(false)} className="block py-5 font-[family-name:var(--font-display)] text-[32px] leading-tight font-medium text-charcoal">
+              <li key={l.href} className="border-b border-bone/15">
+                <Link href={l.href} onClick={() => setOpen(false)} className="block py-5 text-[26px] font-extralight tracking-[0.14em] uppercase">
                   {l.label}
                 </Link>
               </li>
             ))}
           </ul>
-          {phone && (
-            <a href={tel} className="mt-10 block text-[20px] font-semibold text-charcoal">
-              ☏ {phone}
-            </a>
-          )}
+          <div className="mt-10 flex flex-wrap items-center gap-6 text-[13px] tracking-[0.2em] uppercase">
+            {phone && <a href={tel}>{phone}</a>}
+            <Link href={path} locale={otherLocale} onClick={() => setOpen(false)}>
+              {otherLabel}
+            </Link>
+          </div>
         </div>
       )}
-    </>
+    </header>
   );
 }
