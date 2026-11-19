@@ -11,9 +11,9 @@ import { cImg } from "@/content/seed/imagesC";
 import { pointsOfInterest } from "@/content/seed/places";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { BHeroFilm } from "@/components/v2/BHeroFilm";
-import { Link } from "@/i18n/navigation";
 import { CTitle, CEyebrow, CHeading, CList, CLink, CButton, CStats, CQuote } from "@/components/v3/C";
 import { CSlider } from "@/components/v3/CSlider";
+import { CReel } from "@/components/v3/CReel";
 
 /**
  * Version C (client, 19 Nov: "build version 3 like ciprianiresidences-brickell.com; just the homepage banner with
@@ -46,11 +46,12 @@ export default async function VersionC({ params }: { params: Promise<{ locale: L
     { value: "2", unit: es ? "mi" : "mi", label: es ? "Sendero entre jardines" : "Garden walking path" },
     { value: "30", unit: "min", label: es ? "A San Juan y su aeropuerto" : "To San Juan and its airport" },
   ];
-  const index = [
-    { href: "/c/floor-plans", label: es ? "Las residencias" : "The residences" },
-    { href: "/c/longevity", label: es ? "Longevidad" : "Longevity" },
-    { href: "/c/act-60", label: es ? "Ley 60" : "Act 60" },
-    { href: "/c/finishes", label: es ? "Acabados" : "Finishes" },
+  const reel = [
+    { href: "/c/floor-plans", label: es ? "Las residencias" : "The residences", title: es ? "Espacios de doble altura frente al mar" : "Double-height rooms facing the sea", image: cImg.diningPiano },
+    { href: "/c/longevity", label: es ? "Longevidad" : "Longevity", title: es ? "Una vida más larga y mejor" : "A longer, better life", image: spa },
+    { href: "/c/longevity", label: es ? "Ejercicio" : "Fitness", title: es ? "Un programa que lo hace fácil" : "A program that makes it easy", image: { ...still(tdm.gym), focal: "70% 50%" } },
+    { href: "/c/act-60", label: es ? "Ley 60" : "Act 60", title: es ? "Conserve más de lo que gana" : "Keep more of what you earn", image: cImg.aerialCove },
+    { href: "/c/finishes", label: es ? "Acabados" : "Finishes", title: es ? "Gabinetes italianos, grifería Dornbracht" : "Italian cabinetry, Dornbracht fixtures", image: cImg.kitchenWine },
   ];
   const R = es ? "Residencias" : "Residences";
   const PH = "Penthouse";
@@ -127,28 +128,18 @@ export default async function VersionC({ params }: { params: Promise<{ locale: L
         <CStats items={stats} />
       </section>
 
-      {/* Introduction: words and an index on the left, two offset photographs on the right. */}
+      {/* Introduction (client, 19 Nov: "on the right, a slice that goes by itself every two seconds, like flashcards"):
+          the words, then the index beside a panel that slides through its cards on its own. */}
       <section aria-labelledby="c-intro" className="bg-white px-5 py-20 md:px-10 md:py-28">
-        <div className="mx-auto grid max-w-[1200px] gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
-          <div>
+        <div className="mx-auto max-w-[1200px]">
+          <div className="max-w-[760px]">
             <CEyebrow>Tesoro del Mar</CEyebrow>
             <CTitle id="c-intro" caps={es ? "Donde vive" : "Where longevity"} accent={es ? "la longevidad" : "lives"} className="mt-5 text-[34px] leading-[1.15] md:text-[46px]" />
             <p className="mt-6 text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">{x(cip.who.intro)}</p>
             <p className="mt-4 text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">{x(cip.who.body)}</p>
-            <ol className="mt-10 border-t border-travertine-deep">
-              {index.map((it, k) => (
-                <li key={it.href} className="border-b border-travertine-deep">
-                  <Link href={it.href} className="flex min-h-14 items-center justify-between gap-4 text-[14px] font-medium tracking-[0.2em] text-charcoal uppercase hover:text-brass-ink">
-                    {it.label}
-                    <span className="text-[11px] tracking-[0.1em] text-charcoal-soft">{String(k + 1).padStart(2, "0")}</span>
-                  </Link>
-                </li>
-              ))}
-            </ol>
           </div>
-          <div className="relative grid grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] items-end gap-4">
-            {photo(cImg.towerPool, "(max-width: 1023px) 52vw, 320px", "aspect-[4/5]")}
-            {photo(cImg.aerialCove, "(max-width: 1023px) 44vw, 270px", "mb-[-3rem] aspect-[4/5]")}
+          <div className="mt-12">
+            <CReel locale={locale} items={reel} />
           </div>
         </div>
       </section>

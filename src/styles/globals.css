@@ -1001,3 +1001,7 @@ main:has([data-version-b]), main:has([data-version-c]) { padding-top: 0; }
 /* Version B interiors: the counter and arrows centred above the slides. */
 .b-interiors > :first-child { justify-self: center; }
 .b-interiors > .interiors-track { justify-self: stretch; width: auto; }
+
+/* Version C reel: the progress line fills over one card's time. */
+@keyframes reel-fill { from { width: 0; } to { width: 100%; } }
+.reel-fill { animation: reel-fill 2500ms linear forwards; }
