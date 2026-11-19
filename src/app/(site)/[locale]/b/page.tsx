@@ -87,7 +87,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
 
       {/* 1 · The film and the wordmark */}
       <section aria-label="Tesoro del Mar" className="relative isolate flex h-[100svh] min-h-[620px] flex-col items-center justify-center overflow-hidden text-white">
-        <BHeroFilm alt={es ? "Tesoro del Mar desde el aire, sobre una cala de la costa norte de Puerto Rico" : "Tesoro del Mar from the air, above a cove on the north coast of Puerto Rico"} pauseLabel={es ? "Pausar la película" : "Pause the film"} playLabel={es ? "Reproducir la película" : "Play the film"} />
+        <BHeroFilm alt={es ? "El jet de ORA World a su llegada, la primera escena de la película de Tesoro del Mar" : "The ORA World jet on arrival, the opening scene of the Tesoro del Mar film"} pauseLabel={es ? "Pausar la película" : "Pause the film"} playLabel={es ? "Reproducir la película" : "Play the film"} />
         {/* Client, 18 Nov: the film bright, as on Version A: only a soft shade behind the words and under the header. */}
         <span aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_55%_40%_at_center,rgb(28_24_18/0.32),transparent_75%),linear-gradient(180deg,rgb(28_24_18/0.5),transparent_24%,transparent_82%,rgb(28_24_18/0.3))]" />
         <p className="hero-fade px-5 text-center text-[10px] tracking-[0.3em] uppercase opacity-90 md:text-[11px] md:tracking-[0.42em]">ORA World · Dorado, Puerto Rico</p>

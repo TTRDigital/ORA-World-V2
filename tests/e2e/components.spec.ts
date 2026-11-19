@@ -17,10 +17,13 @@ test.describe("vendored components and the desktop menu", () => {
     await page.goto("/en");
     await page.locator("html:not(.no-js)").waitFor();
     // Checked first, while the banner is on screen (mobile browsers pause muted films scrolled out of view).
-    // Client, 17 Nov: the banner plays "Tesoro Layout Film v5" (silent): no sound button; the pause button stops it.
+    // Client, 17 Nov: the banner film is silent: no sound button; the pause button stops it.
     await expect(page.locator("#hero [data-film-sound]")).toHaveCount(0);
     const film = page.locator("#hero video").first();
-    await expect(film.locator("source")).toHaveAttribute("src", "/videos/hero-film.mp4");
+    // Client, 19 Nov: the v4 film (from the 1080p master), with a 720p copy for phones.
+    await expect(film.locator("source").last()).toHaveAttribute("src", "/videos/hero-film-v4.mp4");
+    await expect(film.locator("source").first()).toHaveAttribute("src", "/videos/hero-film-v4-720.mp4");
+    expect(await film.evaluate((v: HTMLVideoElement) => v.currentSrc)).toMatch(/hero-film-v4(-720)?\.mp4$/);
     await expect.poll(() => film.evaluate((v: HTMLVideoElement) => !v.paused)).toBe(true);
     await page.locator("#hero [data-film-pause]").click();
     await expect.poll(() => film.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);

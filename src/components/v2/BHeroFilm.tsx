@@ -33,14 +33,14 @@ export function BHeroFilm({ alt, pauseLabel, playLabel }: { alt: string; pauseLa
   return (
     <>
       <div className="absolute inset-0 -z-10">
-        <Image src="/videos/hero-film-poster.jpg" alt={alt} fill priority fetchPriority="high" sizes="100vw" quality={80} className={`z-[2] object-cover transition-opacity duration-700 ${playing ? "opacity-0" : "opacity-100"}`} style={{ objectPosition: "50% 50%" }} />
+        <Image src="/videos/hero-film-v4-poster.jpg" alt={alt} fill priority fetchPriority="high" sizes="100vw" quality={80} className={`z-[2] object-cover transition-opacity duration-700 ${playing ? "opacity-0" : "opacity-100"}`} style={{ objectPosition: "50% 50%" }} />
         <div
           ref={wrap}
           aria-hidden="true"
           className="absolute inset-0 z-[1]"
           dangerouslySetInnerHTML={{
             __html:
-              '<video autoplay muted loop playsinline preload="auto" poster="/videos/hero-film-poster.jpg" disablepictureinpicture tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><source src="/videos/hero-film.mp4" type="video/mp4"></video>',
+              '<video autoplay muted loop playsinline preload="auto" poster="/videos/hero-film-v4-poster.jpg" disablepictureinpicture tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><source src="/videos/hero-film-v4-720.mp4" media="(max-width: 767px)" type="video/mp4"><source src="/videos/hero-film-v4.mp4" type="video/mp4"></video>',
           }}
         />
       </div>

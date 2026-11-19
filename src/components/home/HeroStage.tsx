@@ -454,8 +454,9 @@ export function HeroStage({ locale, youtubeId, mp4, webm, poster }: Props) {
         className={cn("pointer-events-none absolute inset-0 z-[1] transition-opacity duration-1000", playing ? "opacity-0" : "opacity-100")}
         dangerouslySetInnerHTML={{
           __html:
-            '<video autoplay muted loop playsinline preload="auto" poster="/videos/hero-film-poster.jpg" disablepictureinpicture tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">' +
-            '<source src="/videos/hero-film.mp4" type="video/mp4">' +
+            '<video autoplay muted loop playsinline preload="auto" poster="/videos/hero-film-v4-poster.jpg" disablepictureinpicture tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">' +
+            // Client, 19 Nov: the v4 film from the 1080p master; phones get a 720p copy.
+            '<source src="/videos/hero-film-v4-720.mp4" media="(max-width: 767px)" type="video/mp4"><source src="/videos/hero-film-v4.mp4" type="video/mp4">' +
             "</video>",
         }}
       />
