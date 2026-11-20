@@ -92,7 +92,7 @@ export const home: HomeContent = {
     ctaFilm: { en: "Watch the film", es: "Ver la película" },
     statsLabel: { en: "Tesoro Del Mar", es: "Tesoro Del Mar" },
     stats: [
-      { value: 10, label: { en: "acres", es: "acres" } },
+      { value: 10.6, label: { en: "acres", es: "acres" } }, // client, 20 Nov: per the presentation (10.6 acres)
       { value: 129, label: { en: "residences", es: "residencias" } },
       { value: 42, label: { en: "hotel suites", es: "suites de hotel" } },
       { value: 65500, label: { en: "sq ft of amenities", es: "pies² de amenidades" } },
@@ -107,7 +107,7 @@ export const home: HomeContent = {
   numbers: {
     enabled: true,
     label: { en: "Tesoro Del Mar in numbers", es: "Tesoro Del Mar en cifras" },
-    headline: { en: "Ten acres, *measured* in moments", es: "Diez acres, *medidos* en momentos" },
+    headline: { en: "10.6 acres, *measured* in moments", es: "10.6 acres, *medidos* en momentos" },
     aerial: tdm.aerialCoast,
     beach: life.beach,
     stats: [

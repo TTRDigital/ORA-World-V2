@@ -12,15 +12,15 @@ export const projects: Project[] = [
     lng: -66.3178,
     summary: {
       en: [
-        "Tesoro Del Mar is an ambitious 10-acre development designed to embody the themes of rejuvenation and community. Situated near a national park with panoramic ocean views, it blends nature and modernity with sensory gardens and scenic walking paths, the gentle sea breeze and beautiful sunsets.",
+        "Tesoro Del Mar is an ambitious 10.6-acre development designed to embody the themes of rejuvenation and community. Situated near a national park with panoramic ocean views, it blends nature and modernity with sensory gardens and scenic walking paths, the gentle sea breeze and beautiful sunsets.",
       ],
       es: [
-        "Tesoro Del Mar es un ambicioso desarrollo de 10 acres concebido en torno a la renovación y la comunidad. Situado junto a un parque nacional con vistas panorámicas al mar, integra naturaleza y modernidad con jardines sensoriales y paseos escénicos, la brisa marina y atardeceres memorables.",
+        "Tesoro Del Mar es un ambicioso desarrollo de 10.6 acres concebido en torno a la renovación y la comunidad. Situado junto a un parque nacional con vistas panorámicas al mar, integra naturaleza y modernidad con jardines sensoriales y paseos escénicos, la brisa marina y atardeceres memorables.",
       ],
     },
     facts: [
       { label: { en: "Location", es: "Ubicación" }, value: { en: "Dorado, Vega Alta", es: "Dorado, Vega Alta" }, confirmed: true },
-      { label: { en: "Land", es: "Terreno" }, value: { en: "10 acres · 335,995 sq ft", es: "10 acres · 335,995 pies²" }, confirmed: true },
+      { label: { en: "Land", es: "Terreno" }, value: { en: "10.6 acres", es: "10.6 acres" }, confirmed: true },
       { label: { en: "Residences", es: "Residencias" }, value: { en: "129 contemporary apartments and luxurious villas", es: "129 apartamentos contemporáneos y villas de lujo" }, confirmed: true },
       { label: { en: "Hotel", es: "Hotel" }, value: { en: "Boutique hotel, 42 suites", es: "Hotel boutique, 42 suites" }, confirmed: true },
       { label: { en: "Amenities", es: "Amenidades" }, value: { en: "65,500 sq ft: clubhouse, tennis and basketball courts, fitness center, jogging paths, playgrounds, sensory gardens", es: "65,500 pies²: clubhouse, canchas de tenis y baloncesto, gimnasio, senderos para correr, parques infantiles, jardines sensoriales" }, confirmed: true },

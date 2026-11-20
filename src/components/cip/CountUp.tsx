@@ -20,7 +20,9 @@ export function CountUp({ value, className }: { value: string; className?: strin
     // Start from zero only if the figure is not already on screen (so it never visibly jumps back).
     const r = el.getBoundingClientRect();
     if (r.top < window.innerHeight && r.bottom > 0) return;
-    const fmt = (n: number) => (grouped ? Math.round(n).toLocaleString("en-US") : String(Math.round(n)));
+    // Keeps decimals while counting ("10.6"), so the figure never jumps at the end.
+    const dec = (value.split(".")[1] ?? "").replace(/\D/g, "").length;
+    const fmt = (n: number) => (grouped ? Math.round(n).toLocaleString("en-US") : dec ? n.toFixed(dec) : String(Math.round(n)));
     const zero = requestAnimationFrame(() => setShown(fmt(0)));
     let raf = 0;
     const io = new IntersectionObserver(

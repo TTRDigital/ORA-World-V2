@@ -26,8 +26,8 @@ const COPY = {
   label: { en: "Living", es: "Vivir" },
   headline: { en: "A life, *by the sea*", es: "Una vida *junto al mar*" },
   intro: {
-    en: "Seventeen coastal acres on Puerto Rico's north shore: the beach below, gardens all around, and everything you need a short walk from your door.",
-    es: "Diecisiete acres costeros en la costa norte de Puerto Rico: la playa abajo, jardines alrededor y todo lo que necesita a pocos pasos de su puerta.",
+    en: "10.6 coastal acres on Puerto Rico's north shore: the beach below, gardens all around, and everything you need a short walk from your door.",
+    es: "10.6 acres costeros en la costa norte de Puerto Rico: la playa abajo, jardines alrededor y todo lo que necesita a pocos pasos de su puerta.",
   },
   dayLabel: { en: "A day here", es: "Un día aquí" },
   dayTitle: { en: "Over 65,000 sq ft of ease", es: "Más de 65,000 pies² de comodidad" },

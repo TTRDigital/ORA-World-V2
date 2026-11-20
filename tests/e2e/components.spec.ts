@@ -45,7 +45,7 @@ test.describe("vendored components and the desktop menu", () => {
     // The figures count up when scrolled into view (client, 16 Nov).
     await page.locator("#who dl").scrollIntoViewIfNeeded();
     await page.waitForTimeout(2200);
-    for (const spec of [/10\s*acres/i, /129\s*residences/i, /42\s*hotel suites/i, /65,500\s*sq ft of amenities/i]) await expect(page.locator("#who")).toContainText(spec);
+    for (const spec of [/10\.6\s*acres/i, /129\s*residences/i, /42\s*hotel suites/i, /65,500\s*sq ft of amenities/i]) await expect(page.locator("#who")).toContainText(spec);
     // Brief details that are easy to drop.
     // Client, 15 Nov: no nine-day week anywhere on the homepage.
     await expect(page.locator("main")).not.toContainText(/nine-day week/i);
@@ -110,7 +110,8 @@ test.describe("vendored components and the desktop menu", () => {
   test("counters render real values in the server HTML", async ({ request }) => {
     const html = await (await request.get("/en")).text();
     expect(html).toContain("65,500");
-    expect(html).toContain("335,995");
+    // Client, 20 Nov: the land figure follows the presentation (10.6 acres).
+    expect(html).toContain("10.6");
   });
 
   test("floor plans page carries the floor-plan explorer (moved from the homepage)", async ({ page }) => {
