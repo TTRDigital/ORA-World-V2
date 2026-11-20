@@ -49,8 +49,8 @@ export const cip = {
         label: { en: "Amenities", es: "Amenidades" } as L,
         items: [
           { en: "Resort-style pools and a rooftop pool bar", es: "Piscinas estilo resort y bar en la azotea" },
-          { en: "Members-only Clubhouse with fine dining", es: "Clubhouse solo para miembros, con alta cocina" },
-          { en: "Spa, fitness center and pilates studio", es: "Spa, gimnasio y estudio de pilates" },
+          { en: "Members-only clubhouse with fine dining", es: "Clubhouse solo para miembros, con alta cocina" },
+          { en: "Spa, fitness center and Pilates studio", es: "Spa, gimnasio y estudio de pilates" },
           { en: "Beach club and an 18-hole putting course", es: "Club de playa y campo de putting de 18 hoyos" },
           { en: "Two-mile garden walking path", es: "Sendero de dos millas entre jardines" },
         ] as L[],
@@ -284,7 +284,7 @@ export const cip = {
     } as L,
     bullets: [
       { en: "Water views from every residence", es: "Vista al agua desde cada residencia" },
-      { en: "Oversized balconies and wrap-around terraces", es: "Balcones amplios y terrazas envolventes" },
+      { en: "Oversized balconies and wraparound terraces", es: "Balcones amplios y terrazas envolventes" },
       { en: "10' ceilings; private elevators in most residences", es: "Techos de 10 pies; ascensor privado en la mayoría" },
       { en: "Scavolini kitchens with Gaggenau appliances", es: "Cocinas Scavolini con electrodomésticos Gaggenau" },
       { en: "60 residences in Phase One, 1 to 6 bedrooms", es: "60 residencias en la Fase Uno, de 1 a 6 dormitorios" },
@@ -305,7 +305,7 @@ export const cip = {
       {
         title: { en: "Inspired living spaces", es: "Espacios inspirados" } as L,
         items: [
-          { en: "Balconies and wrap-around terraces", es: "Balcones y terrazas envolventes" },
+          { en: "Balconies and wraparound terraces", es: "Balcones y terrazas envolventes" },
           { en: "Panoramic ocean views through an expansive glass façade", es: "Vistas panorámicas al mar a través de una amplia fachada de vidrio" },
           { en: "Large-format porcelain tile flooring throughout", es: "Pisos de porcelanato de gran formato en toda la residencia" },
           { en: "Motorized window shades in every room", es: "Cortinas motorizadas en cada habitación" },

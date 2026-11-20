@@ -97,7 +97,7 @@ export const projects: Project[] = [
       { label: { en: "Land", es: "Terreno" }, value: { en: "Over 10 million sq ft", es: "Más de 10 millones de pies²" }, confirmed: true },
       { label: { en: "Residences", es: "Residencias" }, value: { en: "1,518 apartments and 18 villas", es: "1,518 apartamentos y 18 villas" }, confirmed: true },
       { label: { en: "Hotel", es: "Hotel" }, value: { en: "Hotel, 60 suites", es: "Hotel, 60 suites" }, confirmed: true },
-      { label: { en: "Amenities", es: "Amenidades" }, value: { en: "120,000 sq ft, clubhouse, sports facilities, playgrounds, walking trails, helipad", es: "120,000 pies², clubhouse, instalaciones deportivas, parques infantiles, senderos, helipuerto" }, confirmed: true },
+      { label: { en: "Amenities", es: "Amenidades" }, value: { en: "120,000 sq ft, clubhouse, sports facilities, playgrounds, walking trails", es: "120,000 pies², clubhouse, instalaciones deportivas, parques infantiles, senderos" }, confirmed: true },
       { label: { en: "Beach", es: "Playa" }, value: null, confirmed: false },
       { label: { en: "Airport", es: "Aeropuerto" }, value: { en: "16 miles from San Juan's airport · 25–30 minutes to San Juan", es: "A 16 millas del aeropuerto de San Juan · 25–30 minutos a San Juan" }, confirmed: true },
       { label: { en: "Nature", es: "Naturaleza" }, value: { en: "Eco park with jogging and hiking paths", es: "Ecoparque con senderos para correr y caminar" }, confirmed: true },
@@ -123,11 +123,11 @@ export const projects: Project[] = [
         title: { en: "Community highlights", es: "Lo mejor de la comunidad" },
         body: {
           en: [
-            "A mix of residential towers, luxurious villas and retail spaces. The community hub includes a clubhouse and a hotel, with sports facilities, playgrounds and walking trails that meander through the lush landscape. A helipad ensures convenient accessibility.",
+            "A mix of residential towers, luxurious villas and retail spaces. The community hub includes a clubhouse and a hotel, with sports facilities, playgrounds and walking trails that meander through the lush landscape.",
             "With a total floor area of nearly 2.4 million square feet, the development offers 1,518 apartments, 18 villas and 60 hotel suites, 120,000 square feet of amenities, 88,000 square feet of retail and 66,000 square feet of offices and medical clinics.",
           ],
           es: [
-            "Una mezcla de torres residenciales, villas de lujo y espacios comerciales. El centro de la comunidad incluye un clubhouse y un hotel, con instalaciones deportivas, parques infantiles y senderos que serpentean por el paisaje. Un helipuerto garantiza una accesibilidad cómoda.",
+            "Una mezcla de torres residenciales, villas de lujo y espacios comerciales. El centro de la comunidad incluye un clubhouse y un hotel, con instalaciones deportivas, parques infantiles y senderos que serpentean por el paisaje.",
             "Con un área de construcción de casi 2.4 millones de pies cuadrados, el desarrollo ofrece 1,518 apartamentos, 18 villas y 60 suites de hotel, 120,000 pies² de amenidades, 88,000 pies² comerciales y 66,000 pies² de oficinas y clínicas médicas.",
           ],
         },

@@ -79,7 +79,7 @@ export const amenityGroups: { key: string; title: L; text: L; image: "gym" | "go
     key: "work",
     title: { en: "Work", es: "Trabajo" },
     text: {
-      en: "A business center with conference rooms, reservable private offices, a coffee bar, high-speed Wifi and IT services available 24/7.",
+      en: "A business center with conference rooms, reservable private offices, a coffee bar, high-speed Wi-Fi and IT services available 24/7.",
       es: "Un centro de negocios con salas de conferencias, oficinas privadas reservables, coffee bar, Wifi de alta velocidad y servicios de TI 24/7.",
     },
     image: "study",

@@ -110,7 +110,7 @@
     "specs": "Specifications",
     "towerLabel": "Illustrative tower stack, select a band",
     "band": "{name} band",
-    "noMatch": "No collection matches those filters yet. Bedroom options are not published, so the filter widens as the client confirms them.",
+    "noMatch": "No collection matches those filters. Try fewer filters.",
     "renderCount": "{count, plural, =1 {1 rendering} other {# renderings}}",
     "otherCollections": "Collections",
     "nextCollection": "Next collection",
@@ -269,7 +269,7 @@
     ],
     "galleryAddress": "Sales gallery address: to be confirmed",
     "booking": "Choose a time",
-    "noBooking": "Online scheduling will appear here once the sales calendar is connected. Send your preferred time below."
+    "noBooking": "Send us your preferred time below and the sales team will confirm it."
   },
   "form": {
     "name": "Full name",
@@ -502,7 +502,7 @@
   "renders": {
     "label": "The renders",
     "headline": "Walk through *Tesoro Del Mar*",
-    "intro": "Arrival, lobby, residences and the penthouse, as rendered for the client. Click a side image or use the arrow keys to turn the carousel.",
+    "intro": "The arrival, the lobby, the residences and the penthouse. Click a side image or use the arrow keys to turn the carousel.",
     "carousel": "Tesoro Del Mar renders, 3D carousel",
     "previous": "Previous render",
     "next": "Next render",

@@ -381,7 +381,7 @@ export const places = {
     "balcony-detail",
     "35% 40%",
     {
-      en: "Detail of the curved balconies against the Caribbean sky",
+      en: "Detail of the curved balconies against the sky",
       es: "Detalle de los balcones curvos contra el cielo caribeño",
     },
     R,
