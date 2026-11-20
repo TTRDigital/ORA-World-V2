@@ -43,6 +43,8 @@ export type Guide = {
   /** The mid-page call band appears after this many sections. */
   ctaAfter: number;
   faqs: { q: string; a: string }[];
+  /** Primary sources for facts that are not ORA World's own (shown as a "Sources" list at the end of the article). */
+  sources?: { label: string; href: string }[];
 };
 
 export const GUIDE_PUBLISHED = "2026-11-21";

@@ -206,6 +206,13 @@ export function GuideArticle({ guide: g, bookingUrl, legalNotice }: { guide: Gui
                 Questions
               </a>
             </li>
+            {g.sources && g.sources.length > 0 && (
+              <li>
+                <a href="#sources" className="-ml-px block border-l border-transparent py-1.5 pl-4 text-[14px] leading-snug text-charcoal-soft transition-colors hover:border-brass hover:text-basalt">
+                  Sources
+                </a>
+              </li>
+            )}
           </ol>
         </aside>
 
@@ -258,6 +265,30 @@ export function GuideArticle({ guide: g, bookingUrl, legalNotice }: { guide: Gui
         </div>
       </section>
 
+      {/* Sources, for the facts that are not ORA World's own. */}
+      {g.sources && g.sources.length > 0 && (
+        <section id="sources" aria-labelledby="sources-h" className="px-5 pt-20 md:px-10 md:pt-28">
+          <div className="mx-auto max-w-[1440px] border-t border-basalt/15 pt-10">
+            <Eyebrow>Sources</Eyebrow>
+            <h2 id="sources-h" className="sr-only">
+              Sources
+            </h2>
+            <ol className="mt-6 max-w-[100ch] list-decimal pl-5 text-[14.5px] leading-relaxed text-charcoal-soft marker:text-brass-ink md:columns-2 md:gap-x-14 [&>li]:mb-3 [&>li]:break-inside-avoid">
+              {g.sources.map((src) => (
+                <li key={src.href}>
+                  <a href={src.href} target="_blank" rel="noopener noreferrer" className="break-words underline decoration-brass/50 underline-offset-4 transition-colors hover:text-basalt hover:decoration-basalt">
+                    {src.label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-6 max-w-[90ch] text-[13px] leading-relaxed text-charcoal-soft">
+              Rules, fees and schedules change. Check each agency&apos;s current page, and ask a licensed professional about your own situation.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* More guides. */}
       <section aria-labelledby="more-h" className="px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto max-w-[1440px]">
@@ -265,11 +296,11 @@ export function GuideArticle({ guide: g, bookingUrl, legalNotice }: { guide: Gui
           <h2 id="more-h" className="mt-5 font-[family-name:var(--font-display)] text-[34px] leading-[1.08] font-normal text-basalt md:text-[48px]">
             More guides to Dorado
           </h2>
-          <ul className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {more.map((m) => (
               <li key={m.slug}>
                 <Link href={`/guides/${m.slug}`} className="group block">
-                  <Photo image={m.hero} sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1023px) 45vw, 330px" className="aspect-[4/3]" />
+                  <Photo image={m.hero} sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1023px) 45vw, 440px" className="aspect-[4/3]" />
                   <p className="mt-5 text-[10.5px] tracking-[0.28em] text-brass-ink uppercase">{m.eyebrow}</p>
                   <h3 className="mt-2 font-[family-name:var(--font-display)] text-[23px] leading-tight text-basalt group-hover:underline group-hover:decoration-brass group-hover:underline-offset-4">{m.cardTitle}</h3>
                 </Link>
@@ -294,6 +325,9 @@ export function GuideArticle({ guide: g, bookingUrl, legalNotice }: { guide: Gui
           <BookButton bookingUrl={bookingUrl} light />
           <Link href="/b#inquire" className="inline-flex min-h-12 items-center border border-white/70 px-7 text-[11px] tracking-[0.26em] uppercase transition-colors hover:bg-white hover:text-basalt">
             Inquire
+          </Link>
+          <Link href="/visit" className="inline-flex min-h-12 items-center border border-white/70 px-7 text-[11px] tracking-[0.26em] uppercase transition-colors hover:bg-white hover:text-basalt">
+            Plan a visit
           </Link>
         </div>
       </section>
