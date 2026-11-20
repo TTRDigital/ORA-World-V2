@@ -15,8 +15,9 @@ const BASE = process.env.NEXT_PUBLIC_SITE_URL ? SITE_URL : process.env.VERCEL_BR
  * Buyer guides (TTR-2508). English only for now: the Spanish address sends visitors to Version B's Spanish homepage.
  * Staged for approval: always noindex until Kia and the client approve them (SOP website-approval).
  */
-export async function generateStaticParams({ params }: { params: { locale: string } }) {
-  return params.locale === "en" ? guides.map((g) => ({ slug: g.slug })) : [];
+// Prerendered under both locales (the parent layout supplies the locale); the Spanish ones are static redirects.
+export function generateStaticParams() {
+  return guides.map((g) => ({ slug: g.slug }));
 }
 
 type Params = Promise<{ locale: Locale; slug: string }>;
