@@ -188,7 +188,7 @@ export const guides: Guide[] = [
     },
     metaTitle: "Living in Dorado, Puerto Rico: Daily Life on the North Coast",
     metaDescription:
-      "What living in Dorado, Puerto Rico is like: beaches, nature, getting around, family life, working from home and weekends on the island, from Tesoro Del Mar.",
+      "What living in Dorado, Puerto Rico is like: beaches, nature, getting around, working from home and weekends on the island, from Tesoro Del Mar.",
     eyebrow: "Living guide · Dorado, Puerto Rico",
     title: "Living in Dorado, Puerto Rico: daily life on the north coast",
     deck: "Mornings by the sea, a short drive to San Juan, forest trails next door and an island of weekends. What a year in Dorado can look like.",
@@ -230,14 +230,6 @@ export const guides: Guide[] = [
         image: { ref: tdm.exteriorRoad, caption: "The palm-lined arrival road to Tesoro Del Mar. Artist rendering." },
       },
       {
-        id: "families-and-pets",
-        h2: "Families, and the whole household",
-        body: [
-          "Tesoro Del Mar was designed with children in mind: playgrounds, children's play areas and a teen lounge sit within the community, along with tennis, a half basketball court and beach volleyball for every age.",
-          "Pets are part of the plan too. ORA World's communities are designed around “Happy Homes for All”: secure dog parks, grooming stations, daycare, open play areas, on-demand veterinary care and pet-friendly events.",
-        ],
-      },
-      {
         id: "working",
         h2: "Working from Dorado",
         body: [
@@ -277,8 +269,8 @@ export const guides: Guide[] = [
         a: "Yes. The clubhouse business center has conference rooms, reservable private offices, a coffee bar, high-speed Wi-Fi and IT services available 24/7.",
       },
       {
-        q: "Is Tesoro Del Mar family and pet friendly?",
-        a: "Yes. There are playgrounds, children's play areas and a teen lounge, and ORA World's communities include secure dog parks, grooming stations, pet daycare and on-demand veterinary care.",
+        q: "Are pets welcome at Tesoro Del Mar?",
+        a: "Yes. ORA World's communities include secure dog parks, grooming stations, pet daycare and on-demand veterinary care.",
       },
       {
         q: "Is it safe to live by the coast in Dorado?",
@@ -398,7 +390,7 @@ export const guides: Guide[] = [
       },
       {
         q: "How many layouts are in Phase 1?",
-        a: "Fifteen layouts across 60 residences on floors 5 to 18 of Tower 1, from one bedroom with a den to a two-level penthouse with a private elevator.",
+        a: "There are 15 layouts across 60 residences on floors 5 to 18 of Tower 1, from one bedroom with a den to a two-level penthouse with a private elevator.",
       },
       {
         q: "Can I choose my finishes?",
@@ -474,7 +466,6 @@ export const guides: Guide[] = [
           "A half basketball court",
           "Beach volleyball and beach tennis",
           "A programmable golf simulator and lounge",
-          "Playgrounds, children's play areas and a teen lounge",
         ],
       },
       {
@@ -616,16 +607,9 @@ export const guides: Guide[] = [
         h2: "Day trips from Dorado",
         body: [
           "Old San Juan is the classic day out: cobblestone streets and colorful colonial architecture, with San Juan's international airport about 30 minutes from Tesoro Del Mar. After dark, paddle through one of the island's bioluminescent bays or sail into the sunset.",
-        ],
-        image: { ref: life.surf, caption: "A surfer on a turquoise wave." },
-      },
-      {
-        id: "with-children",
-        h2: "With children",
-        body: [
-          "Families can choose kids' adventure camps, interactive marine encounters, craft workshops with local themes and treasure hunts. At home, playgrounds, children's play areas and a teen lounge are part of the community.",
           "Thinking about staying longer? Read about [living in Dorado](/guides/living-in-dorado-puerto-rico), or [book a call with Reza](@book) to plan a visit.",
         ],
+        image: { ref: life.surf, caption: "A surfer on a turquoise wave." },
       },
     ],
     ctaAfter: 4,
@@ -766,7 +750,7 @@ export const guides: Guide[] = [
         id: "buying",
         h2: "How does buying a home work in Puerto Rico?",
         body: [
-          "Buying property is familiar, with a few local steps. The deed is signed before a Puerto Rico notary. Unlike a mainland notary public, a notary here is a lawyer with a public role, and the deed must carry the property's cadastre number. The deed is then recorded in the Property Registry, part of the Puerto Rico Department of Justice. Yearly property tax is managed by CRIM, the municipal revenue center.",
+          "Buying property works much as it does on the mainland, with a few local steps. The deed is signed before a Puerto Rico notary. Unlike a mainland notary public, a notary here is a lawyer with a public role, and the deed must carry the property's cadastre number. The deed is then recorded in the Property Registry, part of the Puerto Rico Department of Justice. Yearly property tax is managed by CRIM, the municipal revenue center.",
           "If you are looking at a new building, the order of steps is different again. At Tesoro Del Mar, this is a solicitation of interest only: no offering can be made and no deposits or reservations can be accepted until an offering plan is filed with the New York State Department of Law. Our guide to [buying a pre-construction condo](/guides/buying-pre-construction-condo-puerto-rico) walks through it step by step.",
           "Start by comparing the [residences](/residences) and the Phase 1 [floor plans](/b/floor-plans), and read about [daily life at Tesoro Del Mar](/b/living). For the island's tax incentive program, see our [Act 60 page](/b/act-60).",
         ],
