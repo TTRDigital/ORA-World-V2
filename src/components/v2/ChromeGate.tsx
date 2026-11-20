@@ -2,8 +2,9 @@
 
 import { usePathname } from "next/navigation";
 
-/** Versions B (/en/b), C (/en/c) and D (/en/d) bring their own header and footer: hide Version A's shared chrome there. */
-export const isVersionB = (path: string | null) => !!path && /^\/(en|es)\/(b|c|d)(\/|$)/.test(path);
+/** Versions B (/en/b), C (/en/c) and D (/en/d), and the buyer guides (/en/guides, framed like B), bring their own header
+ *  and footer: hide Version A's shared chrome there. */
+export const isVersionB = (path: string | null) => !!path && /^\/(en|es)\/(b|c|d|guides)(\/|$)/.test(path);
 
 export function ChromeGate({ children }: { children: React.ReactNode }) {
   const path = usePathname();
