@@ -39,12 +39,14 @@ export default async function VersionC({ params }: { params: Promise<{ locale: L
   const spa: ImageRef = { ...still(life.spa), src: "/videos/clips/spa-ocean-poster.jpg", width: 1248, height: 704, focal: "50% 50%", alt: { en: "An ocean-view treatment room at the spa", es: "Una sala de tratamientos con vista al mar en el spa" } };
   const tel = settings.phone ? `tel:${settings.phone.replace(/[^\d+]/g, "")}` : undefined;
 
+  // Client, 20 Nov: the cards play films (the clips of Versions A and B).
+  const film = (n: string) => `/videos/clips/${n}.mp4`;
   const reel = [
-    { href: "/c/floor-plans", label: es ? "Las residencias" : "The residences", title: es ? "Espacios de doble altura frente al mar" : "Double-height rooms facing the sea", image: cImg.diningPiano },
-    { href: "/c/longevity", label: es ? "Longevidad" : "Longevity", title: es ? "Una vida más larga y mejor" : "A longer, better life", image: spa },
-    { href: "/c/longevity", label: es ? "Ejercicio" : "Fitness", title: es ? "Un programa que lo hace fácil" : "A program that makes it easy", image: { ...still(tdm.gym), focal: "70% 50%" } },
-    { href: "/c/act-60", label: es ? "Ley 60" : "Act 60", title: es ? "Conserve más de lo que gana" : "Keep more of what you earn", image: cImg.aerialCove },
-    { href: "/c/finishes", label: es ? "Acabados" : "Finishes", title: es ? "Gabinetes italianos, grifería Dornbracht" : "Italian cabinetry, Dornbracht fixtures", image: cImg.kitchenWine },
+    { href: "/c/floor-plans", label: es ? "Las residencias" : "The residences", title: es ? "Espacios de doble altura frente al mar" : "Double-height rooms facing the sea", image: still(tdm.penthouseLiving), video: film("p24-penthouse-living") },
+    { href: "/c/longevity", label: es ? "Longevidad" : "Longevity", title: es ? "Una vida más larga y mejor" : "A longer, better life", image: spa, video: film("spa-ocean") },
+    { href: "/c/longevity", label: es ? "Ejercicio" : "Fitness", title: es ? "Un programa que lo hace fácil" : "A program that makes it easy", image: { ...still(tdm.gym), focal: "78% 50%" }, video: film("p14-gym") },
+    { href: "/c/act-60", label: es ? "Ley 60" : "Act 60", title: es ? "Conserve más de lo que gana" : "Keep more of what you earn", image: still(tdm.aerialCoast), video: film("p08-aerial-cove") },
+    { href: "/c/finishes", label: es ? "Acabados" : "Finishes", title: es ? "Gabinetes italianos, grifería Dornbracht" : "Italian cabinetry, Dornbracht fixtures", image: still(tdm.kitchenWine), video: film("p16-apartment-kitchen") },
   ];
   const R = es ? "Residencias" : "Residences";
   const PH = "Penthouse";

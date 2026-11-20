@@ -6,18 +6,18 @@ import { Link } from "@/i18n/navigation";
 import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
 
-export type ReelItem = { href: string; label: string; title: string; image: ImageRef };
+export type ReelItem = { href: string; label: string; title: string; image: ImageRef; video?: string };
 
 /**
  * Version C introduction (client, 19 Nov: "on the right side, a slice that goes by itself, every two seconds:
  * longevity, fitness...; automated, like flashcards"): the index on the left and a tall picture panel on the right that
- * slides to the next card on its own every 2.5 s, with a progress line per card. The index row of the card on show is
+ * slides to the next card on its own every 3 s, with a progress line per card. The index row of the card on show is
  * marked; pointing at a row (or focusing it) shows its card and holds there. Reduced motion: no automatic advance.
  */
 export function CReel({
   items,
   locale,
-  interval = 2500,
+  interval = 3000,
   children,
 }: {
   items: ReelItem[];
@@ -49,11 +49,26 @@ export function CReel({
     return () => clearTimeout(t);
   }, [i, held, still, seen, interval, items.length]);
   const run = !held && !still && seen;
+  // Client, 20 Nov: the cards are films. Only the card on show plays (muted, looping); the others wait at their start.
+  const films = useRef<(HTMLVideoElement | null)[]>([]);
+  useEffect(() => {
+    films.current.forEach((v, k) => {
+      if (!v) return;
+      if (k === i && seen && !still) {
+        v.muted = true;
+        if (v.preload !== "auto") v.preload = "auto";
+        v.play().catch(() => {});
+      } else {
+        v.pause();
+        if (k !== i) v.currentTime = 0;
+      }
+    });
+  }, [i, seen, still]);
 
   return (
     <div
       ref={box}
-      className="grid gap-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:items-center lg:gap-20"
+      className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-20"
     >
       <div>
         {children}
@@ -92,8 +107,8 @@ export function CReel({
         </ol>
       </div>
 
-      {/* Client, 19 Nov: a small card, the size the two photographs had, in the same section. */}
-      <div className="mx-auto w-full max-w-[340px] lg:max-w-[380px]">
+      {/* Client, 19 Nov: one card in the same section; 20 Nov: bigger, and playing films. */}
+      <div className="mx-auto w-full max-w-[460px] lg:max-w-[540px]">
         {/* The panel: the cards side by side, the track slides one card at a time. */}
         <div
           className="relative aspect-[4/5] overflow-hidden bg-travertine"
@@ -110,19 +125,36 @@ export function CReel({
                   src={it.image.src}
                   alt={it.image.alt[locale] || it.image.alt.en}
                   fill
-                  sizes="(max-width: 1023px) 340px, 380px"
+                  sizes="(max-width: 1023px) 460px, 540px"
                   quality={82}
                   className={cn(
                     "object-cover transition-transform duration-[2600ms] ease-out",
-                    k === i && run ? "scale-[1.06]" : "scale-100",
+                    !it.video && k === i && run ? "scale-[1.06]" : "scale-100",
                   )}
                   style={{ objectPosition: it.image.focal }}
                 />
+                {it.video && (
+                  <video
+                    ref={(el) => {
+                      films.current[k] = el;
+                    }}
+                    src={it.video}
+                    muted
+                    loop
+                    playsInline
+                    preload={k === 0 ? "auto" : "metadata"}
+                    disablePictureInPicture
+                    tabIndex={-1}
+                    aria-hidden
+                    className="absolute inset-0 h-full w-full object-cover"
+                    style={{ objectPosition: it.image.focal }}
+                  />
+                )}
                 <span
                   aria-hidden
                   className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgb(28_24_18/0.72))]"
                 />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-7">
                   <p className="text-[10.5px] font-semibold tracking-[0.28em] uppercase opacity-90">
                     {String(k + 1).padStart(2, "0")} · {it.label}
                   </p>
