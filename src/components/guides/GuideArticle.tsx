@@ -80,7 +80,7 @@ function BookButton({ bookingUrl, light = false, label = "Book a call with Reza"
 }
 
 const words = (g: Guide) =>
-  [g.lede, ...g.sections.flatMap((s) => [s.h2, ...s.body, ...(s.list ?? []), ...(s.steps ?? []).flatMap((st) => [st.title, st.text])]), ...g.faqs.flatMap((f) => [f.q, f.a])]
+  [g.lede, g.answer ?? "", ...g.sections.flatMap((s) => [s.h2, ...s.body, ...(s.list ?? []), ...(s.steps ?? []).flatMap((st) => [st.title, st.text])]), ...g.faqs.flatMap((f) => [f.q, f.a])]
     .join(" ")
     .split(/\s+/).length;
 
@@ -105,7 +105,9 @@ function Section({ s, bookingUrl, index }: { s: GuideSection; bookingUrl: string
           {s.list.map((it) => (
             <li key={it} className="flex items-start gap-4 text-[16.5px] leading-relaxed text-charcoal">
               <span aria-hidden className="mt-[0.7em] h-px w-5 shrink-0 bg-brass" />
-              {it}
+              <span>
+                <Rich text={it} bookingUrl={bookingUrl} />
+              </span>
             </li>
           ))}
         </ul>
@@ -185,6 +187,12 @@ export function GuideArticle({ guide: g, bookingUrl, legalNotice }: { guide: Gui
       {/* The lede. */}
       <section aria-label="Introduction" className="px-5 py-20 md:px-10 md:py-28">
         <p className="mx-auto max-w-[30ch] text-center font-[family-name:var(--font-display)] text-[28px] leading-[1.25] text-basalt text-balance md:text-[44px]">{g.lede}</p>
+        {g.answer && (
+          <div className="mx-auto mt-14 max-w-[72ch] border-l-2 border-brass bg-bone-deep px-6 py-7 md:mt-20 md:px-10 md:py-9">
+            <p className="text-[11px] tracking-[0.28em] text-brass-ink uppercase">The short answer</p>
+            <p className="mt-3 text-[17px] leading-[1.7] text-charcoal md:text-[18px]">{g.answer}</p>
+          </div>
+        )}
       </section>
 
       {/* The article, beside its index. */}

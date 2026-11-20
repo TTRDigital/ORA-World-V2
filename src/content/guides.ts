@@ -39,6 +39,8 @@ export type Guide = {
   cardTitle: string;
   facts: { value: string; label: string }[];
   lede: string;
+  /** A 2 to 3 sentence answer shown at the top of the article, under the lede. */
+  answer?: string;
   sections: GuideSection[];
   /** The mid-page call band appears after this many sections. */
   ctaAfter: number;
@@ -652,6 +654,401 @@ export const guides: Guide[] = [
         q: "Are there nature trails near Tesoro Del Mar?",
         a: "Yes. A national park sits beside Tesoro Del Mar with scenic jogging and walking paths, and the community has its own two-mile walking path through landscaped gardens.",
       },
+    ],
+  },
+  /* ------------------------------------------------------------------ 6 · Moving checklist (TTR-2596) */
+  {
+    slug: "moving-to-puerto-rico-checklist",
+    seo: {
+      query: "moving to Puerto Rico from the US checklist",
+      secondary: ["do I need a passport to go to Puerto Rico", "shipping a car to Puerto Rico", "Puerto Rico driver's license transfer", "how to move to Puerto Rico"],
+      why: "Planning query from people at the start of a move. Page one is relocation blogs and moving companies; few pages bring the official steps (CBP, TSA, CESCO, Hacienda, LUMA, AAA, Medicare) together in one plain checklist. It brings researchers who are serious about living on the island to ORA World early.",
+    },
+    metaTitle: "Moving to Puerto Rico from the US: A Practical Checklist",
+    metaDescription:
+      "Moving to Puerto Rico from the mainland: no passport, flights from Miami and New York, shipping a car, your license, banking, utilities, healthcare and buying a home.",
+    eyebrow: "Relocation guide · Puerto Rico",
+    title: "Moving to Puerto Rico from the mainland US: a practical checklist",
+    deck: "Flights, your car, your license, the bank, the power and water accounts, Medicare and the home itself. The official steps, in plain words and in the order you will need them.",
+    hero: tdm.exteriorRoad,
+    cardTitle: "Moving to Puerto Rico: a practical checklist",
+    facts: [
+      { value: "No passport", label: "Needed by US citizens on a direct flight from the mainland" },
+      { value: "30 min", label: "From San Juan's airport to Tesoro Del Mar, about" },
+      { value: "30 days", label: "Oldest your state driving record can be for a Puerto Rico license" },
+      { value: "Part B", label: "Medicare you must sign up for yourself in Puerto Rico" },
+    ],
+    lede: "Moving to Puerto Rico feels like moving abroad, but on paper it is closer to moving between states. The trick is knowing which office handles what.",
+    answer:
+      "US citizens can move to Puerto Rico without a passport or visa, because it is a US territory. The main jobs are shipping and registering your car, swapping your driver's license at CESCO, opening power and water accounts with LUMA and AAA, and signing up for Medicare Part B if you are eligible. Buying a home works through a Puerto Rico notary, who is also a lawyer.",
+    sections: [
+      {
+        id: "passport",
+        h2: "Do I need a passport to move to Puerto Rico?",
+        body: [
+          "No. Puerto Rico is a US territory, so a flight from the mainland is a domestic flight. US Customs and Border Protection explains that travelers coming directly from a US territory are not considered to have left the country. The one catch: if your trip stops at a foreign airport on the way, the passport rules for that country apply.",
+          "You still go through TSA screening like any domestic flight. Since May 7, 2025, travelers 18 and over need a REAL ID compliant license (it usually has a star in the top corner) or another accepted ID, such as a passport. Check your license before moving day, because you will want it for flights back and forth until your Puerto Rico license arrives.",
+        ],
+      },
+      {
+        id: "flights",
+        h2: "How do I fly in from Miami or New York?",
+        body: [
+          "Luis Muñoz Marín International Airport (SJU) in San Juan is the island's main gateway. JetBlue says it runs daily flights between San Juan and all three New York area airports: JFK, LaGuardia and Newark. American Airlines flies between Miami and San Juan, and also sells flights from New York. The airport's own airline page lists every carrier that serves it.",
+          "Schedules change by season, so check the airline before you book. From SJU, Tesoro Del Mar in Dorado is about 30 minutes by car. ORA World also offers owners private charter flights between the United States and their home in Puerto Rico, which is worth asking about if you plan to split the year.",
+        ],
+      },
+      {
+        id: "car",
+        h2: "How do I ship my car to Puerto Rico?",
+        body: [
+          "Cars travel by ship, most often from Jacksonville, Florida. TOTE Maritime, Crowley and Trailer Bridge all publish vehicle shipping instructions. Book early in busy months, and remove personal items before drop-off unless the carrier says otherwise.",
+          "Many people price the trip against selling the car and buying one on the island. Either way, here is what shipping looks like:",
+        ],
+        steps: [
+          { title: "Gather the papers", text: "Your title, front and back, and your registration. If the car is financed, you need a written authorization from your lender. TOTE's Jacksonville packet lists the exact documents." },
+          { title: "Drop it at the port", text: "The carrier gives you a bill of lading. Keep the original, because you will need it in San Juan." },
+          { title: "Clear it with Hacienda", text: "Puerto Rico's Treasury (Hacienda) inspects the car and assesses the excise tax, called arbitrios. You pay it online in SURI, Hacienda's portal, which also has an estimator by VIN or by make, model and year." },
+          { title: "Pick it up", text: "The car stays at the port until the arbitrios are paid. Then you are ready to register it." },
+        ],
+      },
+      {
+        id: "register",
+        h2: "How do I register my car once it arrives?",
+        body: [
+          "Registration runs through DTOP, the Department of Transportation and Public Works, and its CESCO offices. You will receive a Puerto Rico plate and a marbete, the yearly registration tag. Under the digital marbete program, vehicles more than two years past their manufacture date must pass an inspection.",
+          "DTOP does not publish a single checklist for imported cars, so call or visit CESCO first and bring your title, the Hacienda payment receipt, the bill of lading and your ID. Your mainland plates only cover you for a limited time once you live on the island, so put this near the top of your list.",
+        ],
+        image: { ref: tdm.entrance, caption: "The arrival drive and canopy entrance at Tesoro Del Mar. Artist rendering." },
+      },
+      {
+        id: "license",
+        h2: "How do I switch my driver's license?",
+        body: [
+          "Puerto Rico gives full reciprocity to licenses from US states and territories. If yours is valid, you swap it at CESCO without a written or road test. CESCO keeps your state license when it issues the new one.",
+          "Ask CESCO how long you may drive on your state license after you become a resident, because the official form does not say. Then bring:",
+        ],
+        list: [
+          "Your valid state license and form DTOP-DIS-257, the reciprocity application",
+          "A driving record from your home state, issued no more than 30 days before your visit",
+          "A medical certificate (form DTOP-DIS-260) signed by a doctor authorized in Puerto Rico",
+          "Photo ID, your Social Security number and an original birth certificate or passport",
+          "Recent proof of your Puerto Rico address, and the fees",
+        ],
+      },
+      {
+        id: "banking",
+        h2: "Can I keep my bank, and how does mail work?",
+        body: [
+          "Yes. Puerto Rico uses the US dollar, and the FDIC's deposit insurance works the same way at insured banks in Puerto Rico as on the mainland. Many people keep their mainland accounts and open a local one for utilities and day-to-day bills.",
+          "The US Postal Service delivers across the island, and Puerto Rico ZIP codes start with 006 to 009. One local habit: many addresses include an urbanization name (URB), because the same street name can appear more than once in a ZIP code. Use it on every form. Tesoro Del Mar's address is in Dorado, Vega Alta, PR 00692.",
+        ],
+        image: { ref: tdm.aptStudy, caption: "A study with built-in shelving in a Tesoro Del Mar residence. Artist rendering." },
+      },
+      {
+        id: "utilities",
+        h2: "How do I set up power, water and internet?",
+        body: [
+          "Electricity is delivered by LUMA Energy. To open a home account, LUMA asks for a government photo ID, your Social Security number, an electrical installation certification, a use permit for the property and proof you can live there, such as a deed, lease or purchase contract. You can apply online through Mi LUMA.",
+          "Water comes from the Puerto Rico Aqueduct and Sewer Authority, known as AAA or PRASA. For new service, AAA asks for your details, the use permit, proof of your right to the property and a deposit, and you can request it online through MiAcueductos. In a new building, the developer or the association usually handles the permits, so ask which papers they will give you at closing.",
+          "For internet, ask your building which cable, fiber and wireless providers are already wired in. If you work from home, that answer matters as much as the view.",
+        ],
+      },
+      {
+        id: "healthcare",
+        h2: "What about healthcare and Medicare?",
+        body: [
+          "Medicare covers people in Puerto Rico. There is one important difference: Part A starts automatically for eligible people, but in Puerto Rico you must sign up for Part B yourself. The Social Security Administration warns that missing it can mean a late penalty for as long as you have Part B. Puerto Rico residents also cannot buy plans on the ACA Marketplace, so plan your coverage before you move.",
+          "Dorado is within driving distance of San Juan and its hospitals. Veterans are served by the VA Caribbean Healthcare System, whose San Juan VA Medical Center has an emergency room open 24/7. Before you go, ask your current doctors for copies of your records and prescriptions, and check which local doctors and hospitals your plan includes.",
+        ],
+      },
+      {
+        id: "buying",
+        h2: "How does buying a home work in Puerto Rico?",
+        body: [
+          "Buying property is familiar, with a few local steps. The deed is signed before a Puerto Rico notary. Unlike a mainland notary public, a notary here is a lawyer with a public role, and the deed must carry the property's cadastre number. The deed is then recorded in the Property Registry, part of the Puerto Rico Department of Justice. Yearly property tax is managed by CRIM, the municipal revenue center.",
+          "If you are looking at a new building, the order of steps is different again. At Tesoro Del Mar, this is a solicitation of interest only: no offering can be made and no deposits or reservations can be accepted until an offering plan is filed with the New York State Department of Law. Our guide to [buying a pre-construction condo](/guides/buying-pre-construction-condo-puerto-rico) walks through it step by step.",
+          "Start by comparing the [residences](/residences) and the Phase 1 [floor plans](/b/floor-plans), and read about [daily life at Tesoro Del Mar](/b/living). For the island's tax incentive program, see our [Act 60 page](/b/act-60).",
+        ],
+        image: { ref: tdm.kitchenDining, caption: "An open kitchen and dining room in a Tesoro Del Mar residence. Artist rendering." },
+      },
+      {
+        id: "checklist",
+        h2: "What goes on my moving checklist?",
+        body: ["Print this, or save it to your phone. Most people work through it over two or three months:"],
+        list: [
+          "Check that your license is REAL ID compliant, or carry your passport",
+          "Book flights and compare nonstop options from Miami and New York",
+          "Decide whether to ship your car or buy on the island, and book the carrier",
+          "Get a lender letter if the car is financed, and keep the bill of lading",
+          "Pay the arbitrios in SURI, then register the car and get your marbete",
+          "Order your state driving record within 30 days of your CESCO visit",
+          "Get the DTOP-DIS-260 medical certificate and swap your license",
+          "Open LUMA and AAA accounts, and line up internet",
+          "Sign up for Medicare Part B if you are eligible, and transfer your records",
+          "Add the urbanization name to your new address everywhere",
+          "Read up on storm season, which runs June 1 to November 30, in our guide to [hurricane-ready homes](/guides/hurricane-ready-homes-puerto-rico)",
+        ],
+      },
+      {
+        id: "talk-to-ora",
+        h2: "Talk to ORA World",
+        body: [
+          "If Dorado is on your list, we would love to help you plan. [Send an inquiry](/b#inquire) and ORA World's team will share the brochure and the Phase 1 floor plans, or [plan a visit](/visit) to see the coast for yourself. You can also [book a call with Reza](@book), ORA World's agent, to talk through your timing.",
+        ],
+      },
+    ],
+    ctaAfter: 5,
+    faqs: [
+      {
+        q: "Do I need a passport to fly to Puerto Rico?",
+        a: "No, not as a US citizen flying directly from the mainland. Puerto Rico is a US territory, so it is a domestic flight. You need a REAL ID compliant license or another accepted ID, such as a passport, to pass TSA screening. If your trip stops in a foreign country, that country's passport rules apply.",
+      },
+      {
+        q: "Which airlines fly nonstop to San Juan from Miami and New York?",
+        a: "JetBlue says it flies daily between San Juan and JFK, LaGuardia and Newark, and American Airlines flies between Miami and San Juan. Routes change by season, so check the airline and the San Juan airport's airline page before you book.",
+      },
+      {
+        q: "How do I bring my car to Puerto Rico?",
+        a: "Ship it with an ocean carrier, most often from Jacksonville. Bring your title and registration, plus a lender authorization if the car is financed. In San Juan, Hacienda assesses the excise tax (arbitrios), which you pay online in SURI before the car leaves the port. Then you register it with DTOP through CESCO.",
+      },
+      {
+        q: "Can I use my state driver's license in Puerto Rico?",
+        a: "Puerto Rico gives full reciprocity to licenses from US states, so you can swap a valid license at CESCO without a test. You need a medical certificate, a driving record from your home state no older than 30 days, proof of address and ID. Ask CESCO how long you may drive on your state license after you become a resident.",
+      },
+      {
+        q: "Does Medicare work in Puerto Rico?",
+        a: "Yes. Part A starts automatically for eligible people, but in Puerto Rico you must sign up for Part B yourself, or you may face a late penalty. Puerto Rico residents cannot use the ACA Marketplace.",
+      },
+      {
+        q: "Who handles electricity and water?",
+        a: "LUMA Energy delivers electricity and the Puerto Rico Aqueduct and Sewer Authority (AAA) provides water. Both let you request new service online, with ID, a use permit for the property and proof you can live there.",
+      },
+      {
+        q: "Can I reserve a residence at Tesoro Del Mar now?",
+        a: "Not yet. This is a solicitation of interest: no offering can be made and no deposits or reservations can be accepted until an offering plan is filed with the New York State Department of Law. You can inquire now to receive the brochure and the Phase 1 floor plans.",
+      },
+    ],
+    sources: [
+      { label: "USA.gov: Travel to US territories", href: "https://www.usa.gov/visit-territories" },
+      { label: "US Customs and Border Protection: Western Hemisphere Travel Initiative FAQs", href: "https://www.cbp.gov/travel/us-citizens/western-hemisphere-travel-initiative/faqs" },
+      { label: "TSA: Acceptable identification at the checkpoint", href: "https://www.tsa.gov/travel/security-screening/identification" },
+      { label: "TSA: REAL ID enforcement continues (May 21, 2025)", href: "https://www.tsa.gov/news/press/releases/2025/05/21/tsa-reminds-public-real-id-enforcement-continues" },
+      { label: "Luis Muñoz Marín International Airport: Airlines", href: "https://aeropuertosju.com/en/airlines/" },
+      { label: "JetBlue: Flights to San Juan", href: "https://www.jetblue.com/en/flights-to-san-juan" },
+      { label: "American Airlines: Flights to San Juan", href: "https://www.aa.com/en-us/flights-to-san-juan" },
+      { label: "TOTE Maritime: Jacksonville to San Juan vehicle packet (PDF)", href: "https://www.totemaritime.com/wp-content/uploads/JAX-SJU-VEHICLE-PACKET-ENGLISH-APRIL-2026.pdf" },
+      { label: "Crowley: Shipping your car to Puerto Rico", href: "https://www.crowley.com/shipping-your-car-to-puerto-rico/" },
+      { label: "Puerto Rico Department of the Treasury (Hacienda): SURI", href: "https://suri.hacienda.pr.gov" },
+      { label: "DTOP: Digital marbete FAQ", href: "https://www.smarttransportation.pr.gov/faq-marbete-digital" },
+      { label: "CESCO: Applications and forms", href: "https://www.cesco.pr.gov/solicitudes-y-formularios" },
+      { label: "DTOP-DIS-257: License by reciprocity application (PDF)", href: "https://docs.pr.gov/files/cesco/Solicitud%20de%20Licencias/DTOP-DIS-257%20Solicitud%20para%20%20Certificado%20de%20Licencia%20para%20Conducir%20Vehiculos%20de%20Motor%20POR%20RECIPROCIDAD%20%20Rev.%2017feb2025.pdf" },
+      { label: "FDIC: Your insured deposits", href: "https://www.fdic.gov/resources/deposit-insurance/brochures/insured-deposits" },
+      { label: "USPS Publication 28: Urbanization", href: "https://pe.usps.com/text/pub28/28c2_042.htm" },
+      { label: "LUMA Energy: Request a service", href: "https://lumapr.com/residential/request-a-service/?lang=en" },
+      { label: "Puerto Rico Aqueduct and Sewer Authority: MiAcueductos", href: "https://miacueductos.acueductospr.com/register" },
+      { label: "Social Security Administration: Medicare in Puerto Rico (PDF)", href: "https://www.ssa.gov/pubs/EN-05-10521.pdf" },
+      { label: "CMS: Original Medicare Part A and B enrollment", href: "https://www.cms.gov/medicare/enrollment-renewal/original-part-a-b" },
+      { label: "VA Caribbean Healthcare System: San Juan VA Medical Center", href: "https://www.va.gov/caribbean-health-care/locations/san-juan-va-medical-center/" },
+      { label: "Puerto Rico Notarial Law, Act 75-1987 (PDF)", href: "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/75-1987.pdf" },
+      { label: "Puerto Rico Department of Justice: Property Registry", href: "https://www.justicia.pr.gov/secretarias-y-oficinas/registro-de-la-propiedad/" },
+      { label: "CRIM: Municipal Revenue Collection Center", href: "https://crimpr.net/" },
+      { label: "NOAA National Hurricane Center: Tropical cyclone climatology", href: "https://www.nhc.noaa.gov/climo/" },
+    ],
+  },
+  /* ------------------------------------------------------------------ 7 · Hurricane-ready homes (TTR-2596) */
+  {
+    slug: "hurricane-ready-homes-puerto-rico",
+    seo: {
+      query: "hurricane proof condos Puerto Rico",
+      secondary: ["Puerto Rico building code hurricane", "what to ask a developer about hurricanes", "condo hurricane insurance Puerto Rico", "impact windows Puerto Rico"],
+      why: "A worry almost every mainland buyer has, and page one is insurers and news stories. A calm checklist built on FEMA, NOAA and the Puerto Rico building code answers it honestly and shows how Tesoro Del Mar is designed, which builds trust before the first call.",
+    },
+    metaTitle: "Hurricane-Ready Homes in Puerto Rico: What to Ask a Developer",
+    metaDescription:
+      "What to ask any new development in Puerto Rico about hurricanes: the building code, wind design, impact glass, backup power and water, flood zones and insurance.",
+    eyebrow: "Buyer's guide · Puerto Rico",
+    title: "Hurricane-ready homes in Puerto Rico: what to ask any new development",
+    deck: "The building code, the wind design, the windows, the power and water plan, the flood map and the insurance. The questions that tell you how a new building is made for the coast.",
+    hero: tdm.aerialVillas,
+    cardTitle: "Hurricane-ready homes: what to ask a developer",
+    facts: [
+      { value: "2018", label: "Puerto Rico Building Code, based on the 2018 International Codes" },
+      { value: "157 mph+", label: "Sustained winds of a Category 5 hurricane" },
+      { value: "Jun 1 to Nov 30", label: "The Atlantic hurricane season" },
+      { value: "30 days", label: "The usual wait before a new flood policy starts" },
+    ],
+    lede: "Every home on a Caribbean coast should be built for storms. The difference between buildings is in the details, and the details are easy to ask about.",
+    answer:
+      "A new building in Puerto Rico should be designed to the 2018 Puerto Rico Building Code, with impact-rated windows and doors, backup power and water for the systems that matter, and a site that sits above the flood map. Ask every developer for the design wind speed, the window product approvals, the generator and water plan, the flood zone, and what the association's insurance covers.",
+    sections: [
+      {
+        id: "building-code",
+        h2: "What building code applies to new homes in Puerto Rico?",
+        body: [
+          "After Hurricanes Irma and Maria, Puerto Rico adopted a new building code. The Puerto Rico Building Code 2018 took effect on November 15, 2018. It is based on the 2018 International Codes, with local changes, and it applies in all 78 municipalities. FEMA helped Puerto Rico's Office of Permit Management (OGPe) develop it, and the code points to the ASCE 7-16 standard for wind loads. The law asks for the code to be reviewed at least every three years.",
+          "The first question for any developer is simple: which code edition was the building permitted under? A building permitted under the current code was designed for today's wind, flood and earthquake rules.",
+        ],
+      },
+      {
+        id: "wind",
+        h2: "What wind speed is the building designed for?",
+        body: [
+          "Puerto Rico's code includes its own microzone wind maps. They account for the way the island's hills and mountains speed up the wind, and FEMA notes there are 316 of them, municipality by municipality. The design wind speed also depends on the building's risk category, so two buildings in the same town can have different numbers.",
+          "Don't compare a code number straight to a hurricane category. The Saffir-Simpson scale used by the National Hurricane Center rates storms by one-minute sustained winds, with Category 5 starting at 157 mph. Building codes use a different measure, a three-second gust. That is why the best question is a specific one: what is the design wind speed and risk category, and who is the structural engineer of record?",
+        ],
+        quote: { text: "Structures engineered to withstand Category 5 hurricanes.", cite: "ORA World, Resilient by Design" },
+      },
+      {
+        id: "windows",
+        h2: "Are the windows and doors impact-rated?",
+        body: [
+          "FEMA lists Puerto Rico as a hurricane-prone region. In wind-borne debris areas, the code requires glazing that is impact-resistant or protected by an impact-resistant covering. Approved products carry a permanent label naming the manufacturer, the product, its performance and the agency that approved it. Testing follows the large-missile standards ASTM E1886 and E1996, and FEMA points buyers to the Miami-Dade and Florida product approval programs.",
+          "Ask to see the product approvals for the windows and for the balcony doors, which are often the largest openings in the home. Ask, too, who maintains the seals and frames over time. At Tesoro Del Mar, ORA World's published materials describe impact-resistant windows and reinforced walls, with floor-to-ceiling glass in the principal rooms.",
+        ],
+        image: { ref: tdm.penthousePiano, caption: "Floor-to-ceiling glass in a Tesoro Del Mar penthouse. Artist rendering." },
+      },
+      {
+        id: "power",
+        h2: "What keeps the lights on after a storm?",
+        body: [
+          "Hurricane Maria showed why this matters. FEMA reports that about 80 percent of Puerto Rico's residents lost power and water. Ninety days later, power was back for 65 percent of customers, and the US Department of Energy notes that some residents went almost a year without electricity.",
+          "So ask exactly what the backup power covers. Is it the common areas only, or the residences too? Does it run the elevators and the water pumps? How much fuel is stored on site, and for how many days? Is the equipment placed above flood level? ORA World's published plans for its developments, Tesoro Del Mar included, list high-capacity generators, plus solar panels and battery storage for backup energy.",
+        ],
+      },
+      {
+        id: "water",
+        h2: "Will there be water if the mains go down?",
+        body: [
+          "After Maria, FEMA reports that water service was 69 percent operational at 30 days. Ready.gov advises storing at least one gallon of water per person per day for several days, with at least three days in your home kit.",
+          "In a tower, water reaches the upper floors by pumps, so water and power go together. Ask whether the building has water storage, how much, and whether the pumps run on backup power. ORA World's published materials do not detail water storage at Tesoro Del Mar yet, so this is a good question to put to Reza, ORA World's agent.",
+        ],
+      },
+      {
+        id: "flood",
+        h2: "Is the site high enough, and how does it drain?",
+        body: [
+          "Start with the flood map. FEMA's Flood Map Service Center shows the official flood zones. After Maria, FEMA also produced Advisory Base Flood Elevation maps, which Puerto Rico's Planning Board adopted in March 2018 as the best available data. The Planning Board's flood zone rule, Regulation 13, uses both. For storm surge, the National Hurricane Center publishes surge risk maps that include Puerto Rico.",
+          "Then ask the developer: which flood zone is the site in, how high is the lowest floor, and where do the electrical and mechanical rooms sit? ORA World's published plans list elevated foundations, landscape grading to prevent flooding, advanced drainage and stormwater management to reduce runoff.",
+        ],
+        image: { ref: tdm.aerialForest, caption: "Tesoro Del Mar rising from the forest canopy near the coast. Artist rendering." },
+      },
+      {
+        id: "insurance",
+        h2: "What should I ask about insurance?",
+        body: [
+          "Flood is not part of a standard homeowners policy. FEMA's National Flood Insurance Program covers all of Puerto Rico, and policies can be bought online through FloodSmart. There is usually a 30-day wait before a new flood policy starts, so don't leave it until a storm is on the map.",
+          "In a condo, the association insures the building, and you insure your own unit. Under the flood program, the association's policy covers the building, and owners can add their own policy for contents. Windstorm deductibles are often a percentage of the insured value rather than a set amount, so read the declarations page closely. Ask the association:",
+        ],
+        list: [
+          "What does the master policy cover, and where does my unit coverage begin?",
+          "What is the windstorm deductible, and how would it be shared among owners?",
+          "Does the association carry flood insurance for the building?",
+          "What should my own policy cover for contents and improvements?",
+        ],
+      },
+      {
+        id: "storm-day",
+        h2: "Where do I go on storm day, and what about earthquakes?",
+        body: [
+          "For the strongest protection, FEMA's safe room guides (FEMA P-320 and P-361) and the ICC 500 standard set the bar. If a developer offers safe rooms, ask which standard they are built to. Ask, too, about the plan: who stays on site, how residents are told what to do, and where supplies are kept.",
+          "Puerto Rico also sits in an earthquake zone. In January 2020, the USGS recorded a magnitude 6.4 earthquake in the island's southwest. Ask how the structure was designed for seismic loads, not only for wind.",
+        ],
+      },
+      {
+        id: "tesoro-del-mar",
+        h2: "What do Tesoro Del Mar's own documents say?",
+        body: [
+          "ORA World publishes its approach under the name Resilient by Design. Here is what its published materials state about how it builds, Tesoro Del Mar included, in its own words where possible. Use this list as a starting point, and ask for the engineering documents behind it as the project moves forward.",
+        ],
+        list: [
+          "Structures engineered to withstand Category 5 hurricanes",
+          "Impact-resistant windows, reinforced walls and advanced drainage systems",
+          "Seismic engineering, with materials and methods that exceed local building codes for seismic zones",
+          "High-capacity generators, plus solar panels and battery storage",
+          "Elevated foundations, landscape grading and stormwater management",
+          "Reinforced safe rooms in the residences",
+          "On-site emergency shelters with supplies, clear evacuation routes and communication systems",
+          "Professional security teams on site 24/7, and resilience training for residents",
+        ],
+      },
+      {
+        id: "checklist",
+        h2: "What should I ask on a site visit?",
+        body: ["Take this list to any new development in Puerto Rico. A good developer will be glad you asked:"],
+        list: [
+          "Which building code edition was the project permitted under?",
+          "What are the design wind speed and risk category?",
+          "May I see the product approvals for the windows and balcony doors?",
+          "What does backup power run, and for how many days?",
+          "Is there water storage, and do the pumps run on backup power?",
+          "Which flood zone is the site in, and how high is the lowest floor?",
+          "What does the master insurance policy cover, and what is the deductible?",
+          "Is there a safe room or shelter, and which standard is it built to?",
+        ],
+      },
+      {
+        id: "talk-to-ora",
+        h2: "Talk to ORA World",
+        body: [
+          "Want to go through these questions for Tesoro Del Mar? [Send an inquiry](/b#inquire) and ORA World's team will share the brochure, or [plan a visit](/visit) to walk the site in Dorado. You can also [book a call with Reza](@book), ORA World's agent.",
+          "Compare the [residences](/residences) and the Phase 1 [floor plans](/b/floor-plans), see [daily life at Tesoro Del Mar](/b/living), and read our guide to [oceanfront condos in Dorado](/guides/oceanfront-condos-dorado-puerto-rico). Planning a full move? Start with our [moving checklist](/guides/moving-to-puerto-rico-checklist) and the [Act 60 page](/b/act-60).",
+        ],
+      },
+    ],
+    ctaAfter: 5,
+    faqs: [
+      {
+        q: "What building code is used in Puerto Rico?",
+        a: "The Puerto Rico Building Code 2018, which took effect on November 15, 2018. It is based on the 2018 International Codes with local changes, applies in all 78 municipalities and points to the ASCE 7-16 standard for wind loads.",
+      },
+      {
+        q: "Is a Category 5 hurricane the same as a building's wind rating?",
+        a: "No. The Saffir-Simpson scale rates storms by one-minute sustained winds, with Category 5 starting at 157 mph. Building codes use a three-second gust and set the design speed by location and risk category. Ask the developer for the design wind speed and the engineer of record.",
+      },
+      {
+        q: "Do new homes in Puerto Rico need impact windows?",
+        a: "Puerto Rico is a hurricane-prone region. In wind-borne debris areas the code requires glazing that is impact-resistant or protected by an impact-resistant covering, tested to ASTM E1886 and E1996 and labeled with its approval.",
+      },
+      {
+        q: "Can I get flood insurance in Puerto Rico?",
+        a: "Yes. FEMA's National Flood Insurance Program covers all of Puerto Rico, and policies can be bought online through FloodSmart. A new policy usually has a 30-day waiting period before it starts.",
+      },
+      {
+        q: "How is Tesoro Del Mar designed for hurricanes?",
+        a: "ORA World states that its structures are engineered to withstand Category 5 hurricanes, with impact-resistant windows, reinforced walls and advanced drainage. Its published plans include high-capacity generators with solar and battery storage, elevated foundations, stormwater management and reinforced safe rooms in the residences.",
+      },
+      {
+        q: "When is hurricane season in Puerto Rico?",
+        a: "The Atlantic hurricane season runs from June 1 to November 30, according to NOAA.",
+      },
+      {
+        q: "Can I reserve a residence at Tesoro Del Mar now?",
+        a: "Not yet. This is a solicitation of interest: no offering can be made and no deposits or reservations can be accepted until an offering plan is filed with the New York State Department of Law. You can inquire now to receive the brochure and the Phase 1 floor plans.",
+      },
+    ],
+    sources: [
+      { label: "FEMA: New building codes support Puerto Rico in building back stronger", href: "https://www.fema.gov/print/pdf/node/342028" },
+      { label: "Puerto Rico Act 109-2018 (PDF)", href: "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2-ingles/0109-2018.pdf" },
+      { label: "FEMA: 2018 IBC wind-resistant provisions (PDF)", href: "https://www.fema.gov/sites/default/files/2020-07/2018-ibc-compliation-wind-resistant-provisions.pdf" },
+      { label: "Puerto Rico Building Code 2018, Appendix P: Microzone wind maps", href: "https://up.codes/viewer/puerto_rico/ibc-2018/chapter/new_P/microzone-wind-maps-for-puerto-rico" },
+      { label: "FEMA P-2020: Mitigation Assessment Team report, Hurricanes Irma and Maria in Puerto Rico (PDF)", href: "https://www.fema.gov/sites/default/files/2020-07/mat-report_hurricane-irma-maria-puerto-rico_2.pdf" },
+      { label: "National Hurricane Center: Saffir-Simpson Hurricane Wind Scale", href: "https://www.nhc.noaa.gov/aboutsshws.php" },
+      { label: "FEMA glossary: Hurricane-prone region", href: "https://www.fema.gov/about/glossary/hurricane-prone-region" },
+      { label: "FEMA: 2021 IBC wind-resistant provisions (PDF)", href: "https://www.fema.gov/sites/default/files/documents/fema_international-building-code_10152021.pdf" },
+      { label: "FEMA: Hurricane Maria, one year later", href: "https://www.fema.gov/print/txt/node/335544" },
+      { label: "US Department of Energy: 2023 year in review, Puerto Rico's grid", href: "https://www.energy.gov/articles/2023-year-review-advancing-puerto-ricos-grid-recovery-and-modernization" },
+      { label: "Ready.gov: Water", href: "https://www.ready.gov/water" },
+      { label: "FEMA Flood Map Service Center", href: "https://msc.fema.gov/portal/home" },
+      { label: "Puerto Rico Planning Board: Flood maps portal", href: "https://portaldeinundacion.jp.pr.gov/mapas/mapas-interactivos-jp/" },
+      { label: "Puerto Rico Planning Board: Regulation 13, eighth revision (PDF)", href: "https://jp.pr.gov/wp-content/uploads/2021/06/Reglamento-Num-13-Octava-Revision-Vigencia-9-Enero-2021-1.pdf" },
+      { label: "National Hurricane Center: National Storm Surge Risk Maps", href: "https://www.nhc.noaa.gov/nationalsurge/" },
+      { label: "FEMA Community Status Book: Puerto Rico", href: "https://www.fema.gov/cis/PR.html" },
+      { label: "FEMA: Waiting period for a flood policy", href: "https://www.fema.gov/fema-common-faq/waiting-period-activating-flood-policy" },
+      { label: "FEMA: Flood insurance forms and underwriting", href: "https://www.fema.gov/flood-insurance/find-form/underwriting" },
+      { label: "FEMA: Safe rooms", href: "https://www.fema.gov/emergency-managers/risk-management/building-science/safe-rooms" },
+      { label: "USGS: Magnitude 6.4 earthquake in Puerto Rico", href: "https://www.usgs.gov/news/featured-story/magnitude-64-earthquake-puerto-rico" },
+      { label: "NOAA: Tropical cyclone climatology", href: "https://www.noaa.gov/tropical-cyclone-climatology" },
     ],
   },
 ];
