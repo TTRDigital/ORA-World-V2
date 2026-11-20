@@ -18,7 +18,7 @@ export const CHAPTERS: Chapter[] = [
     label: { en: "Cabinetry", es: "Gabinetes" },
     title: { en: "Italian cabinetry, your palette", es: "Gabinetes italianos, su paleta" },
     intro: {
-      en: "Custom Scavolini cabinetry in 71 finishes: walnuts and oaks, fluted slats, lacquers and soft greys.",
+      en: "Custom Scavolini cabinetry in 71 finishes: walnuts and oaks, fluted slats, lacquers and soft grays.",
       es: "Gabinetes Scavolini a medida en 71 acabados: nogales y robles, listones acanalados, lacados y grises suaves.",
     },
     brands: "Scavolini",
@@ -26,7 +26,7 @@ export const CHAPTERS: Chapter[] = [
     items: [
       { en: "Walnut and oak veneers", es: "Chapas de nogal y roble" },
       { en: "Vertical and horizontal slats", es: "Listones verticales y horizontales" },
-      { en: "Matt and glossy lacquers", es: "Lacados mate y brillante" },
+      { en: "Matte and glossy lacquers", es: "Lacados mate y brillante" },
       { en: "Glass-front display cabinets", es: "Vitrinas con frente de vidrio" },
     ],
     swatchLabel: { en: "All 71 finishes", es: "Los 71 acabados" },
@@ -176,7 +176,7 @@ export const CHAPTERS: Chapter[] = [
     label: { en: "Lighting", es: "Iluminación" },
     title: { en: "Light, by designers", es: "Luz, de diseñadores" },
     intro: {
-      en: "Statement pendants and wall lights from Italian and European houses.",
+      en: "Statement pendants and wall lights from Italian and other European houses.",
       es: "Lámparas colgantes y apliques de casas italianas y europeas.",
     },
     brands: "Baxter · Flos · Lamptron · ClassiCon · Formagenda · Moooi · Sans Souci · Carlyle Collective",
@@ -213,7 +213,7 @@ export const CHAPTERS: Chapter[] = [
     photos: ["/images/finishes/p/crestron-room.jpg","/images/finishes/p/crestron-app.jpg"],
     group: { en: "Smart home", es: "Casa inteligente" },
     label: { en: "Smart home", es: "Casa inteligente" },
-    title: { en: "A Crestron Home is simply smart", es: "Un hogar Crestron es simplemente inteligente" },
+    title: { en: "A home that is simply smart", es: "Un hogar Crestron es simplemente inteligente" },
     intro: {
       en: "Climate, security, locks, lighting, shades and audio, from one app or a keypad on the wall.",
       es: "Clima, seguridad, cerraduras, iluminación, cortinas y audio, desde una aplicación o un teclado en la pared.",

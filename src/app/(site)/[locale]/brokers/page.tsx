@@ -20,7 +20,7 @@ export default async function BrokersPage({ params }: { params: Promise<{ locale
   setRequestLocale(locale);
   const [doc, settings, tf, tn] = await Promise.all([getPage("brokers"), getSiteSettings(), getTranslations({ locale, namespace: "form" }), getTranslations({ locale, namespace: "nav" })]);
   if (!doc) return null;
-  const steps = locale === "es" ? ["Registre su licencia y a su cliente", "El equipo de ventas confirma por correo", "Reciba precios y planos en primicia"] : ["Register your licence and your client", "The sales team confirms by email", "Receive pricing and plans first"];
+  const steps = locale === "es" ? ["Registre su licencia y a su cliente", "El equipo de ventas confirma por correo", "Reciba precios y planos en primicia"] : ["Register your license and your client", "The sales team confirms by email", "Receive pricing and plans first"];
   return (
     <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("brokers"), path: "/brokers" }])} />

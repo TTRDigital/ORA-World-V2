@@ -194,7 +194,7 @@ export const cip = {
       { title: { en: "Meals you like", es: "Comidas a su gusto" }, text: { en: "Many options built around you, not one plan.", es: "Muchas opciones pensadas para usted, no un solo plan." } },
       { title: { en: "The ghost kitchen", es: "La cocina fantasma" }, text: { en: "On the premises, cooking for you.", es: "En el lugar, cocinando para usted." } },
       { title: { en: "A fitness program", es: "Un programa de ejercicio" }, text: { en: "Designed to make getting fit easy.", es: "Pensado para que ponerse en forma sea fácil." } },
-      { title: { en: "Cardiologists", es: "Cardiólogos" }, text: { en: "A connection to a list of heart specialists.", es: "Conexión con una lista de especialistas del corazón." } },
+      { title: { en: "Cardiologists", es: "Cardiólogos" }, text: { en: "Access to a list of heart specialists.", es: "Conexión con una lista de especialistas del corazón." } },
     ] as { title: L; text: L }[],
     closing: { en: "Longevity is the foundation of our world.", es: "La longevidad es la base de nuestro mundo." } as L,
     closingSub: { en: "Tell us your goals; we'll show you how ORA World makes them easy.", es: "Cuéntenos sus metas; le mostraremos cómo ORA World las hace fáciles." } as L,
@@ -204,7 +204,7 @@ export const cip = {
     title: { en: "Your body is self-made", es: "Su cuerpo se hace a sí mismo" } as L,
     cardLabels: [{ en: "Nutrition", es: "Nutrición" }, { en: "Fitness", es: "Ejercicio" }] as L[],
     intro: {
-      en: "If you're living longer, don't you want to have a better life? Some people look 50 or 60 at 80; others look old at 60. ORA helps you be the first.",
+      en: "If you're living longer, don't you want to have a better life? Some people look 50 or 60 at 80; others look old at 60. ORA helps you be one of the former.",
       es: "Si vive más, ¿no quiere tener una vida mejor? Algunos aparentan 50 o 60 a los 80; otros se ven mayores a los 60. ORA le ayuda a ser de los primeros.",
     } as L,
     body: {
@@ -371,7 +371,7 @@ export const cip = {
         items: [
           { en: "18-hole putting course", es: "Campo de putting de 18 hoyos" },
           { en: "Resort-style pool with sundeck and bar", es: "Piscina estilo resort con solárium y bar" },
-          { en: "Fitness center and pilates studio", es: "Gimnasio y estudio de pilates" },
+          { en: "Fitness center and Pilates studio", es: "Gimnasio y estudio de pilates" },
           { en: "Spa: massage, treatments and salon", es: "Spa: masajes, tratamientos y salón" },
           { en: "Outdoor yoga terrace", es: "Terraza de yoga" },
           { en: "Reservable private offices", es: "Oficinas privadas reservables" },
@@ -501,7 +501,7 @@ export const cip = {
     label: { en: "ORA Mission", es: "Misión ORA" } as L,
     lead: { en: "A world *beyond expectation*", es: "Un mundo *más allá de lo esperado*" } as L,
     body: {
-      en: "More than a destination, Ora World is a movement. We exist to erase limitations and create a future where living is effortless, exhilarating and endlessly rewarding.",
+      en: "More than a destination, ORA World is a movement. We exist to erase limitations and create a future where living is effortless, exhilarating and endlessly rewarding.",
       es: "Más que un destino, Ora World es un movimiento. Existimos para borrar los límites y crear un futuro donde vivir sea fácil, emocionante e infinitamente gratificante.",
     } as L,
     close: {
@@ -521,7 +521,7 @@ export const cip = {
     bullets: [
       { en: "A personal conversation about your goals", es: "Una conversación personal sobre sus metas" },
       { en: "The brochure, Phase 1 floor plans and pricing", es: "El folleto, los planos y los precios de la Fase 1" },
-      { en: "How the decree could apply to you", es: "Cómo podría aplicarle el decreto" },
+      { en: "How an Act 60 decree could apply to you", es: "Cómo podría aplicarle el decreto" },
     ] as L[],
   },
 };

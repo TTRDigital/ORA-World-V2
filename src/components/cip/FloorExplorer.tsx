@@ -45,8 +45,9 @@ export function FloorExplorer({ locale }: { locale: "en" | "es" }) {
     ] as [Filter, string][],
     tower: es ? "Torre 1" : "Tower 1",
     level: es ? "Nivel" : "Level",
-    residences: es ? "residencias" : "Residences",
-    foyer: es ? "Vestíbulo" : "Foyer",
+    residences: es ? "residencias" : "residences",
+    residence: es ? "residencia" : "residence",
+    foyer: es ? "vestíbulo" : "foyer",
     foyerLevel: es ? "Nivel del vestíbulo" : "Foyer level",
     foyerNote: es ? "El nivel del vestíbulo reúne el lobby y los espacios comunes. Elija los niveles 5 a 18 para ver las residencias." : "The foyer level holds the lobby and shared spaces. Choose levels 5 to 18 to see residences.",
     ocean: es ? "Océano Atlántico" : "Atlantic Ocean",
@@ -131,7 +132,7 @@ export function FloorExplorer({ locale }: { locale: "en" | "es" }) {
 
   const feats = u
     ? [
-        u.wrap ? (es ? "Vista al mar con terraza envolvente" : "Ocean view with wrap-around terrace") : es ? "Balcón frente al mar" : "Ocean-facing balcony",
+        u.wrap ? (es ? "Vista al mar con terraza envolvente" : "Ocean view with wraparound terrace") : es ? "Balcón frente al mar" : "Ocean-facing balcony",
         u.elevator ? (es ? "Ascensor privado" : "Private elevator") : null,
         es ? "Techos de 10′" : "10′ ceilings",
         u.den ? (es ? "Estudio" : "Den") : null,
@@ -196,7 +197,7 @@ export function FloorExplorer({ locale }: { locale: "en" | "es" }) {
                   <span className="sr-only">
                     {" "}
                     · {T.level} {f}
-                    {f === 1 ? `, ${T.foyer}` : f === 18 ? ", penthouse" : `, ${us.length} ${T.residences}`}
+                    {f === 1 ? `, ${T.foyer}` : f === 18 ? ", penthouse" : `, ${us.length} ${us.length === 1 ? T.residence : T.residences}`}
                   </span>
                 </span>
                 <i className={cn(bar, "group-hover:border-charcoal")} />
@@ -213,7 +214,7 @@ export function FloorExplorer({ locale }: { locale: "en" | "es" }) {
               {T.level} {floor}
             </span>
             <b className="font-[family-name:var(--font-display)] text-[24px] font-normal text-charcoal">
-              {floor === 1 ? T.foyer : floor === 18 ? "Penthouse" : `${floorUnits(floor).length} ${T.residences}`}
+              {floor === 1 ? (es ? "Vestíbulo" : "Foyer") : floor === 18 ? "Penthouse" : `${floorUnits(floor).length} ${floorUnits(floor).length === 1 ? T.residence : T.residences}`}
             </b>
           </div>
           {floor === 1 ? (

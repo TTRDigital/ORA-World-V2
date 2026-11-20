@@ -71,7 +71,7 @@ const COPY = {
     {
       label: { en: "For everyone", es: "Para todos" },
       items: [
-        { en: "A fitness center and pilates studio", es: "Un gimnasio y estudio de pilates" },
+        { en: "A fitness center and Pilates studio", es: "Un gimnasio y estudio de pilates" },
         { en: "Spa and salon", es: "Spa y salón de belleza" },
         { en: "A teen lounge and kids' play", es: "Un salón para adolescentes y juegos infantiles" },
       ],

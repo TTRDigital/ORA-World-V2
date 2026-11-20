@@ -20,7 +20,7 @@ export async function CFinishes({ locale, films = false }: { locale: Locale; fil
     ["wood", es ? "Maderas" : "Woods"],
     ["lacquer", es ? "Lacados" : "Lacquers"],
     ["texture", es ? "Texturas" : "Textures"],
-    ["colour", es ? "Colores suaves" : "Soft colours"],
+    ["colour", es ? "Colores suaves" : "Soft colors"],
   ];
   return (
     <>

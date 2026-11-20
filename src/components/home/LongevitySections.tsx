@@ -19,7 +19,7 @@ export function LongevitySections({ locale }: { locale: Locale }) {
   const inquire = { href: "/#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" };
   // Client, 15 Nov: each card plays a short film (a camera move made from its picture), not a still.
   const fitnessCards: RailCard[] = [
-    { key: "gym", kicker: es ? "Entrenamiento" : "Training", title: es ? "Gimnasio y pilates" : "Fitness and pilates", text: es ? "Un programa pensado para que sea fácil." : "A program designed to make it easy.", image: tdm.gym, video: "/videos/fitness-gym.mp4", poster: "/videos/fitness-gym-poster.jpg" },
+    { key: "gym", kicker: es ? "Entrenamiento" : "Training", title: es ? "Gimnasio y pilates" : "Fitness and Pilates", text: es ? "Un programa pensado para que sea fácil." : "A program designed to make it easy.", image: tdm.gym, video: "/videos/fitness-gym.mp4", poster: "/videos/fitness-gym-poster.jpg" },
     { key: "spa", kicker: es ? "Recuperación" : "Recovery", title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: life.spa, video: "/videos/fitness-spa.mp4", poster: "/videos/fitness-spa-poster.jpg" },
     { key: "walk", kicker: es ? "Movimiento" : "Movement", title: es ? "Sendero de dos millas" : "Two-mile walking path", text: es ? "Entre jardines, cerca del parque nacional." : "Through gardens, beside a national park.", image: tdm.aerialForest, video: "/videos/fitness-walk.mp4", poster: "/videos/fitness-walk-poster.jpg" },
     { key: "putting", kicker: es ? "Movimiento" : "Movement", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos junto a la piscina." : "Eighteen holes beside the pool.", image: tdm.exteriorGolf, video: "/videos/fitness-putting.mp4", poster: "/videos/fitness-putting-poster.jpg" },
@@ -135,7 +135,7 @@ export function LongevitySections({ locale }: { locale: Locale }) {
         eyebrow={x(cip.fitness.eyebrow)}
         title={x(cip.fitness.title)}
         // Client, 18 Nov ("cleaner"): one line; nutrition and fitness are in the program above.
-        intro={es ? "Algunos aparentan 60 a los 80. Su cuerpo se hace a sí mismo: ORA le ayuda a ser uno de ellos." : "Some people look 60 at 80. Your body is self-made, and ORA helps you be one of them."}
+        intro={es ? "Algunos aparentan 60 a los 80. Su cuerpo se hace a sí mismo: ORA le ayuda a ser uno de ellos." : "Some people look 60 at 80, and ORA helps you be one of them. Your body is self-made."}
         cards={[]}
         cta={inquire}
       >

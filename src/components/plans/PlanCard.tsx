@@ -20,7 +20,7 @@ export function PlanCard({ plan, locale, view = "grid", index = 0 }: { plan: Flo
         <div className="flex items-start justify-between gap-3">
           <div>
             <h3 className="display-s"><Link href={`/residences/plans/${plan.slug}`}>{t(plan.name, locale)}</Link></h3>
-            <p className="small text-charcoal-soft">{plan.building}{plan.floors ? ` · ${tp("floors")} ${plan.floors}` : ""}</p>
+            <p className="small text-charcoal-soft">{plan.building}{plan.floors ? ` · ${/[–,-]/.test(plan.floors) ? tp("floors") : tp("floor")} ${plan.floors}` : ""}</p>
           </div>
           <ShortlistButton slug={plan.slug} compact />
         </div>

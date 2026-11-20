@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
   const { locale, plan } = await params;
   const p = await getFloorPlan(plan);
   if (!p) return {};
-  return pageMetadata({ locale, path: `/residences/plans/${plan}`, title: t(p.name, locale), description: `${p.bedrooms} ${locale === "es" ? "habitaciones" : "bedrooms"} · ${p.building} · ${t(p.view, locale)}` });
+  return pageMetadata({ locale, path: `/residences/plans/${plan}`, title: t(p.name, locale), description: [`${p.bedrooms} ${locale === "es" ? (p.bedrooms === 1 ? "habitación" : "habitaciones") : p.bedrooms === 1 ? "bedroom" : "bedrooms"}`, p.building, t(p.view, locale)].filter(Boolean).join(" · ") });
 }
 
 export default async function PlanPage({ params }: { params: Promise<{ locale: Locale; plan: string }> }) {
@@ -46,7 +46,17 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: L
           <div>
             <p className="label mb-2">{collection ? t(collection.name, locale) : tn("residences")}</p>
             <h1 className="display-xl">{t(plan.name, locale)}</h1>
-            <p className="statement mt-3 text-charcoal-soft">{plan.bedrooms} {tp("bedrooms").toLowerCase()} · {plan.bathrooms} {tp("bath").toLowerCase()} · {plan.building} · {t(plan.view, locale)}</p>
+            <p className="statement mt-3 text-charcoal-soft">
+              {/* Singular for one ("1 bedroom"), and no empty separator when a plan has no view line. */}
+              {[
+                `${plan.bedrooms} ${locale === "es" ? (plan.bedrooms === 1 ? "habitación" : "habitaciones") : plan.bedrooms === 1 ? "bedroom" : "bedrooms"}`,
+                `${plan.bathrooms} ${locale === "es" ? (plan.bathrooms === 1 ? "baño" : "baños") : plan.bathrooms === 1 ? "bathroom" : "bathrooms"}`,
+                plan.building,
+                t(plan.view, locale),
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </p>
           </div>
           <div className="flex gap-2">
             <ShortlistButton slug={plan.slug} />
@@ -88,7 +98,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: L
                 <dt className="text-charcoal-soft">{tp("exterior")}</dt><dd className="font-semibold">{plan.exteriorSqFt ? `${plan.exteriorSqFt.toLocaleString()} sq ft` : <Tbc />}</dd>
                 <dt className="text-charcoal-soft">{tp("bedrooms")}</dt><dd className="font-semibold">{plan.bedrooms}</dd>
                 <dt className="text-charcoal-soft">{tp("bath")}</dt><dd className="font-semibold">{plan.bathrooms}{plan.powder ? ` + ${plan.powder} ${tp("powderShort")}` : ""}</dd>
-                <dt className="text-charcoal-soft">{tp("building")}</dt><dd className="font-semibold">{plan.building}{plan.floors ? ` · ${tp("floors")} ${plan.floors}` : ""}</dd>
+                <dt className="text-charcoal-soft">{tp("building")}</dt><dd className="font-semibold">{plan.building}{plan.floors ? ` · ${/[–,-]/.test(plan.floors) ? tp("floors") : tp("floor")} ${plan.floors}` : ""}</dd>
                 <dt className="text-charcoal-soft">{locale === "es" ? "Estado" : "Status"}</dt><dd className="font-semibold">{tp(`status.${plan.status}`)}</dd>
               </dl>
               <ul className="card grid gap-2 p-5 text-[15px]">

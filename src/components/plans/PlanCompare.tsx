@@ -27,7 +27,7 @@ export function PlanCompare({ plans, locale }: { plans: FloorPlan[]; locale: Loc
     { label: tp("bath"), cell: (p) => `${p.bathrooms}${p.powder ? ` + ${p.powder} ${tp("powderShort")}` : ""}` },
     { label: tp("interior"), cell: (p) => (p.interiorSqFt ? `${p.interiorSqFt.toLocaleString()} sq ft` : <Tbc />) },
     { label: tp("exterior"), cell: (p) => (p.exteriorSqFt ? `${p.exteriorSqFt.toLocaleString()} sq ft` : <Tbc />) },
-    { label: tp("building"), cell: (p) => `${p.building}${p.floors ? ` · ${tp("floors")} ${p.floors}` : ""}` },
+    { label: tp("building"), cell: (p) => `${p.building}${p.floors ? ` · ${/[–,-]/.test(p.floors) ? tp("floors") : tp("floor")} ${p.floors}` : ""}` },
     { label: tp("status.available").replace(/.*/, locale === "es" ? "Estado" : "Status"), cell: (p) => tp(`status.${p.status}`) },
   ];
   return (

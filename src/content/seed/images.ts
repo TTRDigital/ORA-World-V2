@@ -67,7 +67,7 @@ export const tdm = {
     "tdm-aerial-003",
     "50% 40%",
     {
-      en: "Aerial view of the towers and the villa neighbourhood at Tesoro Del Mar",
+      en: "Aerial view of the towers and the villa neighborhood at Tesoro Del Mar",
       es: "Vista aérea de las torres y el vecindario de villas de Tesoro Del Mar",
     },
     R,

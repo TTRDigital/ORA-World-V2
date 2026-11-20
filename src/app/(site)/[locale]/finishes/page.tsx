@@ -44,7 +44,7 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
     ["wood", es ? "Maderas" : "Woods"],
     ["lacquer", es ? "Lacados" : "Lacquers"],
     ["texture", es ? "Texturas" : "Textures"],
-    ["colour", es ? "Colores suaves" : "Soft colours"],
+    ["colour", es ? "Colores suaves" : "Soft colors"],
   ];
   // Client, 18 Nov: the banner plays the kitchen film, as on Version B.
   const hero: ImageRef = { ...tdm.kitchenWine, video: "/videos/clips/p16-apartment-kitchen.mp4", poster: "/videos/clips/p16-apartment-kitchen-poster.jpg" };
@@ -55,7 +55,7 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
         locale={locale}
         label={tn("finishes")}
         headline={es ? "Cada línea fluye con propósito" : "Every line flows with purpose"}
-        intro={es ? "Superficies y acabados seleccionados para elevar el día a día: de los gabinetes italianos a la casa inteligente, todo lo que puede elegir." : "Surfaces and finishes selected to elevate the every day: from Italian cabinetry to the smart home, everything you can choose."}
+        intro={es ? "Superficies y acabados seleccionados para elevar el día a día: de los gabinetes italianos a la casa inteligente, todo lo que puede elegir." : "Surfaces and finishes selected to elevate the everyday: from Italian cabinetry to the smart home, everything you can choose."}
         image={hero}
       />
 
@@ -151,7 +151,7 @@ export default async function FinishesPage({ params }: { params: Promise<{ local
             {es ? "Elija sus acabados con nosotros" : "Choose your finishes with us"}
           </h2>
           <p className="mx-auto mt-4 max-w-[52ch] text-[16px] leading-relaxed text-bone/80">
-            {es ? "Añada a su selección los acabados que le gusten y envíela con su consulta; le acompañamos en cada elección." : "Add the finishes you like to your selection and send it with your inquiry; we walk you through every choice."}
+            {es ? "Añada a su selección los acabados que le gusten y envíela con su consulta; le acompañamos en cada elección." : "Add the finishes you like to your selection and send it with your inquiry; we'll walk you through every choice."}
           </p>
           <Link href="/#inquire" className="cta mt-8 inline-flex min-h-[52px] px-8" data-track="cta_inquire" data-track-label="finishes">
             {es ? "Consultar" : "Inquire"} <ArrowRight width={14} height={14} />

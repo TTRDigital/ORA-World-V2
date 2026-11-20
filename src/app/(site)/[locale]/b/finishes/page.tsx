@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
     ["wood", es ? "Maderas" : "Woods"],
     ["lacquer", es ? "Lacados" : "Lacquers"],
     ["texture", es ? "Texturas" : "Textures"],
-    ["colour", es ? "Colores suaves" : "Soft colours"],
+    ["colour", es ? "Colores suaves" : "Soft colors"],
   ];
   return (
     <>

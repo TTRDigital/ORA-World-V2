@@ -61,14 +61,14 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
     { image: cImg.clubhousePool, label: es ? "Salón, café, simulador de golf" : "Lounge, café, golf simulator", title: es ? "El club" : "The clubhouse" },
     { image: cImg.poolDeck, label: es ? "Piscinas, cabañas, bar" : "Lap pools, cabanas, pool bar", title: es ? "La terraza de la piscina" : "Resort deck" },
     { image: spa, label: es ? "Spa, sauna, tratamientos" : "Spa, sauna, treatments", title: es ? "Bienestar" : "Wellness" },
-    { image: still(tdm.gym), label: es ? "Gimnasio y pilates" : "Fitness center and pilates", title: es ? "Ejercicio" : "Fitness" },
+    { image: still(tdm.gym), label: es ? "Gimnasio y pilates" : "Fitness center and Pilates", title: es ? "Ejercicio" : "Fitness" },
     { image: still(tdm.exteriorGolf), label: es ? "Dieciocho hoyos entre las torres" : "Eighteen holes among the towers", title: es ? "Campo de putting" : "Putting course" },
   ];
   const filmCards = [
     { image: { src: "/videos/clips/restaurant-poster.jpg", width: 1280, height: 720, focal: "50% 50%", alt: { en: "An oceanfront dining room, a couple raising a glass by the window", es: "Un comedor frente al mar, una pareja brindando junto a la ventana" }, rendering: true, video: "/videos/clips/restaurant.mp4", poster: "/videos/clips/restaurant-poster.jpg" } as ImageRef, label: es ? "Cenas frente al mar y cocina fantasma" : "Oceanfront dining and a ghost kitchen", title: es ? "El restaurante" : "The restaurant" },
     { image: tdm.exteriorPull, label: es ? "Piscinas, cabañas, bar" : "Lap pools, cabanas, pool bar", title: es ? "La terraza de la piscina" : "Resort deck" },
     { image: { ...spa, video: "/videos/clips/spa-ocean.mp4", poster: "/videos/clips/spa-ocean-poster.jpg" }, label: es ? "Spa, sauna, tratamientos" : "Spa, sauna, treatments", title: es ? "Bienestar" : "Wellness" },
-    { image: { ...tdm.gym, focal: "78% 50%" }, label: es ? "Gimnasio y pilates" : "Fitness center and pilates", title: es ? "Ejercicio" : "Fitness" },
+    { image: { ...tdm.gym, focal: "78% 50%" }, label: es ? "Gimnasio y pilates" : "Fitness center and Pilates", title: es ? "Ejercicio" : "Fitness" },
     { image: tdm.exteriorGolf, label: es ? "Dieciocho hoyos entre las torres" : "Eighteen holes among the towers", title: es ? "Campo de putting" : "Putting course" },
   ];
   const lists = [
@@ -232,7 +232,7 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
             <CEyebrow light>{es ? "Longevidad" : "Longevity"}</CEyebrow>
             <CTitle id="c-long" caps={es ? "Una vida más larga." : "A longer life."} accent={es ? "Una vida mejor." : "A better life."} light className="mt-5 text-[34px] leading-[1.15] md:text-[46px]" />
             <p className="mt-6 text-[16px] leading-[1.75] text-white/85 md:text-[17px]">
-              {es ? "Escaneos corporales completos, diagnósticos y atención preventiva para adelantarse a lo que viene, con nutrición personalizada, comida fresca y un programa de ejercicio fácil." : "Full-body scans, diagnostics and proactive care to help you stay ahead of the curve, with individual nutrition, fresh food and an easy fitness program."}
+              {es ? "Escaneos corporales completos, diagnósticos y atención preventiva para adelantarse a lo que viene, con nutrición personalizada, comida fresca y un programa de ejercicio fácil." : "Full-body scans, diagnostics and proactive care to help you stay ahead of the curve, with personalized nutrition, fresh food and an easy fitness program."}
             </p>
             <div className="mt-8">
               <CButton href="/c/longevity" variant="outline-light">

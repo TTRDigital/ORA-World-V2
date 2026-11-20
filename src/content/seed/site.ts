@@ -3,7 +3,7 @@ import { tdm } from "./images";
 
 /** Verbatim from oraworld.com, kept in English on both languages until counsel confirms a Spanish rendering. */
 export const LEGAL_NOTICE =
-  "This advertisement is not an offering. It is a solicitation of interest in the advertised property. No offering of the advertised units can be made and no deposits can be accepted, or reservations, binding or non - binding, can be made until an offering plan is filed with the New York State Department of Law. This advertisement is made pursuant to Cooperative Policy Statement No. 1, issued by the New York State Department of Law. Attorney General File No.: CP25-0047. Sponsor: TRPbuildco LLC Sponsor's Address: Tesoro Del Mar Dorado, Vega Alta, Puerto Rico 00692";
+  "This advertisement is not an offering. It is a solicitation of interest in the advertised property. No offering of the advertised units can be made and no deposits can be accepted, or reservations, binding or non-binding, can be made until an offering plan is filed with the New York State Department of Law. This advertisement is made pursuant to Cooperative Policy Statement No. 1, issued by the New York State Department of Law. Attorney General File No.: CP25-0047. Sponsor: TRPbuildco LLC. Sponsor's Address: Tesoro Del Mar Dorado, Vega Alta, Puerto Rico 00692";
 
 export const siteSettings: SiteSettings = {
   // The sales line from the client's prospect email (ORA World, (786) 981-4648). Env overrides it.

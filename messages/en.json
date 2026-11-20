@@ -111,7 +111,7 @@
     "towerLabel": "Illustrative tower stack, select a band",
     "band": "{name} band",
     "noMatch": "No collection matches those filters yet. Bedroom options are not published, so the filter widens as the client confirms them.",
-    "renderCount": "{count, plural, =1 {1 render} other {# renders}}",
+    "renderCount": "{count, plural, =1 {1 rendering} other {# renderings}}",
     "otherCollections": "Collections",
     "nextCollection": "Next collection",
     "hint": "Tap a floor to choose your altitude"
@@ -153,13 +153,13 @@
     "confirmed": "Published",
     "approx": "Approximate, to be confirmed",
     "mapTitle": "Dorado and the island",
-    "mapClosed": "Map not loaded. Opens MapLibre with OpenFreeMap tiles.",
+    "mapClosed": "The map loads when you open it.",
     "site": "Tesoro Del Mar",
     "dragHint": "Drag, swipe or use the arrow keys",
     "railLabel": "Places around Dorado",
     "zoomDorado": "Dorado",
     "zoomIsland": "Whole island",
-    "mapSummary": "{total} places on one map: {published} times published by ORA World, the rest approximate.",
+    "mapSummary": "{total} places on one map: travel times for {published} are published by ORA World; the rest are approximate.",
     "seeCard": "see the place"
   },
   "compare": {
@@ -288,7 +288,7 @@
       "Event",
       "Other"
     ],
-    "licence": "Licence number",
+    "licence": "License number",
     "brokerage": "Brokerage",
     "client": "Client name",
     "preferred": "Preferred date and time",
@@ -359,6 +359,7 @@
     "empty": "Nothing in the shortlist yet. Add up to three plans from the library.",
     "none": "No plan matches those filters.",
     "floors": "Floors",
+    "floor": "Floor",
     "powderShort": "powder"
   },
   "gallery": {
@@ -418,7 +419,7 @@
   "pages": {
     "residences": {
       "title": "Residences",
-      "intro": "Four collections across the tower stack and the villa neighbourhood at Tesoro Del Mar.",
+      "intro": "Four collections across the tower stack and the villa neighborhood at Tesoro Del Mar.",
       "collections": "Collections",
       "finishes": "Finishes",
       "gallery": "Gallery",

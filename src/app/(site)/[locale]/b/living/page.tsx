@@ -67,7 +67,7 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
         </p>
         <div className="mt-10 grid max-w-[720px] gap-8 sm:grid-cols-2">
           <List dark title={es ? "Dentro" : "Inside"} items={es ? ["Café y salón", "Espacios para trabajar con calma", "Simulador de golf"] : ["Café and lounge", "Spaces for focused work", "Golf simulator lounge"]} />
-          <List dark title={es ? "Para todos" : "For everyone"} items={es ? ["Gimnasio y pilates", "Spa y salón de belleza", "Salón de adolescentes y juegos infantiles"] : ["Fitness and pilates", "Spa and salon", "Teen lounge and kids' play"]} />
+          <List dark title={es ? "Para todos" : "For everyone"} items={es ? ["Gimnasio y pilates", "Spa y salón de belleza", "Salón de adolescentes y juegos infantiles"] : ["Fitness and Pilates", "Spa and salon", "Teen lounge and kids' play"]} />
         </div>
       </BFullBleed>
 

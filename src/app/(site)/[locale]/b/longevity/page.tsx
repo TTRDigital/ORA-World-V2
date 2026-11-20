@@ -45,15 +45,15 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
           <BNumbered items={lp.program.map((it) => ({ title: x(it.title), text: x(it.text) }))} />
           <div className="grid content-start gap-4 lg:sticky lg:top-[128px]">
             <BMedia image={{ ...tdm.kitchenWine, ...clip("p16-apartment-kitchen") }} locale={locale} sizes="(max-width: 1023px) calc(100vw - 40px), 620px" className="aspect-[4/5]" />
-            <p className="text-[12px] tracking-[0.22em] text-charcoal-soft uppercase">{x(lp.program[4].title)} · {x(lp.program[4].text)}</p>
+            <p className="text-[12px] tracking-[0.22em] text-charcoal-soft uppercase">{x(lp.program[4].title)} · {x(lp.program[4].text).replace(/\.$/, "")}</p>
           </div>
         </div>
       </BChapter>
-      <BChapter eyebrow={x(cip.fitness.eyebrow)} title={x(cip.fitness.title)} intro={es ? "Algunos aparentan 60 a los 80. Su cuerpo se hace a sí mismo: ORA le ayuda a ser uno de ellos." : "Some people look 60 at 80. Your body is self-made, and ORA helps you be one of them."}>
+      <BChapter eyebrow={x(cip.fitness.eyebrow)} title={x(cip.fitness.title)} intro={es ? "Algunos aparentan 60 a los 80. Su cuerpo se hace a sí mismo: ORA le ayuda a ser uno de ellos." : "Some people look 60 at 80, and ORA helps you be one of them. Your body is self-made."}>
         <BGrid
           locale={locale}
           items={[
-            { kicker: es ? "Entrenamiento" : "Training", title: es ? "Gimnasio y pilates" : "Fitness and pilates", text: es ? "Un programa pensado para que sea fácil." : "A program designed to make it easy.", image: { ...tdm.gym, video: "/videos/fitness-gym.mp4", poster: "/videos/fitness-gym-poster.jpg" } },
+            { kicker: es ? "Entrenamiento" : "Training", title: es ? "Gimnasio y pilates" : "Fitness and Pilates", text: es ? "Un programa pensado para que sea fácil." : "A program designed to make it easy.", image: { ...tdm.gym, video: "/videos/fitness-gym.mp4", poster: "/videos/fitness-gym-poster.jpg" } },
             { kicker: es ? "Recuperación" : "Recovery", title: "Spa", text: es ? "Masajes, tratamientos y salón." : "Massage, treatments and salon services.", image: { ...life.spa, video: "/videos/fitness-spa.mp4", poster: "/videos/fitness-spa-poster.jpg" } },
             { kicker: es ? "Movimiento" : "Movement", title: es ? "Sendero de dos millas" : "Two-mile walking path", text: es ? "Entre jardines, cerca del parque nacional." : "Through gardens, beside a national park.", image: { ...tdm.aerialForest, video: "/videos/fitness-walk.mp4", poster: "/videos/fitness-walk-poster.jpg" } },
             { kicker: es ? "Movimiento" : "Movement", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos entre las torres." : "Eighteen holes between the towers.", image: { ...tdm.exteriorGolf, video: "/videos/fitness-putting.mp4", poster: "/videos/fitness-putting-poster.jpg" } },

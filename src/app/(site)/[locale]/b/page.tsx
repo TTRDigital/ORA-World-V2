@@ -68,7 +68,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
   const amenities = [
     { title: es ? "La piscina" : "The pool deck", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and pool bar.", image: tdm.exteriorPull },
     { title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos entre las torres." : "Eighteen holes between the towers.", image: tdm.exteriorGolf },
-    { title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: gym },
+    { title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "A fitness center and Pilates studio with garden views.", image: gym },
     { title: "Spa", text: es ? "Masajes, tratamientos y salón, frente al mar." : "Massage, treatments and salon, facing the sea.", image: spa },
     { title: es ? "Vestíbulo" : "The lobby", text: es ? "Un vestíbulo de doble altura, con conserje de día y de noche." : "A double-height lobby, with a concierge day and night.", image: lobby },
     { title: es ? "Llegada privada" : "Private arrival", text: es ? "Vuelos chárter privados y el auto de la casa." : "Private charter flights and a house car.", image: jet },

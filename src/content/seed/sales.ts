@@ -52,7 +52,7 @@ export const amenityGroups: { key: string; title: L; text: L; image: "gym" | "go
     key: "wellness",
     title: { en: "Wellness", es: "Bienestar" },
     text: {
-      en: "A state-of-the-art fitness center and pilates studio, a spa for massage, treatments and salon services, and an outdoor yoga terrace.",
+      en: "A state-of-the-art fitness center and Pilates studio, a spa for massage, treatments and salon services, and an outdoor yoga terrace.",
       es: "Un gimnasio de última generación y estudio de pilates, un spa para masajes, tratamientos y salón, y una terraza de yoga al aire libre.",
     },
     image: "gym",

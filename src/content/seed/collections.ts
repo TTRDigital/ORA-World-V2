@@ -34,7 +34,7 @@ export const collections: Collection[] = [
       { group: { en: "Living spaces", es: "Espacios de estar" }, items: [{ en: "Stone, wood and brushed metals", es: "Piedra, madera y metales cepillados" }, { en: "Floor-to-ceiling glazing", es: "Acristalamiento de piso a techo" }] },
     ],
     specs: [
-      { label: { en: "Bedrooms", es: "Habitaciones" }, value: { en: "6 + 8 baths", es: "6 + 8 baños" } },
+      { label: { en: "Bedrooms", es: "Habitaciones" }, value: { en: "6", es: "6" } },
       { label: { en: "Interior", es: "Interior" }, value: { en: "9,807 sq ft", es: "9,807 pies²" } },
       { label: { en: "Terraces", es: "Terrazas" }, value: { en: "11,475 sq ft", es: "11,475 pies²" } },
     ],
@@ -70,7 +70,7 @@ export const collections: Collection[] = [
     finishes: [
       { group: { en: "Living spaces", es: "Espacios de estar" }, items: [{ en: "Floor-to-ceiling glazing", es: "Acristalamiento de piso a techo" }, { en: "Stone, wood and brushed metals", es: "Piedra, madera y metales cepillados" }, { en: "Eco-friendly finishes", es: "Acabados ecológicos" }, { en: "Large-format porcelain tile throughout", es: "Porcelanato de gran formato en toda la residencia" }] },
       { group: { en: "Kitchens", es: "Cocinas" }, items: [{ en: "Custom Italian cabinetry by Scavolini", es: "Gabinetes italianos a medida de Scavolini" }, { en: "Integrated Gaggenau appliance suite with built-in coffee machine", es: "Electrodomésticos integrados Gaggenau con cafetera empotrada" }, { en: "Quartzite countertops and backsplashes", es: "Encimeras y salpicaderos de cuarcita" }, { en: "Dornbracht fixtures", es: "Grifería Dornbracht" }] },
-      { group: { en: "Home systems", es: "Sistemas del hogar" }, items: [{ en: "Crestron Home smart home technology", es: "Tecnología de hogar inteligente Crestron Home" }, { en: "Lutron motorized window shades", es: "Cortinas motorizadas Lutron" }, { en: "Mitsubishi Electric multi-split air", es: "Aire multi-split Mitsubishi Electric" }, { en: "Walk-in closets with Rimadesio built-ins", es: "Vestidores con muebles Rimadesio" }] },
+      { group: { en: "Home systems", es: "Sistemas del hogar" }, items: [{ en: "Crestron Home smart home technology", es: "Tecnología de hogar inteligente Crestron Home" }, { en: "Lutron motorized window shades", es: "Cortinas motorizadas Lutron" }, { en: "Mitsubishi Electric multi-split air conditioning", es: "Aire multi-split Mitsubishi Electric" }, { en: "Walk-in closets with Rimadesio built-ins", es: "Vestidores con muebles Rimadesio" }] },
     ],
     specs: [
       { label: { en: "Bedrooms", es: "Habitaciones" }, value: { en: "1 to 6", es: "1 a 6" } },
@@ -148,7 +148,7 @@ export const collections: Collection[] = [
 ];
 
 const PLANS_PDF = "https://storage.googleapis.com/msgsndr/h3BreqRip5vgBRyV1wRf/media/6969467ce125ef29bd593468.pdf";
-const OCEAN: L = { en: "Ocean view with wrap-around terrace", es: "Vista al mar con terraza envolvente" };
+const OCEAN: L = { en: "Ocean view with wraparound terrace", es: "Vista al mar con terraza envolvente" };
 const CEIL: L = { en: "10' ceilings", es: "Techos de 10 pies" };
 const ELEV: L = { en: "Private elevator", es: "Ascensor privado" };
 const also = (u: string[]): L => ({ en: `Same layout: ${u.join(", ")}`, es: `Misma distribución: ${u.join(", ")}` });
