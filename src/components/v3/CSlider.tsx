@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { ImageRef, Locale } from "@/content/types";
+import { ClipOverlay } from "@/components/ui/ClipOverlay";
 
 /**
  * Version C residences slider (in the manner of ciprianiresidences-brickell.com): wide photographs running off the
@@ -71,6 +72,7 @@ export function CSlider({ slides, locale, prev, next, label }: { slides: { image
           <li key={s.image.src + s.caption} className="snap-start">
             <div className="relative aspect-[3/2] overflow-hidden bg-travertine">
               <Image src={s.image.src} alt={s.image.alt[locale] || s.image.alt.en} fill sizes="(max-width: 767px) 84vw, 620px" quality={82} className="object-cover" style={{ objectPosition: s.image.focal }} />
+              {s.image.video && <ClipOverlay src={s.image.video} poster={s.image.poster} focal={s.image.focal} />}
             </div>
             <p className="mt-3 flex justify-between gap-4 text-[12.5px] text-charcoal-soft">
               <span>{s.caption}</span>

@@ -6,14 +6,16 @@ import { useEffect } from "react";
  * Keeps visitors inside Version B (or C): the shared page content (Living, Longevity, Act 60...) links to Version A
  * paths; inside the version those links point to its own pages instead. Links marked data-keep stay as they are.
  */
-const maps = (v: "b" | "c"): [RegExp, string][] => [
+const maps = (v: "b" | "c" | "d"): [RegExp, string][] => [
+  // Version D reuses Version C's pages and links: its /c addresses become /d.
+  ...(v === "d" ? ([[/^\/(en|es)\/c(\/.*)?$/, "/$1/d$2"]] as [RegExp, string][]) : []),
   [/^\/(en|es)\/residences\/plans\/?$/, `/$1/${v}/floor-plans`],
   [v === "b" ? /^\/(en|es)\/(act-60|finishes|longevity|living)\/?$/ : /^\/(en|es)\/(act-60|finishes|longevity)\/?$/, `/$1/${v}/$2`],
-  ...(v === "c" ? ([[/^\/(en|es)\/(living|place)\/?$/, "/$1/c#setting"]] as [RegExp, string][]) : []),
+  ...(v !== "b" ? ([[/^\/(en|es)\/(living|place)\/?$/, `/$1/${v}#location`]] as [RegExp, string][]) : []),
   [/^\/(en|es)\/?$/, `/$1/${v}`],
 ];
 
-export function LinkRewriter({ v = "b" }: { v?: "b" | "c" }) {
+export function LinkRewriter({ v = "b" }: { v?: "b" | "c" | "d" }) {
   useEffect(() => {
     const MAP = maps(v);
     const root = document.querySelector(`[data-version-${v}]`);

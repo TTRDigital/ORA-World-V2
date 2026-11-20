@@ -153,6 +153,19 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("main")).not.toContainText(/nobody can take|you keep|183 minus/i);
   });
 
+  test("Version D (/en/d) is Version C with films, and keeps visitors inside", async ({ page }) => {
+    await page.goto("/en/d");
+    await expect(page.locator("[data-version-d]")).toHaveCount(1);
+    await expect(page.locator("header")).toHaveCount(1);
+    await expect(page.locator("h1")).toHaveText(/tesoro del mar/i);
+    for (const id of ["amenities", "location", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    // Client, 20 Nov: the pictures are films (Version C has six: the banner and the introduction's five cards).
+    expect(await page.locator("main video").count()).toBeGreaterThan(20);
+    // Version C's links point to Version D's pages.
+    await expect.poll(() => page.locator('[data-version-d] a[href^="/en/c"]:not([data-keep])').count()).toBe(0);
+    await expect(page.locator('[data-version-d] a[href="/en/d/act-60"]').first()).toBeAttached();
+  });
+
   test("gallery page removed (client, 18 Nov): old addresses go home, no Gallery link", async ({ page, isMobile }) => {
     await page.goto("/en/gallery");
     await expect(page).toHaveURL(/\/en\/?$/);

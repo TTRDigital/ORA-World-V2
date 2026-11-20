@@ -5,7 +5,7 @@ import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
 
 /** Version C footer: Deep Earth, four columns (address, explore, versions, the number), then the notice. */
-export function CFooter({ locale, settings }: { locale: Locale; settings: SiteSettings }) {
+export function CFooter({ locale, settings, v = "c" }: { locale: Locale; settings: SiteSettings; v?: "c" | "d" }) {
   const es = locale === "es";
   const x = (l: L) => t(l, locale);
   const head = "text-[11px] font-semibold tracking-[0.3em] text-brass-light uppercase";
@@ -65,6 +65,11 @@ export function CFooter({ locale, settings }: { locale: Locale; settings: SiteSe
             <li>
               <Link href="/b" data-keep="" className={link}>
                 {es ? "Versión B" : "Version B"}
+              </Link>
+            </li>
+            <li>
+              <Link href={v === "c" ? "/d" : "/c"} data-keep="" className={link}>
+                {v === "c" ? (es ? "Versión D" : "Version D") : es ? "Versión C" : "Version C"}
               </Link>
             </li>
           </ul>

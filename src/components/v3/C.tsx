@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { ImageRef, Locale } from "@/content/types";
 import { Link } from "@/i18n/navigation";
+import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import { cn } from "@/lib/utils";
 
 /**
@@ -129,6 +130,7 @@ export function CPageHero({ image, locale, place, caps, accent, line }: { image:
   return (
     <section aria-label={caps} className="relative isolate flex min-h-[72svh] items-end overflow-hidden px-5 pt-40 pb-14 text-white md:px-10 md:pb-20">
       <Image src={image.src} alt={image.alt[locale] || image.alt.en} fill priority sizes="100vw" quality={82} className="-z-10 object-cover" style={{ objectPosition: image.focal }} />
+      {image.video && <ClipOverlay src={image.video} poster={image.poster} focal={image.focal} className="-z-10" />}
       <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(28_24_18/0.55),rgb(28_24_18/0.1)_30%,rgb(28_24_18/0.25)_55%,rgb(28_24_18/0.75))]" />
       <div className="mx-auto w-full max-w-[1200px]">
         <p className="text-[11.5px] font-semibold tracking-[0.3em] uppercase opacity-90">{place}</p>
