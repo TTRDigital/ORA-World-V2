@@ -114,7 +114,7 @@ export default async function LivingPage({ params }: { params: Promise<{ locale:
     { key: "putting", kicker: es ? "Mediodía" : "Midday", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos entre las torres." : "Eighteen holes between the towers.", image: tdm.exteriorGolf, ...clip("p11-putting-green") },
     { key: "gym", kicker: es ? "Tarde" : "Afternoon", title: es ? "Gimnasio" : "Fitness", text: es ? "Con vista al jardín." : "With garden views.", image: tdm.gym, ...clip("p14-gym") },
     { key: "spa", kicker: es ? "Atardecer" : "Sunset", title: "Spa", text: es ? "Tratamientos frente al mar." : "Treatments facing the sea.", image: { ...life.spa, src: "/videos/clips/spa-ocean-poster.jpg", width: 1248, height: 704, focal: "50% 50%" }, ...clip("spa-ocean") },
-    { key: "lobby", kicker: es ? "Noche" : "Evening", title: es ? "Vestíbulo" : "Lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: tdm.foyerAtrium, ...clip("lobby-combined") },
+    { key: "lobby", kicker: es ? "Noche" : "Evening", title: es ? "Vestíbulo" : "Lobby", text: es ? "Un vestíbulo de doble altura, con conserje de día y de noche." : "A double-height lobby, with a concierge day and night.", image: tdm.foyerAtrium, ...clip("lobby-combined") },
   ];
   const islandCards: RailCard[] = home.island.places.map((p) => ({ key: p.slug, kicker: x(COPY.islandLabel), title: x(p.name), text: x(p.text), image: p.image }));
 

@@ -70,7 +70,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
     { title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos entre las torres." : "Eighteen holes between the towers.", image: tdm.exteriorGolf },
     { title: es ? "Gimnasio" : "Fitness", text: es ? "Gimnasio y estudio de pilates con vista al jardín." : "Fitness center and pilates studio with garden views.", image: gym },
     { title: "Spa", text: es ? "Masajes, tratamientos y salón, frente al mar." : "Massage, treatments and salon, facing the sea.", image: spa },
-    { title: es ? "Vestíbulo" : "The lobby", text: es ? "Doble altura, atendido 24/7." : "Double height, attended 24/7.", image: lobby },
+    { title: es ? "Vestíbulo" : "The lobby", text: es ? "Un vestíbulo de doble altura, con conserje de día y de noche." : "A double-height lobby, with a concierge day and night.", image: lobby },
     { title: es ? "Llegada privada" : "Private arrival", text: es ? "Vuelos chárter privados y el auto de la casa." : "Private charter flights and a house car.", image: jet },
     { title: es ? "El club" : "The clubhouse", text: es ? "Un club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
     { title: es ? "La entrada" : "The entrance", text: es ? "Pórtico y valet bajo las torres." : "Porte-cochère and valet beneath the towers.", image: tdm.entrance },
