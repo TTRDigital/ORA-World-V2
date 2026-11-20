@@ -39,7 +39,7 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
     { href: "/c/floor-plans", label: es ? "Las residencias" : "The residences", title: es ? "Espacios de doble altura frente al mar" : "Double-height rooms facing the sea", image: still(tdm.penthouseLiving), video: film("p24-penthouse-living") },
     { href: "/c/longevity", label: es ? "Longevidad" : "Longevity", title: es ? "Una vida más larga y mejor" : "A longer, better life", image: spa, video: film("spa-ocean") },
     { href: "/c/longevity", label: es ? "Ejercicio" : "Fitness", title: es ? "Un programa que lo hace fácil" : "A program that makes it easy", image: { ...still(tdm.gym), focal: "78% 50%" }, video: film("p14-gym") },
-    { href: "/c/act-60", label: es ? "Ley 60" : "Act 60", title: es ? "Conserve más de lo que gana" : "Keep more of what you earn", image: still(tdm.aerialCoast), video: film("p08-aerial-cove") },
+    { href: "/c/act-60", label: es ? "Ley 60" : "Act 60", title: es ? "La Ley 60, explicada" : "Act 60, explained", image: still(tdm.aerialCoast), video: film("p08-aerial-cove") },
     { href: "/c/finishes", label: es ? "Acabados" : "Finishes", title: es ? "Gabinetes italianos, grifería Dornbracht" : "Italian cabinetry, Dornbracht fixtures", image: still(tdm.kitchenWine), video: film("p16-apartment-kitchen") },
   ];
   const R = es ? "Residencias" : "Residences";
@@ -250,7 +250,7 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
           <div>
             <CEyebrow>{es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"}</CEyebrow>
             <h2 id="c-act" className="mt-5 font-[family-name:var(--font-display)] text-[34px] leading-[1.15] font-medium text-charcoal md:text-[42px]">
-              {es ? "Conserve más de lo que gana." : "Keep more of what you earn."}
+              {es ? "La Ley 60, explicada con claridad." : "Act 60, clearly explained."}
             </h2>
             <p className="mt-5 text-[16px] leading-[1.75] text-charcoal-soft">{x(cip.why.short)}</p>
             <dl className="mt-8 grid grid-cols-3 border-y border-travertine-deep">
@@ -263,7 +263,7 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
               ))}
             </dl>
             <p className="mt-4 text-[12.5px] leading-relaxed text-charcoal-soft">
-              {es ? "Tasas de Puerto Rico bajo un decreto aprobado, no tasas federales de EE. UU. Información general, no asesoría fiscal ni legal." : "Puerto Rico rates under an approved decree, not US federal rates. General information, not tax or legal advice."}
+              {es ? "Beneficios de Puerto Rico solo bajo un decreto aprobado; no cambian las reglas federales de EE. UU. Información general, no asesoría fiscal ni legal." : "Puerto Rico benefits only under an approved decree; they do not change US federal rules. General information, not tax or legal advice."}
             </p>
             <CLink href="/c/act-60" className="mt-6">
               {es ? "La Ley 60, explicada" : "Act 60, explained"}

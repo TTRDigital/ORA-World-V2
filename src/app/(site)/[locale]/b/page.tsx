@@ -226,7 +226,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
         <div className="mx-auto max-w-[1200px]">
           <Eyebrow light>{es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"}</Eyebrow>
           <h2 id="b-act" className="mt-6 font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[64px]">
-            {es ? "Conserve más de lo que gana." : "Keep more of what you earn."}
+            {es ? "La Ley 60, explicada con claridad." : "Act 60, clearly explained."}
           </h2>
           <p className="mx-auto mt-6 max-w-[52ch] text-[16px] leading-relaxed text-[var(--v2-cream)]/70 md:text-[17px]">{x(cip.why.short)}</p>
           <dl className="mt-16 grid gap-12 md:grid-cols-3 md:gap-0 md:divide-x md:divide-[var(--v2-cream)]/15">
@@ -243,8 +243,8 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
           </Link>
           <p className="mx-auto mt-10 max-w-[80ch] text-[12px] leading-relaxed text-[var(--v2-cream)]/50">
             {es
-              ? "Tasas de Puerto Rico bajo un decreto aprobado, no tasas federales de EE. UU. Información general, no asesoría fiscal ni legal; consulte a un asesor fiscal calificado."
-              : "Puerto Rico rates under an approved decree, not US federal rates. General information, not tax or legal advice; consult qualified tax counsel."}
+              ? "Beneficios de Puerto Rico solo bajo un decreto aprobado; no cambian las reglas federales de EE. UU. Información general, no asesoría fiscal ni legal; consulte a un asesor fiscal calificado."
+              : "Puerto Rico benefits only under an approved decree; they do not change US federal rules. General information, not tax or legal advice; consult qualified tax counsel."}
           </p>
         </div>
       </section>

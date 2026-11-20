@@ -5,7 +5,7 @@ import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
 import { tdm } from "@/content/seed/images";
 import { getFaqs } from "@/lib/content";
-import { TaxCalculator } from "@/components/cip/WhyWidgets";
+import { TaxAdviceCard } from "@/components/cip/WhyWidgets";
 import { BHero, BChapter, BFullBleed, BNumbered, BClose, Eyebrow } from "@/components/v2/B";
 
 /** Version B · Act 60: its own layout; copy as on Version A (the Act 60 audit brief's reviewed wording). */
@@ -28,13 +28,13 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
   const x = (l: L) => t(l, locale);
   const faqs = (await getFaqs()).filter((f) => f.topic === "tax");
   const tests = [
-    { title: es ? "Presencia" : "Presence", text: es ? "Una prueba de presencia que califique, a menudo 183 días en Puerto Rico en el año fiscal." : "A qualifying presence test, often 183 days in Puerto Rico in the tax year." },
+    { title: es ? "Presencia" : "Presence", text: es ? "Una prueba de presencia en Puerto Rico que califique para el año fiscal." : "A qualifying presence test in Puerto Rico for the tax year." },
     { title: es ? "Domicilio fiscal" : "Tax home", text: es ? "Su domicilio fiscal, su lugar principal de trabajo o negocio, está en Puerto Rico." : "Your tax home, your main place of work or business, is in Puerto Rico." },
     { title: es ? "Conexión más cercana" : "Closer connection", text: es ? "Sin una conexión más cercana con Estados Unidos u otro país extranjero." : "No closer connection to the United States or another foreign country." },
   ];
   return (
     <>
-      <BHero image={tdm.aerialCoast} locale={locale} eyebrow={es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"} title={es ? "Conserve más de lo que gana" : "Keep more of what you earn"} line={x(cip.why.short)} cue={es ? "Desplácese" : "Scroll to explore"} />
+      <BHero image={tdm.aerialCoast} locale={locale} eyebrow={es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"} title={es ? "La Ley 60, explicada con claridad" : "Act 60, clearly explained"} line={x(cip.why.short)} cue={es ? "Desplácese" : "Scroll to explore"} />
 
       <section className="bg-bone px-5 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[1100px] text-center">
@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
         </div>
       </section>
 
-      <BChapter eyebrow={es ? "Las cifras" : "The numbers"} title={es ? "Tres cifras, bien entendidas." : "Three numbers, clearly understood."}>
+      <BChapter eyebrow={es ? "Lo esencial" : "The essentials"} title={es ? "Tres palabras, bien entendidas." : "Three words, clearly understood."}>
         <dl className="grid gap-px overflow-hidden bg-bone/15 md:grid-cols-3">
           {cip.why.stats.map((st) => (
             <div key={st.value} className="bg-basalt p-8 md:p-10">
@@ -56,12 +56,12 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
         <p className="mt-6 max-w-[90ch] text-[12.5px] leading-relaxed text-bone/55">{x(cip.why.statsNote)}</p>
         <div className="mt-16 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:items-center lg:gap-16">
           <div>
-            <h3 className="font-[family-name:var(--font-display)] text-[34px] leading-tight md:text-[48px]">{es ? "Una comparación ilustrativa" : "An illustrative comparison"}</h3>
+            <h3 className="font-[family-name:var(--font-display)] text-[34px] leading-tight md:text-[48px]">{es ? "Háblelo con un asesor" : "Talk it through with an adviser"}</h3>
             <p className="mt-5 max-w-[46ch] text-[16px] leading-relaxed text-bone/75">
-              {es ? "Mueva el control y cambie de régimen: son ejemplos, no una estimación de su obligación fiscal ni un ahorro garantizado." : "Move the slider and switch the regime: these are examples, not estimates of your tax liability or guaranteed savings."}
+              {es ? "Si la Ley 60 encaja en sus planes depende de sus ingresos, su residencia y los términos del decreto. Un asesor independiente revisa su caso." : "Whether Act 60 fits your plans depends on your income, your residency and the decree's terms. An independent adviser reviews your situation."}
             </p>
           </div>
-          <TaxCalculator es={es} />
+          <TaxAdviceCard es={es} />
         </div>
       </BChapter>
 
@@ -69,11 +69,12 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
         <BNumbered items={tests} />
       </BChapter>
 
-      <BFullBleed image={tdm.exteriorRoad} locale={locale} eyebrow={es ? "Fecha límite de solicitud 2026" : "2026 application deadline"} title={es ? "31 de diciembre" : "December 31"}>
+      {/* Kia, 20 Nov: no deadlines in marketing copy; the application deadline band now explains the portal. */}
+      <BFullBleed image={tdm.exteriorRoad} locale={locale} eyebrow={es ? "Solicitud" : "Application"} title={es ? "Por el portal oficial" : "Through the official portal"}>
         <p className="mt-6 max-w-[56ch] text-[16px] leading-relaxed text-white/85">
           {es
-            ? "Según la guía del DDEC, las solicitudes elegibles recibidas hasta las 11:59 p. m. del 31 de diciembre de 2026, según la hora del pago en el Portal de Incentivos, conservan los términos vigentes al presentarlas aunque se aprueben después. Presentar a tiempo no garantiza la aprobación ni sustituye los requisitos de residencia y cumplimiento."
-            : "DDEC guidance states that eligible applications received by 11:59 p.m. on December 31, 2026, based on the Incentives Portal filing-fee timestamp, retain the substantive terms in effect at filing even if approved later. Timely filing does not guarantee approval or replace residency and compliance requirements."}
+            ? "Las solicitudes de decreto se presentan por el Portal de Incentivos del DDEC. Presentarla no garantiza la aprobación ni sustituye los requisitos de residencia y cumplimiento."
+            : "Decree applications are filed through the DDEC Incentives Portal. Filing does not guarantee approval or replace the residency and compliance requirements."}
         </p>
       </BFullBleed>
 

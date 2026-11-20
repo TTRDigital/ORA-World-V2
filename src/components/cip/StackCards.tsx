@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import type { ImageRef, Locale } from "@/content/types";
-import { FinishesShowcase, HealthCheck, ResilienceGrid, TaxCalculator, TravelRoute } from "./WhyWidgets";
+import { FinishesShowcase, HealthCheck, ResilienceGrid, TaxAdviceCard, TravelRoute } from "./WhyWidgets";
 import { scavolini } from "@/content/seed/finishes";
 
 export type StackCard = {
@@ -112,7 +112,7 @@ export function StackCards({ cards, locale }: { cards: StackCard[]; locale: Loca
                 {/* Client, 17 Nov: no "Read more" link on the cards. */}
               </div>
               {c.kind === "tax" ? (
-                <TaxCalculator es={locale === "es"} />
+                <TaxAdviceCard es={locale === "es"} />
               ) : c.kind === "health" ? (
                 <HealthCheck es={locale === "es"} items={c.tags} />
               ) : c.kind === "finishes" ? (

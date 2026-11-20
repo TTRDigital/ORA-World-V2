@@ -20,13 +20,13 @@ export async function CAct60({ locale, films = false }: { locale: Locale; films?
   const x = (l: L) => t(l, locale);
   const faqs = (await getFaqs()).filter((f) => f.topic === "tax");
   const tests = [
-    { title: es ? "Presencia" : "Presence", text: es ? "Una prueba de presencia que califique, a menudo 183 días en Puerto Rico en el año fiscal." : "A qualifying presence test, often 183 days in Puerto Rico in the tax year." },
+    { title: es ? "Presencia" : "Presence", text: es ? "Una prueba de presencia en Puerto Rico que califique para el año fiscal." : "A qualifying presence test in Puerto Rico for the tax year." },
     { title: es ? "Domicilio fiscal" : "Tax home", text: es ? "Su domicilio fiscal, su lugar principal de trabajo o negocio, está en Puerto Rico." : "Your tax home, your main place of work or business, is in Puerto Rico." },
     { title: es ? "Conexión más cercana" : "Closer connection", text: es ? "Sin una conexión más cercana con Estados Unidos u otro país extranjero." : "No closer connection to the United States or another foreign country." },
   ];
   return (
     <>
-      <CPageHero image={films ? tdm.aerialCoast : cImg.aerialCove} locale={locale} place={es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"} caps={es ? "Conserve más" : "Keep more"} accent={es ? "de lo que gana" : "of what you earn"} line={x(cip.why.short)} />
+      <CPageHero image={films ? tdm.aerialCoast : cImg.aerialCove} locale={locale} place={es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"} caps={es ? "La Ley 60" : "Act 60"} accent={es ? "explicada" : "explained"} line={x(cip.why.short)} />
 
       {/* The program and the figures. */}
       <CSection tone="bone" labelledBy="c-program">
@@ -86,12 +86,13 @@ export async function CAct60({ locale, films = false }: { locale: Locale; films?
           </div>
           <div className="grid content-start gap-8">
             <div className="border border-travertine-deep bg-bone p-8">
-              <CEyebrow>{es ? "Fecha límite de solicitud 2026" : "2026 application deadline"}</CEyebrow>
-              <p className="mt-4 font-[family-name:var(--font-display)] text-[40px] leading-none font-medium text-charcoal">{es ? "31 de diciembre" : "December 31"}</p>
+              {/* Kia, 20 Nov: no deadlines in marketing copy. */}
+              <CEyebrow>{es ? "Solicitud" : "Application"}</CEyebrow>
+              <p className="mt-4 font-[family-name:var(--font-display)] text-[40px] leading-none font-medium text-charcoal">{es ? "Por el portal oficial" : "Through the official portal"}</p>
               <p className="mt-5 text-[16.5px] leading-[1.7] text-charcoal-soft">
                 {es
-                  ? "Según la guía del DDEC, las solicitudes elegibles recibidas hasta las 11:59 p. m. del 31 de diciembre de 2026, según la hora del pago en el Portal de Incentivos, conservan los términos vigentes al presentarlas aunque se aprueben después. Presentar a tiempo no garantiza la aprobación ni sustituye los requisitos de residencia y cumplimiento."
-                  : "DDEC guidance states that eligible applications received by 11:59 p.m. on December 31, 2026, based on the Incentives Portal filing-fee timestamp, retain the substantive terms in effect at filing even if approved later. Timely filing does not guarantee approval or replace residency and compliance requirements."}
+                  ? "Las solicitudes de decreto se presentan por el Portal de Incentivos del DDEC. Presentarla no garantiza la aprobación ni sustituye los requisitos de residencia y cumplimiento."
+                  : "Decree applications are filed through the DDEC Incentives Portal. Filing does not guarantee approval or replace the residency and compliance requirements."}
               </p>
             </div>
             <div className="border border-travertine-deep bg-bone p-8">

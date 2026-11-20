@@ -231,9 +231,10 @@ export const cip = {
   why: {
     eyebrow: { en: "Why Puerto Rico", es: "Por qué Puerto Rico" } as L,
     title: { en: "Act 60: the tax benefits of living here", es: "Ley 60: los beneficios fiscales de vivir aquí" } as L,
+    // Kia, 20 Nov: no tax numbers, savings or deadlines in marketing copy: rates, years and filing dates removed.
     intro: {
-      en: "Puerto Rico's Act 60 Resident Individual Investor program may offer preferential Puerto Rico income-tax treatment to eligible individuals who establish bona fide residency. Qualifying applicants filing by December 31, 2026 may receive 0% Puerto Rico income tax on certain interest, dividends and post-residency capital appreciation through December 31, 2035. Applications filed beginning January 1, 2027 generally fall under a 4% regime extending through December 31, 2055. Eligibility, income sourcing, federal tax rules and decree compliance apply.",
-      es: "El programa de Inversionista Residente Individual de la Ley 60 de Puerto Rico puede ofrecer un tratamiento preferencial del impuesto sobre la renta de Puerto Rico a las personas elegibles que establezcan residencia bona fide. Quienes califiquen y soliciten hasta el 31 de diciembre de 2026 pueden recibir un 0% de impuesto sobre la renta de Puerto Rico sobre ciertos intereses, dividendos y plusvalías posteriores a la residencia hasta el 31 de diciembre de 2035. Las solicitudes presentadas desde el 1 de enero de 2027 generalmente entran en un régimen del 4% que se extiende hasta el 31 de diciembre de 2055. Aplican la elegibilidad, el origen de los ingresos, las reglas fiscales federales y el cumplimiento del decreto.",
+      en: "Puerto Rico's Act 60 Resident Individual Investor program may offer preferential Puerto Rico income-tax treatment on certain income to eligible individuals who establish bona fide residency. Terms depend on the decree, and eligibility, income sourcing, federal tax rules and decree compliance all apply. An independent Puerto Rico tax professional can tell you whether it fits your situation.",
+      es: "El programa de Inversionista Residente Individual de la Ley 60 de Puerto Rico puede ofrecer un tratamiento preferencial del impuesto sobre la renta de Puerto Rico sobre ciertos ingresos a las personas elegibles que establezcan residencia bona fide. Los términos dependen del decreto, y aplican la elegibilidad, el origen de los ingresos, las reglas fiscales federales y el cumplimiento del decreto. Un profesional tributario independiente de Puerto Rico puede decirle si encaja en su situación.",
     } as L,
     // A short version for the hero, the homepage card and the page description.
     short: {
@@ -247,14 +248,15 @@ export const cip = {
       { en: "Establish bona fide Puerto Rico residency and satisfy the applicable primary-residence acquisition requirement.", es: "Establezca residencia bona fide en Puerto Rico y cumpla el requisito aplicable de adquirir una residencia principal." },
       { en: "Maintain the decree's annual reporting, charitable-contribution and other compliance obligations.", es: "Mantenga los informes anuales, la contribución benéfica y las demás obligaciones de cumplimiento del decreto." },
     ] as L[],
+    // Kia, 20 Nov: no tax figures. The three cells now name the three things the program asks of you, in words.
     stats: [
-      { value: "0%", label: { en: "Potential Puerto Rico rate for qualifying 2026 applicants; benefits generally expire December 31, 2035.", es: "Tasa potencial de Puerto Rico para solicitantes de 2026 que califiquen; los beneficios generalmente vencen el 31 de diciembre de 2035." } as L },
-      { value: "4%", label: { en: "Preferential Puerto Rico rate for qualifying applications filed from January 1, 2027.", es: "Tasa preferencial de Puerto Rico para solicitudes que califiquen presentadas desde el 1 de enero de 2027." } as L },
-      { value: "2055", label: { en: "End of the extended 4% program period, not the end date of the original 0% decree.", es: "Fin del período extendido del programa al 4%, no la fecha de vencimiento del decreto original al 0%." } as L },
+      { value: "Apply", label: { en: "Through the official DDEC Incentives Portal, with an independent adviser.", es: "Por el Portal de Incentivos oficial del DDEC, con un asesor independiente." } as L },
+      { value: "Reside", label: { en: "Establish bona fide Puerto Rico residency, as the IRS defines it.", es: "Establezca residencia bona fide en Puerto Rico, según la define el IRS." } as L },
+      { value: "Report", label: { en: "Keep the decree's annual reporting and compliance obligations.", es: "Cumpla los informes anuales y las obligaciones del decreto." } as L },
     ],
     statsNote: {
-      en: "Rates apply only to qualifying Puerto Rico income-tax treatment under an approved decree; they are not US federal rates. The 0% and 4% regimes are separate: a 2026 decree does not continue automatically at 4% after 2035.",
-      es: "Las tasas aplican solo al tratamiento que califique del impuesto sobre la renta de Puerto Rico bajo un decreto aprobado; no son tasas federales de EE. UU. Los regímenes del 0% y del 4% son distintos: un decreto de 2026 no continúa automáticamente al 4% después de 2035.",
+      en: "Any benefit applies only to qualifying Puerto Rico income-tax treatment under an approved decree; it does not change US federal tax rules. Decrees remain subject to eligibility, compliance and governing law.",
+      es: "Cualquier beneficio aplica solo al tratamiento que califique del impuesto sobre la renta de Puerto Rico bajo un decreto aprobado; no cambia las reglas fiscales federales de EE. UU. Los decretos siguen sujetos a la elegibilidad, el cumplimiento y la ley aplicable.",
     } as L,
     note: {
       en: "General information, not tax or legal advice, and not an offer of tax results. Based on Act 60 as amended by Act 38-2026, DDEC Bulletin 2026-004 and IRS Publication 570. ORA World can connect you with independent Puerto Rico tax advisers; consult qualified tax counsel about your situation.",

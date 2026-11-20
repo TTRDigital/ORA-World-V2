@@ -5,8 +5,9 @@ import { cn } from "@/lib/utils";
 
 /**
  * The live panels on the "Why ORA World" cards (client, 17 Nov: "have it together and more like a flashing thing;
- * for taxes show a tax calculator and the money saved"). Each one starts when its card comes on screen; reduced motion
- * shows the finished state at once.
+ * for taxes show a tax calculator and the money saved"); Kia, 20 Nov: no tax figures or savings, so the tax card shows
+ * what an adviser reviews instead). Each one starts when its card comes on screen; reduced motion shows the finished
+ * state at once.
  */
 
 const reduced = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -33,123 +34,41 @@ function useSeen<T extends HTMLElement>() {
   return [ref, seen] as const;
 }
 
-/** A number that eases to its target whenever the target changes. */
-function useTween(target: number, run: boolean, ms = 900) {
-  const [v, setV] = useState(0);
-  const from = useRef(0);
-  useEffect(() => {
-    if (!run) return;
-    if (reduced()) {
-      const id = requestAnimationFrame(() => setV(target));
-      return () => cancelAnimationFrame(id);
-    }
-    const start = performance.now();
-    const a = from.current;
-    let raf = 0;
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - start) / ms);
-      const e = 1 - Math.pow(1 - p, 3);
-      const val = a + (target - a) * e;
-      from.current = val;
-      setV(val);
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [target, run, ms]);
-  return v;
-}
-
 const panel = "rounded-[20px] bg-basalt/55 p-5 text-bone ring-1 ring-bone/15 backdrop-blur-md md:p-6";
 
-/* ---------------------------------------------------------------- Act 60: the tax calculator */
+/* ---------------------------------------------------------------- Act 60: the adviser panel */
 
-// Long-term capital gains on the mainland at the top federal bracket: 20% + 3.8% net investment income tax (before
-// any state tax). Act 60: 0% for applications filed by 31 Dec 2026 (through 2035), 4% from 1 Jan 2027 (through 2055).
-// Labels and caveats per the Act 60 audit brief (18 Nov): illustrative, no "you keep", no guaranteed savings.
-const MAINLAND = 0.238;
+// Kia, 20 Nov: no tax numbers, Act 60 savings or deadlines in marketing copy. The illustrative savings calculator
+// (rates, dollar differences) is replaced by what an independent adviser reviews with the buyer: no figures at all.
+const ADVICE = [
+  { en: "Whether Act 60 applies to your situation", es: "Si la Ley 60 aplica a su situación" },
+  { en: "What bona fide Puerto Rico residency requires", es: "Lo que exige la residencia bona fide en Puerto Rico" },
+  { en: "How the decree application works", es: "Cómo funciona la solicitud del decreto" },
+  { en: "The reporting and compliance that follow", es: "Los informes y el cumplimiento posteriores" },
+];
 
-export function TaxCalculator({ es }: { es: boolean }) {
+export function TaxAdviceCard({ es }: { es: boolean }) {
   const [ref, seen] = useSeen<HTMLDivElement>();
-  const [gain, setGain] = useState(1_000_000);
-  const [rate, setRate] = useState<0 | 0.04>(0.04);
-  const money = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-  const mainland = gain * MAINLAND;
-  const pr = gain * rate;
-  const saved = useTween(mainland - pr, seen);
-  const shownMain = useTween(mainland, seen);
-  const shownPr = useTween(pr, seen);
-
   return (
     <div ref={ref} className={panel} data-widget="tax">
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Calculadora Ley 60" : "Act 60 calculator"}</p>
-        <div role="radiogroup" aria-label={es ? "Tasa de Ley 60" : "Act 60 rate"} className="inline-flex rounded-full bg-bone/10 p-0.5 text-[11px] ring-1 ring-bone/15">
-          {([0, 0.04] as const).map((r) => (
-            <button
-              key={r}
-              type="button"
-              role="radio"
-              aria-checked={rate === r}
-              onClick={() => setRate(r)}
-              className={cn("min-h-8 rounded-full px-2.5 font-semibold transition-colors", rate === r ? "bg-bone text-basalt" : "text-bone/80 hover:text-bone")}
-            >
-              {r === 0 ? (es ? "0% · solicitudes 2026" : "0% · 2026 applications") : es ? "4% · desde 2027" : "4% · from 2027"}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <label className="mt-5 block">
-        <span className="flex items-baseline justify-between text-[13px] text-bone/80">
-          {es ? "Ganancias posteriores a la residencia que califiquen" : "Fully qualifying post-residency gains"}
-          <b className="font-[family-name:var(--font-display)] text-[22px] font-normal text-bone tabular-nums">{money.format(gain)}</b>
-        </span>
-        <input
-          type="range"
-          min={100_000}
-          max={10_000_000}
-          step={50_000}
-          value={gain}
-          onChange={(e) => setGain(Number(e.target.value))}
-          className="mt-2 w-full accent-[var(--color-brass)]"
-          aria-valuetext={money.format(gain)}
-        />
-      </label>
-
-      <div className="mt-4 grid gap-3 text-[13px]">
-        <Bar label={es ? "Impuesto federal ilustrativo en EE. UU. (23.8%)" : "Illustrative mainland federal tax (23.8%)"} value={money.format(shownMain)} pct={seen ? 100 : 0} tone="muted" />
-        <Bar label={`${es ? "Impuesto ilustrativo de Puerto Rico, régimen elegido" : "Illustrative Puerto Rico tax under selected regime"} (${rate === 0 ? "0%" : "4%"})`} value={money.format(shownPr)} pct={seen ? (rate / MAINLAND) * 100 : 0} tone="brass" />
-      </div>
-
-      <div className="mt-5 flex items-end justify-between gap-3 border-t border-bone/15 pt-4">
-        <p className="text-[13px] text-bone/80">{es ? "Diferencia fiscal ilustrativa" : "Illustrative tax difference"}</p>
-        <p className="font-[family-name:var(--font-display)] text-[34px] leading-none text-brass-light tabular-nums md:text-[40px]" aria-live="polite">
-          {money.format(saved)}
-        </p>
-      </div>
-      <p className="mt-3 text-[10.5px] leading-snug text-bone/60">
+      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Con un asesor independiente" : "With an independent adviser"}</p>
+      <ul className="mt-4 grid gap-2.5">
+        {ADVICE.map((it, k) => (
+          <li
+            key={it.en}
+            className={cn("flex items-start gap-3 text-[14.5px] leading-snug text-bone/90 transition-[opacity,transform] duration-700", seen ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0")}
+            style={{ transitionDelay: `${k * 120}ms` }}
+          >
+            <span aria-hidden className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brass-light" />
+            {es ? it.es : it.en}
+          </li>
+        ))}
+      </ul>
+      <p className="mt-5 border-t border-bone/15 pt-4 text-[11px] leading-snug text-bone/60">
         {es
-          ? "Comparación ilustrativa entre un posible impuesto federal a largo plazo (tasa máxima 20% + 3.8% NIIT) y el tratamiento preferencial de Puerto Rico para ganancias posteriores a la residencia que califiquen por completo. Son ejemplos, no una estimación de su obligación fiscal ni un ahorro garantizado; el resultado real depende de la residencia fiscal, el origen de los ingresos, la plusvalía previa a la mudanza, las reglas federales y de Puerto Rico y los términos del decreto. Consulte a un asesor fiscal calificado."
-          : "An illustrative comparison of possible federal long-term capital gains tax (top 20% rate + 3.8% NIIT) and preferential Puerto Rico income-tax treatment for fully qualifying post-residency gains. These figures are examples, not estimates of your personal tax liability or guaranteed savings. Actual treatment depends on tax residency, sourcing, pre-relocation appreciation, federal and Puerto Rico rules, and decree terms. Consult qualified tax counsel."}
+          ? "Información general, no asesoría fiscal ni legal. ORA World puede ponerle en contacto con asesores fiscales independientes de Puerto Rico."
+          : "General information, not tax or legal advice. ORA World can connect you with independent Puerto Rico tax advisers."}
       </p>
-    </div>
-  );
-}
-
-function Bar({ label, value, pct, tone }: { label: string; value: string; pct: number; tone: "muted" | "brass" }) {
-  return (
-    <div>
-      <div className="flex justify-between gap-3">
-        <span className="text-bone/80">{label}</span>
-        <span className="font-semibold text-bone tabular-nums">{value}</span>
-      </div>
-      <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-bone/10">
-        <div
-          className={cn("h-full rounded-full transition-[width] duration-[900ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]", tone === "brass" ? "bg-brass-light" : "bg-bone/45")}
-          style={{ width: `${Math.max(pct, pct > 0 ? 1.5 : 0)}%` }}
-        />
-      </div>
     </div>
   );
 }

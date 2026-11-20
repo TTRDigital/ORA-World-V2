@@ -7,14 +7,14 @@ import { tdm } from "@/content/seed/images";
 import { getFaqs } from "@/lib/content";
 import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
-import { TaxCalculator } from "@/components/cip/WhyWidgets";
+import { TaxAdviceCard } from "@/components/cip/WhyWidgets";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 
 /**
  * Act 60 (client, 18 Nov). Copy follows the Act 60 audit brief ("ORA World | Act 60 publication review", Nov 17 2026):
- * qualifying Puerto Rico income-tax treatment only, 0% through 2035 kept apart from 4% through 2055, no guarantees, bona
- * fide residency explained (no day-count shortcut), deadline and decree caveats, illustrative calculator, primary
+ * qualifying Puerto Rico income-tax treatment only, no guarantees (Kia, 20 Nov: no rates, savings or deadlines), bona
+ * fide residency explained (no day-count shortcut), decree caveats, primary
  * sources linked. Puerto Rico tax counsel to approve before promotion; Spanish to be reviewed separately.
  */
 const SOURCES = [
@@ -25,12 +25,12 @@ const SOURCES = [
 ];
 const COPY = {
   label: { en: "Act 60", es: "Ley 60" },
-  headline: { en: "Keep more of what you earn", es: "Conserve más de lo que gana" },
+  headline: { en: "Act 60, clearly explained", es: "La Ley 60, explicada con claridad" },
   figuresLabel: { en: "The program", es: "El programa" },
-  calcTitle: { en: "An illustrative comparison", es: "Una comparación ilustrativa" },
+  calcTitle: { en: "Talk it through with an adviser", es: "Háblelo con un asesor" },
   calcText: {
-    en: "Explore an illustrative comparison of possible federal long-term capital gains tax and preferential Puerto Rico income-tax treatment for fully qualifying post-residency gains. These figures are examples, not estimates of your personal tax liability or guaranteed savings.",
-    es: "Explore una comparación ilustrativa entre un posible impuesto federal sobre ganancias de capital a largo plazo y el tratamiento preferencial del impuesto sobre la renta de Puerto Rico para ganancias posteriores a la residencia que califiquen por completo. Son ejemplos, no estimaciones de su obligación fiscal ni ahorros garantizados.",
+    en: "Whether Act 60 fits your plans depends on your income, your residency and the decree's terms. ORA World can connect you with independent Puerto Rico tax advisers who review your situation.",
+    es: "Si la Ley 60 encaja en sus planes depende de sus ingresos, su residencia y los términos del decreto. ORA World puede ponerle en contacto con asesores fiscales independientes de Puerto Rico que revisan su caso.",
   },
   resLabel: { en: "Residency", es: "Residencia" },
   resTitle: { en: "Establish bona fide Puerto Rico residency", es: "Establezca residencia bona fide en Puerto Rico" },
@@ -39,23 +39,23 @@ const COPY = {
     es: "El IRS generalmente exige las tres condiciones siguientes. Pueden aplicar otras pruebas de presencia y reglas del año de la mudanza; contar días no basta.",
   },
   resTests: [
-    { title: { en: "Presence", es: "Presencia" }, text: { en: "A qualifying presence test, often 183 days in Puerto Rico in the tax year.", es: "Una prueba de presencia que califique, a menudo 183 días en Puerto Rico en el año fiscal." } },
+    { title: { en: "Presence", es: "Presencia" }, text: { en: "A qualifying presence test in Puerto Rico for the tax year.", es: "Una prueba de presencia en Puerto Rico que califique para el año fiscal." } },
     { title: { en: "Tax home", es: "Domicilio fiscal" }, text: { en: "Your tax home, your main place of work or business, is in Puerto Rico.", es: "Su domicilio fiscal, su lugar principal de trabajo o negocio, está en Puerto Rico." } },
     { title: { en: "Closer connection", es: "Conexión más cercana" }, text: { en: "No closer connection to the United States or another foreign country.", es: "Sin una conexión más cercana con Estados Unidos u otro país extranjero." } },
   ],
   qualifyLabel: { en: "How to qualify", es: "Cómo calificar" },
   qualifyTitle: { en: "Four steps to a decree", es: "Cuatro pasos hacia un decreto" },
   homeNote: {
-    en: "The primary-residence commitment is generally to acquire a home within two years after the decree; applications filed from 2027 have specific ownership and title rules. Buying a residence, including at Tesoro del Mar, does not by itself qualify you or automatically satisfy the rule.",
-    es: "El compromiso de residencia principal generalmente consiste en adquirir una vivienda dentro de los dos años posteriores al decreto; las solicitudes desde 2027 tienen reglas específicas de titularidad. Comprar una residencia, también en Tesoro del Mar, no le califica por sí solo ni cumple la regla automáticamente.",
+    en: "The decree includes a commitment to acquire a primary residence in Puerto Rico, with ownership and title rules set by DDEC. Buying a residence, including at Tesoro del Mar, does not by itself qualify you or automatically satisfy the rule.",
+    es: "El decreto incluye el compromiso de adquirir una residencia principal en Puerto Rico, con reglas de titularidad fijadas por el DDEC. Comprar una residencia, también en Tesoro del Mar, no le califica por sí solo ni cumple la regla automáticamente.",
   },
   features: [
     {
-      kicker: { en: "2026 application deadline", es: "Fecha límite de solicitud 2026" },
-      title: { en: "December 31", es: "31 de diciembre" },
+      kicker: { en: "Application", es: "Solicitud" },
+      title: { en: "Through the official portal", es: "Por el portal oficial" },
       text: {
-        en: "DDEC guidance states that eligible applications received by 11:59 p.m. on December 31, 2026, based on the Incentives Portal filing-fee timestamp, retain the substantive terms in effect at filing even if approved later. Timely filing does not guarantee approval or replace residency and compliance requirements.",
-        es: "La guía del DDEC indica que las solicitudes elegibles recibidas hasta las 11:59 p. m. del 31 de diciembre de 2026, según la hora del pago de la tarifa en el Portal de Incentivos, conservan los términos vigentes al presentarlas aunque se aprueben después. Presentar a tiempo no garantiza la aprobación ni sustituye los requisitos de residencia y cumplimiento.",
+        en: "Decree applications are filed through the DDEC Incentives Portal. Filing does not guarantee approval or replace the residency and compliance requirements.",
+        es: "Las solicitudes de decreto se presentan por el Portal de Incentivos del DDEC. Presentarla no garantiza la aprobación ni sustituye los requisitos de residencia y cumplimiento.",
       },
     },
     {
@@ -127,7 +127,7 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
               <h2 id="calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-bone md:text-[52px]">{x(COPY.calcTitle)}</h2>
               <p className="mt-5 max-w-[46ch] text-[16px] leading-relaxed text-bone/80 md:text-[17px]">{x(COPY.calcText)}</p>
             </div>
-            <TaxCalculator es={es} />
+            <TaxAdviceCard es={es} />
           </div>
         </div>
       </section>
@@ -185,7 +185,7 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
       {/* Deadline, decree and advice (Act 60 audit brief, 18 Nov), with the official sources. */}
       <section aria-labelledby="deadline-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <h2 id="deadline-title" className="sr-only">{es ? "Fecha límite, decreto y asesoría" : "Deadline, decree and advice"}</h2>
+          <h2 id="deadline-title" className="sr-only">{es ? "Solicitud, decreto y asesoría" : "Application, decree and advice"}</h2>
           <ul className="grid gap-4 md:grid-cols-3">
             {COPY.features.map((f, k) => (
               <li key={f.kicker.en} className={k === 0 ? "rounded-[20px] bg-basalt p-7 text-bone md:p-8" : "rounded-[20px] bg-bone p-7 ring-1 ring-travertine-deep/70 md:p-8"}>
