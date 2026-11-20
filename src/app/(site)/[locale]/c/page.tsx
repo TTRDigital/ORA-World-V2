@@ -11,7 +11,7 @@ import { cImg } from "@/content/seed/imagesC";
 import { pointsOfInterest } from "@/content/seed/places";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { BHeroFilm } from "@/components/v2/BHeroFilm";
-import { CTitle, CEyebrow, CHeading, CList, CLink, CButton, CStats, CQuote } from "@/components/v3/C";
+import { CTitle, CEyebrow, CHeading, CList, CLink, CButton, CQuote } from "@/components/v3/C";
 import { CSlider } from "@/components/v3/CSlider";
 import { CReel } from "@/components/v3/CReel";
 
@@ -39,13 +39,6 @@ export default async function VersionC({ params }: { params: Promise<{ locale: L
   const spa: ImageRef = { ...still(life.spa), src: "/videos/clips/spa-ocean-poster.jpg", width: 1248, height: 704, focal: "50% 50%", alt: { en: "An ocean-view treatment room at the spa", es: "Una sala de tratamientos con vista al mar en el spa" } };
   const tel = settings.phone ? `tel:${settings.phone.replace(/[^\d+]/g, "")}` : undefined;
 
-  const stats = [
-    { value: "14,000", unit: es ? "pies²" : "sf", label: es ? "Club privado" : "Private clubhouse" },
-    { value: "18", label: es ? "Hoyos de putting" : "Hole putting course" },
-    { value: "3", label: es ? "Piscinas de nado" : "Lap pools" },
-    { value: "2", unit: es ? "mi" : "mi", label: es ? "Sendero entre jardines" : "Garden walking path" },
-    { value: "30", unit: "min", label: es ? "A San Juan y su aeropuerto" : "To San Juan and its airport" },
-  ];
   const reel = [
     { href: "/c/floor-plans", label: es ? "Las residencias" : "The residences", title: es ? "Espacios de doble altura frente al mar" : "Double-height rooms facing the sea", image: cImg.diningPiano },
     { href: "/c/longevity", label: es ? "Longevidad" : "Longevity", title: es ? "Una vida más larga y mejor" : "A longer, better life", image: spa },
@@ -123,10 +116,6 @@ export default async function VersionC({ params }: { params: Promise<{ locale: L
         </div>
       </section>
 
-      {/* The figures. */}
-      <section aria-label={es ? "En cifras" : "In figures"} className="bg-white px-5 md:px-10">
-        <CStats items={stats} />
-      </section>
 
       {/* Introduction (client, 19 Nov: "on the right, a slice that goes by itself every two seconds, like flashcards"):
           the words and the index on the left, a small card on the right that changes on its own (19 Nov: "very small, one clean section"). */}
