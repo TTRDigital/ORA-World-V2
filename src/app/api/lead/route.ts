@@ -4,10 +4,11 @@ import { leadSchema } from "@/lib/lead-schema";
 import { rateLimit } from "@/lib/rate-limit";
 import { writeClient } from "@/sanity/client";
 import { sendConfirmationEmail } from "@/lib/email";
+import { ATTRIBUTION_FIELDS } from "@/lib/attribution";
 
 /**
  * Lead intake: Zod validation, honeypot with silent success, Turnstile when keys exist, rate limiting,
- * then (1) POST to CRM_WEBHOOK_URL with the first-touch attribution, (2) a Sanity lead document,
+ * then (1) POST to CRM_WEBHOOK_URL with lead_type and the first-touch attribution, (2) a Sanity lead document,
  * (3) a Resend confirmation behind EMAIL_ENABLED.
  */
 export async function POST(req: Request) {
@@ -38,7 +39,9 @@ export async function POST(req: Request) {
   const { turnstileToken: _t, company: _c, ...fields } = data;
   void _t;
   void _c;
-  const payload = { ...fields, attribution, userAgent: req.headers.get("user-agent"), ip, submittedAt, site: "oraworld-v2" };
+  // lead_type ("buyer" or "broker") and the browser attribution fields (utm_*, click ids, referrer, landing_page)
+  // travel at the top level under their own names; role mirrors lead_type for older consumers.
+  const payload = { ...fields, role: fields.lead_type, attribution, userAgent: req.headers.get("user-agent"), ip, submittedAt, site: "oraworld-v2" };
 
   let crmStatus = "skipped";
   const webhook = process.env.CRM_WEBHOOK_URL;
@@ -64,13 +67,13 @@ export async function POST(req: Request) {
         name: fields.name,
         email: fields.email,
         phone: fields.phone,
-        role: fields.role,
+        role: fields.lead_type,
         variant: fields.variant,
         message: [fields.message, fields.licence && `Licence: ${fields.licence}`, fields.brokerage && `Brokerage: ${fields.brokerage}`, fields.client && `Client: ${fields.client}`, fields.visitMode && `Visit: ${fields.visitMode}`, fields.preferred && `Preferred: ${fields.preferred}`, fields.source && `Source: ${fields.source}`, fields.goal && `Goal: ${fields.goal}`].filter(Boolean).join("\n"),
         locale: fields.locale,
         page: fields.page,
         answers: fields.answers ? JSON.stringify(fields.answers) : undefined,
-        attribution: JSON.stringify(attribution),
+        attribution: JSON.stringify({ ...attribution, browser: Object.fromEntries(ATTRIBUTION_FIELDS.filter((k) => fields[k]).map((k) => [k, fields[k]])) }),
         submittedAt,
         crmStatus,
       })

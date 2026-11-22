@@ -10,6 +10,7 @@ import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { Check } from "@/components/ui/Icons";
 import { readPicks, picksMessage, onPicks } from "@/lib/finish-selection";
+import { readAttribution } from "@/lib/attribution";
 
 type Props = {
   variant: LeadVariant;
@@ -52,7 +53,8 @@ export function LeadForm({
     formState: { errors },
   } = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
-    defaultValues: { variant, locale, page: pathname, role: "buyer", consent: undefined, ...defaults },
+    // No pre-selected buyer/broker choice: the visitor must pick one (the broker registration form is always "broker").
+    defaultValues: { variant, locale, page: pathname, consent: undefined, ...defaults, ...(variant === "broker" ? { lead_type: "broker" as const } : {}) },
   });
 
   // Client, 18 Nov: finishes picked on the Finishes page arrive in the message, ready to send (the visitor can edit it).
@@ -79,7 +81,8 @@ export function LeadForm({
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, turnstileToken: token }),
+        // Where the visitor came from (src/lib/attribution.ts), under the same field names.
+        body: JSON.stringify({ ...readAttribution(), ...data, turnstileToken: token }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus("done");
@@ -150,21 +153,42 @@ export function LeadForm({
       <input type="hidden" {...register("variant")} />
       <input type="hidden" {...register("locale")} />
       <input type="hidden" {...register("page")} />
+      {broker ? (
+        <input type="hidden" {...register("lead_type")} />
+      ) : (
+        <fieldset aria-describedby={errors.lead_type ? `${variant}-lead_type-err` : undefined}>
+          <legend className="small mb-1 block font-semibold">{t("role")}</legend>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {(["buyer", "broker"] as const).map((v) => (
+              <label
+                key={v}
+                className={cn(
+                  "field flex cursor-pointer items-center gap-3 font-semibold has-checked:shadow-[inset_0_0_0_2px_var(--color-brass-ink)]! has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-brass-ink",
+                  errors.lead_type && "shadow-[inset_0_0_0_2px_#9a3b2e]!",
+                )}
+              >
+                <input
+                  type="radio"
+                  value={v}
+                  className="size-5 shrink-0 accent-[var(--color-brass-ink)]"
+                  aria-describedby={errors.lead_type ? `${variant}-lead_type-err` : undefined}
+                  {...register("lead_type")}
+                />
+                <span className="text-[15px]">{t(v === "buyer" ? "leadTypeBuyer" : "leadTypeBroker")}</span>
+              </label>
+            ))}
+          </div>
+          {errors.lead_type && (
+            <p id={`${variant}-lead_type-err`} role="alert" className="small mt-1 text-[#9a3b2e]">
+              {t("leadTypeRequired")}
+            </p>
+          )}
+        </fieldset>
+      )}
       <div className={cn("grid gap-4", !compact && "sm:grid-cols-2")}>
         {field("name", t("name"), { autoComplete: "name" })}
         {field("email", t("email"), { type: "email", autoComplete: "email", inputMode: "email" })}
         {showPhone && field("phone", t("phone"), { type: "tel", autoComplete: "tel", inputMode: "tel" })}
-        {(full || broker) && (
-          <div>
-            <label htmlFor={`${variant}-role`} className="small mb-1 block font-semibold">
-              {t("role")}
-            </label>
-            <select id={`${variant}-role`} className="field" {...register("role")}>
-              <option value="buyer">{t("buyer")}</option>
-              <option value="broker">{t("broker")}</option>
-            </select>
-          </div>
-        )}
         {broker && field("licence", t("licence"))}
         {broker && field("brokerage", t("brokerage"))}
         {broker && field("client", t("client"))}

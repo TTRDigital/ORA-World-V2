@@ -17,7 +17,9 @@ const ATTR_KEYS = [
   "gbraid",
   "wbraid",
   "fbclid",
+  "oppref",
   "msclkid",
+  "ttclid",
 ] as const;
 
 /**

@@ -279,6 +279,9 @@
     "role": "Are you a buyer or a broker?",
     "buyer": "Buyer",
     "broker": "Broker",
+    "leadTypeBuyer": "I am a buyer",
+    "leadTypeBroker": "I am a broker",
+    "leadTypeRequired": "Please choose buyer or broker",
     "source": "How did you hear about us?",
     "sourceOptions": [
       "Search",
