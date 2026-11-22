@@ -23,7 +23,7 @@ export const ATTRIBUTION_PARAMS = [
   "ttclid",
 ] as const;
 
-export const ATTRIBUTION_FIELDS = [...ATTRIBUTION_PARAMS, "referrer", "landing_page"] as const;
+export const ATTRIBUTION_FIELDS = [...ATTRIBUTION_PARAMS, "referrer", "landing"] as const;
 
 export type AttributionField = (typeof ATTRIBUTION_FIELDS)[number];
 export type Attribution = Partial<Record<AttributionField, string>>;
@@ -96,7 +96,7 @@ function fromLocation(): Attribution {
     const ref = document.referrer ? new URL(document.referrer) : null;
     if (ref && ref.hostname !== url.hostname) attr.referrer = clean(document.referrer);
   } catch {}
-  attr.landing_page = clean(url.pathname + url.search);
+  attr.landing = clean(url.pathname + url.search);
   return attr;
 }
 

@@ -39,7 +39,7 @@ export async function POST(req: Request) {
   const { turnstileToken: _t, company: _c, ...fields } = data;
   void _t;
   void _c;
-  // lead_type ("buyer" or "broker") and the browser attribution fields (utm_*, click ids, referrer, landing_page)
+  // lead_type ("buyer" or "broker") and the browser attribution fields (utm_*, click ids, referrer, landing)
   // travel at the top level under their own names; role mirrors lead_type for older consumers.
   const payload = { ...fields, role: fields.lead_type, attribution, userAgent: req.headers.get("user-agent"), ip, submittedAt, site: "oraworld-v2" };
 
