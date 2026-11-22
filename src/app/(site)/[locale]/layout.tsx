@@ -17,6 +17,7 @@ import { ScrollFx } from "@/components/providers/ScrollFx";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { Consent } from "@/components/providers/Consent";
 import { TrackClicks } from "@/components/providers/TrackClicks";
+import { AttributionCapture } from "@/components/providers/AttributionCapture";
 import { PageTransition } from "@/components/providers/PageTransition";
 import "@/styles/globals.css";
 
@@ -67,6 +68,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <ScrollFx />
           <SmoothScroll />
           <TrackClicks />
+          <AttributionCapture />
         </NextIntlClientProvider>
       </body>
     </html>
