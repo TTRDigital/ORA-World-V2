@@ -334,9 +334,6 @@ export function GuideArticle({ guide: g, bookingUrl, legalNotice }: { guide: Gui
           <Link href="/b#inquire" className="inline-flex min-h-12 items-center border border-white/70 px-7 text-[11px] tracking-[0.26em] uppercase transition-colors hover:bg-white hover:text-basalt">
             Inquire
           </Link>
-          <Link href="/visit" className="inline-flex min-h-12 items-center border border-white/70 px-7 text-[11px] tracking-[0.26em] uppercase transition-colors hover:bg-white hover:text-basalt">
-            Plan a visit
-          </Link>
         </div>
       </section>
 

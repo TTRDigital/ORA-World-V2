@@ -269,18 +269,7 @@
     ],
     "galleryAddress": "Dirección de la galería de ventas: por confirmar",
     "booking": "Elija un horario",
-    "noBooking": "La agenda en línea aparecerá aquí cuando se conecte el calendario de ventas. Indique abajo su horario preferido.",
-    "who": "¿Es comprador o corredor?",
-    "buyer": "Soy comprador",
-    "buyerSub": "Busca un hogar en ORA World.",
-    "broker": "Soy corredor",
-    "brokerSub": "Representa a un cliente y quiere enviarnos sus datos.",
-    "buyerNote": "Deje sus datos y nuestro equipo se pondrá en contacto con usted.",
-    "brokerNote": "Envíenos sus datos y un mensaje breve. Nuestro equipo se pondrá en contacto con usted.",
-    "back": "Volver",
-    "doneStep": "Gracias",
-    "doneTitle": "Gracias, recibimos sus datos.",
-    "doneText": "Nuestro equipo se pondrá en contacto con usted en breve."
+    "noBooking": "La agenda en línea aparecerá aquí cuando se conecte el calendario de ventas. Indique abajo su horario preferido."
   },
   "form": {
     "name": "Nombre completo",
@@ -329,8 +318,7 @@
       "Los incentivos fiscales de Puerto Rico",
       "Un hogar en Puerto Rico",
       "Todo lo anterior"
-    ],
-    "aiConsent": "Al enviar, usted acepta que ORA World le llame o le envíe mensajes de texto sobre su consulta, incluso con un asistente de IA. Responda STOP para dejar de recibir mensajes de texto."
+    ]
   },
   "gate": {
     "title": "Regístrese para ver el plano completo",
@@ -466,8 +454,8 @@
       "intro": "Doce ubicaciones en Puerto Rico, cada una con su lema publicado."
     },
     "visit": {
-      "title": "Hable con nuestro equipo",
-      "intro": "Díganos si es comprador o corredor, y nuestro equipo se pondrá en contacto con usted."
+      "title": "Reserve una visita",
+      "intro": "La galería de ventas o una videollamada, en el horario que le convenga."
     },
     "faq": {
       "title": "Preguntas",
@@ -491,8 +479,8 @@
       "municipalities": "Municipios",
       "projectPages": "Páginas de proyecto",
       "revealed": "Por revelar",
-      "ways": "Cómo funciona",
-      "ways2": "Una llamada con nuestro equipo",
+      "ways": "Formas de visitar",
+      "ways2": "Galería o video",
       "gallery": "Galería de ventas",
       "hours": "Horario",
       "questions": "Preguntas",
