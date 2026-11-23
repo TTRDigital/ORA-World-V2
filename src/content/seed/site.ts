@@ -33,8 +33,8 @@ export const siteSettings: SiteSettings = {
   floorPlansUrl: "https://storage.googleapis.com/msgsndr/h3BreqRip5vgBRyV1wRf/media/6969467ce125ef29bd593468.pdf",
   brokerKitUrl: null,
   consentText: {
-    en: "By submitting this form you agree that ORA World and its sales representatives may contact you by phone, email and text message (including by automated means) about your inquiry. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to opt out at any time.",
-    es: "Al enviar este formulario acepta que ORA World y sus representantes de ventas puedan contactarle por teléfono, correo electrónico y mensaje de texto (incluso por medios automatizados) sobre su consulta. El consentimiento no es condición de compra. Pueden aplicar tarifas de mensajes y datos. Responda STOP para cancelar en cualquier momento.",
+    en: "By submitting this form you agree that ORA World and its sales representatives may contact you by phone, email and text message (including by automated means or an AI assistant) about your inquiry. Consent is not a condition of purchase. Message and data rates may apply. Reply STOP to opt out at any time.",
+    es: "Al enviar este formulario acepta que ORA World y sus representantes de ventas puedan contactarle por teléfono, correo electrónico y mensaje de texto (incluso por medios automatizados o un asistente de IA) sobre su consulta. El consentimiento no es condición de compra. Pueden aplicar tarifas de mensajes y datos. Responda STOP para cancelar en cualquier momento.",
   },
   siteLat: Number(process.env.NEXT_PUBLIC_ORA2_SITE_LAT || 18.4542),
   siteLng: Number(process.env.NEXT_PUBLIC_ORA2_SITE_LNG || -66.3178),
