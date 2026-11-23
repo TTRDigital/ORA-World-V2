@@ -269,7 +269,18 @@
     ],
     "galleryAddress": "Sales gallery address: to be confirmed",
     "booking": "Choose a time",
-    "noBooking": "Send us your preferred time below and the sales team will confirm it."
+    "noBooking": "Send us your preferred time below and the sales team will confirm it.",
+    "who": "Are you a buyer or a broker?",
+    "buyer": "I'm a buyer",
+    "buyerSub": "You are looking for a home at ORA World.",
+    "broker": "I'm a broker",
+    "brokerSub": "You represent a client and want to send us your details.",
+    "buyerNote": "Leave your details and our team will reach out to you.",
+    "brokerNote": "Send us your details and a short message. Our team will reach out to you.",
+    "back": "Back",
+    "doneStep": "Thank you",
+    "doneTitle": "Thank you, we received your details.",
+    "doneText": "Our team will reach out to you shortly."
   },
   "form": {
     "name": "Full name",
@@ -318,7 +329,8 @@
       "Puerto Rico's tax incentives",
       "A home in Puerto Rico",
       "All of the above"
-    ]
+    ],
+    "aiConsent": "By submitting, you agree that ORA World may call or text you about your inquiry, including with an AI assistant. Reply STOP to opt out of texts."
   },
   "gate": {
     "title": "Register to view the full plan",
@@ -454,8 +466,8 @@
       "intro": "Twelve locations across Puerto Rico, each with its published tagline."
     },
     "visit": {
-      "title": "Book a visit",
-      "intro": "The sales gallery or a video call, at a time that suits you."
+      "title": "Talk to our team",
+      "intro": "Tell us if you are a buyer or a broker, and our team will reach out to you."
     },
     "faq": {
       "title": "Questions",
@@ -479,8 +491,8 @@
       "municipalities": "Municipalities",
       "projectPages": "Project pages",
       "revealed": "To be revealed",
-      "ways": "Ways to visit",
-      "ways2": "Gallery or video",
+      "ways": "How it works",
+      "ways2": "A call with our team",
       "gallery": "Sales gallery",
       "hours": "Hours",
       "questions": "Questions",
