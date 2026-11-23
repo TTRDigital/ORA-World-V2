@@ -11,6 +11,8 @@ import { BHeroFilm } from "@/components/v2/BHeroFilm";
 import { CTitle, CEyebrow, CHeading, CList, CLink, CButton, CQuote } from "@/components/v3/C";
 import { CSlider } from "@/components/v3/CSlider";
 import { CReel } from "@/components/v3/CReel";
+import { FloorExplorer } from "@/components/cip/FloorExplorer";
+import { HomeTourStage } from "@/components/home/HomeTourStage";
 
 import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import { interiorSlides } from "@/content/seed/interiorSlides";
@@ -38,7 +40,6 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
   const reel = [
     { href: "/c/floor-plans", label: es ? "Las residencias" : "The residences", title: es ? "Espacios de doble altura frente al mar" : "Double-height rooms facing the sea", image: still(tdm.penthouseLiving), video: film("p24-penthouse-living") },
     { href: "/c/longevity", label: es ? "Longevidad" : "Longevity", title: es ? "Una vida más larga y mejor" : "A longer, better life", image: spa, video: film("spa-ocean") },
-    { href: "/c/longevity", label: es ? "Ejercicio" : "Fitness", title: es ? "Un programa que lo hace fácil" : "A program that makes it easy", image: { ...still(tdm.gym), focal: "78% 50%" }, video: film("p14-gym") },
     { href: "/c/act-60", label: es ? "Ley 60" : "Act 60", title: es ? "Conserve más de lo que gana" : "Keep more of what you earn", image: still(tdm.aerialCoast), video: film("p08-aerial-cove") },
     { href: "/c/finishes", label: es ? "Acabados" : "Finishes", title: es ? "Gabinetes italianos, grifería Dornbracht" : "Italian cabinetry, Dornbracht fixtures", image: still(tdm.kitchenWine), video: film("p16-apartment-kitchen") },
   ];
@@ -70,18 +71,6 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
     { image: { ...spa, video: "/videos/clips/spa-ocean.mp4", poster: "/videos/clips/spa-ocean-poster.jpg" }, label: es ? "Spa, sauna, tratamientos" : "Spa, sauna, treatments", title: es ? "Bienestar" : "Wellness" },
     { image: { ...tdm.gym, focal: "78% 50%" }, label: es ? "Gimnasio y pilates" : "Fitness center and Pilates", title: es ? "Ejercicio" : "Fitness" },
     { image: tdm.exteriorGolf, label: es ? "Dieciocho hoyos entre las torres" : "Eighteen holes among the towers", title: es ? "Campo de putting" : "Putting course" },
-  ];
-  const lists = [
-    {
-      title: es ? "Amenidades" : "Amenities",
-      items: es
-        ? ["Tenis", "Pickleball", "Vóleibol", "Baloncesto", "Golf", "Simulador de golf", "Piscinas estilo resort", "Solárium con sombra", "Cabañas de playa", "Paseos de madera", "Deportes acuáticos"]
-        : ["Tennis", "Pickleball", "Volleyball", "Basketball", "Golf", "Golf simulator", "Resort-style pools", "Shaded sundecks", "Beach cabanas", "Boardwalks", "Watersports"],
-    },
-    {
-      title: es ? "Centro para una vida óptima" : "Center for Optimal Living",
-      items: es ? ["Gimnasio de última generación", "Spa y sauna", "Piscinas de hidroterapia", "Jardines paisajísticos", "Espacios del club", "Centro de negocios"] : ["State-of-the-art fitness", "Spa and sauna", "Hydrotherapy pools", "Landscaped gardens", "Clubhouse spaces", "Business center"],
-    },
   ];
   const places = cip.location.places.map((slug) => {
     const p = pointsOfInterest.find((q) => q.slug === slug)!;
@@ -154,29 +143,45 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
         </div>
       </section>
 
-      {/* Amenities: two offset photographs and the words, then five cards. */}
+      {/* Step inside (client, 23 Nov: "the 360° tour from Version 1, very important to show"). */}
+      <section id="virtual-tour" aria-labelledby="c-tour" data-tone="dark" className="on-dark scroll-mt-24 bg-basalt py-20 text-bone md:py-28">
+        <div className="mx-auto max-w-[1200px] px-5 md:px-10">
+          <CHeading id="c-tour" light eyebrow={x(cip.tour.eyebrow)} caps={es ? "Véalo" : "See it"} accent={es ? "usted mismo" : "for yourself"} intro={x(cip.tour.intro)} />
+        </div>
+        <div className="mx-auto mt-12 max-w-[1840px] px-3 md:px-6">
+          <HomeTourStage vrUrl={settings.vrTourUrl} filmId={null} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
+        </div>
+      </section>
+
+      {/* Floor plans (client, 23 Nov: "the floor plan also on Version 3"): the floor-by-floor explorer, as on Version A's
+          Floor plans page. */}
+      <section id="floor-plans" aria-labelledby="c-plans" className="scroll-mt-24 bg-white px-5 pb-20 md:px-10 md:pb-28">
+        <div className="mx-auto max-w-[1200px] border-t border-travertine-deep pt-20 md:pt-28">
+          <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+            <CHeading id="c-plans" eyebrow={es ? "Planos · Torre 1" : "Floor plans · Tower 1"} caps={es ? "Encuentre" : "Find your"} accent={es ? "su residencia" : "residence"} intro={x(cip.plans.intro)} />
+            <p className="text-[12px] font-semibold tracking-[0.22em] text-charcoal-soft uppercase md:pb-2">
+              {x(cip.plans.startingFrom)} <span className="font-[family-name:var(--font-display)] text-[26px] tracking-normal text-charcoal normal-case">{cip.plans.tiers[0].value}</span> {x(cip.plans.perSqFt)}
+            </p>
+          </div>
+          <div className="mt-12">
+            <FloorExplorer locale={locale} />
+          </div>
+        </div>
+      </section>
+
+      {/* Amenities (client, 23 Nov: "remove the photographs, text on top, cleaner"): the words centred, then the cards. */}
       <section id="amenities" aria-labelledby="c-amen" className="scroll-mt-24 bg-bone px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto max-w-[1200px]">
-          <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
-            <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] items-end gap-4">
-              {photo(pick(cImg.entrance, tdm.entrance), "(max-width: 1023px) 52vw, 320px", "aspect-[4/5]")}
-              {photo(pick(cImg.lobbyGarden, { ...tdm.foyerAtrium, video: "/videos/clips/lobby-combined.mp4", poster: "/videos/clips/lobby-combined-poster.jpg" }), "(max-width: 1023px) 44vw, 260px", "mb-[-3rem] aspect-[3/4]")}
-            </div>
-            <div>
-              <CEyebrow>{es ? "Amenidades" : "Amenities"}</CEyebrow>
-              <CTitle id="c-amen" caps={es ? "Amenidades excepcionales" : "Exceptional amenities"} accent={es ? "y experiencias a medida" : "& bespoke experiences"} className="mt-5 text-[34px] leading-[1.15] md:text-[44px]" />
-              <p className="mt-6 text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">
-                {es ? "ORA World se centra en la longevidad y la calidad de vida, con amenidades modernas, atención médica, educación y entretenimiento a mano." : "ORA World focuses on longevity and quality of life, with modern amenities, healthcare, education and entertainment close at hand."}
-              </p>
-              <p className="mt-4 text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">
-                {es ? "En su centro, un club privado de 14,000 pies² con café, restaurante, spa de bienestar, gimnasio y bar en la azotea." : "At its heart, a 14,000 sq ft private clubhouse with a café, restaurant, wellness spa, gym and rooftop bar."}
-              </p>
-              <CLink href="/c/longevity" className="mt-8">
-                {es ? "Explore la longevidad" : "Explore longevity"}
-              </CLink>
-            </div>
+          <div className="mx-auto max-w-[760px] text-center">
+            <CEyebrow className="justify-center">{es ? "Amenidades" : "Amenities"}</CEyebrow>
+            <CTitle id="c-amen" caps={es ? "Amenidades excepcionales" : "Exceptional amenities"} accent={es ? "y experiencias a medida" : "& bespoke experiences"} className="mt-5 text-[32px] leading-[1.15] md:text-[44px]" />
+            <p className="mx-auto mt-6 max-w-[60ch] text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">
+              {es
+                ? "En su centro, un club privado de 14,000 pies² con café, restaurante, spa de bienestar, gimnasio y bar en la azotea."
+                : "At its heart, a 14,000 sq ft private clubhouse with a café, restaurant, wellness spa, gym and rooftop bar."}
+            </p>
           </div>
-          <ul className="mt-24 grid gap-4 md:grid-cols-6">
+          <ul className="mt-14 grid gap-4 md:grid-cols-6">
             {(films ? filmCards : cards).map((c, k) => (
               <li key={c.title} className={k < 2 ? "md:col-span-3" : "md:col-span-2"}>
                 <div className={`relative isolate overflow-hidden bg-travertine ${k < 2 ? "aspect-[4/3]" : "aspect-[4/5]"}`}>
@@ -191,34 +196,6 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
               </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      {/* Bespoke experiences: the presentation's lists beside its lifestyle photographs. */}
-      <section aria-labelledby="c-life" className="bg-white px-5 py-20 md:px-10 md:py-28">
-        <div className="mx-auto grid max-w-[1200px] gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center lg:gap-20">
-          <div>
-            <CEyebrow>{es ? "Experiencias" : "Experiences"}</CEyebrow>
-            <CTitle id="c-life" caps={es ? "La vida," : "Life,"} accent={es ? "más allá de la residencia" : "beyond the residence"} className="mt-5 text-[34px] leading-[1.15] md:text-[44px]" />
-            <div className="mt-10 grid gap-10 sm:grid-cols-2">
-              {lists.map((l) => (
-                <div key={l.title}>
-                  <p className="text-[12px] font-semibold tracking-[0.22em] text-brass-ink uppercase">{l.title}</p>
-                  <ul className="mt-4 border-t border-travertine-deep">
-                    {l.items.map((it) => (
-                      <li key={it} className="border-b border-travertine-deep py-2.5 text-[15.5px] text-charcoal">
-                        {it}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,0.75fr)] items-start gap-4">
-            {photo(pick(cImg.lobbyMarble, tdm.foyerAtrium), "(max-width: 1023px) 54vw, 360px", "aspect-[3/4]")}
-            {photo(pick(cImg.poolDeck, tdm.exteriorPull), "(max-width: 1023px) 40vw, 270px", "mt-16 aspect-[3/4]")}
-          </div>
         </div>
       </section>
 

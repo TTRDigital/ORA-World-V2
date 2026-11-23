@@ -15,6 +15,7 @@ import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { Link } from "@/i18n/navigation";
 import { ScrollStatement } from "@/components/v2/ScrollStatement";
 import { BHeroFilm } from "@/components/v2/BHeroFilm";
+import { HomeTourStage } from "@/components/home/HomeTourStage";
 import { InteriorsGallery } from "@/components/cip/InteriorsGallery";
 import { interiorSlides } from "@/content/seed/interiorSlides";
 
@@ -267,6 +268,18 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
             {es ? "Descubra los acabados" : "Discover the finishes"}
           </Link>
         </p>
+      </section>
+
+      {/* Step inside (client, 23 Nov: "the 360° tour from Version 1, very important to show"). */}
+      <section id="virtual-tour" aria-labelledby="b-tour" data-tone="dark" className="on-dark scroll-mt-24 bg-[var(--v2-green)] py-16 text-[var(--v2-cream)] md:py-24 lg:scroll-mt-28">
+        <div className="mx-auto max-w-[1440px] px-5 text-center md:px-10">
+          <Eyebrow light>{x(cip.tour.eyebrow)}</Eyebrow>
+          <h2 id="b-tour" className="mx-auto mt-6 font-[family-name:var(--font-display)] text-[40px] leading-[1.08] font-normal md:text-[64px]">{x(cip.tour.title)}</h2>
+          <p className="mx-auto mt-5 max-w-[54ch] text-[16px] leading-relaxed opacity-80 md:text-[17px]">{x(cip.tour.intro)}</p>
+        </div>
+        <div className="mx-auto mt-12 max-w-[1840px] px-3 md:px-6">
+          <HomeTourStage vrUrl={settings.vrTourUrl} filmId={null} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
+        </div>
       </section>
 
       {/* Floor plans (client, 18 Nov: "put the floor plan like Version A"): the same explorer. */}

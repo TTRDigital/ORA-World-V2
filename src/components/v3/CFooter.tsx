@@ -28,6 +28,7 @@ export function CFooter({ locale, settings, v = "c" }: { locale: Locale; setting
               ["/c/longevity", es ? "Longevidad" : "Longevity"],
               ["/c/act-60", es ? "Ley 60" : "Act 60"],
               ["/c/finishes", es ? "Acabados" : "Finishes"],
+              ...(v === "d" ? [["/d/living", es ? "Vivir" : "Living"]] : []),
             ].map(([h, l]) => (
               <li key={h}>
                 <Link href={h} className={link}>

@@ -17,7 +17,6 @@ export default async function VersionBLayout({ children, params }: { children: R
     { href: "/b/floor-plans", label: es ? "Planos" : "Floor plans" },
     { href: "/b/finishes", label: es ? "Acabados" : "Finishes" },
     { href: "/b/act-60", label: es ? "Ley 60" : "Act 60" },
-    { href: "/b#location", label: es ? "Ubicación" : "Location" },
   ];
   return (
     <div data-version-b id="top" className="bg-[var(--v2-cream)] text-[var(--v2-green)]">

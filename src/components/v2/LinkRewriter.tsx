@@ -11,7 +11,8 @@ const maps = (v: "b" | "c" | "d" | "e"): [RegExp, string][] => [
   ...(v === "d" || v === "e" ? ([[/^\/(en|es)\/c(\/.*)?$/, `/$1/${v}$2`]] as [RegExp, string][]) : []),
   [/^\/(en|es)\/residences\/plans\/?$/, `/$1/${v}/floor-plans`],
   [v === "b" ? /^\/(en|es)\/(act-60|finishes|longevity|living)\/?$/ : /^\/(en|es)\/(act-60|finishes|longevity)\/?$/, `/$1/${v}/$2`],
-  ...(v !== "b" ? ([[/^\/(en|es)\/(living|place)\/?$/, `/$1/${v}#location`]] as [RegExp, string][]) : []),
+  ...(v === "d" ? ([[/^\/(en|es)\/(living|place)\/?$/, "/$1/d/living"]] as [RegExp, string][]) : []),
+  ...(v === "c" || v === "e" ? ([[/^\/(en|es)\/(living|place)\/?$/, `/$1/${v}#location`]] as [RegExp, string][]) : []),
   [/^\/(en|es)\/?$/, `/$1/${v}`],
 ];
 
