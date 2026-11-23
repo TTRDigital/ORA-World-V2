@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const PAGES = ["/en", "/es", "/en/residences", "/en/residences/plans", "/en/residences/plans/residence-b1", "/en/longevity", "/en/act-60", "/en/finishes", "/en/b", "/en/b/living", "/en/b/longevity", "/en/b/act-60", "/en/b/floor-plans", "/en/b/finishes", "/en/c", "/en/c/longevity", "/en/c/act-60", "/en/c/floor-plans", "/en/c/finishes", "/en/d", "/en/d/longevity", "/en/d/act-60", "/en/d/floor-plans", "/en/d/finishes", "/en/living", "/en/place/tesoro-del-mar", "/en/portfolio", "/en/visit", "/en/faq"];
+const PAGES = ["/en", "/es", "/en/residences", "/en/residences/plans", "/en/residences/plans/residence-b1", "/en/longevity", "/en/act-60", "/en/finishes", "/en/b", "/en/b/living", "/en/b/longevity", "/en/b/act-60", "/en/b/floor-plans", "/en/b/finishes", "/en/c", "/en/c/longevity", "/en/c/act-60", "/en/c/floor-plans", "/en/c/finishes", "/en/d", "/en/d/longevity", "/en/d/act-60", "/en/d/floor-plans", "/en/d/finishes", "/en/e", "/en/e/longevity", "/en/living", "/en/place/tesoro-del-mar", "/en/portfolio", "/en/visit", "/en/faq"];
 
 test.describe("accessibility (axe, WCAG 2.2 AA)", () => {
   for (const path of PAGES) {

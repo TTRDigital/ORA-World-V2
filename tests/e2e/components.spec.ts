@@ -167,6 +167,17 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator('[data-version-d] a[href="/en/d/act-60"]').first()).toBeAttached();
   });
 
+  test("Version E (/en/e) has its own header and footer, the figures, the slideshow and the inquiry", async ({ page }) => {
+    await page.goto("/en/e");
+    await expect(page.locator("[data-version-e]")).toHaveCount(1);
+    await expect(page.locator("header")).toHaveCount(1);
+    for (const id of ["amenities", "location", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    await expect(page.locator('section[aria-labelledby="e-figures"]')).toContainText(/10\.6/);
+    await expect(page.locator('[aria-roledescription="carousel"] button')).toHaveCount(6);
+    await expect(page.locator("#inquire form")).toHaveCount(1);
+    await expect.poll(() => page.locator('[data-version-e] a[href^="/en/c"]:not([data-keep])').count()).toBe(0);
+  });
+
   test("gallery page removed (client, 18 Nov): old addresses go home, no Gallery link", async ({ page, isMobile }) => {
     await page.goto("/en/gallery");
     await expect(page).toHaveURL(/\/en\/?$/);
