@@ -23,10 +23,6 @@ type Props = {
   compact?: boolean;
   /** Short set of fields only (name, email, phone, preferred time): used by CTA cards. */
   short?: boolean;
-  /** The visitor already said buyer or broker: no buyer/broker question, the value travels as a hidden field. */
-  leadType?: "buyer" | "broker";
-  /** Adds the message box to a short form. */
-  withMessage?: boolean;
 };
 
 /**
@@ -43,15 +39,12 @@ export function LeadForm({
   className,
   compact,
   short,
-  leadType,
-  withMessage,
 }: Props) {
   const t = useTranslations("form");
   const locale = useLocale() as "en" | "es";
   const pathname = usePathname();
   const [status, setStatus] = useState<"idle" | "busy" | "done" | "error">("idle");
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-  const fixedType = variant === "broker" ? "broker" : leadType;
   const {
     register,
     handleSubmit,
@@ -61,7 +54,7 @@ export function LeadForm({
   } = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
     // No pre-selected buyer/broker choice: the visitor must pick one (the broker registration form is always "broker").
-    defaultValues: { variant, locale, page: pathname, consent: undefined, ...defaults, ...(fixedType ? { lead_type: fixedType } : {}) },
+    defaultValues: { variant, locale, page: pathname, consent: undefined, ...defaults, ...(variant === "broker" ? { lead_type: "broker" as const } : {}) },
   });
 
   // Client, 18 Nov: finishes picked on the Finishes page arrive in the message, ready to send (the visitor can edit it).
@@ -161,7 +154,7 @@ export function LeadForm({
       <input type="hidden" {...register("variant")} />
       <input type="hidden" {...register("locale")} />
       <input type="hidden" {...register("page")} />
-      {fixedType ? (
+      {broker ? (
         <input type="hidden" {...register("lead_type")} />
       ) : (
         <fieldset aria-describedby={errors.lead_type ? `${variant}-lead_type-err` : undefined}>
@@ -200,7 +193,7 @@ export function LeadForm({
         {broker && field("licence", t("licence"))}
         {broker && field("brokerage", t("brokerage"))}
         {broker && field("client", t("client"))}
-        {variant === "visit" && !leadType && field("preferred", t("preferred"), { placeholder: "" })}
+        {variant === "visit" && field("preferred", t("preferred"), { placeholder: "" })}
         {full && (
           <div>
             <label htmlFor={`${variant}-goal`} className="small mb-1 block font-semibold">
@@ -232,7 +225,7 @@ export function LeadForm({
           </div>
         )}
       </div>
-      {(full || broker || withMessage) && (
+      {(full || broker) && (
         <div>
           <label htmlFor={`${variant}-message`} className="small mb-1 block font-semibold">
             {t("message")}
@@ -282,8 +275,6 @@ export function LeadForm({
           </p>
         )}
       </div>
-      {/* TTR-3011: AI-call consent, approved word for word by Kia (Nov 23). On the buyer and broker forms of the contact page. */}
-      {leadType && <p className="legal max-w-prose opacity-70" data-testid="ai-call-consent">{t("aiConsent")}</p>}
     </form>
   );
 }
