@@ -279,6 +279,9 @@
     "role": "¿Es comprador o corredor?",
     "buyer": "Comprador",
     "broker": "Corredor",
+    "leadTypeBuyer": "Soy comprador",
+    "leadTypeBroker": "Soy corredor",
+    "leadTypeRequired": "Elija comprador o corredor",
     "source": "¿Cómo supo de nosotros?",
     "sourceOptions": [
       "Búsqueda",
