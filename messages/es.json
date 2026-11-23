@@ -329,7 +329,8 @@
       "Los incentivos fiscales de Puerto Rico",
       "Un hogar en Puerto Rico",
       "Todo lo anterior"
-    ]
+    ],
+    "aiConsent": "Al enviar, usted acepta que ORA World le llame o le envíe mensajes de texto sobre su consulta, incluso con un asistente de IA. Responda STOP para dejar de recibir mensajes de texto."
   },
   "gate": {
     "title": "Regístrese para ver el plano completo",

@@ -282,6 +282,8 @@ export function LeadForm({
           </p>
         )}
       </div>
+      {/* TTR-3011: AI-call consent, approved word for word by Kia (Nov 23). On the buyer and broker forms of the contact page. */}
+      {leadType && <p className="legal max-w-prose opacity-70" data-testid="ai-call-consent">{t("aiConsent")}</p>}
     </form>
   );
 }

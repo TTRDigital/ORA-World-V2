@@ -15,6 +15,9 @@ async function send(page: Page, who: "buyer" | "broker") {
   expect(await form.getAttribute("data-ttr-skip")).not.toBeNull();
   await expect(form.getByRole("radio")).toHaveCount(0);
   await expect(form.locator("#visit-message")).toHaveCount(who === "broker" ? 1 : 0);
+  await expect(form.getByTestId("ai-call-consent")).toHaveText(
+    "By submitting, you agree that ORA World may call or text you about your inquiry, including with an AI assistant. Reply STOP to opt out of texts.",
+  );
   await form.locator("#visit-name").fill("Test Person");
   await form.locator("#visit-email").fill("test@example.com");
   await form.locator("#visit-phone").fill("+1 787 555 0100");
