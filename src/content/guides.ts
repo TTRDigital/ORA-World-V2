@@ -864,7 +864,7 @@ export const guides: Guide[] = [
     ],
     lede: "Every home on a Caribbean coast should be built for storms. The difference between buildings is in the details, and the details are easy to ask about.",
     answer:
-      "A new building in Puerto Rico should be designed to the 2018 Puerto Rico Building Code, with impact-rated windows and doors, backup power and water for the systems that matter, and a site that sits above the flood map. Ask every developer for the design wind speed, the window product approvals, the generator and water plan, the flood zone, and what the association's insurance covers.",
+      "A new building in Puerto Rico should be designed to the 2018 Puerto Rico Building Code, with impact-rated windows and doors, backup power and water for the systems that matter. For flood risk, ask for the property's mapped flood zone, the applicable flood elevation, and the proposed lowest-floor elevation. Ask every developer for the design wind speed, the window product approvals, the generator and water plan, the flood zone, and what the association's insurance covers.",
     sections: [
       {
         id: "building-code",
@@ -881,7 +881,6 @@ export const guides: Guide[] = [
           "Puerto Rico's code includes its own microzone wind maps. They account for the way the island's hills and mountains speed up the wind, and FEMA notes there are 316 of them, municipality by municipality. The design wind speed also depends on the building's risk category, so two buildings in the same town can have different numbers.",
           "Don't compare a code number straight to a hurricane category. The Saffir-Simpson scale used by the National Hurricane Center rates storms by one-minute sustained winds, with Category 5 starting at 157 mph. Building codes use a different measure, a three-second gust. That is why the best question is a specific one: what is the design wind speed and risk category, and who is the structural engineer of record?",
         ],
-        quote: { text: "Structures engineered to withstand Category 5 hurricanes.", cite: "ORA World, Resilient by Design" },
       },
       {
         id: "windows",
@@ -896,15 +895,15 @@ export const guides: Guide[] = [
         id: "power",
         h2: "What keeps the lights on after a storm?",
         body: [
-          "Hurricane Maria showed why this matters. FEMA reports that about 80 percent of Puerto Rico's residents lost power and water. Ninety days later, power was back for 65 percent of customers, and the US Department of Energy notes that some residents went almost a year without electricity.",
-          "So ask exactly what the backup power covers. Is it the common areas only, or the residences too? Does it run the elevators and the water pumps? How much fuel is stored on site, and for how many days? Is the equipment placed above flood level? ORA World's published plans for its developments, Tesoro Del Mar included, list high-capacity generators, plus solar panels and battery storage for backup energy.",
+          "Hurricane Maria showed why this matters. FEMA reports that Puerto Rico's entire electrical grid failed. Ninety days later, power was back for 65 percent of customers, and the US Department of Energy notes that some residents went almost a year without electricity.",
+          "So ask exactly what the backup power covers. Is it the common areas only, or the residences too? Does it run the elevators and the water pumps? How much fuel is stored on site, and for how many days? Is the equipment placed above flood level? ORA World's published plans for its developments, Tesoro Del Mar included, list high-capacity generators, plus solar panels and battery storage for backup energy. These are proposed features, described on the [residences](/residences) page. Project-specific specifications will be published once the team documents them.",
         ],
       },
       {
         id: "water",
         h2: "Will there be water if the mains go down?",
         body: [
-          "After Maria, FEMA reports that water service was 69 percent operational at 30 days. Ready.gov advises storing at least one gallon of water per person per day for several days, with at least three days in your home kit.",
+          "After Maria, FEMA reports that water service went from 20 percent to 69 percent operational within 30 days. Ready.gov advises storing at least one gallon of water per person per day for several days, with at least three days in your home kit.",
           "In a tower, water reaches the upper floors by pumps, so water and power go together. Ask whether the building has water storage, how much, and whether the pumps run on backup power. ORA World's published materials do not detail water storage at Tesoro Del Mar yet, so this is a good question to put to Reza, ORA World's agent.",
         ],
       },
@@ -921,8 +920,8 @@ export const guides: Guide[] = [
         id: "insurance",
         h2: "What should I ask about insurance?",
         body: [
-          "Flood is not part of a standard homeowners policy. FEMA's National Flood Insurance Program covers all of Puerto Rico, and policies can be bought online through FloodSmart. There is usually a 30-day wait before a new flood policy starts, so don't leave it until a storm is on the map.",
-          "In a condo, the association insures the building, and you insure your own unit. Under the flood program, the association's policy covers the building, and owners can add their own policy for contents. Windstorm deductibles are often a percentage of the insured value rather than a set amount, so read the declarations page closely. Ask the association:",
+          "Flood is not part of a standard homeowners policy. FEMA's National Flood Insurance Program covers all of Puerto Rico. Use FloodSmart to find a provider, then buy coverage through an insurance agent or insurer. There is usually a 30-day wait before a new flood policy starts, so don't leave it until a storm is on the map.",
+          "In a condo, the association insures the building, and you insure your own unit. Under the flood program, the association's policy covers the building, and owners can add their own policy for contents. Condo owners should ask about unit building coverage and contents coverage, since the association policy and individual coverage can overlap. Windstorm deductibles are often a percentage of the insured value rather than a set amount, so read the declarations page closely. Ask the association:",
         ],
         list: [
           "What does the master policy cover, and where does my unit coverage begin?",
@@ -935,7 +934,7 @@ export const guides: Guide[] = [
         id: "storm-day",
         h2: "Where do I go on storm day, and what about earthquakes?",
         body: [
-          "For the strongest protection, FEMA's safe room guides (FEMA P-320 and P-361) and the ICC 500 standard set the bar. If a developer offers safe rooms, ask which standard they are built to. Ask, too, about the plan: who stays on site, how residents are told what to do, and where supplies are kept.",
+          "For the strongest protection, FEMA's safe room guides (FEMA P-320 and P-361) and the ICC 500 standard set the bar. If a developer offers safe rooms, ask which standard they are built to. Ask, too, about the plan: who stays on site, how residents are told what to do, and where supplies are kept. Always follow local evacuation orders, even if your building has a safe room.",
           "Puerto Rico also sits in an earthquake zone. In January 2020, the USGS recorded a magnitude 6.4 earthquake in the island's southwest. Ask how the structure was designed for seismic loads, not only for wind.",
         ],
       },
@@ -943,15 +942,14 @@ export const guides: Guide[] = [
         id: "tesoro-del-mar",
         h2: "What do Tesoro Del Mar's own documents say?",
         body: [
-          "ORA World publishes its approach under the name Resilient by Design. Here is what its published materials state about how it builds, Tesoro Del Mar included, in its own words where possible. Use this list as a starting point, and ask for the engineering documents behind it as the project moves forward.",
+          "ORA World publishes its approach under the name Resilient by Design. Here is what its published materials state about how it builds, Tesoro Del Mar included, in its own words where possible. These are proposed features, described in ORA World's own materials on the [residences](/residences) and [finishes](/b/finishes) pages. Project-specific specifications will be published once the team documents them. Use this list as a starting point, and ask for the engineering documents behind it as the project moves forward.",
         ],
         list: [
-          "Structures engineered to withstand Category 5 hurricanes",
           "Impact-resistant windows, reinforced walls and advanced drainage systems",
-          "Seismic engineering, with materials and methods that exceed local building codes for seismic zones",
-          "High-capacity generators, plus solar panels and battery storage",
+          "Proposed feature: seismic engineering, with materials and methods that exceed local building codes for seismic zones",
+          "Proposed feature: high-capacity generators, plus solar panels and battery storage",
           "Elevated foundations, landscape grading and stormwater management",
-          "Reinforced safe rooms in the residences",
+          "Proposed feature: reinforced safe rooms in the residences",
           "On-site emergency shelters with supplies, clear evacuation routes and communication systems",
           "Professional security teams on site 24/7, and resilience training for residents",
         ],
@@ -996,11 +994,11 @@ export const guides: Guide[] = [
       },
       {
         q: "Can I get flood insurance in Puerto Rico?",
-        a: "Yes. FEMA's National Flood Insurance Program covers all of Puerto Rico, and policies can be bought online through FloodSmart. A new policy usually has a 30-day waiting period before it starts.",
+        a: "Yes. FEMA's National Flood Insurance Program covers all of Puerto Rico. Use FloodSmart to find a provider, then buy coverage through an insurance agent or insurer. A new policy usually has a 30-day waiting period before it starts.",
       },
       {
         q: "How is Tesoro Del Mar designed for hurricanes?",
-        a: "ORA World states that its structures are engineered to withstand Category 5 hurricanes, with impact-resistant windows, reinforced walls and advanced drainage. Its published plans include high-capacity generators with solar and battery storage, elevated foundations, stormwater management and reinforced safe rooms in the residences.",
+        a: "ORA World's own materials, on the residences and finishes pages of this site, describe proposed features: impact-resistant windows, reinforced walls and advanced drainage, high-capacity generators with solar and battery storage, elevated foundations, stormwater management and reinforced safe rooms in the residences. Project-specific specifications will be published once the team documents them.",
       },
       {
         q: "When is hurricane season in Puerto Rico?",
@@ -1008,7 +1006,8 @@ export const guides: Guide[] = [
       },
       {
         q: "Can I reserve a residence at Tesoro Del Mar now?",
-        a: "Not yet. This is a solicitation of interest: no offering can be made and no deposits or reservations can be accepted until an offering plan is filed with the New York State Department of Law. You can inquire now to receive the brochure and the Phase 1 floor plans.",
+        // TTR-2596: general New York solicitation wording; Tesoro Del Mar's own status and this wording are to be confirmed by the sponsor (ORA World).
+        a: "This is a solicitation of interest only. No offering can be made and no deposits or reservations can be accepted until an offering plan is filed with the New York State Department of Law. The current status and the approved wording are to be confirmed by the sponsor, ORA World. You can inquire now to receive the brochure and the Phase 1 floor plans.",
       },
     ],
     sources: [
