@@ -11,7 +11,6 @@ export default async function VersionBLayout({ children, params }: { children: R
   const es = locale === "es";
   const settings = await getSiteSettings();
   const links = [
-    { href: "/b#about", label: es ? "Nosotros" : "About" },
     { href: "/b/living", label: es ? "Vivir" : "Living" },
     { href: "/b/longevity", label: es ? "Longevidad" : "Longevity" },
     { href: "/b/floor-plans", label: es ? "Planos" : "Floor plans" },
