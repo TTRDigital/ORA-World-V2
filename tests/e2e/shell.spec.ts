@@ -111,9 +111,9 @@ test.describe("shell", () => {
   test("newsletter and lead API validate and accept", async ({ request }) => {
     const bad = await request.post("/api/lead", { data: { variant: "short", name: "x" } });
     expect(bad.status()).toBe(400);
-    const ok = await request.post("/api/lead", { data: { variant: "short", name: "Test Person", email: "test@example.com", phone: "+1 787 555 0100", consent: true, locale: "en" } });
+    const ok = await request.post("/api/lead", { data: { variant: "short", name: "Test Person", email: "test@example.com", phone: "+1 787 555 0100", lead_type: "buyer", consent: true, locale: "en" } });
     expect(ok.status()).toBe(200);
-    const honey = await request.post("/api/lead", { data: { variant: "short", name: "Bot", email: "bot@example.com", consent: true, locale: "en", company: "" } });
+    const honey = await request.post("/api/lead", { data: { variant: "short", name: "Bot", email: "bot@example.com", lead_type: "buyer", consent: true, locale: "en", company: "" } });
     expect(honey.status()).toBe(200);
   });
 });
