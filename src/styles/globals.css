@@ -1005,3 +1005,15 @@ main:has([data-version-b]), main:has([data-version-c]), main:has([data-version-d
 /* Version C reel: the progress line fills over one card's time. */
 @keyframes reel-fill { from { width: 0; } to { width: 100%; } }
 .reel-fill { animation: reel-fill 2500ms linear forwards; }
+
+/* Version E opening: the logo drawn, filled, the line, then the curtain lifts (src/components/v5/ELogoIntro.tsx). */
+.e-intro { animation: e-lift 700ms ease-in 4500ms forwards; }
+.e-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: e-draw 1100ms ease-in-out forwards; }
+.e-fill { opacity: 0; animation: e-fade 700ms ease-out 2500ms forwards; }
+.e-line { opacity: 0; animation: e-rise 800ms ease-out 3000ms forwards; }
+@keyframes e-draw { to { stroke-dashoffset: 0; } }
+@keyframes e-fade { to { opacity: 1; } }
+@keyframes e-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes e-lift { to { opacity: 0; visibility: hidden; } }
+.e-intro-seen .e-intro { display: none; }
+@media (prefers-reduced-motion: reduce) { .e-intro { display: none; } }

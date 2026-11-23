@@ -173,7 +173,10 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("header")).toHaveCount(1);
     for (const id of ["amenities", "location", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
     await expect(page.locator('section[aria-labelledby="e-figures"]')).toContainText(/10\.6/);
-    await expect(page.locator('[aria-roledescription="carousel"] button')).toHaveCount(6);
+    // Client, 23 Nov: the slideshow plays the eleven interior films; the opening draws the logo.
+    await expect(page.locator('[aria-roledescription="carousel"] button')).toHaveCount(11);
+    await expect(page.locator('[aria-roledescription="carousel"] video')).toHaveCount(11);
+    await expect(page.locator(".e-intro path.e-draw").first()).toBeAttached();
     await expect(page.locator("#inquire form")).toHaveCount(1);
     await expect.poll(() => page.locator('[data-version-e] a[href^="/en/c"]:not([data-keep])').count()).toBe(0);
   });

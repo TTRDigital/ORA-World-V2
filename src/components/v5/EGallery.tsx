@@ -1,18 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { ImageRef, Locale } from "@/content/types";
 import { cn } from "@/lib/utils";
 
 /**
  * Version E interiors: a full-width slideshow (in the manner of ciprianiresidencesmiami.com): one photograph at a
- * time, crossfading on its own every 5 s, a line of text at the bottom left and dots to choose. Reduced motion: no
+ * time, crossfading on its own every 5 s (films since 23 Nov), a line of text at the bottom left and dots to choose. Reduced motion: no
  * automatic change.
  */
-export function EGallery({ slides, locale, text, label }: { slides: { image: ImageRef; caption: string }[]; locale: Locale; text: string; label: string }) {
+export function EGallery({ slides, locale, text, label }: { slides: { image: ImageRef; caption: string; video?: string }[]; locale: Locale; text: string; label: string }) {
   const [i, setI] = useState(0);
   const [held, setHeld] = useState(false);
+  // Client, 23 Nov: the slides are films; only the one on show plays.
+  const films = useRef<(HTMLVideoElement | null)[]>([]);
+  useEffect(() => {
+    films.current.forEach((v, k) => {
+      if (!v) return;
+      if (k === i) {
+        v.muted = true;
+        v.play().catch(() => {});
+      } else v.pause();
+    });
+  }, [i]);
   useEffect(() => {
     if (held || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = setTimeout(() => setI((k) => (k + 1) % slides.length), 5000);
@@ -23,6 +34,23 @@ export function EGallery({ slides, locale, text, label }: { slides: { image: Ima
       {slides.map((s, k) => (
         <div key={s.image.src} aria-hidden={k !== i} className={cn("absolute inset-0 -z-10 transition-opacity duration-[1200ms]", k === i ? "opacity-100" : "opacity-0")}>
           <Image src={s.image.src} alt={s.image.alt[locale] || s.image.alt.en} fill sizes="100vw" quality={82} className="object-cover" style={{ objectPosition: s.image.focal }} priority={k === 0} />
+          {s.video && (
+            <video
+              ref={(el) => {
+                films.current[k] = el;
+              }}
+              src={s.video}
+              muted
+              loop
+              playsInline
+              preload={k === 0 ? "auto" : "metadata"}
+              disablePictureInPicture
+              tabIndex={-1}
+              aria-hidden
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: s.image.focal }}
+            />
+          )}
         </div>
       ))}
       <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent_45%,rgb(28_24_18/0.72))]" />
