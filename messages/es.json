@@ -275,14 +275,12 @@
     "buyerSub": "Busca un hogar en ORA World.",
     "broker": "Soy corredor",
     "brokerSub": "Representa a un cliente y quiere enviarnos sus datos.",
-    "buyerNote": "Deje sus datos y luego elija un horario para una llamada con nuestro equipo.",
-    "brokerNote": "Envíenos sus datos y un mensaje breve. Nuestro equipo le responderá.",
-    "buyerSubmit": "Continuar para reservar una llamada",
-    "bookStep": "Reservar una llamada",
-    "bookTitle": "Reserve una llamada con nuestro equipo",
-    "bookIntro": "Gracias, sus datos están guardados. Elija el horario que le convenga para una llamada con nuestro equipo.",
-    "bookCta": "Elegir un horario",
-    "back": "Volver"
+    "buyerNote": "Deje sus datos y nuestro equipo se pondrá en contacto con usted.",
+    "brokerNote": "Envíenos sus datos y un mensaje breve. Nuestro equipo se pondrá en contacto con usted.",
+    "back": "Volver",
+    "doneStep": "Gracias",
+    "doneTitle": "Gracias, recibimos sus datos.",
+    "doneText": "Nuestro equipo se pondrá en contacto con usted en breve."
   },
   "form": {
     "name": "Nombre completo",
@@ -467,8 +465,8 @@
       "intro": "Doce ubicaciones en Puerto Rico, cada una con su lema publicado."
     },
     "visit": {
-      "title": "Reserve una llamada",
-      "intro": "Los compradores reservan una llamada con nuestro equipo. Los corredores nos envían sus datos."
+      "title": "Hable con nuestro equipo",
+      "intro": "Díganos si es comprador o corredor, y nuestro equipo se pondrá en contacto con usted."
     },
     "faq": {
       "title": "Preguntas",

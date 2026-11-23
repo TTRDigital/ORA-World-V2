@@ -18,15 +18,10 @@ export default async function VisitPage({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   setRequestLocale(locale);
   const [settings, tv, tn] = await Promise.all([getSiteSettings(), getTranslations({ locale, namespace: "pages.visit" }), getTranslations({ locale, namespace: "nav" })]);
-  const address = settings.salesGalleryAddress?.[locale] ?? null;
   const tf = await getTranslations({ locale, namespace: "pages.facts" });
   const tpg = await getTranslations({ locale, namespace: "pages" });
-  const tcm = await getTranslations({ locale, namespace: "common" });
-  const facts = [
-    { label: tf("ways"), value: tf("ways2") },
-    { label: tf("gallery"), value: "Dorado" },
-    { label: tf("hours"), value: settings.hours?.[locale] ?? tcm("tbc") },
-  ];
+  // TTR-3011: calls only. No gallery, visit or opening-hours facts on this page.
+  const facts = [{ label: tf("ways"), value: tf("ways2") }];
   return (
     <div className="flex flex-col">
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("visit"), path: "/visit" }])} />
@@ -35,9 +30,7 @@ export default async function VisitPage({ params }: { params: Promise<{ locale: 
         <VisitJourney consentText={settings.consentText[locale]} />
       </section>
       <section className="panel panel-bone container-x py-10" aria-label={tn("contact")}>
-        <dl className="grid gap-4 sm:grid-cols-3 text-[15px]">
-          <div className="card p-5"><dt className="label mb-1">{settings.salesGalleryName[locale]}</dt><dd>{address ?? <Tbc />}</dd></div>
-          <div className="card p-5"><dt className="label mb-1">{locale === "es" ? "Horario" : "Hours"}</dt><dd>{settings.hours?.[locale] ?? <Tbc />}</dd></div>
+        <dl className="grid gap-4 text-[15px]">
           <div className="card p-5"><dt className="label mb-1">{locale === "es" ? "Teléfono y correo" : "Phone and email"}</dt><dd>{settings.phone || settings.email ? <>{settings.phone && <a href={`tel:${settings.phone.replace(/[^\d+]/g, "")}`} className="block">{settings.phone}</a>}{settings.email && <a href={`mailto:${settings.email}`} className="block">{settings.email}</a>}</> : <Tbc />}</dd></div>
         </dl>
       </section>

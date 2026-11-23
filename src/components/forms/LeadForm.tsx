@@ -15,8 +15,7 @@ import { readAttribution } from "@/lib/attribution";
 type Props = {
   variant: LeadVariant;
   consentText: string;
-  /** Called after the lead is saved, with the booking link ORA World OS sent back for a buyer (TTR-3011), if any. */
-  onSuccess?: (result: { bookingUrl?: string }) => void;
+  onSuccess?: () => void;
   submitLabel?: string;
   dark?: boolean;
   defaults?: Partial<LeadInput>;
@@ -93,10 +92,9 @@ export function LeadForm({
         body: JSON.stringify({ ...readAttribution(), ...data, turnstileToken: token }),
       });
       if (!res.ok) throw new Error(String(res.status));
-      const answer = (await res.json().catch(() => ({}))) as { bookingUrl?: unknown };
       setStatus("done");
       track("lead_submit", { variant });
-      onSuccess?.({ bookingUrl: typeof answer.bookingUrl === "string" ? answer.bookingUrl : undefined });
+      onSuccess?.();
     } catch {
       setStatus("error");
     }
