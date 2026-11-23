@@ -25,7 +25,6 @@ export default async function VersionELayout({ children, params }: { children: R
         links={links}
         inquire={es ? "Consultar" : "Inquire"}
         phone={settings.phone ?? ""}
-        note={es ? "Fase Uno · Precios de preconstrucción" : "Phase One · Early pre-construction pricing"}
         otherLocale={es ? "en" : "es"}
         otherLabel={es ? "English" : "Español"}
         menu={es ? "Menú" : "Menu"}

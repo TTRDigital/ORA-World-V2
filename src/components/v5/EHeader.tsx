@@ -6,11 +6,11 @@ import { Logo } from "@/components/layout/Logo";
 import { cn } from "@/lib/utils";
 
 /**
- * Version E header (in the manner of ciprianiresidencesmiami.com): a thin announcement line on top; over the film, a
+ * Version E header (in the manner of ciprianiresidencesmiami.com; 23 Nov: no announcement line): over the film, a
  * solid "Inquire" button and the telephone number on the left and a menu button on the right (the big logo sits in the
  * film); after a short scroll, a bone bar with the gold logo in the middle. The menu opens full screen.
  */
-export function EHeader({ links, inquire, phone, note, otherLocale, otherLabel, menu, close }: { links: { href: string; label: string }[]; inquire: string; phone: string; note: string; otherLocale: "en" | "es"; otherLabel: string; menu: string; close: string }) {
+export function EHeader({ links, inquire, phone, otherLocale, otherLabel, menu, close }: { links: { href: string; label: string }[]; inquire: string; phone: string; otherLocale: "en" | "es"; otherLabel: string; menu: string; close: string }) {
   const path = usePathname();
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
@@ -23,8 +23,7 @@ export function EHeader({ links, inquire, phone, note, otherLocale, otherLabel, 
   const tel = `tel:${phone.replace(/[^\d+]/g, "")}`;
   return (
     <>
-      <p className="relative z-50 bg-basalt px-5 py-2 text-center text-[10.5px] font-semibold tracking-[0.24em] text-bone uppercase">{note}</p>
-      <header className={cn("fixed inset-x-0 z-40 transition-[background-color,top,box-shadow] duration-300", solid ? "top-0 bg-bone text-basalt shadow-[0_1px_0_rgb(44_36_22/0.18)]" : "top-[33px] bg-transparent text-white")}>
+      <header className={cn("fixed inset-x-0 z-40 transition-[background-color,top,box-shadow] duration-300", solid ? "top-0 bg-bone text-basalt shadow-[0_1px_0_rgb(44_36_22/0.18)]" : "top-0 bg-gradient-to-b from-[rgb(28_24_18/0.4)] to-transparent text-white")}>
         <div className="mx-auto grid h-[72px] max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 md:h-[84px] md:px-8">
           <div className="flex items-center gap-5">
             <Link href="/e#inquire" className={cn("inline-flex min-h-10 items-center px-4 text-[11px] font-semibold tracking-[0.2em] uppercase transition-colors", solid ? "bg-basalt text-bone hover:bg-basalt-soft" : "bg-basalt/90 text-bone hover:bg-basalt")}>

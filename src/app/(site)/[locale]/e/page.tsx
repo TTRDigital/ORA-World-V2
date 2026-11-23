@@ -11,16 +11,15 @@ import { pointsOfInterest } from "@/content/seed/places";
 import { Logo } from "@/components/layout/Logo";
 import { LeadFormLazy } from "@/components/forms/LeadFormLazy";
 import { BHeroFilm } from "@/components/v2/BHeroFilm";
-import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import { ELogoIntro } from "@/components/v5/ELogoIntro";
-import { interiorSlides } from "@/content/seed/interiorSlides";
+import { cImg } from "@/content/seed/imagesC";
 import { EGallery } from "@/components/v5/EGallery";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 /**
  * Version E (client, 23 Nov: "another version like ciprianiresidencesmiami.com; I really like this page, the same
- * layout"). That page's sequence in ORA's palette and with ORA's content: a film with the logo large in the middle, a
+ * layout"; 23 Nov: "one film, then photos", no top bar). That page's sequence in ORA's palette and with ORA's content: a film with the logo large in the middle, a
  * pen sketch beside the introduction, the aerial with the logo, a dark figures band, "the art of" with a drawing, an
  * inset photograph, a quote, an interiors slideshow, a dark service split, "a life of" with three photographs, a dark
  * Act 60 band (in place of their press logos), a full-bleed location panel, a split call to action and the inquiry.
@@ -48,18 +47,13 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
   const es = locale === "es";
   const x = (l: L) => t(l, locale);
   const settings = await getSiteSettings();
-  const still = (i: ImageRef): ImageRef => ({ src: i.src, width: i.width, height: i.height, focal: i.focal, alt: i.alt, rendering: i.rendering });
-  const spa: ImageRef = { ...still(life.spa), src: "/videos/clips/spa-ocean-poster.jpg", width: 1248, height: 704, focal: "50% 50%", alt: { en: "A massage in an ocean-view treatment room at the spa", es: "Un masaje en una sala de tratamientos con vista al mar en el spa" } };
-  // Client, 23 Nov: every picture on this page plays its film.
+  // Client, 23 Nov: "one film, then photos": the banner is the only film; every section below is a still render that
+  // is not in the film, so nothing repeats.
   const photo = (i: ImageRef, sizes: string, cls: string, imgCls = "") => (
     <div className={cn("relative overflow-hidden bg-travertine", cls)}>
-      <Image src={i.src} alt={i.alt[locale] || i.alt.en} fill sizes={sizes} quality={82} className={cn("object-cover", imgCls)} style={{ objectPosition: i.focal }} />
-      {i.video && <ClipOverlay src={i.video} poster={i.poster} focal={i.focal} className={imgCls} />}
+      <Image src={i.src} alt={i.alt[locale] || i.alt.en} fill sizes={sizes} quality={84} className={cn("object-cover", imgCls)} style={{ objectPosition: i.focal }} />
     </div>
   );
-  const clip = (n: string) => ({ video: `/videos/clips/${n}.mp4`, poster: `/videos/clips/${n}-poster.jpg` });
-  const restaurant: ImageRef = { src: "/videos/clips/restaurant-poster.jpg", width: 1280, height: 720, focal: "50% 50%", alt: { en: "An oceanfront dining room, a couple raising a glass by the window", es: "Un comedor frente al mar, una pareja brindando junto a la ventana" }, rendering: true, ...clip("restaurant") };
-  const jet: ImageRef = { src: "/videos/clips/jet-arrival-poster.jpg", width: 1632, height: 544, focal: "30% 60%", alt: { en: "The ORA World jet on arrival", es: "El jet de ORA World a su llegada" }, rendering: true, ...clip("jet-arrival") };
   const facts = [
     { value: "10.6", label: es ? "Acres" : "Acres" },
     { value: "129", label: es ? "Residencias" : "Residences" },
@@ -67,7 +61,16 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
     { value: "65,500", label: es ? "Pies² de amenidades" : "SF amenities" },
     { value: "30", label: es ? "Min al aeropuerto" : "Min to the airport" },
   ];
-  const slides = interiorSlides(es).map((sl) => ({ image: sl.image, caption: `${sl.title} · ${sl.note}`, video: sl.video }));
+  // Rooms that are not in the banner film (the film shows the reception, the marble lobby, the two-level living room,
+  // the penthouse living room, the wine-wall kitchen, a bedroom and the baths).
+  const slides = [
+    { image: cImg.diningPiano, caption: es ? "Comedor de doble altura" : "Double-height dining" },
+    { image: cImg.livingView, caption: es ? "Salón abierto" : "Open living room" },
+    { image: cImg.kitchenIsland, caption: es ? "Cocina con isla de mármol" : "Kitchen with a marble island" },
+    { image: cImg.bedroom, caption: es ? "Dormitorio y terraza" : "Bedroom and terrace" },
+    { image: cImg.livingSofa, caption: es ? "Salón con cava de vidrio" : "Living room with a glass wine room" },
+    { image: cImg.lobbyGarden, caption: es ? "El vestíbulo" : "The lobby" },
+  ];
   const places = cip.location.places.slice(0, 4).map((slug) => {
     const p = pointsOfInterest.find((q) => q.slug === slug)!;
     const walk = p.walkMinutes != null;
@@ -79,7 +82,7 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
       <ELogoIntro line={es ? "Más allá de lo esperado" : "Beyond expectations"} />
 
       {/* 1 · The film, the logo large in the middle, "Schedule a private preview" at the bottom right. */}
-      <section aria-label="ORA World · Tesoro del Mar" className="relative isolate flex h-[calc(100svh-33px)] min-h-[560px] items-center justify-center overflow-hidden text-white">
+      <section aria-label="ORA World · Tesoro del Mar" className="relative isolate flex h-[100svh] min-h-[560px] items-center justify-center overflow-hidden text-white">
         <BHeroFilm alt={es ? "El jet de ORA World a su llegada, la primera escena de la película de Tesoro del Mar" : "The ORA World jet on arrival, the opening scene of the Tesoro del Mar film"} pauseLabel={es ? "Pausar la película" : "Pause the film"} playLabel={es ? "Reproducir la película" : "Play the film"} />
         <span aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_45%_40%_at_center,rgb(28_24_18/0.35),transparent_75%),linear-gradient(180deg,rgb(28_24_18/0.45),transparent_25%,transparent_80%,rgb(28_24_18/0.35))]" />
         <h1 className="flex flex-col items-center drop-shadow-[0_2px_18px_rgb(28_24_18/0.45)]">
@@ -94,8 +97,7 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
       {/* 2 · The sketch and the introduction. */}
       <section aria-label={es ? "Introducción" : "Introduction"} className="bg-bone px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1200px] items-center gap-12 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-20">
-          {/* Client, 23 Nov: the sketch replaced with the towers film. */}
-          {photo(tdm.exteriorRoad, "(max-width: 767px) calc(100vw - 40px), 420px", "mx-auto aspect-[4/5] w-full max-w-[420px]")}
+          {photo(cImg.aerialTowers, "(max-width: 767px) calc(100vw - 40px), 420px", "mx-auto aspect-[4/5] w-full max-w-[420px]")}
           <div className="text-[17px] leading-[1.75] md:text-[18px]">
             <p className="text-basalt">{es ? "Longevidad, lujo y naturaleza. Tres torres curvas sobre la costa norte de Puerto Rico." : "Longevity, luxury and nature. Three curved towers above Puerto Rico's north coast."}</p>
             <p className="mt-6 text-charcoal-soft">{x(cip.who.intro)} {x(cip.who.body)}</p>
@@ -103,14 +105,11 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
         </div>
       </section>
 
-      {/* 3 · The aerial with the logo over it. */}
-      <section aria-label={es ? "Llegada en jet privado" : "Arrival by private jet"} className="relative isolate flex h-[82svh] min-h-[480px] items-center justify-center overflow-hidden text-white">
-        <Image src={jet.src} alt={jet.alt[locale] || jet.alt.en} fill sizes="100vw" quality={82} className="-z-10 object-cover" style={{ objectPosition: jet.focal }} />
-        <ClipOverlay src={jet.video!} poster={jet.poster} focal={jet.focal} className="-z-10" />
-        <span aria-hidden className="absolute inset-0 -z-10 bg-[rgb(28_24_18/0.42)]" />
-        <div className="flex flex-col items-center opacity-90">
-          <Logo variant="white" height={200} responsive className="h-[120px] w-auto md:h-[170px]" />
-        </div>
+      {/* 3 · The towers from the arrival road, the logo over them. */}
+      <section aria-label={es ? "Las torres" : "The towers"} className="relative isolate flex h-[82svh] min-h-[480px] items-center justify-center overflow-hidden text-white">
+        <Image src={tdm.exteriorRoad.src} alt={tdm.exteriorRoad.alt[locale] || tdm.exteriorRoad.alt.en} fill sizes="100vw" quality={84} className="-z-10 object-cover" style={{ objectPosition: tdm.exteriorRoad.focal }} />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-[rgb(28_24_18/0.45)]" />
+        <Logo variant="white" height={200} responsive className="h-[120px] w-auto opacity-95 md:h-[170px]" />
       </section>
 
       {/* 4 · The figures, on Deep Earth. */}
@@ -147,8 +146,7 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
       {/* 6 · An inset photograph with words over it, then the quote. */}
       <section aria-labelledby="e-legacy" className="bg-bone px-5 pt-6 md:px-6">
         <div className="relative isolate flex min-h-[520px] items-center justify-center overflow-hidden px-5 py-20 text-center text-white md:min-h-[600px]">
-          <Image src={spa.src} alt={spa.alt[locale] || spa.alt.en} fill sizes="100vw" quality={82} className="-z-10 object-cover grayscale" style={{ objectPosition: "50% 50%" }} />
-          <ClipOverlay src="/videos/clips/spa-ocean.mp4" poster="/videos/clips/spa-ocean-poster.jpg" className="-z-10 grayscale" />
+          <Image src={life.running.src} alt={life.running.alt[locale] || life.running.alt.en} fill sizes="100vw" quality={84} className="-z-10 object-cover grayscale" style={{ objectPosition: life.running.focal }} />
           <span aria-hidden className="absolute inset-0 -z-10 bg-[rgb(28_24_18/0.45)]" />
           <div className="max-w-[560px]">
             <H2 id="e-legacy" light>{es ? "Longevidad incluida" : "Longevity, built in"}</H2>
@@ -184,7 +182,7 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
             </p>
             <TextLink href="/e#amenities" light>{es ? "Las amenidades" : "Experience the amenities"}</TextLink>
           </div>
-          {photo(tdm.entrance, "(max-width: 767px) calc(100vw - 40px), 440px", "aspect-[4/5] bg-basalt-soft")}
+          {photo({ ...cImg.entrance, focal: "60% 50%" }, "(max-width: 767px) calc(100vw - 40px), 440px", "aspect-[4/5] bg-basalt-soft")}
         </div>
       </section>
 
@@ -199,9 +197,9 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
           </p>
         </div>
         <div className="mt-16 grid grid-cols-[1fr_1.6fr_1fr] items-end gap-3 md:mt-20 md:gap-5">
-          {photo(tdm.exteriorPull, "33vw", "aspect-[4/3]")}
-          {photo(restaurant, "50vw", "aspect-[4/3]")}
-          {photo(tdm.exteriorGolf, "33vw", "aspect-[4/3]")}
+          {photo(cImg.poolDeck, "33vw", "aspect-[4/3]")}
+          {photo(cImg.clubhousePool, "50vw", "aspect-[4/3]")}
+          {photo(cImg.bar, "33vw", "aspect-[4/3]")}
         </div>
       </section>
 
@@ -223,8 +221,7 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
 
       {/* 11 · The location, full bleed. */}
       <section id="location" aria-labelledby="e-loc" className="relative isolate flex min-h-[78svh] scroll-mt-24 items-center justify-center overflow-hidden px-5 py-24 text-center text-white md:px-10">
-        <Image src={tdm.aerialCoast.src} alt={tdm.aerialCoast.alt[locale] || tdm.aerialCoast.alt.en} fill sizes="100vw" quality={82} className="-z-10 object-cover" style={{ objectPosition: tdm.aerialCoast.focal }} />
-        <ClipOverlay src="/videos/clips/p08-aerial-cove.mp4" poster="/videos/clips/p08-aerial-cove-poster.jpg" className="-z-10" />
+        <Image src={life.beach.src} alt={life.beach.alt[locale] || life.beach.alt.en} fill sizes="100vw" quality={84} className="-z-10 object-cover" style={{ objectPosition: life.beach.focal }} />
         <span aria-hidden className="absolute inset-0 -z-10 bg-[rgb(28_24_18/0.5)]" />
         <div className="max-w-[760px]">
           <h2 id="e-loc" className="font-[family-name:var(--font-sans)] text-[30px] leading-[1.2] font-light tracking-[0.1em] uppercase md:text-[44px]">{es ? "El tesoro de Dorado" : "The treasure of Dorado"}</h2>
@@ -244,7 +241,7 @@ export default async function VersionE({ params }: { params: Promise<{ locale: L
           <Link href="/e#inquire" className="mx-auto inline-block border-b border-basalt/60 pb-2 text-[20px] font-light tracking-[0.08em] uppercase hover:border-basalt md:text-[22px]">
             {es ? "Agende una cita privada" : "Schedule a private appointment"}
           </Link>
-          {photo({ ...tdm.foyerAtrium, ...clip("lobby-combined") }, "(max-width: 767px) 70vw, 280px", "mx-auto aspect-square w-[70%] md:w-[240px]", "grayscale")}
+          {photo(cImg.kitchenIsland, "(max-width: 767px) 70vw, 280px", "mx-auto aspect-square w-[70%] md:w-[240px]", "grayscale")}
           <Link href="/e/longevity" className="mx-auto inline-flex flex-col items-center gap-3 text-[20px] font-light tracking-[0.08em] uppercase md:text-[22px]">
             {es ? "Explore la longevidad" : "Explore longevity"} <span aria-hidden className="text-[26px]">→</span>
           </Link>
