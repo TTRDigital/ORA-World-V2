@@ -1006,8 +1006,8 @@ export const guides: Guide[] = [
       },
       {
         q: "Can I reserve a residence at Tesoro Del Mar now?",
-        // TTR-2596: general wording, to be confirmed by the sponsor (ORA World) along with the current reservation status.
-        a: "Reservations and the offering are set by the sponsor, ORA World, and details are to be confirmed by the sponsor. You can inquire now to receive the brochure and the Phase 1 floor plans.",
+        // TTR-2596: general New York solicitation wording; Tesoro Del Mar's own status and this wording are to be confirmed by the sponsor (ORA World).
+        a: "This is a solicitation of interest only. No offering can be made and no deposits or reservations can be accepted until an offering plan is filed with the New York State Department of Law. The current status and the approved wording are to be confirmed by the sponsor, ORA World. You can inquire now to receive the brochure and the Phase 1 floor plans.",
       },
     ],
     sources: [
