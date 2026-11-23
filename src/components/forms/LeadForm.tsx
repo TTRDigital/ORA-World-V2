@@ -149,6 +149,7 @@ export function LeadForm({
       noValidate
       className={cn("grid gap-4", className)}
       data-variant={variant}
+      data-ttr-skip
     >
       <input type="hidden" {...register("variant")} />
       <input type="hidden" {...register("locale")} />
