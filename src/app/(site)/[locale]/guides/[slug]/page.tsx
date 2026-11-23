@@ -80,7 +80,8 @@ export default async function GuidePage({ params }: { params: Params }) {
           ],
         }}
       />
-      <GuideArticle guide={g} bookingUrl={settings.bookingUrl} legalNotice={settings.legalNotice} />
+      {/* TTR-3011 (Kia, Nov 23): no calendar or booking on the website, so the guide's call buttons and links open the inquiry form. */}
+      <GuideArticle guide={g} bookingUrl={null} legalNotice={settings.legalNotice} />
     </>
   );
 }

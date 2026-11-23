@@ -90,7 +90,7 @@ export function MobileSheet({ open, onClose, tiles }: { open: boolean; onClose: 
           <div className="flex gap-4 text-[14px] font-semibold text-charcoal-soft">
             <Link href="/faq">{t("faq")}</Link>
             <Link href="/brokers">{t("brokers")}</Link>
-            <Link href="/visit">{t("contact")}</Link>
+            <Link href="/#inquire">{t("contact")}</Link>
           </div>
           <LanguageToggle />
         </div>

@@ -42,7 +42,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ loc
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("residences"), path: "/residences" }, { name: t(c.name, locale), path: `/residences/${c.slug}` }])} />
       <PageHero locale={locale} label={tr("collections")} headline={t(c.name, locale)} intro={t(c.tagline, locale)} image={c.image}>
         <Link href="/residences/plans" className="pill pill-brass">{tc("viewPlans")}</Link>
-        <Link href="/visit" className="pill pill-ghost">{tc("bookVisit")}</Link>
+        <Link href="/#inquire" className="pill pill-ghost">{tc("bookVisit")}</Link>
       </PageHero>
       {/* Collection switcher: every collection one tap away, the current one marked. */}
       <nav aria-label={te("otherCollections")} className="panel panel-bone container-x py-4">
