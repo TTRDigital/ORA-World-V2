@@ -19,6 +19,7 @@ import { Consent } from "@/components/providers/Consent";
 import { TrackClicks } from "@/components/providers/TrackClicks";
 import { AttributionCapture } from "@/components/providers/AttributionCapture";
 import { PageTransition } from "@/components/providers/PageTransition";
+import { TtrTracker } from "@/components/providers/TtrTracker";
 import "@/styles/globals.css";
 
 export function generateStaticParams() {
@@ -69,6 +70,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <SmoothScroll />
           <TrackClicks />
           <AttributionCapture />
+          <TtrTracker />
         </NextIntlClientProvider>
       </body>
     </html>

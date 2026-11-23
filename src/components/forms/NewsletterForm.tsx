@@ -23,7 +23,7 @@ export function NewsletterForm({ dark }: { dark?: boolean }) {
   };
   if (state === "done") return <p role="status" className="small text-brass-light">{t("newsletterSuccess")}</p>;
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-2 sm:flex-row" aria-label={t("newsletter")}>
+    <form onSubmit={onSubmit} data-ttr-skip className="flex flex-col gap-2 sm:flex-row" aria-label={t("newsletter")}>
       <label className="visually-hidden" htmlFor="newsletter-email">{t("email")}</label>
       <input id="newsletter-email" name="email" type="email" required autoComplete="email" placeholder={t("newsletterPlaceholder")} className="field flex-1" />
       <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" defaultValue="" />
