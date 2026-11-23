@@ -41,7 +41,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
     <div className="flex flex-col">
       <JsonLd data={[breadcrumbLd(locale, crumbs), placeLd(locale, t(project.name, locale), t(project.tagline, locale), `/place/${project.slug}`, `${SITE_URL}${project.hero.src}`, project.lat, project.lng)]} />
       <PageHero locale={locale} label={t(project.location, locale)} headline={t(project.name, locale)} intro={t(project.tagline, locale)} image={project.hero}>
-        <Link href="/visit" className="pill pill-brass">{tc("bookVisit")}</Link>
+        <Link href="/#inquire" className="pill pill-brass">{tc("bookVisit")}</Link>
       </PageHero>
       <section className="panel panel-travertine container-x section-y" aria-label={locale === "es" ? "Datos" : "Facts"}>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

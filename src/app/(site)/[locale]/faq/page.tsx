@@ -28,7 +28,7 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: Lo
     <div className="flex flex-col">
       <JsonLd data={[faqLd(faqs.map((f) => ({ q: f.question[locale], a: f.answer[locale].join(" ") }))), breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("title"), path: "/faq" }])]} />
       <PageHero locale={locale} label="ORA World" headline={tn("title")} intro={tn("intro")} compact place={tpg("placeLine")} facts={facts}>
-        <PillLink href="/visit" tone="brass">{tc("bookVisit")}</PillLink>
+        <PillLink href="/#inquire" tone="brass">{tc("bookVisit")}</PillLink>
       </PageHero>
       <section className="panel panel-travertine container-x section-y" aria-label={tn("title")}>
         <FaqSearch faqs={faqs} columns={2} variant="centre" />

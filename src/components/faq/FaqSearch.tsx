@@ -115,7 +115,7 @@ export function FaqSearch({
               <button type="button" onClick={askOra} className="pill pill-basalt">
                 <MessageCircle aria-hidden size={18} strokeWidth={1.75} className="text-brass-light" /> {t("askOra")}
               </button>
-              <Link href="/visit" className="pill pill-ghost">{t("bookVisit")}</Link>
+              <Link href="/#inquire" className="pill pill-ghost">{t("bookVisit")}</Link>
             </div>
           </div>
         ) : (

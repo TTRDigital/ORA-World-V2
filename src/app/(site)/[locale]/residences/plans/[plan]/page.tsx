@@ -60,7 +60,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: L
           </div>
           <div className="flex gap-2">
             <ShortlistButton slug={plan.slug} />
-            <Link href="/visit" className="pill pill-brass">{tp("requestPricing")}</Link>
+            <Link href="/#inquire" className="pill pill-brass">{tp("requestPricing")}</Link>
           </div>
         </div>
       </section>
@@ -108,7 +108,7 @@ export default async function PlanPage({ params }: { params: Promise<{ locale: L
               </ul>
               <div className="flex flex-wrap gap-2">
                 {plan.pdf ? <a href={plan.pdf} className="pill pill-basalt">{tp("download")}</a> : <span className="pill pill-ghost cursor-default opacity-70">{tp("noPdf")}</span>}
-                <Link href="/visit" className="pill pill-brass">{tp("requestPricing")}</Link>
+                <Link href="/#inquire" className="pill pill-brass">{tp("requestPricing")}</Link>
               </div>
               {collection && (
                 <Link href={`/residences/${collection.slug}`} className="card lift block overflow-hidden">

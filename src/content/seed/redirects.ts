@@ -16,8 +16,10 @@ export const redirects: Redirect[] = [
   { from: "/incentives", to: "/act-60", permanent: true },
   { from: "/investment", to: "/act-60", permanent: true },
   { from: "/resilience", to: "/faq", permanent: true },
-  { from: "/contact-us", to: "/visit", permanent: true },
-  { from: "/contact", to: "/visit", permanent: true },
+  // TTR-3011 (Kia, Nov 23): no separate visit page. Contact and visit addresses open the inquiry form on the homepage.
+  { from: "/visit", to: "/#inquire", permanent: true },
+  { from: "/contact-us", to: "/#inquire", permanent: true },
+  { from: "/contact", to: "/#inquire", permanent: true },
   { from: "/location", to: "/living", permanent: true },
   // Client, 18 Nov: Living and Place are one page.
   { from: "/place", to: "/living", permanent: true },

@@ -28,7 +28,7 @@ export async function PrivateCharters({ locale }: { locale: Locale }) {
               </li>
             ))}
           </ul>
-          <Link href="/visit" className="pill pill-brass mt-8 min-h-12 px-6" data-track="charters_ask">
+          <Link href="/#inquire" className="pill pill-brass mt-8 min-h-12 px-6" data-track="charters_ask">
             {tx("cta")} <ArrowRight width={16} height={16} />
           </Link>
         </div>

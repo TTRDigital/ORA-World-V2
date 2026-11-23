@@ -28,7 +28,7 @@ export default async function ResidencesPage({ params }: { params: Promise<{ loc
       <JsonLd data={[breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("residences"), path: "/residences" }]), residenceLd(locale, "Tesoro Del Mar", tr("intro"), `${SITE_URL}${tdm.exteriorPull.src}`)]} />
       <PageHero locale={locale} label="Tesoro Del Mar" headline={tr("title")} intro={tr("intro")} image={tdm.aptLiving2}>
         <Link href="/residences/plans" className="pill pill-brass">{tc("viewPlans")}</Link>
-        <Link href="/visit" className="pill pill-ghost">{tc("bookVisit")}</Link>
+        <Link href="/#inquire" className="pill pill-ghost">{tc("bookVisit")}</Link>
       </PageHero>
       <Explorer locale={locale} />
       <section className="panel panel-travertine container-x section-y" aria-label={tr("collections")}>
