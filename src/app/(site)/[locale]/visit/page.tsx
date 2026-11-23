@@ -32,7 +32,7 @@ export default async function VisitPage({ params }: { params: Promise<{ locale: 
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("visit"), path: "/visit" }])} />
       <PageHero locale={locale} label={tn("contact")} headline={tv("title")} intro={tv("intro")} image={tdm.foyerReception} place={tpg("placeLine")} facts={facts} />
       <section className="panel panel-travertine container-x section-y" aria-label={tv("title")}>
-        <VisitJourney bookingUrl={settings.bookingUrl} consentText={settings.consentText[locale]} galleryAddress={address} />
+        <VisitJourney consentText={settings.consentText[locale]} />
       </section>
       <section className="panel panel-bone container-x py-10" aria-label={tn("contact")}>
         <dl className="grid gap-4 sm:grid-cols-3 text-[15px]">

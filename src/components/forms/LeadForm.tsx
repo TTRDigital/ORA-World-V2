@@ -15,7 +15,8 @@ import { readAttribution } from "@/lib/attribution";
 type Props = {
   variant: LeadVariant;
   consentText: string;
-  onSuccess?: () => void;
+  /** Called after the lead is saved, with the booking link ORA World OS sent back for a buyer (TTR-3011), if any. */
+  onSuccess?: (result: { bookingUrl?: string }) => void;
   submitLabel?: string;
   dark?: boolean;
   defaults?: Partial<LeadInput>;
@@ -23,6 +24,10 @@ type Props = {
   compact?: boolean;
   /** Short set of fields only (name, email, phone, preferred time): used by CTA cards. */
   short?: boolean;
+  /** The visitor already said buyer or broker: no buyer/broker question, the value travels as a hidden field. */
+  leadType?: "buyer" | "broker";
+  /** Adds the message box to a short form. */
+  withMessage?: boolean;
 };
 
 /**
@@ -39,12 +44,15 @@ export function LeadForm({
   className,
   compact,
   short,
+  leadType,
+  withMessage,
 }: Props) {
   const t = useTranslations("form");
   const locale = useLocale() as "en" | "es";
   const pathname = usePathname();
   const [status, setStatus] = useState<"idle" | "busy" | "done" | "error">("idle");
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const fixedType = variant === "broker" ? "broker" : leadType;
   const {
     register,
     handleSubmit,
@@ -54,7 +62,7 @@ export function LeadForm({
   } = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
     // No pre-selected buyer/broker choice: the visitor must pick one (the broker registration form is always "broker").
-    defaultValues: { variant, locale, page: pathname, consent: undefined, ...defaults, ...(variant === "broker" ? { lead_type: "broker" as const } : {}) },
+    defaultValues: { variant, locale, page: pathname, consent: undefined, ...defaults, ...(fixedType ? { lead_type: fixedType } : {}) },
   });
 
   // Client, 18 Nov: finishes picked on the Finishes page arrive in the message, ready to send (the visitor can edit it).
@@ -85,9 +93,10 @@ export function LeadForm({
         body: JSON.stringify({ ...readAttribution(), ...data, turnstileToken: token }),
       });
       if (!res.ok) throw new Error(String(res.status));
+      const answer = (await res.json().catch(() => ({}))) as { bookingUrl?: unknown };
       setStatus("done");
       track("lead_submit", { variant });
-      onSuccess?.();
+      onSuccess?.({ bookingUrl: typeof answer.bookingUrl === "string" ? answer.bookingUrl : undefined });
     } catch {
       setStatus("error");
     }
@@ -154,7 +163,7 @@ export function LeadForm({
       <input type="hidden" {...register("variant")} />
       <input type="hidden" {...register("locale")} />
       <input type="hidden" {...register("page")} />
-      {broker ? (
+      {fixedType ? (
         <input type="hidden" {...register("lead_type")} />
       ) : (
         <fieldset aria-describedby={errors.lead_type ? `${variant}-lead_type-err` : undefined}>
@@ -193,7 +202,7 @@ export function LeadForm({
         {broker && field("licence", t("licence"))}
         {broker && field("brokerage", t("brokerage"))}
         {broker && field("client", t("client"))}
-        {variant === "visit" && field("preferred", t("preferred"), { placeholder: "" })}
+        {variant === "visit" && !leadType && field("preferred", t("preferred"), { placeholder: "" })}
         {full && (
           <div>
             <label htmlFor={`${variant}-goal`} className="small mb-1 block font-semibold">
@@ -225,7 +234,7 @@ export function LeadForm({
           </div>
         )}
       </div>
-      {(full || broker) && (
+      {(full || broker || withMessage) && (
         <div>
           <label htmlFor={`${variant}-message`} className="small mb-1 block font-semibold">
             {t("message")}

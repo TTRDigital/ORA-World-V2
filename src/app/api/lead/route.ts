@@ -5,6 +5,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { writeClient } from "@/sanity/client";
 import { sendConfirmationEmail } from "@/lib/email";
 import { ATTRIBUTION_FIELDS } from "@/lib/attribution";
+import { bookingLinkFrom } from "@/lib/booking-link";
 
 /**
  * Lead intake: Zod validation, honeypot with silent success, Turnstile when keys exist, rate limiting,
@@ -44,6 +45,8 @@ export async function POST(req: Request) {
   const payload = { ...fields, role: fields.lead_type, attribution, userAgent: req.headers.get("user-agent"), ip, submittedAt, site: "oraworld-v2" };
 
   let crmStatus = "skipped";
+  // TTR-3011: a buyer lead may come back with a link to book a call (src/lib/booking-link.ts).
+  let bookingUrl: string | null = null;
   const webhook = process.env.CRM_WEBHOOK_URL;
   if (webhook) {
     try {
@@ -54,6 +57,7 @@ export async function POST(req: Request) {
         signal: AbortSignal.timeout(8000),
       });
       crmStatus = res.ok ? "sent" : `failed:${res.status}`;
+      if (res.ok && fields.lead_type === "buyer") bookingUrl = bookingLinkFrom(await res.json().catch(() => null));
     } catch (e) {
       crmStatus = `failed:${(e as Error).message}`;
     }
@@ -81,7 +85,7 @@ export async function POST(req: Request) {
   }
 
   await sendConfirmationEmail({ to: data.email, name: data.name, locale: data.locale }).catch((e) => console.error("[lead] email failed", e));
-  return NextResponse.json({ ok: true, crmStatus });
+  return NextResponse.json({ ok: true, crmStatus, ...(bookingUrl ? { bookingUrl } : {}) });
 }
 
 async function verifyTurnstile(token: string, ip: string) {

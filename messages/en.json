@@ -269,7 +269,20 @@
     ],
     "galleryAddress": "Sales gallery address: to be confirmed",
     "booking": "Choose a time",
-    "noBooking": "Send us your preferred time below and the sales team will confirm it."
+    "noBooking": "Send us your preferred time below and the sales team will confirm it.",
+    "who": "Are you a buyer or a broker?",
+    "buyer": "I'm a buyer",
+    "buyerSub": "You are looking for a home at ORA World.",
+    "broker": "I'm a broker",
+    "brokerSub": "You represent a client and want to send us your details.",
+    "buyerNote": "Leave your details, then pick a time for a call with our team.",
+    "brokerNote": "Send us your details and a short message. Our team will reply.",
+    "buyerSubmit": "Continue to book a call",
+    "bookStep": "Book a call",
+    "bookTitle": "Book a call with our team",
+    "bookIntro": "Thank you, your details are saved. Choose a time that suits you for a call with our team.",
+    "bookCta": "Choose a time",
+    "back": "Back"
   },
   "form": {
     "name": "Full name",
@@ -454,8 +467,8 @@
       "intro": "Twelve locations across Puerto Rico, each with its published tagline."
     },
     "visit": {
-      "title": "Book a visit",
-      "intro": "The sales gallery or a video call, at a time that suits you."
+      "title": "Book a call",
+      "intro": "Buyers book a call with our team. Brokers send us their details."
     },
     "faq": {
       "title": "Questions",
@@ -479,8 +492,8 @@
       "municipalities": "Municipalities",
       "projectPages": "Project pages",
       "revealed": "To be revealed",
-      "ways": "Ways to visit",
-      "ways2": "Gallery or video",
+      "ways": "How it works",
+      "ways2": "A call with our team",
       "gallery": "Sales gallery",
       "hours": "Hours",
       "questions": "Questions",
