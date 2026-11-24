@@ -545,20 +545,6 @@
     "filmTitle": "Welcome to ORA World, film",
     "filmNote": "A short film about the ORA World resort community. It loads from YouTube when you play it."
   },
-  "pricing": {
-    "headline": "Early pre-construction pricing",
-    "intro": "Average pricing for Phase 1 at Tesoro Del Mar, by floor. Pricing will rise in later phases.",
-    "tiers": "Price per square foot",
-    "lower": "Lower units",
-    "average": "Average",
-    "higher": "Higher units",
-    "perSqFt": "per sq ft",
-    "included": "Every residence",
-    "plans": "Phase 1 floor plans",
-    "presentation": "Project presentation",
-    "pdfNote": "Both open as PDFs.",
-    "book": "Book a follow-up call with our agent, Reza"
-  },
   "charters": {
     "label": "Private charters",
     "headline": "Private flights to Puerto Rico and home again",
