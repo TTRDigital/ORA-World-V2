@@ -9,7 +9,7 @@ import { Pause, Play } from "@/components/ui/Icons";
  * once and fades when the film really plays; the film is written as HTML so "muted" and "autoplay" reach the browser in
  * the first response, is nudged to play on mount (some phones wait), and has a pause button.
  */
-export function BHeroFilm({ alt, pauseLabel, playLabel }: { alt: string; pauseLabel: string; playLabel: string }) {
+export function BHeroFilm({ alt, pauseLabel, playLabel, frame = "absolute inset-0 -z-10" }: { alt: string; pauseLabel: string; playLabel: string; frame?: string }) {
   const wrap = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -32,7 +32,7 @@ export function BHeroFilm({ alt, pauseLabel, playLabel }: { alt: string; pauseLa
   };
   return (
     <>
-      <div className="absolute inset-0 -z-10">
+      <div className={frame}>
         <Image src="/videos/hero-film-v5-poster.jpg" alt={alt} fill priority fetchPriority="high" sizes="100vw" quality={80} className={`z-[2] object-cover transition-opacity duration-700 ${playing ? "opacity-0" : "opacity-100"}`} style={{ objectPosition: "50% 50%" }} />
         <div
           ref={wrap}

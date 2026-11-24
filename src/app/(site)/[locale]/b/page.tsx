@@ -87,12 +87,13 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
     <>
 
       {/* 1 · The film and the wordmark */}
-      <section aria-label="Tesoro del Mar" className="relative isolate flex h-[100svh] min-h-[620px] flex-col items-center justify-center overflow-hidden text-white">
-        <BHeroFilm alt={es ? "El jet de ORA World a su llegada, la primera escena de la película de Tesoro del Mar" : "The ORA World jet on arrival, the opening scene of the Tesoro del Mar film"} pauseLabel={es ? "Pausar la película" : "Pause the film"} playLabel={es ? "Reproducir la película" : "Play the film"} />
+      {/* Client, 24 Nov (iPhone): on phones the film shows whole at 16:9 below the header, the words under it. */}
+      <section aria-label="Tesoro del Mar" className="relative isolate flex flex-col items-center overflow-hidden bg-basalt pt-[84px] pb-28 text-white md:h-[100svh] md:min-h-[620px] md:justify-center md:bg-transparent md:pt-0 md:pb-0">
+        <BHeroFilm alt={es ? "El jet de ORA World a su llegada, la primera escena de la película de Tesoro del Mar" : "The ORA World jet on arrival, the opening scene of the Tesoro del Mar film"} pauseLabel={es ? "Pausar la película" : "Pause the film"} playLabel={es ? "Reproducir la película" : "Play the film"} frame="relative aspect-video w-full md:absolute md:inset-0 md:-z-10 md:aspect-auto" />
         {/* Client, 18 Nov: the film bright, as on Version A: only a soft shade behind the words and under the header. */}
         <span aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_55%_40%_at_center,rgb(28_24_18/0.32),transparent_75%),linear-gradient(180deg,rgb(28_24_18/0.5),transparent_24%,transparent_82%,rgb(28_24_18/0.3))]" />
-        <p className="hero-fade px-5 text-center text-[10px] tracking-[0.3em] uppercase opacity-90 md:text-[11px] md:tracking-[0.42em]">ORA World · Dorado, Puerto Rico</p>
-        <h1 className="hero-fade mt-6 px-5 text-center [text-shadow:0_2px_30px_rgb(28_24_18/0.35)] font-[family-name:var(--font-display)] text-[64px] leading-[0.92] font-normal tracking-[0.02em] md:text-[120px] lg:text-[150px]" style={{ animationDelay: "200ms" }}>
+        <p className="hero-fade mt-10 px-5 text-center text-[10px] tracking-[0.3em] uppercase opacity-90 md:mt-0 md:text-[11px] md:tracking-[0.42em]">ORA World · Dorado, Puerto Rico</p>
+        <h1 className="hero-fade mt-6 px-5 text-center [text-shadow:0_2px_30px_rgb(28_24_18/0.35)] font-[family-name:var(--font-display)] text-[52px] leading-[0.92] font-normal tracking-[0.02em] md:text-[120px] lg:text-[150px]" style={{ animationDelay: "200ms" }}>
           Tesoro del Mar
         </h1>
         <p className="hero-fade mt-6 text-[13px] tracking-[0.3em] uppercase opacity-90" style={{ animationDelay: "400ms" }}>

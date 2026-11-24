@@ -87,10 +87,10 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
   return (
     <>
       {/* The banner: the v4 film, the title at the bottom left, three buttons. */}
-      <section aria-label="Tesoro del Mar" className="relative isolate flex min-h-[100svh] items-end overflow-hidden px-5 pt-40 pb-16 text-white md:px-10 md:pb-20">
-        <BHeroFilm alt={es ? "El jet de ORA World a su llegada, la primera escena de la película de Tesoro del Mar" : "The ORA World jet on arrival, the opening scene of the Tesoro del Mar film"} pauseLabel={es ? "Pausar la película" : "Pause the film"} playLabel={es ? "Reproducir la película" : "Play the film"} />
+      <section aria-label="Tesoro del Mar" className="relative isolate flex flex-col overflow-hidden bg-basalt pt-[84px] pb-16 text-white md:min-h-[100svh] md:flex-row md:items-end md:bg-transparent md:px-10 md:pt-40 md:pb-20">
+        <BHeroFilm alt={es ? "El jet de ORA World a su llegada, la primera escena de la película de Tesoro del Mar" : "The ORA World jet on arrival, the opening scene of the Tesoro del Mar film"} pauseLabel={es ? "Pausar la película" : "Pause the film"} playLabel={es ? "Reproducir la película" : "Play the film"} frame="relative aspect-video w-full md:absolute md:inset-0 md:-z-10 md:aspect-auto" />
         <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(28_24_18/0.4),transparent_28%,transparent_45%,rgb(28_24_18/0.72))]" />
-        <div className="mx-auto w-full max-w-[1440px]">
+        <div className="mx-auto w-full max-w-[1440px] px-5 pt-10 md:px-0 md:pt-0">
           <p className="text-[11.5px] font-semibold tracking-[0.3em] uppercase opacity-90">Vega Alta · Dorado, Puerto Rico</p>
           <h1 className="mt-4 [text-shadow:0_2px_24px_rgb(28_24_18/0.3)]">
             <span className="block font-[family-name:var(--font-sans)] text-[44px] leading-[1.02] font-extralight tracking-[0.1em] uppercase md:text-[84px]">Tesoro del Mar</span>

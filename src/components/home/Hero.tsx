@@ -22,18 +22,22 @@ export async function Hero({ locale }: { locale: Locale }) {
       id="hero"
       aria-labelledby="hero-title"
       data-tone="dark"
-      className="on-dark relative isolate flex h-[calc(100svh-80px)] min-h-[520px] flex-col justify-end overflow-hidden bg-basalt lg:h-[calc(100svh-96px)]"
+      className="on-dark relative isolate flex flex-col overflow-hidden bg-basalt md:h-[calc(100svh-80px)] md:min-h-[520px] md:justify-end lg:h-[calc(100svh-96px)]"
     >
       {/* Client, 17 Nov: the banner plays "Tesoro Layout Film v5" (silent, self-hosted, in the server HTML so it starts
           at once); the YouTube film no longer loads here. */}
-      <HeroStage locale={locale} youtubeId={null} mp4={null} webm={null} poster={heroPoster} />
+      {/* Client, 24 Nov (iPhone): on phones the film shows whole, at its 16:9 shape, with the line under it; from tablets up it
+          fills the banner. */}
+      <div className="relative aspect-video w-full md:absolute md:inset-0 md:aspect-auto">
+        <HeroStage locale={locale} youtubeId={null} mp4={null} webm={null} poster={heroPoster} />
+      </div>
       {/* Client, 16 Nov: the line bottom-left and easy to read: a light veil over the film, and a deeper shade rising
           from the bottom-left corner behind the words. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-[3] bg-[rgb(28_24_18/0.12)]" />
       <div aria-hidden className="pointer-events-none absolute inset-0 z-[3] bg-[radial-gradient(ellipse_75%_60%_at_0%_100%,rgb(28_24_18/0.62),rgb(28_24_18/0.2)_55%,transparent_80%)]" />
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48 bg-gradient-to-t from-basalt/45 to-transparent" />
 
-      <div className="relative z-10 w-full px-5 pb-[104px] md:px-10 md:pb-24 lg:px-14 lg:pb-20">
+      <div className="relative z-10 w-full px-5 pt-8 pb-[104px] md:px-10 md:pt-0 md:pb-24 lg:px-14 lg:pb-20">
         <div className="mx-auto max-w-[1440px]">
           <h1 id="hero-title" className="hero-title max-w-[12ch] text-left text-bone [text-shadow:0_2px_24px_rgb(28_22_14/0.55)]">
             {/* Client, 17 Nov: the line types itself in when the page opens. Every letter is in the HTML from the start
