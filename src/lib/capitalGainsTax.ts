@@ -27,10 +27,11 @@ export function bracketTax(amount: number, brackets: Bracket[]): number {
 
 /** Federal long-term capital gains tax (0/15/20% after the standard deduction) plus the 3.8% net investment income tax. */
 export function federalTax(gain: number): number {
-  const ltcg = bracketTax(Math.max(0, gain - FEDERAL.standardDeduction), FEDERAL.ltcgBrackets);
-  const niit = FEDERAL.niit.rate * Math.max(0, gain - FEDERAL.niit.threshold);
-  return ltcg + niit;
+  return federalIncomeTax(gain) + FEDERAL.niit.rate * Math.max(0, gain - FEDERAL.niit.threshold);
 }
+
+/** The federal income tax alone (without the net investment income tax), which Alabama lets residents deduct. */
+const federalIncomeTax = (gain: number) => bracketTax(Math.max(0, gain - FEDERAL.standardDeduction), FEDERAL.ltcgBrackets);
 
 /** New York's supplemental tax ("tax benefit recapture"), from the statutory table in the rate data. */
 function nyTax(ti: number, agi: number, brackets: Bracket[], r: NonNullable<Jurisdiction["recapture"]>): number {
@@ -52,7 +53,8 @@ export function stateTax(gain: number, j: Jurisdiction | undefined): StateResult
     const share = gain <= from ? 1 : gain >= to ? keep : 1 - ((gain - from) / (to - from)) * (1 - keep);
     return sum + d.amount * share;
   }, 0);
-  const taxable = Math.max(0, gain - excluded - j.deduction - phased);
+  const fedDeduction = j.deductsFederalTax ? federalIncomeTax(gain) : 0;
+  const taxable = Math.max(0, gain - excluded - j.deduction - phased - fedDeduction);
   let state = j.recapture ? nyTax(taxable, gain, j.brackets, j.recapture) : bracketTax(taxable, j.brackets);
   for (const s of j.surtaxes ?? []) {
     const base = s.base === "gain" ? gain : taxable;

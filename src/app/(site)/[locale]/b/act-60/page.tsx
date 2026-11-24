@@ -5,7 +5,7 @@ import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
 import { tdm } from "@/content/seed/images";
 import { getFaqs } from "@/lib/content";
-import { TaxCalculator } from "@/components/cip/WhyWidgets";
+import { TaxComparison } from "@/components/cip/TaxComparison";
 import { BHero, BChapter, BFullBleed, BNumbered, BClose, Eyebrow } from "@/components/v2/B";
 
 /** Version B · Act 60: its own layout; copy as on Version A (the Act 60 audit brief's reviewed wording). */
@@ -54,14 +54,14 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
           ))}
         </dl>
         <p className="mt-6 max-w-[90ch] text-[12.5px] leading-relaxed text-bone/55">{x(cip.why.statsNote)}</p>
-        <div className="mt-16 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:items-center lg:gap-16">
+        <div className="mt-16 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)] lg:items-center lg:gap-16">
           <div>
             <h3 className="font-[family-name:var(--font-display)] text-[34px] leading-tight md:text-[48px]">{es ? "Una comparación ilustrativa" : "An illustrative comparison"}</h3>
             <p className="mt-5 max-w-[46ch] text-[16px] leading-relaxed text-bone/75">
-              {es ? "Mueva el control y cambie de régimen: son ejemplos, no una estimación de su obligación fiscal ni un ahorro garantizado." : "Move the slider and switch the regime: these are examples, not estimates of your tax liability or guaranteed savings."}
+              {es ? "Elija el estado donde vive hoy, mueva el control y cambie de régimen: la calculadora compara el impuesto federal, estatal y local estimado donde vive hoy con la tasa de la Ley 60. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado." : "Choose the state you live in now, move the slider and switch the regime: the calculator compares estimated federal, state and local tax where you live today with the Act 60 rate. These are illustrations, not your tax liability or guaranteed savings."}
             </p>
           </div>
-          <TaxCalculator es={es} />
+          <TaxComparison es={es} />
         </div>
       </BChapter>
 

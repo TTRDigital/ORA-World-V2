@@ -7,7 +7,7 @@ import { tdm } from "@/content/seed/images";
 import { getFaqs } from "@/lib/content";
 import { pageMetadata, JsonLd, breadcrumbLd } from "@/lib/seo";
 import { PageHero } from "@/components/ui/PageHero";
-import { TaxCalculator } from "@/components/cip/WhyWidgets";
+import { TaxComparison } from "@/components/cip/TaxComparison";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 
@@ -29,8 +29,8 @@ const COPY = {
   figuresLabel: { en: "The program", es: "El programa" },
   calcTitle: { en: "An illustrative comparison", es: "Una comparación ilustrativa" },
   calcText: {
-    en: "Explore an illustrative comparison of possible federal long-term capital gains tax and preferential Puerto Rico income-tax treatment for fully qualifying post-residency gains. These figures are examples, not estimates of your personal tax liability or guaranteed savings.",
-    es: "Explore una comparación ilustrativa entre un posible impuesto federal sobre ganancias de capital a largo plazo y el tratamiento preferencial del impuesto sobre la renta de Puerto Rico para ganancias posteriores a la residencia que califiquen por completo. Son ejemplos, no estimaciones de su obligación fiscal ni ahorros garantizados.",
+    en: "Choose the state you live in now, the size of the gain and the Puerto Rico regime. The calculator compares estimated federal, state and local tax on long-term capital gains where you live today with the Act 60 rate for qualifying post-residency gains. These figures are illustrations, not your tax liability or guaranteed savings.",
+    es: "Elija el estado donde vive hoy, el monto de la ganancia y el régimen de Puerto Rico. La calculadora compara el impuesto federal, estatal y local estimado sobre ganancias de capital a largo plazo donde vive hoy con la tasa de la Ley 60 para ganancias posteriores a la residencia que califiquen. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado.",
   },
   resLabel: { en: "Residency", es: "Residencia" },
   resTitle: { en: "Establish bona fide Puerto Rico residency", es: "Establezca residencia bona fide en Puerto Rico" },
@@ -122,12 +122,12 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
             ))}
           </dl>
           <p className="mt-8 max-w-[90ch] border-b border-bone/15 pb-12 text-[12.5px] leading-relaxed text-bone/65 md:pb-16">{x(cip.why.statsNote)}</p>
-          <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:items-center lg:gap-16">
+          <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)] lg:items-center lg:gap-16">
             <div>
               <h2 id="calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-bone md:text-[52px]">{x(COPY.calcTitle)}</h2>
               <p className="mt-5 max-w-[46ch] text-[16px] leading-relaxed text-bone/80 md:text-[17px]">{x(COPY.calcText)}</p>
             </div>
-            <TaxCalculator es={es} />
+            <TaxComparison es={es} />
           </div>
         </div>
       </section>
