@@ -31,3 +31,30 @@ test.describe("Act 60 calculator", () => {
     });
   }
 });
+
+// Client meeting, 24 Nov: an address adds county, city and school district taxes. The Census lookup is mocked here.
+test("an address adds the local taxes found there", async ({ page, request }) => {
+  const bad = await request.get("/api/tax-place?q=x");
+  expect(bad.status()).toBe(400);
+  await page.route("**/api/tax-place**", (route) =>
+    route.fulfill({
+      json: { ok: true, code: "MI", matched: "2 WOODWARD AVE, DETROIT, MI, 48226", areas: ["Wayne County", "Detroit city"], locals: [{ name: "Detroit city income tax", base: "gain", flat: 0.024, minus: 600 }] },
+    }),
+  );
+  await page.goto("/en/act-60");
+  const calc = page.locator('[data-widget="tax-compare"]');
+  await calc.scrollIntoViewIfNeeded();
+  const stateLocal = async () => Number((await calc.locator("dl > div").filter({ hasText: "Estimated state and local taxes" }).locator("dd").textContent())!.replace(/[^\d]/g, ""));
+  await calc.getByLabel("Current State of Residence").selectOption("MI");
+  // Michigan 4.25% of the $1,000,000 gain less the $5,900 exemption.
+  await expect.poll(stateLocal).toBe(42_249);
+  await calc.getByPlaceholder(/street/i).fill("2 Woodward Ave, Detroit, MI 48226");
+  await calc.getByRole("button", { name: "Find" }).click();
+  await expect(calc.locator("[data-place]")).toContainText("Detroit city income tax (2.4%)");
+  // 2.4% of the $1,000,000 gain less the $600 exemption.
+  await expect.poll(stateLocal).toBe(42_249 + 23_986);
+  // Choosing a state by hand drops the address.
+  await calc.getByLabel("Current State of Residence").selectOption("MI");
+  await calc.getByLabel("Current State of Residence").selectOption("OH");
+  await expect(calc.locator("[data-place]")).toHaveCount(0);
+});

@@ -7,9 +7,9 @@
  * are applied as published; phase-outs, itemized deductions, credits other than the personal credit, the AMT and
  * holding-period rules are not. The figures are estimates for illustration, not a tax obligation.
  */
-import { FEDERAL, JURISDICTIONS, type Bracket, type Jurisdiction } from "@/content/capitalGainsRates";
+import { FEDERAL, JURISDICTIONS, type Bracket, type Jurisdiction, type LocalTax } from "@/content/capitalGainsRates";
 
-export type { Jurisdiction };
+export type { Jurisdiction, LocalTax };
 export { JURISDICTIONS };
 
 /** Tax on `amount` through ascending [lower bound, rate] brackets. */
@@ -44,7 +44,8 @@ function nyTax(ti: number, agi: number, brackets: Bracket[], r: NonNullable<Juri
 
 export type StateResult = { state: number; local: number };
 
-export function stateTax(gain: number, j: Jurisdiction | undefined): StateResult {
+/** `locals`, from the address lookup, replace the state's typical local tax (an empty list: no local tax there). */
+export function stateTax(gain: number, j: Jurisdiction | undefined, locals?: LocalTax[]): StateResult {
   if (!j || j.noIncomeTax) return { state: 0, local: 0 };
   const excluded = j.exclusion ? Math.min(gain * j.exclusion.pct, j.exclusion.cap ?? Infinity) : 0;
   const phased = (j.phased ?? []).reduce((sum, d) => {
@@ -63,20 +64,22 @@ export function stateTax(gain: number, j: Jurisdiction | undefined): StateResult
     else state += Math.max(0, base - s.threshold) * s.rate;
   }
   state = Math.max(0, state - (j.credit ?? 0));
-  let local = 0;
-  if (j.local) {
-    const base = j.local.base === "gain" ? gain : j.local.base === "stateTax" ? state : taxable;
-    local = j.local.flat != null ? base * j.local.flat : bracketTax(base, j.local.brackets ?? []);
-  }
+  const local = (locals ?? (j.local ? [j.local] : [])).reduce((sum, l) => {
+    const base = Math.max(0, (l.base === "gain" ? gain : l.base === "stateTax" ? state : taxable) - (l.minus ?? 0));
+    if (l.flat != null) return sum + base * l.flat;
+    const brackets = l.brackets ?? [];
+    if (l.band) return sum + base * brackets.reduce((r, [lo, rate]) => (base > lo ? rate : r), 0);
+    return sum + bracketTax(base, brackets);
+  }, 0);
   return { state, local };
 }
 
 export type Estimate = { gain: number; federal: number; stateLocal: number; current: number; pr: number; savings: number; reduction: number };
 
-export function estimate(gain: number, code: string, prRate: number): Estimate {
+export function estimate(gain: number, code: string, prRate: number, locals?: LocalTax[]): Estimate {
   const j = JURISDICTIONS.find((x) => x.code === code);
   const federal = federalTax(gain);
-  const { state, local } = stateTax(gain, j);
+  const { state, local } = stateTax(gain, j, locals);
   const stateLocal = state + local;
   const current = federal + stateLocal;
   const pr = gain * prRate;

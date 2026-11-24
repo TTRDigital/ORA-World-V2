@@ -10,6 +10,10 @@
  * cities or districts (Michigan cities, Ohio school districts, Portland Metro and Multnomah County).
  */
 export type Bracket = [number, number];
+/** A local income tax: a flat rate or brackets on the state taxable income, the gain, or the state tax itself.
+ *  `band`: the rate of the bracket the whole base falls in applies to all of it (Frederick County, Maryland).
+ *  `minus`: an exemption taken off the base first (Michigan cities). */
+export type LocalTax = { name: string; base: "gain" | "taxable" | "stateTax"; flat?: number; brackets?: Bracket[]; band?: boolean; minus?: number };
 export type Jurisdiction = {
   code: string;
   name: string;
@@ -39,7 +43,7 @@ export type Jurisdiction = {
     flatAbove: number;
     flatRate: number;
   };
-  local?: { name: string; base: "gain" | "taxable" | "stateTax"; flat?: number; brackets?: Bracket[] };
+  local?: LocalTax;
   note: string;
   noteEs?: string;
   sources: string[];
@@ -560,9 +564,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://detroitmi.gov/departments/office-chief-financial-officer/ocfo-divisions/office-treasury/income-tax/income-tax-information",
       "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/City-Withholding/TY2026/5469_ty2026.pdf",
     ],
-    note: "Michigan: a flat 4.25%. About two dozen cities add their own income tax (Detroit 2.4%, most others 1%), not included here.",
+    note: "Michigan: a flat 4.25%. About two dozen cities add their own income tax (Detroit 2.4%, most others 1%); enter your address to include yours.",
     noteEs:
-      "Míchigan: una tasa fija de 4.25%. Unas dos docenas de ciudades añaden su propio impuesto (Detroit 2.4%, la mayoría 1%), no incluido aquí.",
+      "Míchigan: una tasa fija de 4.25%. Unas dos docenas de ciudades añaden su propio impuesto (Detroit 2.4%, la mayoría 1%); escriba su dirección para incluir el suyo.",
   },
   {
     code: "MN",
@@ -975,9 +979,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.portland.gov/revenue/personal-tax",
       "https://multco.us/news/news-release-multnomah-county-commissioners-unanimously-delay-preschool-all-income-tax",
     ],
-    note: "Oregon: 4.75% to 9.9% by bracket. Portland Metro and Multnomah County add local taxes on higher incomes, not included here.",
+    note: "Oregon: 4.75% to 9.9% by bracket. Portland Metro and Multnomah County add local taxes on higher incomes; enter your address to include them.",
     noteEs:
-      "Oregón: de 4.75% a 9.9% según el tramo. Portland Metro y el condado de Multnomah añaden impuestos locales sobre ingresos altos, no incluidos aquí.",
+      "Oregón: de 4.75% a 9.9% según el tramo. Portland Metro y el condado de Multnomah añaden impuestos locales sobre ingresos altos; escriba su dirección para incluirlos.",
   },
   {
     code: "PA",

@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { cn } from "@/lib/utils";
-import { estimate, JURISDICTIONS } from "@/lib/capitalGainsTax";
+import { estimate, JURISDICTIONS, type LocalTax } from "@/lib/capitalGainsTax";
 import { panel, useSeen, useTween } from "./WhyWidgets";
 
 /**
@@ -16,10 +16,32 @@ export function TaxComparison({ es }: { es: boolean }) {
   const [gain, setGain] = useState(1_000_000);
   const [rate, setRate] = useState<0 | 0.04>(0.04);
   const [code, setCode] = useState("US");
+  // Client meeting, 24 Nov: "put the address and it picks up state, city and other taxes".
+  const [address, setAddress] = useState("");
+  const [place, setPlace] = useState<{ code: string; matched: string; areas: string[]; locals: LocalTax[] } | null>(null);
+  const [lookup, setLookup] = useState<"idle" | "busy" | "not_found" | "error">("idle");
   const selectId = useId();
+  const addressId = useId();
+  const findAddress = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (address.trim().length < 8) return setLookup("not_found");
+    setLookup("busy");
+    try {
+      const res = await fetch(`/api/tax-place?q=${encodeURIComponent(address.trim())}`);
+      const json = await res.json();
+      if (!json.ok) return setLookup(res.status === 404 ? "not_found" : "error");
+      setPlace(json);
+      setCode(json.code);
+      setLookup("idle");
+    } catch {
+      setLookup("error");
+    }
+  };
+  const rateText = (l: LocalTax) =>
+    l.flat != null ? `${+(l.flat * 100).toFixed(3)}%${l.base === "stateTax" ? (es ? " del impuesto estatal" : " of state tax") : ""}` : es ? "según el tramo" : "by bracket";
   const money = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
   const pct = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "percent", maximumFractionDigits: 0 });
-  const e = estimate(gain, code, rate);
+  const e = estimate(gain, code, rate, place?.code === code ? place.locals : undefined);
   const j = JURISDICTIONS.find((x) => x.code === code);
 
   const federal = useTween(e.federal, seen);
@@ -59,7 +81,10 @@ export function TaxComparison({ es }: { es: boolean }) {
         <select
           id={selectId}
           value={code}
-          onChange={(ev) => setCode(ev.target.value)}
+          onChange={(ev) => {
+            setCode(ev.target.value);
+            setPlace(null);
+          }}
           className="min-h-11 w-full appearance-none rounded-xl bg-bone/10 py-2 pr-10 pl-3.5 text-[15px] text-bone ring-1 ring-bone/20 outline-none focus-visible:ring-2 focus-visible:ring-brass-light"
         >
           <option value="US" className="bg-basalt text-bone">
@@ -75,6 +100,45 @@ export function TaxComparison({ es }: { es: boolean }) {
           <path d="M2 4.5 6 8.5l4-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
+
+      <form onSubmit={findAddress} className="mt-4" role="search" aria-label={es ? "Buscar los impuestos locales por dirección" : "Find local taxes by address"}>
+        <label htmlFor={addressId} className="block text-[13px] text-bone/80">
+          {es ? "O escriba su dirección para incluir los impuestos de su condado, ciudad y distrito escolar" : "Or enter your address to include county, city and school district taxes"}
+        </label>
+        <div className="mt-2 flex gap-2">
+          <input
+            id={addressId}
+            value={address}
+            onChange={(ev) => setAddress(ev.target.value)}
+            autoComplete="street-address"
+            placeholder={es ? "Calle, ciudad, estado y código postal" : "Street, city, state and ZIP"}
+            className="min-h-11 min-w-0 flex-1 rounded-xl bg-bone/10 px-3.5 text-[15px] text-bone ring-1 ring-bone/20 outline-none placeholder:text-bone/45 focus-visible:ring-2 focus-visible:ring-brass-light"
+          />
+          <button type="submit" disabled={lookup === "busy"} className="min-h-11 shrink-0 rounded-xl bg-bone px-4 text-[12px] font-semibold tracking-[0.12em] text-basalt uppercase disabled:opacity-60">
+            {lookup === "busy" ? "…" : es ? "Buscar" : "Find"}
+          </button>
+        </div>
+        <div aria-live="polite" className="mt-2 text-[12px] leading-snug text-bone/70">
+          {lookup === "not_found" && <p>{es ? "No encontramos esa dirección. Pruebe con calle, ciudad, estado y código postal." : "We could not find that address. Try street, city, state and ZIP."}</p>}
+          {lookup === "error" && <p>{es ? "La búsqueda no está disponible ahora. Elija su estado arriba." : "The lookup is unavailable right now. Choose your state above."}</p>}
+          {place && place.code === code && (
+            <div data-place>
+              <p className="text-bone/85">{place.matched}</p>
+              <p>{place.areas.join(" · ")}</p>
+              <p className="mt-1 text-bone/85">
+                {place.locals.length
+                  ? `${es ? "Impuestos locales incluidos" : "Local taxes included"}: ${place.locals.map((l) => `${l.name} (${rateText(l)})`).join(", ")}`
+                  : es
+                    ? "No hay impuesto local sobre ganancias de capital en esta dirección."
+                    : "No local income tax on capital gains at this address."}
+              </p>
+            </div>
+          )}
+          <p className="mt-1 text-bone/50">
+            {es ? "Su dirección se envía a la Oficina del Censo de EE. UU. solo para identificar sus áreas fiscales; no se guarda." : "Your address is sent to the U.S. Census Bureau only to find your tax areas; it is not stored."}
+          </p>
+        </div>
+      </form>
 
       <label className="mt-5 block">
         <span className="flex items-baseline justify-between gap-3 text-[13px] text-bone/80">
