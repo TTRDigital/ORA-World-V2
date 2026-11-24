@@ -55,7 +55,13 @@ export type StateResult = { state: number; local: number };
 export function stateTax(gain: number, j: Jurisdiction | undefined): StateResult {
   if (!j || j.noIncomeTax) return { state: 0, local: 0 };
   const excluded = j.exclusion ? Math.min(gain * j.exclusion.pct, j.exclusion.cap ?? Infinity) : 0;
-  const taxable = Math.max(0, gain - excluded - j.deduction);
+  const phased = (j.phased ?? []).reduce((sum, d) => {
+    const [from, to] = d.phase;
+    const keep = d.keep ?? 0;
+    const share = gain <= from ? 1 : gain >= to ? keep : 1 - ((gain - from) / (to - from)) * (1 - keep);
+    return sum + d.amount * share;
+  }, 0);
+  const taxable = Math.max(0, gain - excluded - j.deduction - phased);
   let state = j.recapture ? nyRecapture(taxable, gain, j.brackets, j.recapture.start, j.recapture.span) : bracketTax(taxable, j.brackets);
   for (const s of j.surtaxes ?? []) {
     const base = s.base === "gain" ? gain : taxable;
@@ -66,7 +72,7 @@ export function stateTax(gain: number, j: Jurisdiction | undefined): StateResult
   state = Math.max(0, state - (j.credit ?? 0));
   let local = 0;
   if (j.local) {
-    const base = j.local.base === "gain" ? gain : taxable;
+    const base = j.local.base === "gain" ? gain : j.local.base === "stateTax" ? state : taxable;
     local = j.local.flat != null ? base * j.local.flat : bracketTax(base, j.local.brackets ?? []);
   }
   return { state, local };

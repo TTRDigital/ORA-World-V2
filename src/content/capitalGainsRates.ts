@@ -7,12 +7,14 @@ export type Jurisdiction = {
   taxYear: number;
   noIncomeTax?: boolean;
   deduction: number;
+  /** Deductions that shrink with income: full up to phase[0], down to `keep` of the amount at phase[1] (straight line). */
+  phased?: { amount: number; phase: [number, number]; keep?: number }[];
   credit?: number;
   exclusion?: { pct: number; cap?: number | null };
   brackets: Bracket[];
   surtaxes?: { threshold: number; rate: number; base?: "gain" | "taxable"; test?: "gain"; mode?: "excess" | "all" }[];
   recapture?: { start: number; span: number };
-  local?: { name: string; base: "gain" | "taxable"; flat?: number; brackets?: Bracket[] };
+  local?: { name: string; base: "gain" | "taxable" | "stateTax"; flat?: number; brackets?: Bracket[] };
   note: string;
   noteEs?: string;
   sources: string[];
