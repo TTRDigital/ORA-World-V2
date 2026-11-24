@@ -37,9 +37,6 @@ export default async function PlansPage({ params }: { params: Promise<{ locale: 
             <h2 id="floor-plans-title" className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]">
               {t(cip.explorer.title, locale)}
             </h2>
-            <p className="text-[12px] font-semibold tracking-[0.24em] text-charcoal-soft uppercase">
-              {t(cip.plans.title, locale)} · {t(cip.plans.startingFrom, locale)} <span className="font-[family-name:var(--font-display)] text-[24px] tracking-normal text-charcoal normal-case">{cip.plans.tiers[0].value}</span> {t(cip.plans.perSqFt, locale)}
-            </p>
           </div>
           <FloorExplorer locale={locale} />
         </div>

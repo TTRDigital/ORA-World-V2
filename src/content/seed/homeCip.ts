@@ -418,19 +418,13 @@ export const cip = {
 
   /* 09 Floor plans and pricing */
   plans: {
-    eyebrow: { en: "Floor plans and pricing", es: "Planos y precios" } as L,
+    // Client, 24 Nov: no pricing anywhere on the website.
+    eyebrow: { en: "Floor plans", es: "Planos" } as L,
     title: { en: "Phase One", es: "Fase Uno" } as L,
     intro: {
-      en: "60 residences on floors 5 to 18 of Tower 1. Early pricing averages $2,250 per sq ft; later units will likely cost more.",
-      es: "60 residencias en los pisos 5 al 18 de la Torre 1. El precio inicial promedia $2,250 por pie²; las unidades posteriores probablemente costarán más.",
+      en: "60 residences on floors 5 to 18 of Tower 1, with water views and generous balconies.",
+      es: "60 residencias en los pisos 5 al 18 de la Torre 1, con vista al agua y amplios balcones.",
     } as L,
-    tiers: [
-      { label: { en: "Lower units", es: "Unidades bajas" } as L, value: "$2,000" },
-      { label: { en: "Average", es: "Promedio" } as L, value: "$2,250" },
-      { label: { en: "Higher units", es: "Unidades altas" } as L, value: "$2,500" },
-    ],
-    startingFrom: { en: "Starting from", es: "Desde" } as L,
-    perSqFt: { en: "per sq ft", es: "por pie²" } as L,
     plansNote: {
       en: "Inquire for the full Phase 1 floor plans and brochure.",
       es: "Consulte para recibir los planos de la Fase 1 y el folleto.",

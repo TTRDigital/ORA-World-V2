@@ -159,9 +159,6 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
         <div className="mx-auto max-w-[1200px] border-t border-travertine-deep pt-20 md:pt-28">
           <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <CHeading id="c-plans" eyebrow={es ? "Planos · Torre 1" : "Floor plans · Tower 1"} caps={es ? "Encuentre" : "Find your"} accent={es ? "su residencia" : "residence"} intro={x(cip.plans.intro)} />
-            <p className="text-[12px] font-semibold tracking-[0.22em] text-charcoal-soft uppercase md:pb-2">
-              {x(cip.plans.startingFrom)} <span className="font-[family-name:var(--font-display)] text-[26px] tracking-normal text-charcoal normal-case">{cip.plans.tiers[0].value}</span> {x(cip.plans.perSqFt)}
-            </p>
           </div>
           <div className="mt-12">
             <FloorExplorer locale={locale} />

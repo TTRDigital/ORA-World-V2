@@ -1,20 +1,6 @@
 import type { L } from "../types";
 
-/**
- * Sales facts from the ORA World prospect email (sent by the sales team to interested buyers) and the Phase 1
- * documents linked from it. Verbatim figures; pricing is early pre-construction pricing and may change.
- */
-export const pricing = {
-  phase: { en: "Phase 1 · Tesoro Del Mar", es: "Fase 1 · Tesoro Del Mar" } as L,
-  averagePerSqFt: 2250,
-  lowerPerSqFt: 2000,
-  higherPerSqFt: 2500,
-  note: {
-    en: "Early pre-construction pricing. Later units will likely be sold at higher rates.",
-    es: "Precios iniciales de preconstrucción. Es probable que las unidades posteriores se vendan a precios más altos.",
-  } as L,
-  plansNote: { en: "Phase 1 floor plans, subject to change.", es: "Planos de la Fase 1, sujetos a cambios." } as L,
-};
+/** Sales facts from the ORA World prospect email. Client, 24 Nov: no pricing on the website, so none is kept here. */
 
 /** "All the units in Tesoro Del Mar have nice water views and come with oversized balconies … amazing amenities such
  *  as a nutritionist on staff and private charter flights" (prospect email). */

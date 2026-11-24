@@ -289,9 +289,6 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
           <Eyebrow>{es ? "Planos · Torre 1" : "Floor plans · Tower 1"}</Eyebrow>
           <div className="mt-6 mb-10 flex flex-wrap items-end justify-between gap-4">
             <h2 id="b-plans" className="font-[family-name:var(--font-display)] text-[40px] leading-[1.06] font-normal md:text-[64px]">{x(cip.explorer.title)}</h2>
-            <p className="text-[12px] tracking-[0.24em] uppercase opacity-75">
-              {x(cip.plans.startingFrom)} <span className="font-[family-name:var(--font-display)] text-[24px] tracking-normal normal-case">{cip.plans.tiers[0].value}</span> {x(cip.plans.perSqFt)}
-            </p>
           </div>
           <FloorExplorer locale={locale} />
         </div>

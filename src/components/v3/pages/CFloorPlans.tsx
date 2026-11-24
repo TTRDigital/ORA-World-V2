@@ -15,12 +15,6 @@ export async function CFloorPlans({ locale, films = false }: { locale: Locale; f
   return (
     <>
       <CPageHero image={films ? tdm.penthouseLiving : cImg.diningPiano} locale={locale} place={es ? "Residencias · Torre 1" : "Residences · Tower 1"} caps={es ? "Encuentre" : "Find your"} accent={es ? "su residencia" : "residence"} line={x(p.intro)} />
-      <CSection labelledBy="c-price">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-20">
-          <CHeading id="c-price" eyebrow={x(p.eyebrow)} caps={es ? "Fase Uno" : "Phase"} accent={es ? "Torre 1" : "One"} intro={x(p.plansNote)} />
-          <CList rows={p.tiers.map((tier) => ({ label: x(tier.label), value: `${tier.value} ${x(p.perSqFt)}` }))} />
-        </div>
-      </CSection>
       <CSection id="explorer" tone="bone" labelledBy="c-floor">
         <CHeading id="c-floor" eyebrow={es ? "Piso a piso" : "Floor by floor"} caps={es ? "Elija un piso," : "Choose a floor,"} accent={es ? "luego una residencia" : "then a residence"} />
         <div className="mt-12">

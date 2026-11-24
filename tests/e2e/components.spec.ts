@@ -117,7 +117,7 @@ test.describe("vendored components and the desktop menu", () => {
   test("floor plans page carries the floor-plan explorer (moved from the homepage)", async ({ page }) => {
     await page.goto("/en/residences/plans");
     // Floor-plan explorer: pricing line, the default residence, a bedroom filter and a level.
-    await expect(page.locator("#floor-plans")).toContainText("$2,000");
+    await expect(page.locator("#floor-plans")).not.toContainText("$"); // client, 24 Nov: no pricing on the site
     await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1002/i);
     await page.locator("#floor-plans").getByRole("button", { name: "4 Bed", exact: true }).click();
     await expect(page.locator("#floor-plans h3").first()).toHaveText(/residence 1301/i);

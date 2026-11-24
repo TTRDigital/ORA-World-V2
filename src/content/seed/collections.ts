@@ -75,7 +75,6 @@ export const collections: Collection[] = [
     specs: [
       { label: { en: "Bedrooms", es: "Habitaciones" }, value: { en: "1 to 6", es: "1 a 6" } },
       { label: { en: "Interior", es: "Interior" }, value: { en: "942–4,666 sq ft", es: "942–4,666 pies²" } },
-      { label: { en: "From", es: "Desde" }, value: { en: "$2,000 / sq ft", es: "$2,000 / pie²" } },
     ],
     bands: [2, 3, 4, 5, 6, 7],
     views: ["ocean", "garden"],
