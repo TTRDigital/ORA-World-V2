@@ -81,9 +81,10 @@ test.describe("shell", () => {
     await expect(dialog.getByRole("button", { name: /hurricanes and earthquakes/i })).toBeVisible();
     await dialog.getByRole("tab", { name: "Quick questions" }).focus();
     await page.keyboard.press("ArrowRight");
-    // The next tab is "Call" now that the sales line is published, otherwise "Book a visit".
+    // Client, 24 Nov: no phone number on the sites, so there is no "Call" tab; the next tab is "Book a visit".
     await expect(dialog.getByRole("tab").nth(1)).toHaveAttribute("aria-selected", "true");
-    await expect(dialog.getByRole("link", { name: /\(786\) 981-4648/ })).toHaveAttribute("href", "tel:7869814648");
+    await expect(dialog.getByRole("tab", { name: /call/i })).toHaveCount(0);
+    await expect(dialog.locator('a[href^="tel:"]')).toHaveCount(0);
     await page.keyboard.press("Escape");
     await expect(dialog).toBeHidden();
   });

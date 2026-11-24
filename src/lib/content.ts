@@ -51,7 +51,15 @@ const mapSections = (v: unknown, fallback: Project["sections"]): Project["sectio
     ? v.map((s: Rec, i) => ({ ...(s as Project["sections"][number]), image: s.image ? (fig(s.image, fallback[i]?.image as ImageRef) ?? undefined) : undefined }))
     : fallback;
 
-export const getSiteSettings = cache(() =>
+/**
+ * Client, 24 Nov: no telephone or WhatsApp number anywhere on the sites; every contact goes through the inquiry form.
+ * Kept out here, after the CMS and the environment, so no setting can bring a number back by accident.
+ */
+const noPhone = (s: SiteSettings): SiteSettings => ({ ...s, phone: null, whatsapp: null });
+
+export const getSiteSettings = cache(async () => noPhone(await fetchOrSettings()));
+
+const fetchOrSettings = () =>
   fetchOr<SiteSettings>(q.siteSettingsQ, seed.siteSettings, (raw) => {
     const r = raw as Rec;
     return {
@@ -66,8 +74,7 @@ export const getSiteSettings = cache(() =>
       introFilmYoutubeId: (r.introFilmYoutubeId as string) || seed.siteSettings.introFilmYoutubeId,
       filmPoster: fig(r.filmPoster, seed.siteSettings.filmPoster),
     };
-  }),
-);
+  });
 
 export const getHome = cache(() =>
   fetchOr<HomeContent>(q.homePageQ, seed.home, (raw) => {

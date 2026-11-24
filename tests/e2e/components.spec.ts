@@ -146,7 +146,7 @@ test.describe("vendored components and the desktop menu", () => {
     // Client, 19 Nov: films only in the banner and (20 Nov) the introduction's card; everything else is photographs.
     await expect(page.locator('[aria-roledescription="carousel"] video')).toHaveCount(4); // 23 Nov: Fitness removed from the card
     await expect(page.locator("#inquire form")).toHaveCount(1);
-    await expect(page.locator('a[href^="tel:"]').first()).toBeAttached();
+    await expect(page.locator('a[href^="tel:"]')).toHaveCount(0); // client, 24 Nov: no phone number, the form only
     // Shared links point to Version C pages, not Version A.
     await expect.poll(() => page.locator('[data-version-c] a[href="/en/act-60"]:not([data-keep])').count()).toBe(0);
     await expect(page.locator('[data-version-c] a[href="/en/c/act-60"]').first()).toBeAttached();
