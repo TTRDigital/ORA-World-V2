@@ -58,3 +58,30 @@ test("an address adds the local taxes found there", async ({ page, request }) =>
   await calc.getByLabel("Current State of Residence").selectOption("OH");
   await expect(calc.locator("[data-place]")).toHaveCount(0);
 });
+
+// Client meeting, 24 Nov: a second line for qualified ordinary income, and the yearly savings compounded.
+test("ordinary income and the compounded savings", async ({ page }) => {
+  await page.goto("/en/act-60");
+  const calc = page.locator('[data-widget="tax-compare"]');
+  await calc.scrollIntoViewIfNeeded();
+  const amount = async (name: string) => Number((await calc.locator("dl > div").filter({ hasText: name }).locator("dd").first().textContent())!.replace(/[^\d]/g, ""));
+  await expect.poll(() => amount("Estimated federal tax")).toBe(192_488);
+  const ordinary = calc.getByRole("slider", { name: /qualified ordinary income/i });
+  await ordinary.evaluate((el: HTMLInputElement) => {
+    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(el, "500000");
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  await expect(calc.locator("dl")).toContainText("Qualified ordinary income");
+  // $500,000 of interest and dividends on the ordinary brackets, the $1,000,000 gain stacked on top, 3.8% NIIT on both.
+  await expect.poll(() => amount("Estimated federal tax")).toBe(384_454);
+  await expect.poll(() => amount("Estimated Puerto Rico tax")).toBe(60_000);
+  const box = calc.locator("[data-compound]");
+  await box.getByRole("radio", { name: "20%" }).click();
+  await box.getByRole("radio", { name: "10 years" }).click();
+  await expect(box).toContainText("Hypothetical value after 10 years");
+  await expect(box).toContainText("returns are not guaranteed");
+  // Savings of about $324,454 a year; at 20% for 10 years: x 25.9587, about $8.42 million.
+  const grown = async () => Number((await box.locator("p").nth(2).textContent())!.replace(/[^\d]/g, ""));
+  await expect.poll(grown).toBeGreaterThan(8_420_000);
+  await expect.poll(grown).toBeLessThan(8_425_000);
+});

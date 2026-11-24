@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { cn } from "@/lib/utils";
-import { estimate, JURISDICTIONS, type LocalTax } from "@/lib/capitalGainsTax";
+import { compound, estimate, JURISDICTIONS, type LocalTax } from "@/lib/capitalGainsTax";
 import { panel, useSeen, useTween } from "./WhyWidgets";
 
 /**
@@ -14,6 +14,11 @@ import { panel, useSeen, useTween } from "./WhyWidgets";
 export function TaxComparison({ es }: { es: boolean }) {
   const [ref, seen] = useSeen<HTMLDivElement>();
   const [gain, setGain] = useState(1_000_000);
+  // Client meeting, 24 Nov: "two lines": capital gains, and qualified ordinary income (interest and dividends).
+  const [ordinary, setOrdinary] = useState(0);
+  // Client meeting, 24 Nov: the "third part", the yearly savings compounded over 10, 20 or 30 years.
+  const [growth, setGrowth] = useState<0.1 | 0.15 | 0.2>(0.1);
+  const [years, setYears] = useState<10 | 20 | 30>(20);
   const [rate, setRate] = useState<0 | 0.04>(0.04);
   const [code, setCode] = useState("US");
   // Client meeting, 24 Nov: "put the address and it picks up state, city and other taxes".
@@ -41,7 +46,7 @@ export function TaxComparison({ es }: { es: boolean }) {
     l.flat != null ? `${+(l.flat * 100).toFixed(3)}%${l.base === "stateTax" ? (es ? " del impuesto estatal" : " of state tax") : ""}` : es ? "según el tramo" : "by bracket";
   const money = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
   const pct = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "percent", maximumFractionDigits: 0 });
-  const e = estimate(gain, code, rate, place?.code === code ? place.locals : undefined);
+  const e = estimate({ gain, ordinary }, code, rate, place?.code === code ? place.locals : undefined);
   const j = JURISDICTIONS.find((x) => x.code === code);
 
   const federal = useTween(e.federal, seen);
@@ -50,6 +55,7 @@ export function TaxComparison({ es }: { es: boolean }) {
   const pr = useTween(e.pr, seen);
   const savings = useTween(e.savings, seen);
   const reduction = useTween(e.reduction, seen);
+  const grown = useTween(compound(e.savings, growth, years), seen);
 
   const fedShare = e.current > 0 ? (e.federal / e.current) * 100 : 0;
   const prShare = e.current > 0 ? (e.pr / e.current) * 100 : 0;
@@ -140,22 +146,24 @@ export function TaxComparison({ es }: { es: boolean }) {
         </div>
       </form>
 
-      <label className="mt-5 block">
-        <span className="flex items-baseline justify-between gap-3 text-[13px] text-bone/80">
-          {es ? "Ganancias de capital a largo plazo" : "Long-term capital gains"}
-          <b className="font-[family-name:var(--font-display)] text-[22px] font-normal text-bone tabular-nums">{money.format(gain)}</b>
-        </span>
-        <input
-          type="range"
-          min={100_000}
-          max={10_000_000}
-          step={50_000}
-          value={gain}
-          onChange={(ev) => setGain(Number(ev.target.value))}
-          className="mt-2 w-full accent-[var(--color-brass)]"
-          aria-valuetext={money.format(gain)}
-        />
-      </label>
+      <Slider
+        label={es ? "Ganancias de capital a largo plazo" : "Long-term capital gains"}
+        value={gain}
+        min={100_000}
+        max={10_000_000}
+        step={50_000}
+        onChange={setGain}
+        format={money.format}
+      />
+      <Slider
+        label={es ? "Ingreso ordinario calificado (intereses y dividendos)" : "Qualified ordinary income (interest and dividends)"}
+        value={ordinary}
+        min={0}
+        max={5_000_000}
+        step={25_000}
+        onChange={setOrdinary}
+        format={money.format}
+      />
 
       {/* Two bars on one scale: tax where you live now (federal, then state and local) and in Puerto Rico. */}
       <div className="mt-5 grid gap-3 text-[13px]" aria-hidden>
@@ -182,6 +190,7 @@ export function TaxComparison({ es }: { es: boolean }) {
 
       <dl className="mt-5 grid gap-2 border-t border-bone/15 pt-4 text-[13px]">
         <Row label={es ? "Ganancias de capital totales" : "Total capital gains"} value={money.format(gain)} />
+        {ordinary > 0 && <Row label={es ? "Ingreso ordinario calificado" : "Qualified ordinary income"} value={money.format(ordinary)} />}
         <Row label={es ? "Impuesto federal estimado" : "Estimated federal tax"} value={money.format(federal)} />
         <Row label={es ? "Impuestos estatales y locales estimados" : "Estimated state and local taxes"} value={money.format(stateLocal)} />
         <Row label={es ? "Impuesto total estimado en su residencia actual" : "Total estimated tax at current residence"} value={money.format(current)} strong />
@@ -195,10 +204,29 @@ export function TaxComparison({ es }: { es: boolean }) {
         <p className="text-right font-[family-name:var(--font-display)] text-[34px] leading-none text-bone tabular-nums md:text-[40px]">{pct.format(reduction)}</p>
       </div>
 
+      <div className="mt-5 rounded-2xl bg-bone/[0.07] p-4 ring-1 ring-bone/10" data-compound>
+        <p className="text-[13px] text-bone/80">{es ? "Si invierte el ahorro de cada año" : "If you invest each year's savings"}</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Choice label={es ? "Rendimiento anual" : "Yearly return"} options={[0.1, 0.15, 0.2] as const} value={growth} onChange={setGrowth} text={(v) => `${v * 100}%`} />
+          <Choice label={es ? "Años" : "Years"} options={[10, 20, 30] as const} value={years} onChange={setYears} text={(v) => (es ? `${v} años` : `${v} years`)} />
+        </div>
+        <p className="mt-4 text-[13px] text-bone/80">
+          {es ? `Valor hipotético después de ${years} años` : `Hypothetical value after ${years} years`}
+        </p>
+        <p className="mt-1 font-[family-name:var(--font-display)] text-[34px] leading-none text-brass-light tabular-nums md:text-[40px]" aria-live="polite">
+          {money.format(grown)}
+        </p>
+        <p className="mt-2 text-[10.5px] leading-snug text-bone/60">
+          {es
+            ? `Hipotético: ${money.format(e.savings)} de ahorro al año durante ${years} años, invertidos al final de cada año con un rendimiento constante de ${growth * 100}%. No es una proyección; los rendimientos no están garantizados y pueden ser menores o negativos.`
+            : `Hypothetical: ${money.format(e.savings)} of savings a year for ${years} years, invested at the end of each year at a constant ${growth * 100}% return. Not a projection; returns are not guaranteed and can be lower or negative.`}
+        </p>
+      </div>
+
       <p className="mt-4 text-[10.5px] leading-snug text-bone/60">
         {es
-          ? "Estimaciones para 2026: contribuyente soltero, la ganancia como único ingreso del año, tasas federales a largo plazo de 0%, 15% y 20% más el impuesto de 3.8% sobre ingresos netos de inversión, y los tramos, deducciones y reglas de ganancias de capital publicados por cada estado."
-          : "2026 estimates: a single filer, the gain as the only income for the year, federal long-term rates of 0%, 15% and 20% plus the 3.8% net investment income tax, and each state's published brackets, deductions and capital gains rules."}
+          ? "Estimaciones para 2026: contribuyente soltero, las ganancias y el ingreso ordinario indicados como único ingreso del año, intereses y dividendos gravados como ingreso ordinario, tasas federales a largo plazo de 0%, 15% y 20% más el impuesto de 3.8% sobre ingresos netos de inversión, y los tramos, deducciones y reglas de ganancias de capital publicados por cada estado."
+          : "2026 estimates: a single filer, the gains and ordinary income above as the only income for the year, interest and dividends taxed as ordinary income, federal long-term rates of 0%, 15% and 20% plus the 3.8% net investment income tax, and each state's published brackets, deductions and capital gains rules."}
         {j ? ` ${es ? (j.noteEs ?? j.note) : j.note}` : ""}
       </p>
       <p className="mt-2 text-[10.5px] leading-snug text-bone/60">
@@ -215,6 +243,30 @@ function Row({ label, value, strong }: { label: string; value: string; strong?: 
     <div className="flex items-baseline justify-between gap-4">
       <dt className={strong ? "text-bone" : "text-bone/75"}>{label}</dt>
       <dd className={cn("tabular-nums", strong ? "font-semibold text-bone" : "text-bone")}>{value}</dd>
+    </div>
+  );
+}
+
+function Slider({ label, value, min, max, step, onChange, format }: { label: string; value: number; min: number; max: number; step: number; onChange: (v: number) => void; format: (v: number) => string }) {
+  return (
+    <label className="mt-5 block">
+      <span className="flex items-baseline justify-between gap-3 text-[13px] text-bone/80">
+        {label}
+        <b className="font-[family-name:var(--font-display)] text-[22px] font-normal text-bone tabular-nums">{format(value)}</b>
+      </span>
+      <input type="range" min={min} max={max} step={step} value={value} onChange={(ev) => onChange(Number(ev.target.value))} className="mt-2 w-full accent-[var(--color-brass)]" aria-valuetext={format(value)} />
+    </label>
+  );
+}
+
+function Choice<T extends number>({ label, options, value, onChange, text }: { label: string; options: readonly T[]; value: T; onChange: (v: T) => void; text: (v: T) => string }) {
+  return (
+    <div role="radiogroup" aria-label={label} className="inline-flex rounded-full bg-bone/10 p-0.5 text-[11px] ring-1 ring-bone/15">
+      {options.map((o) => (
+        <button key={o} type="button" role="radio" aria-checked={value === o} onClick={() => onChange(o)} className={cn("min-h-8 rounded-full px-3 font-semibold transition-colors", value === o ? "bg-bone text-basalt" : "text-bone/80 hover:text-bone")}>
+          {text(o)}
+        </button>
+      ))}
     </div>
   );
 }

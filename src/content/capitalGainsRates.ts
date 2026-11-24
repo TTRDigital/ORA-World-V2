@@ -1,5 +1,5 @@
 /**
- * Long-term capital gains rates for the Act 60 calculator (client, 24 Nov), tax year 2026, single filer.
+ * Long-term capital gains and ordinary income (interest and dividends) rates for the Act 60 calculator (client, 24 Nov), tax year 2026, single filer.
  * Researched on 24 Nov 2026 from official sources (the IRS, state revenue departments, state statutes and enacted
  * legislation); each entry lists the pages checked. Generated from the research files: update the rates here when
  * states publish new figures. How they are applied is in src/lib/capitalGainsTax.ts.
@@ -13,7 +13,14 @@ export type Bracket = [number, number];
 /** A local income tax: a flat rate or brackets on the state taxable income, the gain, or the state tax itself.
  *  `band`: the rate of the bracket the whole base falls in applies to all of it (Frederick County, Maryland).
  *  `minus`: an exemption taken off the base first (Michigan cities). */
-export type LocalTax = { name: string; base: "gain" | "taxable" | "stateTax"; flat?: number; brackets?: Bracket[]; band?: boolean; minus?: number };
+export type LocalTax = {
+  name: string;
+  base: "gain" | "taxable" | "stateTax";
+  flat?: number;
+  brackets?: Bracket[];
+  band?: boolean;
+  minus?: number;
+};
 export type Jurisdiction = {
   code: string;
   name: string;
@@ -28,13 +35,19 @@ export type Jurisdiction = {
   credit?: number;
   exclusion?: { pct: number; cap?: number | null };
   brackets: Bracket[];
+  /** base: "taxable" (default), "gain" (capital gains only) or "investment" (gains, interest and dividends);
+   *  test "agi": the threshold is tested on total income; mode "all": the whole base is taxed once over it. */
   surtaxes?: {
     threshold: number;
     rate: number;
-    base?: "gain" | "taxable";
-    test?: "gain";
+    base?: "gain" | "taxable" | "investment";
+    test?: "agi";
     mode?: "excess" | "all";
   }[];
+  /** Montana and Hawaii: the schedule for ordinary income when long-term gains have their own schedule in `brackets`. */
+  ordinaryBrackets?: Bracket[];
+  /** Washington: only capital gains are taxed. */
+  gainsOnly?: boolean;
   /** New York's supplemental tax (Tax Law 601(d-5)): for each band of taxable income from `over`, add
    *  base + inc x min(1, (AGI - start) / span); above `flatAbove` of AGI the whole of taxable income is taxed at `flatRate`. */
   recapture?: {
@@ -51,6 +64,15 @@ export type Jurisdiction = {
 
 export const FEDERAL = {
   taxYear: 2026,
+  ordinaryBrackets: [
+    [0, 0.1],
+    [12400, 0.12],
+    [50400, 0.22],
+    [105700, 0.24],
+    [201775, 0.32],
+    [256225, 0.35],
+    [640600, 0.37],
+  ] as Bracket[],
   standardDeduction: 16100,
   ltcgBrackets: [
     [0, 0],
@@ -313,9 +335,23 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://files.hawaii.gov/tax/news/announce/ann26-06.pdf",
       "https://files.hawaii.gov/tax/forms/2025/n11ins.pdf",
     ],
-    note: "Hawaii: rates up to 11% on ordinary income, but long-term capital gains are taxed at no more than 7.25%.",
+    ordinaryBrackets: [
+      [0, 0.014],
+      [9600, 0.032],
+      [14400, 0.055],
+      [19200, 0.064],
+      [24000, 0.068],
+      [36000, 0.072],
+      [48000, 0.076],
+      [125000, 0.079],
+      [175000, 0.0825],
+      [225000, 0.09],
+      [275000, 0.1],
+      [325000, 0.11],
+    ],
+    note: "Hawaii: rates up to 11% on interest, dividends and other ordinary income, but long-term capital gains are taxed at no more than 7.25%.",
     noteEs:
-      "Hawái: tasas de hasta 11% sobre el ingreso ordinario, pero las ganancias de capital a largo plazo pagan como máximo 7.25%.",
+      "Hawái: tasas de hasta 11% sobre intereses, dividendos y otros ingresos ordinarios, pero las ganancias de capital a largo plazo pagan como máximo 7.25%.",
   },
   {
     code: "ID",
@@ -518,6 +554,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
         threshold: 350000,
         rate: 0.02,
         base: "gain",
+        test: "agi",
         mode: "all",
       },
     ],
@@ -597,7 +634,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
       {
         threshold: 1000000,
         rate: 0.01,
-        base: "gain",
+        base: "investment",
       },
     ],
     note: "Minnesota: 5.35% to 9.85% by bracket, plus 1% above $1,000,000.",
@@ -625,18 +662,30 @@ export const JURISDICTIONS: Jurisdiction[] = [
     name: "Missouri",
     nameEs: "Misuri",
     taxYear: 2026,
-    noIncomeTax: true,
-    deduction: 0,
-    brackets: [[0, 0]],
+    deduction: 16100,
+    brackets: [
+      [0, 0],
+      [1348, 0.02],
+      [2696, 0.025],
+      [4044, 0.03],
+      [5392, 0.035],
+      [6740, 0.04],
+      [8088, 0.045],
+      [9436, 0.047],
+    ],
     sources: [
       "https://dor.mo.gov/news/newsitem/uuid/15044650-59dd-48f4-975a-01988d485255",
       "https://dor.mo.gov/faq/taxation/individual/capital-gains-subtraction.html",
       "https://dor.mo.gov/forms/MO-1040ES_2026.pdf",
       "https://www.stlouis-mo.gov/government/departments/collector/earnings-tax/taxable-items.cfm",
     ],
-    note: "Missouri: since 2025, individuals can deduct 100% of capital gains from state income tax.",
+    exclusion: {
+      pct: 1,
+      cap: null,
+    },
+    note: "Missouri: no tax on capital gains since 2025; interest and dividends are taxed at up to 4.7%.",
     noteEs:
-      "Misuri: desde 2025, las personas pueden deducir el 100% de las ganancias de capital del impuesto estatal sobre la renta.",
+      "Misuri: sin impuesto sobre ganancias de capital desde 2025; los intereses y dividendos pagan hasta 4.7%.",
   },
   {
     code: "MT",
@@ -654,8 +703,12 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://mca.legmt.gov/bills/mca/title_0150/chapter_0300/part_0210/section_0030/0150-0300-0210-0030.html",
       "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
     ],
-    note: "Montana: 3% to 4.1% by bracket.",
-    noteEs: "Montana: de 3% a 4.1% según el tramo.",
+    ordinaryBrackets: [
+      [0, 0.047],
+      [47500, 0.0565],
+    ],
+    note: "Montana: long-term gains at 3% or 4.1%; interest and dividends at 4.7% or 5.65%.",
+    noteEs: "Montana: ganancias a largo plazo al 3% o 4.1%; intereses y dividendos al 4.7% o 5.65%.",
   },
   {
     code: "NE",
@@ -1161,9 +1214,10 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://dor.wa.gov/forms-publications/publications-subject/special-notices/new-tiered-rates-washingtons-capital-gains-tax",
       "https://dor.wa.gov/taxes-rates/other-taxes/capital-gains-tax/frequently-asked-questions-about-washingtons-capital-gains-tax",
     ],
-    note: "Washington: no income tax, but a 7% capital gains excise tax on long-term gains above a $290,000 deduction, and 9.9% on the part above $1 million. Real estate sales are exempt.",
+    gainsOnly: true,
+    note: "Washington: no income tax, but a 7% capital gains excise tax on long-term gains above a $290,000 deduction, and 9.9% on the part above $1 million. Real estate sales are exempt, and interest and dividends are not taxed.",
     noteEs:
-      "Washington: sin impuesto sobre la renta, pero con un impuesto de 7% sobre las ganancias de capital a largo plazo por encima de una deducción de $290,000, y de 9.9% sobre la parte que exceda $1 millón. Las ventas de bienes raíces están exentas.",
+      "Washington: sin impuesto sobre la renta, pero con un impuesto de 7% sobre las ganancias de capital a largo plazo por encima de una deducción de $290,000, y de 9.9% sobre la parte que exceda $1 millón. Las ventas de bienes raíces están exentas y los intereses y dividendos no pagan impuesto.",
   },
   {
     code: "WV",
