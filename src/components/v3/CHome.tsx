@@ -174,7 +174,7 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
         <div className="mx-auto max-w-[1200px]">
           <div className="mx-auto max-w-[760px] text-center">
             <CEyebrow className="justify-center">{es ? "Amenidades" : "Amenities"}</CEyebrow>
-            <CTitle id="c-amen" caps={es ? "Amenidades excepcionales" : "Exceptional amenities"} accent={es ? "y experiencias a medida" : "& bespoke experiences"} className="mt-5 text-[32px] leading-[1.15] md:text-[44px]" />
+            <CTitle id="c-amen" caps={es ? "Amenidades excepcionales" : "Exceptional amenities"} accent={es ? "y experiencias a medida" : "and bespoke experiences"} className="mt-5 text-[32px] leading-[1.15] md:text-[44px]" />
             <p className="mx-auto mt-6 max-w-[60ch] text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">
               {es
                 ? "En su centro, un club privado de 14,000 pies² con café, restaurante, spa de bienestar, gimnasio y bar en la azotea."
