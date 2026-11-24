@@ -141,7 +141,7 @@ export async function CLiving({ locale, films = false }: { locale: Locale; films
   return (
     <>
       <CPageHero
-        image={life.beach /* client, 24 Nov: just the ocean */}
+        image={{ ...life.beach, video: "/videos/clips/ocean-calm.mp4", poster: "/videos/clips/ocean-calm-poster.jpg" } /* client, 24 Nov: a calm ocean film */}
         locale={locale}
         place={es ? "Vivir · Tesoro del Mar" : "Living · Tesoro del Mar"}
         caps={es ? "Una vida" : "A life,"}

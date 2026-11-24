@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
   return (
     <>
       <BHero
-        image={life.beach /* client, 24 Nov: just the ocean */}
+        image={{ ...life.beach, video: "/videos/clips/ocean-calm.mp4", poster: "/videos/clips/ocean-calm-poster.jpg" } /* client, 24 Nov: a calm ocean film */}
         locale={locale}
         eyebrow={es ? "Vivir · Tesoro del Mar" : "Living · Tesoro del Mar"}
         title={es ? "Una vida junto al mar" : "A life by the sea"}
