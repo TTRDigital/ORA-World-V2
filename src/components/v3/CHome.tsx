@@ -202,7 +202,7 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
       {/* Longevity: a full-bleed band. */}
       <section aria-labelledby="c-long" className="relative isolate overflow-hidden px-5 py-28 text-white md:px-10 md:py-40">
         <Image src={tdm.gym.src} alt={tdm.gym.alt[locale] || tdm.gym.alt.en} fill sizes="100vw" quality={80} className="-z-10 object-cover" style={{ objectPosition: "50% 50%" }} />
-        {films && <ClipOverlay src="/videos/fitness-walk.mp4" poster="/videos/fitness-walk-poster.jpg" className="-z-10" />}
+        {films && <ClipOverlay src="/videos/clips/p14-gym.mp4" poster="/videos/clips/p14-gym-poster.jpg" focal="70% 50%" className="-z-10" />}
         <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(28_24_18/0.85),rgb(28_24_18/0.55)_55%,rgb(28_24_18/0.25))]" />
         <div className="mx-auto max-w-[1200px]">
           <div className="max-w-[560px]">
@@ -223,7 +223,7 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
       {/* Act 60: a photograph and the figures. */}
       <section aria-labelledby="c-act" className="bg-white px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
-          {photo(pick(cImg.livingView, tdm.penthouseLiving), "(max-width: 1023px) calc(100vw - 40px), 620px", "aspect-[3/2]")}
+          {photo(pick(cImg.aerialCove, tdm.aerialCoast), "(max-width: 1023px) calc(100vw - 40px), 620px", "aspect-[3/2]")}
           <div>
             <CEyebrow>{es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"}</CEyebrow>
             <h2 id="c-act" className="mt-5 font-[family-name:var(--font-display)] text-[34px] leading-[1.15] font-medium text-charcoal md:text-[42px]">
@@ -249,27 +249,32 @@ export async function CHome({ locale, films = false }: { locale: Locale; films?:
         </div>
       </section>
 
-      {/* Location: the words and travel times, a tall photograph. */}
-      <section id="location" aria-labelledby="c-loc" className="scroll-mt-24 bg-bone px-5 py-20 md:px-10 md:py-28">
+      {/* Living (client, 24 Nov: "don't have Location, say Living"): a life by the sea, the travel times, and a link to the
+          Living page. */}
+      <section id="living" aria-labelledby="c-loc" className="scroll-mt-24 bg-bone px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1200px] gap-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
           <div>
-            <CEyebrow>{es ? "Ubicación" : "Location"}</CEyebrow>
-            <CTitle id="c-loc" caps={es ? "Dorado," : "Dorado,"} accent={es ? "en la costa norte" : "on the north coast"} className="mt-5 text-[34px] leading-[1.15] md:text-[46px]" />
-            <p className="mt-6 text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">{x(cip.location.intro)}</p>
+            <CEyebrow>{es ? "Vivir" : "Living"}</CEyebrow>
+            <CTitle id="c-loc" caps={es ? "Una vida" : "A life,"} accent={es ? "junto al mar" : "by the sea"} className="mt-5 text-[34px] leading-[1.15] md:text-[46px]" />
+            <p className="mt-6 text-[16px] leading-[1.75] text-charcoal-soft md:text-[17px]">
+              {es
+                ? "En Dorado, en la costa norte: la playa abajo, jardines alrededor, un parque nacional al lado y San Juan a unos 30 minutos."
+                : "In Dorado, on the north coast: the beach below, gardens all around, a national park next door and San Juan about 30 minutes away."}
+            </p>
             <div className="mt-8">
               <CList rows={places} />
               <p className="mt-3 text-[12.5px] text-charcoal-soft">{x(cip.location.note)}</p>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              <CButton href={`https://www.google.com/maps/search/?api=1&query=${settings.siteLat},${settings.siteLng}`} external>
-                {es ? "Ver en Google Maps" : "View on Google Maps"} <span aria-hidden>→</span>
+              <CButton href="/c/living">
+                {es ? "Descubra la vida aquí" : "Discover living here"} <span aria-hidden>→</span>
               </CButton>
               <CButton href="/c#inquire" variant="outline">
                 {es ? "Agende una presentación" : "Schedule a presentation"}
               </CButton>
             </div>
           </div>
-          {photo(pick(cImg.aerialTowers, tdm.aerialCoast), "(max-width: 1023px) calc(100vw - 40px), 540px", "aspect-[4/5]")}
+          {photo(pick(cImg.poolDeck, tdm.exteriorPull), "(max-width: 1023px) calc(100vw - 40px), 540px", "aspect-[4/5]")}
         </div>
       </section>
 

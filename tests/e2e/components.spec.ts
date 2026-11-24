@@ -142,7 +142,7 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("[data-version-c]")).toHaveCount(1);
     await expect(page.locator("header")).toHaveCount(1); // Version C's own masthead only
     await expect(page.locator("h1")).toHaveText(/tesoro del mar/i);
-    for (const id of ["amenities", "location", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    for (const id of ["amenities", "living", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
     // Client, 19 Nov: films only in the banner and (20 Nov) the introduction's card; everything else is photographs.
     await expect(page.locator('[aria-roledescription="carousel"] video')).toHaveCount(4); // 23 Nov: Fitness removed from the card
     await expect(page.locator("#inquire form")).toHaveCount(1);
@@ -158,7 +158,7 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("[data-version-d]")).toHaveCount(1);
     await expect(page.locator("header")).toHaveCount(1);
     await expect(page.locator("h1")).toHaveText(/tesoro del mar/i);
-    for (const id of ["amenities", "location", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    for (const id of ["amenities", "living", "inquire"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
     // Client, 20 Nov: the pictures are films (Version C has six: the banner and the introduction's five cards).
     expect(await page.locator("main video").count()).toBeGreaterThan(20);
     // Version C's links point to Version D's pages.
