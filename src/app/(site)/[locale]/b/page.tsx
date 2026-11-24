@@ -74,7 +74,7 @@ export default async function VersionB({ params }: { params: Promise<{ locale: L
     { title: es ? "Vestíbulo" : "The lobby", text: es ? "Un vestíbulo de doble altura, con conserje de día y de noche." : "A double-height lobby, with a concierge day and night.", image: lobby },
     { title: es ? "Llegada privada" : "Private arrival", text: es ? "Vuelos chárter privados y el auto de la casa." : "Private charter flights and a house car.", image: jet },
     { title: es ? "El club" : "The clubhouse", text: es ? "Un club privado de 14,000 pies²." : "A members-only club of 14,000 sq ft.", image: tdm.foyerLounge },
-    { title: es ? "La entrada" : "The entrance", text: es ? "Pórtico y valet bajo las torres." : "Porte-cochère and valet beneath the towers.", image: tdm.entrance },
+    { title: es ? "La entrada" : "The entrance", text: es ? "Pórtico y valet bajo las torres." : "Porte-cochère and valet beneath the towers.", image: { src: "/videos/clips/entrance-waterfall-poster.jpg", width: 1600, height: 990, focal: "55% 50%", alt: { en: "The arrival canopy at night, with its water curtain", es: "El pórtico de llegada de noche, con su cortina de agua" }, rendering: true, video: "/videos/clips/entrance-waterfall.mp4", poster: "/videos/clips/entrance-waterfall-poster.jpg" } }, // client, 24 Nov: the entrance film
   ];
   const facts = [
     { label: es ? "Ubicación" : "Location", value: "Dorado · Vega Alta" },
