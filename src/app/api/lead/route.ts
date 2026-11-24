@@ -69,7 +69,7 @@ export async function POST(req: Request) {
         phone: fields.phone,
         role: fields.lead_type,
         variant: fields.variant,
-        message: [fields.message, fields.licence && `Licence: ${fields.licence}`, fields.brokerage && `Brokerage: ${fields.brokerage}`, fields.client && `Client: ${fields.client}`, fields.visitMode && `Visit: ${fields.visitMode}`, fields.preferred && `Preferred: ${fields.preferred}`, fields.source && `Source: ${fields.source}`, fields.goal && `Goal: ${fields.goal}`].filter(Boolean).join("\n"),
+        message: [fields.message, fields.licence && `Licence: ${fields.licence}`, fields.brokerage && `Brokerage: ${fields.brokerage}`, fields.client && `Client: ${fields.client}`, fields.visitMode && `Visit: ${fields.visitMode}`, fields.preferred && `Preferred: ${fields.preferred}`, fields.source && `Source: ${fields.source}`, fields.goal && `Goal: ${fields.goal}`, fields.residence && `Residence: ${fields.residence}`, fields.attorney && "Attorney review: yes"].filter(Boolean).join("\n"),
         locale: fields.locale,
         page: fields.page,
         answers: fields.answers ? JSON.stringify(fields.answers) : undefined,

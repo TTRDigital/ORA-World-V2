@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 /**
  * The phone menu used on every version (client, 24 Nov: "on mobile I like Version 2's navigation best; have it on all
  * three"): under the header (which keeps the logo, Inquire and the close button), a bone panel with the pages in large
- * serif type and the language switch under them. Escape closes it; the page behind does not scroll while it is open.
+ * serif type and the language switch under them. Escape closes it; the page behind does not scroll while it is open. It sits above the cookie banner (z 70) and the Ask ORA button so the last links stay reachable.
  */
 export function MobileMenu({
   open,
@@ -46,7 +46,7 @@ export function MobileMenu({
       aria-label={label}
       data-lenis-prevent
       className={cn(
-        "fixed inset-x-0 bottom-0 z-[59] overflow-y-auto overscroll-contain bg-bone px-5 pt-6 pb-10 xl:hidden",
+        "fixed inset-x-0 bottom-0 z-[75] overflow-y-auto overscroll-contain bg-bone px-5 pt-6 pb-10 xl:hidden",
         top,
       )}
     >

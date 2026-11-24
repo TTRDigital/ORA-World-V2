@@ -34,7 +34,8 @@
     "priceList": "Consultar",
     "longevity": "Longevidad",
     "act60": "Ley 60",
-    "finishes": "Acabados"
+    "finishes": "Acabados",
+    "reserve": "Reservar"
   },
   "ask": {
     "open": "Pregunte a ORA",
@@ -318,7 +319,11 @@
       "Los incentivos fiscales de Puerto Rico",
       "Un hogar en Puerto Rico",
       "Todo lo anterior"
-    ]
+    ],
+    "residence": "Residencia",
+    "residenceHint": "Por ejemplo 1002, o déjelo en blanco",
+    "attorney": "Quiero que mi abogado revise el acuerdo conmigo.",
+    "reserveSubmit": "Solicitar mi reserva"
   },
   "gate": {
     "title": "Regístrese para ver el plano completo",

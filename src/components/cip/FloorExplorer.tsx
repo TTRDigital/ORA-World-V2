@@ -60,6 +60,7 @@ export function FloorExplorer({ locale }: { locale: "en" | "es" }) {
     ceilings: es ? "Techos" : "Ceilings",
     onFloor: es ? "Ubicación en el piso" : "Location on floor",
     inquire: es ? "Consultar por" : "Inquire about",
+    reserve: es ? "Reservar" : "Reserve",
     thePh: es ? "el penthouse" : "the penthouse",
     prev: es ? "Residencia anterior" : "Previous residence",
     next: es ? "Residencia siguiente" : "Next residence",
@@ -347,8 +348,11 @@ export function FloorExplorer({ locale }: { locale: "en" | "es" }) {
                       <span className="text-[11px] tracking-[0.24em] text-brass-ink uppercase">{T.onFloor}</span>
                       <span role="img" aria-label={T.onFloor} className="block w-full bg-brass/85" style={{ ...mask(keySrc(u)), aspectRatio: dims(keySrc(u)).join("/") }} />
                     </div>
-                    <a href="#inquire" className="cta min-h-[52px] justify-center px-6 text-center" data-track="cta_inquire" data-track-label={`explorer-${u.id}`}>
-                      {T.inquire} {u.id === "PH" ? T.thePh : u.id} →
+                    <a href={`/${locale}/reserve?residence=${u.id}#reserve-form`} className="cta min-h-[52px] justify-center px-6 text-center" data-track="cta_reserve" data-track-label={`explorer-${u.id}`}>
+                      {T.reserve} {u.id === "PH" ? T.thePh : u.id} →
+                    </a>
+                    <a href="#inquire" className="inline-flex min-h-[52px] items-center justify-center border border-charcoal/40 px-6 text-center text-[12px] font-semibold tracking-[0.2em] text-charcoal uppercase hover:bg-charcoal hover:text-bone" data-track="cta_inquire" data-track-label={`explorer-${u.id}`}>
+                      {T.inquire} {u.id === "PH" ? T.thePh : u.id}
                     </a>
                   </div>
                 </div>

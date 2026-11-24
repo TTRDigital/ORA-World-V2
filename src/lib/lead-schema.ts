@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ATTRIBUTION_FIELDS, type AttributionField } from "./attribution";
 
-export const leadVariants = ["short", "full", "broker", "gate", "visit", "quiz", "newsletter"] as const;
+export const leadVariants = ["short", "full", "broker", "gate", "visit", "quiz", "newsletter", "reserve"] as const;
 export type LeadVariant = (typeof leadVariants)[number];
 
 const phone = z.string().trim().min(7).max(32).regex(/^[+()\d\s.-]+$/);
@@ -26,6 +26,9 @@ export const leadSchema = z.object({
   visitMode: z.enum(["gallery", "video"]).optional(),
   preferred: z.string().trim().max(120).optional(),
   answers: z.record(z.string(), z.string()).optional(),
+  /** Reservation request (client, 24 Nov): the residence asked for, and whether the buyer's attorney will review. */
+  residence: z.string().trim().max(60).optional(),
+  attorney: z.boolean().optional(),
   consent: z.literal(true),
   locale: z.enum(["en", "es"]),
   page: z.string().max(300).optional(),

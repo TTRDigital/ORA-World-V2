@@ -34,7 +34,8 @@
     "priceList": "Inquire",
     "longevity": "Longevity",
     "act60": "Act 60",
-    "finishes": "Finishes"
+    "finishes": "Finishes",
+    "reserve": "Reserve"
   },
   "ask": {
     "open": "Ask ORA",
@@ -318,7 +319,11 @@
       "Puerto Rico's tax incentives",
       "A home in Puerto Rico",
       "All of the above"
-    ]
+    ],
+    "residence": "Residence",
+    "residenceHint": "For example 1002, or leave blank",
+    "attorney": "I would like my attorney to review the agreement with me.",
+    "reserveSubmit": "Request my reservation"
   },
   "gate": {
     "title": "Register to view the full plan",

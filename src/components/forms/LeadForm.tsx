@@ -26,7 +26,7 @@ type Props = {
 };
 
 /**
- * One form component with variants short, full, broker, gate, visit and quiz. Zod on the client mirrors the
+ * One form component with variants short, full, broker, gate, visit, quiz and reserve. Zod on the client mirrors the
  * server schema; a hidden honeypot; Turnstile token when the site key exists; in-page success panel.
  */
 export function LeadForm({
@@ -93,6 +93,7 @@ export function LeadForm({
     }
   };
 
+  const reserve = variant === "reserve";
   const full = !short && (variant === "full" || variant === "visit");
   const broker = variant === "broker";
   const showPhone = variant !== "newsletter";
@@ -194,6 +195,7 @@ export function LeadForm({
         {broker && field("brokerage", t("brokerage"))}
         {broker && field("client", t("client"))}
         {variant === "visit" && field("preferred", t("preferred"), { placeholder: "" })}
+        {reserve && field("residence", t("residence"), { placeholder: t("residenceHint") })}
         {full && (
           <div>
             <label htmlFor={`${variant}-goal`} className="small mb-1 block font-semibold">
@@ -225,13 +227,19 @@ export function LeadForm({
           </div>
         )}
       </div>
-      {(full || broker) && (
+      {(full || broker || reserve) && (
         <div>
           <label htmlFor={`${variant}-message`} className="small mb-1 block font-semibold">
             {t("message")}
           </label>
           <textarea id={`${variant}-message`} rows={3} className="field" {...register("message")} />
         </div>
+      )}
+      {reserve && (
+        <label className="flex items-start gap-3">
+          <input type="checkbox" className="mt-1 size-5 accent-[var(--color-brass-ink)]" {...register("attorney")} />
+          <span className="small">{t("attorney")}</span>
+        </label>
       )}
       <input
         type="text"
