@@ -349,6 +349,41 @@
     "width": 2400,
     "height": 1351
   },
+  "tdm-v18-elevation": {
+    "src": "/images/client/tdm-v18-elevation.jpg",
+    "width": 1620,
+    "height": 1490
+  },
+  "tdm-v18-entrance": {
+    "src": "/images/client/tdm-v18-entrance.jpg",
+    "width": 1166,
+    "height": 777
+  },
+  "tdm-v18-site": {
+    "src": "/images/client/tdm-v18-site.jpg",
+    "width": 2550,
+    "height": 2190
+  },
+  "tdm-v18-siteplan": {
+    "src": "/images/client/tdm-v18-siteplan.jpg",
+    "width": 2175,
+    "height": 1050
+  },
+  "tdm-v18-terrace-sea": {
+    "src": "/images/client/tdm-v18-terrace-sea.jpg",
+    "width": 1166,
+    "height": 777
+  },
+  "tdm-v18-terraces": {
+    "src": "/images/client/tdm-v18-terraces.jpg",
+    "width": 1166,
+    "height": 777
+  },
+  "tdm-v18-towers": {
+    "src": "/images/client/tdm-v18-towers.jpg",
+    "width": 2499,
+    "height": 1666
+  },
   "tdm-vanity": {
     "src": "/images/client/tdm-vanity.jpg",
     "width": 2400,

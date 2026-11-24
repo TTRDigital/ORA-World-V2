@@ -480,3 +480,14 @@ export const life = {
     es: "Una niña jugando a la pelota con un golden retriever",
   }),
 };
+
+/* ---- Tesoro Del Mar design update: Forma Nova Architects, "Site Plan V2 w/ Towers V18", schematic design, 23 Nov 2026 ---- */
+export const tdmV18 = {
+  towers: img("tdm-v18-towers", "50% 30%", { en: "The two towers of Tesoro Del Mar above a terraced podium and a palm-lined plaza", es: "Las dos torres de Tesoro Del Mar sobre un podio escalonado y una plaza con palmeras" }, R),
+  entrance: img("tdm-v18-entrance", "50% 50%", { en: "The ORA World entrance beneath the curving garden terraces", es: "La entrada de ORA World bajo las terrazas ajardinadas curvas" }, R),
+  terraces: img("tdm-v18-terraces", "50% 50%", { en: "Terraces with palms and glass rails, seen from above", es: "Terrazas con palmeras y barandas de vidrio, vistas desde arriba" }, R),
+  terraceSea: img("tdm-v18-terrace-sea", "50% 50%", { en: "A garden terrace facing the sea", es: "Una terraza ajardinada frente al mar" }, R),
+  site: img("tdm-v18-site", "50% 50%", { en: "Site plan: the three parcels of Tesoro Del Mar along road PR-690", es: "Plano del terreno: las tres parcelas de Tesoro Del Mar junto a la carretera PR-690" }),
+  sitePlan: img("tdm-v18-siteplan", "50% 50%", { en: "Site plan with the two towers, the podium, the drives and the condo-hotel area", es: "Plano del sitio con las dos torres, el podio, los accesos y el área de condo-hotel" }),
+  elevation: img("tdm-v18-elevation", "50% 50%", { en: "East elevation: two 29-level towers above the podium and three levels of parking", es: "Elevación este: dos torres de 29 niveles sobre el podio y tres niveles de estacionamiento" }),
+};
