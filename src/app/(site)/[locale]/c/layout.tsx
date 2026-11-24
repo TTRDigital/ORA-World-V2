@@ -22,7 +22,6 @@ export default async function VersionCLayout({ children, params }: { children: R
       <CHeader
         links={links}
         inquire={es ? "Consultar" : "Inquire"}
-        phone={settings.phone ?? ""}
         otherLocale={es ? "en" : "es"}
         otherLabel={es ? "English" : "Español"}
         menu={es ? "Menú" : "Menu"}

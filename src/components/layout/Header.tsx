@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { LanguageToggle } from "./LanguageToggle";
 import { primaryNav } from "./nav";
-import { Menu } from "@/components/ui/Icons";
 import { TextRoll } from "@/components/vendor/skiper-ui/skiper58";
-import { MobileSheet, type MenuTile } from "./MobileSheet";
+import type { MenuTile } from "./MobileSheet";
+import { MobileMenu, MenuToggle } from "./MobileMenu";
 
 /**
  * Clean white bar fixed across the top of the page (client, 15 Nov: white, the logo in its original gold, always at
@@ -17,6 +17,7 @@ import { MobileSheet, type MenuTile } from "./MobileSheet";
  * tracked capitals navigation, EN | ES and "Inquire". Phones: logo, "Inquire" and the menu.
  * Height 80px phones / 96px desktop (client, 15 Nov: a bigger, clearer logo); main's top padding matches.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- the tiles of the old bottom sheet, kept in the props
 export function Header({ tiles }: { tiles: MenuTile[] }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
@@ -86,20 +87,23 @@ export function Header({ tiles }: { tiles: MenuTile[] }) {
             >
               {t("priceList")}
             </Link>
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              aria-label={t("openMenu")}
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-bone-deep text-charcoal xl:hidden"
-            >
-              <Menu />
-            </button>
+            <MenuToggle
+              open={open}
+              onClick={() => setOpen((o) => !o)}
+              label={open ? t("closeMenu") : t("openMenu")}
+            />
           </div>
         </nav>
       </header>
-      <MobileSheet open={open} onClose={() => setOpen(false)} tiles={tiles} />
+      {/* Client, 24 Nov: Version 2's phone menu on every version. */}
+      <MobileMenu
+        open={open}
+        onClose={() => setOpen(false)}
+        top="top-[80px] lg:top-[96px]"
+        label={t("openMenu")}
+        links={primaryNav.map((i) => ({ href: i.href, label: t(i.key) }))}
+        footer={<LanguageToggle className="flex" />}
+      />
     </>
   );
 }

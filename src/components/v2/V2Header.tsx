@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * Version B header (in the manner of parksidebrickell.com): transparent over the film with small spaced capitals and an
  * outlined "Inquire"; once the visitor scrolls it settles on cream with the gold logo. Phones get a full-screen menu.
  */
-export function V2Header({ links, inquire, versionA, otherLocale, otherLabel }: { links: { href: string; label: string }[]; inquire: string; versionA: string; otherLocale: "en" | "es"; otherLabel: string }) {
+export function V2Header({ links, inquire, otherLocale, otherLabel }: { links: { href: string; label: string }[]; inquire: string; otherLocale: "en" | "es"; otherLabel: string }) {
   const path = usePathname();
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
@@ -68,9 +68,6 @@ export function V2Header({ links, inquire, versionA, otherLocale, otherLabel }: 
           <div className="mt-8 flex gap-6 text-[11px] tracking-[0.22em] uppercase">
             <Link href={path} locale={otherLocale}>
               {otherLabel}
-            </Link>
-            <Link href="/" data-keep="">
-              {versionA}
             </Link>
           </div>
         </div>

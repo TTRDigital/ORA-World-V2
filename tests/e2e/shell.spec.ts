@@ -57,17 +57,21 @@ test.describe("shell", () => {
       .toBeLessThanOrEqual(1);
   });
 
-  test("mobile bottom sheet opens with tiles, traps focus, closes on Escape", async ({ page, isMobile }) => {
-    test.skip(!isMobile, "mobile sheet only");
-    await page.goto("/en");
-    await page.getByRole("button", { name: /open menu/i }).click();
-    const sheet = page.locator("#mobile-menu");
-    await expect(sheet).toBeVisible();
-    await expect(sheet.getByRole("link", { name: "Residences" })).toBeVisible();
-    await expect(sheet.locator("img").first()).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(sheet).toBeHidden();
-  });
+  // Client, 24 Nov: Version 2's phone menu on every version (large serif links, no "Version A" link).
+  for (const [path, first] of [["/en", "Residences"], ["/en/b", "Living"], ["/en/d", "Residences"]] as const) {
+    test(`mobile menu on ${path} opens, lists the pages, closes on Escape`, async ({ page, isMobile }) => {
+      test.skip(!isMobile, "phone menu only");
+      await page.goto(path);
+      await page.locator("header").getByRole("button", { name: /menu/i }).click();
+      const menu = path === "/en/b" ? page.locator("header") : page.getByRole("dialog");
+      await expect(menu.getByRole("link", { name: first, exact: true })).toBeVisible();
+      await expect(menu.getByRole("link", { name: /version a/i })).toHaveCount(0);
+      if (path !== "/en/b") {
+        await page.keyboard.press("Escape");
+        await expect(page.getByRole("dialog")).toBeHidden();
+      }
+    });
+  }
 
   test("Ask ORA opens with searchable questions and keyboard tabs", async ({ page }) => {
     await page.goto("/en");

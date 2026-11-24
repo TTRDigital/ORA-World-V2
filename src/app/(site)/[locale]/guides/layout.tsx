@@ -23,7 +23,7 @@ export default async function GuidesLayout({ children, params }: { children: Rea
   ];
   return (
     <div data-version-b id="top" className="bg-[var(--v2-cream)] text-[var(--v2-green)]">
-      <V2Header links={links} inquire={es ? "Consultar" : "Inquire"} versionA={es ? "Versión A" : "Version A"} otherLocale={es ? "en" : "es"} otherLabel={es ? "English" : "Español"} />
+      <V2Header links={links} inquire={es ? "Consultar" : "Inquire"} otherLocale={es ? "en" : "es"} otherLabel={es ? "English" : "Español"} />
       {children}
       <V2Footer locale={locale} settings={settings} />
       <LinkRewriter />
