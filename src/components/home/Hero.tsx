@@ -15,7 +15,7 @@ export async function Hero({ locale }: { locale: Locale }) {
   const words = tr(cip.hero.title, locale).split(" ");
 
   const es = locale === "es";
-  const heroPoster = { ...settings.filmPoster, src: "/videos/hero-film-v4-poster.jpg", width: 1920, height: 1080, focal: "50% 50%", alt: { en: "The ORA World jet on arrival, the opening scene of the Tesoro del Mar film", es: "El jet de ORA World a su llegada, la primera escena de la película de Tesoro del Mar" } };
+  const heroPoster = { ...settings.filmPoster, src: "/videos/hero-film-v5-poster.jpg", width: 1920, height: 1080, focal: "50% 50%", alt: { en: "The ORA World jet on arrival, the opening scene of the Tesoro del Mar film", es: "El jet de ORA World a su llegada, la primera escena de la película de Tesoro del Mar" } };
 
   return (
     <section

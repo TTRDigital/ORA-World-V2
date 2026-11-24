@@ -21,9 +21,9 @@ test.describe("vendored components and the desktop menu", () => {
     await expect(page.locator("#hero [data-film-sound]")).toHaveCount(0);
     const film = page.locator("#hero video").first();
     // Client, 19 Nov: the v4 film (from the 1080p master), with a 720p copy for phones.
-    await expect(film.locator("source").last()).toHaveAttribute("src", "/videos/hero-film-v4.mp4");
-    await expect(film.locator("source").first()).toHaveAttribute("src", "/videos/hero-film-v4-720.mp4");
-    expect(await film.evaluate((v: HTMLVideoElement) => v.currentSrc)).toMatch(/hero-film-v4(-720)?\.mp4$/);
+    await expect(film.locator("source").last()).toHaveAttribute("src", "/videos/hero-film-v5.mp4");
+    await expect(film.locator("source").first()).toHaveAttribute("src", "/videos/hero-film-v5-720.mp4");
+    expect(await film.evaluate((v: HTMLVideoElement) => v.currentSrc)).toMatch(/hero-film-v5(-720)?\.mp4$/);
     await expect.poll(() => film.evaluate((v: HTMLVideoElement) => !v.paused)).toBe(true);
     await page.locator("#hero [data-film-pause]").click();
     await expect.poll(() => film.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
