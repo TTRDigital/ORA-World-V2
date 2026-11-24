@@ -12,6 +12,7 @@ import { CipShowcase } from "@/components/cip/CipShowcase";
 import { CardRail, type RailCard } from "@/components/cip/CardRail";
 import { LocationExplorer } from "@/components/cip/LocationExplorer";
 import { Link } from "@/i18n/navigation";
+import { ClipOverlay } from "@/components/ui/ClipOverlay";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 
 /**
@@ -131,6 +132,8 @@ export default async function LivingPage({ params }: { params: Promise<{ locale:
         <figure className="relative overflow-hidden rounded-[22px] bg-basalt-soft" style={{ aspectRatio: "4/5" }}>
           {/* eslint-disable-next-line @next/next/no-img-element -- the clubhouse lounge render */}
           <img src={tdm.foyerLounge.src} alt={tdm.foyerLounge.alt[locale] || tdm.foyerLounge.alt.en} className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: tdm.foyerLounge.focal }} />
+          {/* Client, 24 Nov: the clubhouse film. */}
+          <ClipOverlay src="/videos/clips/clubhouse-lounge.mp4" poster="/videos/clips/clubhouse-lounge-poster.jpg" focal={tdm.foyerLounge.focal} />
         </figure>
       </CipShowcase>
 

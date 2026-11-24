@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
         />
       </BChapter>
 
-      <BFullBleed image={tdm.foyerLounge} locale={locale} eyebrow={es ? "El club" : "The clubhouse"} title={es ? "Su club, de 14,000 pies²." : "Your club, 14,000 sq ft of it."}>
+      <BFullBleed image={{ ...tdm.foyerLounge, video: "/videos/clips/clubhouse-lounge.mp4", poster: "/videos/clips/clubhouse-lounge-poster.jpg" }} locale={locale} eyebrow={es ? "El club" : "The clubhouse"} title={es ? "Su club, de 14,000 pies²." : "Your club, 14,000 sq ft of it."}>
         <p className="mt-6 max-w-[50ch] text-[16px] leading-relaxed text-white/85">
           {es ? "Solo para miembros. Café por la mañana, un escritorio tranquilo, un simulador de golf y cócteles en la azotea bajo las estrellas." : "Members only. Coffee in the morning, a quiet desk, a golf simulator, and cocktails on the roof under the stars."}
         </p>
