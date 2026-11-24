@@ -32,22 +32,13 @@ export function federalTax(gain: number): number {
   return ltcg + niit;
 }
 
-/**
- * New York's supplemental tax ("tax benefit recapture"): above $107,650 of New York AGI the benefit of the lower
- * brackets is taken back over the next $50,000 of income in each bracket, until the whole of taxable income is taxed at
- * the top rate reached. Modelled as a straight-line move from the previous flat amount to the new flat amount.
- */
-function nyRecapture(ti: number, agi: number, brackets: Bracket[], start: number, span: number): number {
+/** New York's supplemental tax ("tax benefit recapture"), from the statutory table in the rate data. */
+function nyTax(ti: number, agi: number, brackets: Bracket[], r: NonNullable<Jurisdiction["recapture"]>): number {
+  if (agi > r.flatAbove) return ti * r.flatRate;
   const regular = bracketTax(ti, brackets);
-  if (agi <= start) return regular;
-  const idx = brackets.reduce((k, [lo], i) => (ti > lo ? i : k), 0);
-  const lo = brackets[idx][0];
-  const flatNew = ti * brackets[idx][1];
-  // The first recapture (from the graduated tax to a flat rate) starts at `start`; later ones at each bracket's floor.
-  const from = Math.max(start, lo);
-  const base = from === start || idx === 0 ? regular : ti * brackets[idx - 1][1];
-  const share = Math.min(1, Math.max(0, (agi - from) / span));
-  return Math.max(regular, base + (flatNew - base) * share);
+  const band = [...r.bands].reverse().find((b) => ti > b.over);
+  if (!band || agi <= band.start) return regular;
+  return regular + band.base + band.inc * Math.min(1, (agi - band.start) / r.span);
 }
 
 export type StateResult = { state: number; local: number };
@@ -62,7 +53,7 @@ export function stateTax(gain: number, j: Jurisdiction | undefined): StateResult
     return sum + d.amount * share;
   }, 0);
   const taxable = Math.max(0, gain - excluded - j.deduction - phased);
-  let state = j.recapture ? nyRecapture(taxable, gain, j.brackets, j.recapture.start, j.recapture.span) : bracketTax(taxable, j.brackets);
+  let state = j.recapture ? nyTax(taxable, gain, j.brackets, j.recapture) : bracketTax(taxable, j.brackets);
   for (const s of j.surtaxes ?? []) {
     const base = s.base === "gain" ? gain : taxable;
     const test = s.test === "gain" ? gain : base;

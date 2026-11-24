@@ -13,7 +13,9 @@ export type Jurisdiction = {
   exclusion?: { pct: number; cap?: number | null };
   brackets: Bracket[];
   surtaxes?: { threshold: number; rate: number; base?: "gain" | "taxable"; test?: "gain"; mode?: "excess" | "all" }[];
-  recapture?: { start: number; span: number };
+  /** New York's supplemental tax (Tax Law 601(d-5)): for each band of taxable income from `over`, add
+   *  base + inc x min(1, (AGI - start) / span); above `flatAbove` of AGI the whole of taxable income is taxed at `flatRate`. */
+  recapture?: { bands: { over: number; base: number; inc: number; start: number }[]; span: number; flatAbove: number; flatRate: number };
   local?: { name: string; base: "gain" | "taxable" | "stateTax"; flat?: number; brackets?: Bracket[] };
   note: string;
   noteEs?: string;
