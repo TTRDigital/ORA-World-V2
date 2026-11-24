@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 const reduced = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /** True once the element has been on screen (and stays true). */
-function useSeen<T extends HTMLElement>() {
+export function useSeen<T extends HTMLElement>() {
   const ref = useRef<T>(null);
   const [seen, setSeen] = useState(false);
   useEffect(() => {
@@ -34,7 +34,7 @@ function useSeen<T extends HTMLElement>() {
 }
 
 /** A number that eases to its target whenever the target changes. */
-function useTween(target: number, run: boolean, ms = 900) {
+export function useTween(target: number, run: boolean, ms = 900) {
   const [v, setV] = useState(0);
   const from = useRef(0);
   useEffect(() => {
@@ -60,7 +60,7 @@ function useTween(target: number, run: boolean, ms = 900) {
   return v;
 }
 
-const panel = "rounded-[20px] bg-basalt/55 p-5 text-bone ring-1 ring-bone/15 backdrop-blur-md md:p-6";
+export const panel = "rounded-[20px] bg-basalt/55 p-5 text-bone ring-1 ring-bone/15 backdrop-blur-md md:p-6";
 
 /* ---------------------------------------------------------------- Act 60: the tax calculator */
 
@@ -137,7 +137,7 @@ export function TaxCalculator({ es }: { es: boolean }) {
   );
 }
 
-function Bar({ label, value, pct, tone }: { label: string; value: string; pct: number; tone: "muted" | "brass" }) {
+export function Bar({ label, value, pct, tone }: { label: string; value: string; pct: number; tone: "muted" | "brass" }) {
   return (
     <div>
       <div className="flex justify-between gap-3">
