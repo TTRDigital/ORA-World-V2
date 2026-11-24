@@ -15,6 +15,7 @@ import { AskOra } from "@/components/layout/AskOra";
 import { MotionInit } from "@/components/providers/MotionInit";
 import { ScrollFx } from "@/components/providers/ScrollFx";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { ScrollTop } from "@/components/providers/ScrollTop";
 import { Consent } from "@/components/providers/Consent";
 import { TrackClicks } from "@/components/providers/TrackClicks";
 import { AttributionCapture } from "@/components/providers/AttributionCapture";
@@ -54,7 +55,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     { key: "living" as const, href: "/living", image: life.poolTerrace },
   ];
   return (
-    <html lang={locale} className={`${display.variable} ${sans.variable} ${script.variable} no-js`} suppressHydrationWarning>
+    <html lang={locale} data-scroll-behavior="smooth" className={`${display.variable} ${sans.variable} ${script.variable} no-js`} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
           <SkipLink />
@@ -68,6 +69,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <MotionInit />
           <ScrollFx />
           <SmoothScroll />
+          <ScrollTop />
           <TrackClicks />
           <AttributionCapture />
           <TtrTracker />

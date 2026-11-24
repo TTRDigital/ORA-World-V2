@@ -109,7 +109,8 @@ export default async function LivingPage({ params }: { params: Promise<{ locale:
   const inquire = { href: "/#inquire", label: es ? "Consultar" : "Inquire", track: "cta_inquire" };
   const accent = (s: string) => s.split("*").map((part, k) => (k % 2 ? <em key={k} className="text-brass-ink italic">{part}</em> : <span key={k}>{part}</span>));
 
-  const hero: ImageRef = { ...tdm.exteriorPull, ...clip("p10-pool-cabana") };
+  // Client, 24 Nov: the banner is just the ocean, clear turquoise water.
+  const hero: ImageRef = life.beach;
   const dayCards: RailCard[] = [
     { key: "pool", kicker: es ? "Mañana" : "Morning", title: es ? "La piscina" : "The pool", text: es ? "Estilo resort, con solárium y bar." : "Resort-style, with sundeck and pool bar.", image: tdm.exteriorPull, ...clip("p10-pool-cabana") },
     { key: "putting", kicker: es ? "Mediodía" : "Midday", title: es ? "Campo de putting" : "Putting course", text: es ? "Dieciocho hoyos entre las torres." : "Eighteen holes between the towers.", image: tdm.exteriorGolf, ...clip("p11-putting-green") },

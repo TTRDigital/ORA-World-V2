@@ -141,7 +141,7 @@ export async function CLiving({ locale, films = false }: { locale: Locale; films
   return (
     <>
       <CPageHero
-        image={f(tdm.exteriorPull, "p10-pool-cabana")}
+        image={life.beach /* client, 24 Nov: just the ocean */}
         locale={locale}
         place={es ? "Vivir · Tesoro del Mar" : "Living · Tesoro del Mar"}
         caps={es ? "Una vida" : "A life,"}
