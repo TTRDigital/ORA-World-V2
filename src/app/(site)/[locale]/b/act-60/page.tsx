@@ -42,8 +42,8 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
           <h2 id="b-calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-tight md:text-[52px]">{es ? "Una comparación ilustrativa" : "An illustrative comparison"}</h2>
           <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/75">
             {es
-              ? "Escriba su dirección, mueva el control y cambie de régimen: la calculadora compara el impuesto federal, estatal, municipal y local estimado donde vive hoy con la tasa de la Ley 60. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado."
-              : "Enter your home address, move the slider and switch the regime: the calculator compares estimated federal, state, city and other local tax where you live today with the Act 60 rate. These are illustrations, not your tax liability or guaranteed savings."}
+              ? "En cuatro pasos: su dirección, su estado civil tributario, sus ganancias de capital e ingreso ordinario calificado, y su tasa en Puerto Rico. La calculadora compara el impuesto federal, estatal, municipal y local estimado donde vive hoy con la tasa de la Ley 60. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado."
+              : "In four steps: your home address, your filing status, your capital gains and qualified ordinary income, and your Puerto Rico rate. The calculator compares estimated federal, state, city and other local tax where you live today with the Act 60 rate. These are illustrations, not your tax liability or guaranteed savings."}
           </p>
         </div>
         <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">

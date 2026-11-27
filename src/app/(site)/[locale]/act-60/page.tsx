@@ -29,8 +29,8 @@ const COPY = {
   figuresLabel: { en: "The program", es: "El programa" },
   calcTitle: { en: "An illustrative comparison", es: "Una comparación ilustrativa" },
   calcText: {
-    en: "Enter your home address, the size of the gain and the Puerto Rico regime. The calculator compares estimated federal, state, city and other local tax where you live today with the Act 60 rate for qualifying post-residency income. These figures are illustrations, not your tax liability or guaranteed savings.",
-    es: "Escriba su dirección, el monto de la ganancia y el régimen de Puerto Rico. La calculadora compara el impuesto federal, estatal, municipal y local estimado donde vive hoy con la tasa de la Ley 60 para ingresos posteriores a la residencia que califiquen. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado.",
+    en: "In four steps: your home address, your filing status, your capital gains and qualified ordinary income, and your Puerto Rico rate. The calculator compares estimated federal, state, city and other local tax where you live today with the Act 60 rate on qualifying post-residency capital gains and qualified ordinary income. These figures are illustrations, not your tax liability or guaranteed savings.",
+    es: "En cuatro pasos: su dirección, su estado civil tributario, sus ganancias de capital e ingreso ordinario calificado, y su tasa en Puerto Rico. La calculadora compara el impuesto federal, estatal, municipal y local estimado donde vive hoy con la tasa de la Ley 60 sobre las ganancias de capital y el ingreso ordinario calificado posteriores a la residencia. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado.",
   },
   resLabel: { en: "Residency", es: "Residencia" },
   resTitle: { en: "Establish bona fide Puerto Rico residency", es: "Establezca residencia bona fide en Puerto Rico" },

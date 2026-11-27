@@ -27,6 +27,9 @@ for (const path of ["/en/act-60", "/en/b/act-60"]) {
     await expect(firstSection.locator('[data-widget="tax-compare"]')).toHaveCount(1);
     await calc.scrollIntoViewIfNeeded();
     await expect(calc.locator("select")).toHaveCount(0);
+    // Client, 27 Nov: four numbered steps, and Dr. Yan's words "qualified ordinary income" on the page itself.
+    for (const n of ["1", "2", "3", "4"]) await expect(calc.locator(`[data-step="${n}"]`)).toBeVisible();
+    await expect(page.locator("main")).toContainText("qualified ordinary income (certain interest and dividends)");
     await expect(calc.getByLabel(/current home address/i)).toBeVisible();
     // Before an address: federal tax only.
     await expect.poll(amount(page, "Estimated federal tax")).toBeGreaterThan(150_000);

@@ -79,54 +79,32 @@ export function TaxComparison({ es }: { es: boolean }) {
     <div ref={ref} className={cn(panel, "lg:p-10")} data-widget="tax-compare">
       {/* Wide screens: the choices on the left, the results on the right (client, 27 Nov: bigger, in the middle). */}
       <div className="lg:grid lg:grid-cols-2 lg:gap-12">
+        {/* Client, 27 Nov: four numbered steps, so visitors know what to do to get their estimate. */}
         <div>
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">
-              {es ? "Calculadora Ley 60" : "Act 60 calculator"}
-            </p>
-            <div
-              role="radiogroup"
-              aria-label={es ? "Régimen de Ley 60 en Puerto Rico" : "Puerto Rico Act 60 regime"}
-              className="inline-flex rounded-full bg-bone/10 p-0.5 text-[11px] ring-1 ring-bone/15"
-            >
-              {([0, 0.04] as const).map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  role="radio"
-                  aria-checked={rate === r}
-                  onClick={() => setRate(r)}
-                  className={cn(
-                    "min-h-8 rounded-full px-2.5 font-semibold transition-colors",
-                    rate === r ? "bg-bone text-basalt" : "text-bone/80 hover:text-bone",
-                  )}
-                >
-                  {r === 0
-                    ? es
-                      ? "0% · solicitudes 2026"
-                      : "0% · 2026 applications"
-                    : es
-                      ? "4% · desde 2027"
-                      : "4% · from 2027"}
-                </button>
-              ))}
-            </div>
-          </div>
+          <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">
+            {es ? "Calculadora Ley 60" : "Act 60 calculator"}
+          </p>
+          <p className="mt-2 text-[15px] text-bone/80">
+            {es ? "Cuatro pasos para su estimación." : "Four steps to your estimate."}
+          </p>
 
           <form
             onSubmit={findAddress}
-            className="mt-6 rounded-2xl bg-bone/[0.08] p-4 ring-1 ring-brass-light/50 md:p-5"
+            className="mt-5 rounded-2xl bg-bone/[0.08] p-4 ring-1 ring-brass-light/50 md:p-5"
             role="search"
             aria-label={es ? "Calcular con su dirección" : "Calculate with your address"}
+            data-step="1"
           >
-            <label htmlFor={addressId} className="block text-[16px] font-semibold text-bone md:text-[17px]">
-              {es ? "Su dirección actual" : "Your current home address"}
-            </label>
-            <p className="mt-1 text-[13px] leading-snug text-bone/75">
-              {es
-                ? "La usamos para incluir los impuestos de su estado, condado, ciudad y distrito escolar."
-                : "We use it to include your state, county, city and school district taxes."}
-            </p>
+            <StepHead
+              n={1}
+              htmlFor={addressId}
+              title={es ? "Su dirección actual" : "Your current home address"}
+              hint={
+                es
+                  ? "Incluye los impuestos de su estado, condado, ciudad y distrito escolar."
+                  : "This adds your state, county, city and school district taxes."
+              }
+            />
             <div className="mt-3 flex gap-2">
               <input
                 id={addressId}
@@ -191,14 +169,19 @@ export function TaxComparison({ es }: { es: boolean }) {
             </div>
           </form>
 
-          <div className="mt-5">
-            <p id={`${addressId}-status`} className="text-[13px] text-bone/80">
-              {es ? "Estado civil tributario" : "Filing status"}
-            </p>
+          <div className="mt-7" data-step="2">
+            <StepHead
+              n={2}
+              id={`${addressId}-status`}
+              title={es ? "Su estado civil tributario" : "Your filing status"}
+              hint={
+                es ? "Las tasas para matrimonios son distintas." : "Married couples have different rates."
+              }
+            />
             <div
               role="radiogroup"
               aria-labelledby={`${addressId}-status`}
-              className="mt-2 inline-flex rounded-full bg-bone/10 p-0.5 text-[12px] ring-1 ring-bone/15"
+              className="mt-3 ml-10 inline-flex rounded-full bg-bone/10 p-0.5 text-[12px] ring-1 ring-bone/15"
             >
               {(["single", "mfj"] as const).map((v) => (
                 <button
@@ -224,35 +207,89 @@ export function TaxComparison({ es }: { es: boolean }) {
             </div>
           </div>
 
-          <Slider
-            label={es ? "Ganancias de capital a largo plazo" : "Long-term capital gains"}
-            value={gain}
-            min={100_000}
-            max={10_000_000}
-            hardMax={500_000_000}
-            step={50_000}
-            onChange={setGain}
-            format={money.format}
-          />
-          <Slider
-            label={
-              es
-                ? "Ingreso ordinario calificado (intereses y dividendos)"
-                : "Qualified ordinary income (interest and dividends)"
-            }
-            value={ordinary}
-            min={0}
-            max={5_000_000}
-            hardMax={500_000_000}
-            step={25_000}
-            onChange={setOrdinary}
-            format={money.format}
-          />
+          <div className="mt-7" data-step="3">
+            <StepHead
+              n={3}
+              title={es ? "Sus ingresos de un año" : "Your income for a year"}
+              hint={
+                es ? "Mueva los controles o escriba los montos." : "Move the sliders or type the amounts."
+              }
+            />
+            <div className="ml-10">
+              <Slider
+                label={es ? "Ganancias de capital a largo plazo" : "Long-term capital gains"}
+                value={gain}
+                min={100_000}
+                max={10_000_000}
+                hardMax={500_000_000}
+                step={50_000}
+                onChange={setGain}
+                format={money.format}
+              />
+              <Slider
+                label={
+                  es
+                    ? "Ingreso ordinario calificado (intereses y dividendos)"
+                    : "Qualified ordinary income (interest and dividends)"
+                }
+                value={ordinary}
+                min={0}
+                max={5_000_000}
+                hardMax={500_000_000}
+                step={25_000}
+                onChange={setOrdinary}
+                format={money.format}
+              />
+            </div>
+          </div>
+
+          <div className="mt-7" data-step="4">
+            <StepHead
+              n={4}
+              id={`${addressId}-regime`}
+              title={es ? "Su tasa en Puerto Rico" : "Your Puerto Rico rate"}
+              hint={
+                es
+                  ? "0% para solicitudes de Ley 60 presentadas en 2026; 4% para las presentadas desde 2027."
+                  : "0% for Act 60 applications filed in 2026; 4% for those filed from 2027."
+              }
+            />
+            <div
+              role="radiogroup"
+              aria-labelledby={`${addressId}-regime`}
+              className="mt-3 ml-10 inline-flex rounded-full bg-bone/10 p-0.5 text-[12px] ring-1 ring-bone/15"
+            >
+              {([0, 0.04] as const).map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  role="radio"
+                  aria-checked={rate === r}
+                  onClick={() => setRate(r)}
+                  className={cn(
+                    "min-h-9 rounded-full px-4 font-semibold transition-colors",
+                    rate === r ? "bg-bone text-basalt" : "text-bone/80 hover:text-bone",
+                  )}
+                >
+                  {r === 0
+                    ? es
+                      ? "0% · solicitudes 2026"
+                      : "0% · 2026 applications"
+                    : es
+                      ? "4% · desde 2027"
+                      : "4% · from 2027"}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="lg:border-l lg:border-bone/15 lg:pl-12">
+        <div className="mt-8 border-t border-bone/15 pt-6 lg:mt-0 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-12">
+          <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">
+            {es ? "Su estimación" : "Your estimate"}
+          </p>
           {/* Client, 27 Nov: the savings first and in green: "that's the data you want to see". */}
           <div
-            className="mt-6 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-4 gap-y-1 rounded-2xl bg-[#7fd6a4]/[0.12] p-4 ring-1 ring-[#7fd6a4]/40 md:p-5 lg:mt-0"
+            className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-4 gap-y-1 rounded-2xl bg-[#7fd6a4]/[0.12] p-4 ring-1 ring-[#7fd6a4]/40 md:p-5"
             aria-live="polite"
             data-savings
           >
@@ -447,7 +484,7 @@ function Slider({
           onChange={(ev) => setDraft(ev.target.value)}
           onBlur={commit}
           onKeyDown={(ev) => ev.key === "Enter" && (ev.currentTarget as HTMLInputElement).blur()}
-          className="w-[14ch] shrink-0 rounded-lg bg-transparent px-2 py-1 text-right font-[family-name:var(--font-display)] text-[20px] md:text-[22px] text-bone tabular-nums ring-1 ring-bone/15 outline-none hover:ring-bone/30 focus-visible:ring-2 focus-visible:ring-brass-light"
+          className="w-[14ch] shrink-0 rounded-lg bg-transparent px-2 py-1 text-right font-[family-name:var(--font-display)] text-[20px] text-bone tabular-nums ring-1 ring-bone/15 outline-none hover:ring-bone/30 focus-visible:ring-2 focus-visible:ring-brass-light md:text-[22px]"
         />
       </div>
       <input
@@ -499,6 +536,40 @@ function Choice<T extends number>({
           {text(o)}
         </button>
       ))}
+    </div>
+  );
+}
+
+/** A numbered step: the number in a brass circle, the title and a one-line hint (client, 27 Nov). */
+function StepHead({
+  n,
+  title,
+  hint,
+  htmlFor,
+  id,
+}: {
+  n: number;
+  title: string;
+  hint?: string;
+  htmlFor?: string;
+  id?: string;
+}) {
+  const Title = htmlFor ? "label" : "p";
+  return (
+    <div className="flex items-start gap-3">
+      <span
+        aria-hidden
+        className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-brass-light text-[13px] font-semibold text-basalt"
+      >
+        {n}
+      </span>
+      <div>
+        <Title id={id} htmlFor={htmlFor} className="block text-[16px] font-semibold text-bone md:text-[17px]">
+          <span className="sr-only">{`${n}. `}</span>
+          {title}
+        </Title>
+        {hint && <p className="mt-0.5 text-[13px] leading-snug text-bone/75">{hint}</p>}
+      </div>
     </div>
   );
 }
