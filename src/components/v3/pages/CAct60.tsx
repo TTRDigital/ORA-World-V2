@@ -5,6 +5,7 @@ import { getFaqs } from "@/lib/content";
 import { CPageHero, CHeading, CTitle, CSection, CEyebrow, CButton } from "@/components/v3/C";
 import { cImg } from "@/content/seed/imagesC";
 import { tdm } from "@/content/seed/images";
+import { TaxComparison } from "@/components/cip/TaxComparison";
 
 /** Version C · Act 60: explained plainly, in the Act 60 audit brief's reviewed wording (as on Versions A and B). */
 const SOURCES = [
@@ -27,6 +28,23 @@ export async function CAct60({ locale, films = false }: { locale: Locale; films?
   return (
     <>
       <CPageHero image={films ? tdm.aerialCoast : cImg.aerialCove} locale={locale} place={es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"} caps={es ? "Conserve más" : "Keep more"} accent={es ? "de lo que gana" : "of what you earn"} line={x(cip.why.short)} />
+
+      {/* Client, 27 Nov: the four-step calculator right after the banner, as on Versions 1 and 2. */}
+      <section id="calculator" aria-labelledby="c-calc-title" className="bg-basalt px-5 py-16 text-bone md:px-10 md:py-24">
+        <div className="mx-auto max-w-[760px] text-center">
+          <h2 id="c-calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-tight font-light md:text-[52px]">
+            {es ? "Calcule su ahorro" : "Calculate your savings"}
+          </h2>
+          <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/75">
+            {es
+              ? "En cuatro pasos: su dirección, su estado civil tributario, sus ganancias de capital e ingreso ordinario calificado, y su tasa en Puerto Rico. La calculadora compara el impuesto federal, estatal, municipal y local estimado donde vive hoy con la tasa de la Ley 60. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado."
+              : "In four steps: your home address, your filing status, your capital gains and qualified ordinary income, and your Puerto Rico rate. The calculator compares estimated federal, state, city and other local tax where you live today with the Act 60 rate. These are illustrations, not your tax liability or guaranteed savings."}
+          </p>
+        </div>
+        <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">
+          <TaxComparison es={es} />
+        </div>
+      </section>
 
       {/* The program and the figures. */}
       <CSection tone="bone" labelledBy="c-program">

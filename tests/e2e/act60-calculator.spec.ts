@@ -18,7 +18,7 @@ async function useAddress(page: Page, json: object) {
   await expect(calc.locator("[data-place]")).toBeVisible();
 }
 
-for (const path of ["/en/act-60", "/en/b/act-60"]) {
+for (const path of ["/en/act-60", "/en/b/act-60", "/en/d/act-60"]) {
   test(`calculator right after the banner, address only, savings in green on ${path}`, async ({ page }) => {
     await page.goto(path);
     const calc = page.locator('[data-widget="tax-compare"]');

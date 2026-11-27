@@ -15,6 +15,7 @@ export type Bracket = [number, number];
  *  `minus`: an exemption taken off the base first (Michigan cities). */
 export type LocalTax = {
   name: string;
+  nameEs?: string;
   base: "gain" | "taxable" | "stateTax";
   flat?: number;
   brackets?: Bracket[];
@@ -538,6 +539,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
     ],
     local: {
       name: "County income tax",
+      nameEs: "Impuesto del condado",
       base: "taxable",
       flat: 0.0202,
     },
@@ -564,6 +566,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
     ],
     local: {
       name: "School district surtax",
+      nameEs: "Sobretasa del distrito escolar",
       base: "stateTax",
       flat: 0.05,
     },
@@ -733,6 +736,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
     ],
     local: {
       name: "County income tax",
+      nameEs: "Impuesto del condado",
       base: "taxable",
       flat: 0.032,
     },
@@ -1258,6 +1262,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
     },
     local: {
       name: "New York City income tax",
+      nameEs: "Impuesto de la ciudad de Nueva York",
       base: "taxable",
       brackets: [
         [0, 0.03078],
@@ -1318,6 +1323,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
       },
       local: {
         name: "New York City income tax",
+        nameEs: "Impuesto de la ciudad de Nueva York",
         base: "taxable",
         brackets: [
           [0, 0.03078],

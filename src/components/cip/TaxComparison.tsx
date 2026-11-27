@@ -63,6 +63,17 @@ export function TaxComparison({ es }: { es: boolean }) {
   const pct = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "percent", maximumFractionDigits: 0 });
   const e = estimate({ gain, ordinary }, code, rate, place?.locals ?? undefined, status);
   const j = JURISDICTIONS.find((x) => x.code === code);
+  // The state tax line names the state: New York City residents pay New York State tax, then the city's tax.
+  const stateName =
+    code === "NYC" || code === "NY"
+      ? es
+        ? "Nueva York"
+        : "New York"
+      : j
+        ? es
+          ? (j.nameEs ?? j.name)
+          : j.name
+        : "";
 
   const federal = useTween(e.federal, seen);
   const stateT = useTween(e.state, seen);
@@ -154,7 +165,7 @@ export function TaxComparison({ es }: { es: boolean }) {
                         ? `Encontramos su estado (${j?.nameEs ?? j?.name}) pero no la dirección exacta, así que se usan los impuestos locales típicos. Escriba la calle para incluir los suyos.`
                         : `We found your state (${j?.name}) but not the exact address, so typical local taxes are used. Add the street to include yours.`
                       : place.locals && place.locals.length
-                        ? `${es ? "Impuestos locales incluidos" : "Local taxes included"}: ${place.locals.map((l) => `${l.name} (${rateText(l)})`).join(", ")}`
+                        ? `${es ? "Impuestos locales incluidos" : "Local taxes included"}: ${place.locals.map((l) => `${es ? (l.nameEs ?? l.name) : l.name} (${rateText(l)})`).join(", ")}`
                         : es
                           ? "No hay impuesto local sobre ganancias de capital en esta dirección."
                           : "No local income tax on capital gains at this address."}
@@ -359,11 +370,11 @@ export function TaxComparison({ es }: { es: boolean }) {
             />
             {/* Client, 24 Nov: "explain state, city and other taxes": the state, then each local tax on its own line. */}
             <Row
-              label={`${es ? "Impuesto estatal estimado" : "Estimated state tax"}${j ? ` (${es ? (j.nameEs ?? j.name) : j.name})` : ""}`}
+              label={`${es ? "Impuesto estatal estimado" : "Estimated state tax"}${stateName ? ` (${stateName})` : ""}`}
               value={money.format(stateT)}
             />
             {e.locals.map((l) => (
-              <Row key={l.name} label={l.name} value={money.format(l.amount)} />
+              <Row key={l.name} label={es ? (l.nameEs ?? l.name) : l.name} value={money.format(l.amount)} />
             ))}
             <Row
               label={

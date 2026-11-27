@@ -68,17 +68,34 @@ export async function GET(req: Request) {
     const m = LOCAL.MD[c];
     locals.push(
       m.brackets
-        ? { name: `${m.name} income tax`, base: "taxable", brackets: m.brackets, band: m.mode === "band" }
-        : { name: `${m.name} income tax`, base: "taxable", flat: m.rate },
+        ? {
+            name: `${m.name} income tax`,
+            nameEs: `Impuesto sobre la renta de ${m.name}`,
+            base: "taxable",
+            brackets: m.brackets,
+            band: m.mode === "band",
+          }
+        : {
+            name: `${m.name} income tax`,
+            nameEs: `Impuesto sobre la renta de ${m.name}`,
+            base: "taxable",
+            flat: m.rate,
+          },
     );
   }
   if (state === "IN" && LOCAL.IN[c])
-    locals.push({ name: `${LOCAL.IN[c].name} income tax`, base: "taxable", flat: LOCAL.IN[c].rate });
+    locals.push({
+      name: `${LOCAL.IN[c].name} income tax`,
+      nameEs: `Impuesto sobre la renta de ${LOCAL.IN[c].name}`,
+      base: "taxable",
+      flat: LOCAL.IN[c].rate,
+    });
   if (state === "MI" && LOCAL.MI[placeName]) {
     const m = LOCAL.MI[placeName];
     // The exemption is per person, so a married couple filing jointly has two.
     locals.push({
       name: `${m.name} city income tax`,
+      nameEs: `Impuesto municipal de ${m.name}`,
       base: "gain",
       flat: m.rate,
       minus: m.exemption,
@@ -90,11 +107,17 @@ export async function GET(req: Request) {
     if (nyc) locals.push(nyc);
   }
   if (state === "NY" && placeName === LOCAL.YONKERS.place)
-    locals.push({ name: "Yonkers resident surcharge", base: "stateTax", flat: LOCAL.YONKERS.rate });
+    locals.push({
+      name: "Yonkers resident surcharge",
+      nameEs: "Recargo para residentes de Yonkers",
+      base: "stateTax",
+      flat: LOCAL.YONKERS.rate,
+    });
   if (state === "OR") {
     if (LOCAL.OR.metroPlaces.includes(placeName))
       locals.push({
         name: "Metro supportive housing services tax",
+        nameEs: "Impuesto de Metro para servicios de vivienda",
         base: "taxable",
         brackets: [
           [0, 0],
@@ -110,6 +133,7 @@ export async function GET(req: Request) {
     if (c === LOCAL.OR.multnomahFips)
       locals.push({
         name: "Multnomah County Preschool for All tax",
+        nameEs: "Impuesto Preschool for All del condado de Multnomah",
         base: "taxable",
         brackets: [[0, 0], ...LOCAL.OR.multnomah],
         mfj: { brackets: [[0, 0], ...LOCAL.OR.multnomahJoint] },
@@ -117,9 +141,19 @@ export async function GET(req: Request) {
   }
   const sd = district?.GEOID ?? "";
   if (state === "OH" && LOCAL.OH[sd]?.base === "traditional")
-    locals.push({ name: LOCAL.OH[sd].name, base: "taxable", flat: LOCAL.OH[sd].rate });
+    locals.push({
+      name: `${LOCAL.OH[sd].name} income tax`,
+      nameEs: `Impuesto escolar de ${LOCAL.OH[sd].name}`,
+      base: "taxable",
+      flat: LOCAL.OH[sd].rate,
+    });
   if (state === "IA" && LOCAL.IA[sd])
-    locals.push({ name: `${LOCAL.IA[sd].name} surtax`, base: "stateTax", flat: LOCAL.IA[sd].rate });
+    locals.push({
+      name: `${LOCAL.IA[sd].name} surtax`,
+      nameEs: `Sobretasa de ${LOCAL.IA[sd].name}`,
+      base: "stateTax",
+      flat: LOCAL.IA[sd].rate,
+    });
 
   return NextResponse.json(
     { ok: true, code, matched: match.matchedAddress, areas, locals: locals.filter((l) => l.flat !== 0) },

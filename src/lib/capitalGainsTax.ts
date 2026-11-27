@@ -68,7 +68,7 @@ function nyTax(ti: number, agi: number, brackets: Bracket[], r: NonNullable<Juri
 }
 
 /** Each local tax on its own line (client, 24 Nov: "explain state, city and other taxes"). */
-export type LocalLine = { name: string; amount: number };
+export type LocalLine = { name: string; nameEs?: string; amount: number };
 export type StateResult = { state: number; local: number; locals: LocalLine[] };
 
 /** `locals`, from the address lookup, replace the state's typical local tax (an empty list: no local tax there). */
@@ -115,7 +115,7 @@ export function stateTax(income: Income, jIn: Jurisdiction | undefined, locals?:
         : l.band
           ? base * brackets.reduce((r, [lo, rate]) => (base > lo ? rate : r), 0)
           : bracketTax(base, brackets);
-    return { name: l.name, amount };
+    return { name: l.name, nameEs: l.nameEs, amount };
   });
   return { state, local: lines.reduce((sum, l) => sum + l.amount, 0), locals: lines };
 }
