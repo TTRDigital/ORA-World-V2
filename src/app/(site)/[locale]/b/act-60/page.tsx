@@ -54,14 +54,17 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
           ))}
         </dl>
         <p className="mt-6 max-w-[90ch] text-[12.5px] leading-relaxed text-bone/55">{x(cip.why.statsNote)}</p>
-        <div className="mt-16 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)] lg:items-center lg:gap-16">
-          <div>
+        {/* Client, 27 Nov: the calculator bigger, in the middle of the screen. */}
+        <div className="mt-16">
+          <div className="mx-auto max-w-[760px] text-center">
             <h3 className="font-[family-name:var(--font-display)] text-[34px] leading-tight md:text-[48px]">{es ? "Una comparación ilustrativa" : "An illustrative comparison"}</h3>
-            <p className="mt-5 max-w-[46ch] text-[16px] leading-relaxed text-bone/75">
+            <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/75">
               {es ? "Elija el estado donde vive hoy, mueva el control y cambie de régimen: la calculadora compara el impuesto federal, estatal y local estimado donde vive hoy con la tasa de la Ley 60. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado." : "Choose the state you live in now, move the slider and switch the regime: the calculator compares estimated federal, state and local tax where you live today with the Act 60 rate. These are illustrations, not your tax liability or guaranteed savings."}
             </p>
           </div>
-          <TaxComparison es={es} />
+          <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">
+            <TaxComparison es={es} />
+          </div>
         </div>
       </BChapter>
 

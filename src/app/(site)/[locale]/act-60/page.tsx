@@ -122,12 +122,15 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
             ))}
           </dl>
           <p className="mt-8 max-w-[90ch] border-b border-bone/15 pb-12 text-[12.5px] leading-relaxed text-bone/65 md:pb-16">{x(cip.why.statsNote)}</p>
-          <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)] lg:items-center lg:gap-16">
-            <div>
+          {/* Client, 27 Nov: the calculator bigger, in the middle of the screen. */}
+          <div className="mt-12 md:mt-16">
+            <div className="mx-auto max-w-[760px] text-center">
               <h2 id="calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-bone md:text-[52px]">{x(COPY.calcTitle)}</h2>
-              <p className="mt-5 max-w-[46ch] text-[16px] leading-relaxed text-bone/80 md:text-[17px]">{x(COPY.calcText)}</p>
+              <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/80 md:text-[17px]">{x(COPY.calcText)}</p>
             </div>
-            <TaxComparison es={es} />
+            <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">
+              <TaxComparison es={es} />
+            </div>
           </div>
         </div>
       </section>

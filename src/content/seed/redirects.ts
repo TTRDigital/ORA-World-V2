@@ -27,7 +27,6 @@ export const redirects: Redirect[] = [
   { from: "/place/gallery", to: "/", permanent: true },
   // Client, 18 Nov: the gallery page removed.
   { from: "/gallery", to: "/", permanent: true },
-  { from: "/virtual-tour", to: "/place/tour", permanent: true },
   { from: "/floor-plans", to: "/residences/plans", permanent: true },
   { from: "/the-team", to: "/portfolio", permanent: true },
 ];
