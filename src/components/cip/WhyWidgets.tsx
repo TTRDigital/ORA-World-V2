@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
 
 /**
  * The live panels on the "Why ORA World" cards (client, 17 Nov: "have it together and more like a flashing thing;
@@ -9,7 +10,8 @@ import { cn } from "@/lib/utils";
  * shows the finished state at once.
  */
 
-const reduced = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reduced = () =>
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /** True once the element has been on screen (and stays true). */
 export function useSeen<T extends HTMLElement>() {
@@ -62,82 +64,64 @@ export function useTween(target: number, run: boolean, ms = 900) {
 
 export const panel = "rounded-[20px] bg-basalt/55 p-5 text-bone ring-1 ring-bone/15 backdrop-blur-md md:p-6";
 
-/* ---------------------------------------------------------------- Act 60: the tax calculator */
+/* ---------------------------------------------------------------- Act 60: the way to the calculator */
 
-// Long-term capital gains on the mainland at the top federal bracket: 20% + 3.8% net investment income tax (before
-// any state tax). Act 60: 0% for applications filed by 31 Dec 2026 (through 2035), 4% from 1 Jan 2027 (through 2055).
-// Labels and caveats per the Act 60 audit brief (18 Nov): illustrative, no "you keep", no guaranteed savings.
-const MAINLAND = 0.238;
-
-export function TaxCalculator({ es }: { es: boolean }) {
-  const [ref, seen] = useSeen<HTMLDivElement>();
-  const [gain, setGain] = useState(1_000_000);
-  const [rate, setRate] = useState<0 | 0.04>(0.04);
-  const money = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-  const mainland = gain * MAINLAND;
-  const pr = gain * rate;
-  const saved = useTween(mainland - pr, seen);
-  const shownMain = useTween(mainland, seen);
-  const shownPr = useTween(pr, seen);
-
+/**
+ * Client, 27 Nov: no calculator on the homepage card ("it takes too much space"): a short invitation and one button
+ * to the full four-step calculator on the Act 60 page.
+ */
+export function TaxCta({ es }: { es: boolean }) {
   return (
-    <div ref={ref} className={panel} data-widget="tax">
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Calculadora Ley 60" : "Act 60 calculator"}</p>
-        <div role="radiogroup" aria-label={es ? "Tasa de Ley 60" : "Act 60 rate"} className="inline-flex rounded-full bg-bone/10 p-0.5 text-[11px] ring-1 ring-bone/15">
-          {([0, 0.04] as const).map((r) => (
-            <button
-              key={r}
-              type="button"
-              role="radio"
-              aria-checked={rate === r}
-              onClick={() => setRate(r)}
-              className={cn("min-h-8 rounded-full px-2.5 font-semibold transition-colors", rate === r ? "bg-bone text-basalt" : "text-bone/80 hover:text-bone")}
-            >
-              {r === 0 ? (es ? "0% · solicitudes 2026" : "0% · 2026 applications") : es ? "4% · desde 2027" : "4% · from 2027"}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <label className="mt-5 block">
-        <span className="flex items-baseline justify-between text-[13px] text-bone/80">
-          {es ? "Ganancias posteriores a la residencia que califiquen" : "Fully qualifying post-residency gains"}
-          <b className="font-[family-name:var(--font-display)] text-[22px] font-normal text-bone tabular-nums">{money.format(gain)}</b>
-        </span>
-        <input
-          type="range"
-          min={100_000}
-          max={10_000_000}
-          step={50_000}
-          value={gain}
-          onChange={(e) => setGain(Number(e.target.value))}
-          className="mt-2 w-full accent-[var(--color-brass)]"
-          aria-valuetext={money.format(gain)}
-        />
-      </label>
-
-      <div className="mt-4 grid gap-3 text-[13px]">
-        <Bar label={es ? "Impuesto federal ilustrativo en EE. UU. (23.8%)" : "Illustrative mainland federal tax (23.8%)"} value={money.format(shownMain)} pct={seen ? 100 : 0} tone="muted" />
-        <Bar label={`${es ? "Impuesto ilustrativo de Puerto Rico, régimen elegido" : "Illustrative Puerto Rico tax under selected regime"} (${rate === 0 ? "0%" : "4%"})`} value={money.format(shownPr)} pct={seen ? (rate / MAINLAND) * 100 : 0} tone="brass" />
-      </div>
-
-      <div className="mt-5 flex items-end justify-between gap-3 border-t border-bone/15 pt-4">
-        <p className="text-[13px] text-bone/80">{es ? "Diferencia fiscal ilustrativa" : "Illustrative tax difference"}</p>
-        <p className="font-[family-name:var(--font-display)] text-[34px] leading-none text-brass-light tabular-nums md:text-[40px]" aria-live="polite">
-          {money.format(saved)}
-        </p>
-      </div>
-      <p className="mt-3 text-[10.5px] leading-snug text-bone/60">
-        {es
-          ? "Comparación ilustrativa entre un posible impuesto federal a largo plazo (tasa máxima 20% + 3.8% NIIT) y el tratamiento preferencial de Puerto Rico para ganancias posteriores a la residencia que califiquen por completo. Son ejemplos, no una estimación de su obligación fiscal ni un ahorro garantizado; el resultado real depende de la residencia fiscal, el origen de los ingresos, la plusvalía previa a la mudanza, las reglas federales y de Puerto Rico y los términos del decreto. Consulte a un asesor fiscal calificado."
-          : "An illustrative comparison of possible federal long-term capital gains tax (top 20% rate + 3.8% NIIT) and preferential Puerto Rico income-tax treatment for fully qualifying post-residency gains. These figures are examples, not estimates of your personal tax liability or guaranteed savings. Actual treatment depends on tax residency, sourcing, pre-relocation appreciation, federal and Puerto Rico rules, and decree terms. Consult qualified tax counsel."}
+    <div className={panel} data-widget="tax">
+      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">
+        {es ? "Calculadora Ley 60" : "Act 60 calculator"}
       </p>
+      <p className="mt-4 font-[family-name:var(--font-display)] text-[34px] leading-[1.1] text-[#7fd6a4] md:text-[40px]">
+        {es ? "Calcule su ahorro" : "Calculate your savings"}
+      </p>
+      <p className="mt-3 text-[15px] leading-relaxed text-bone/85">
+        {es
+          ? "Escriba su dirección y sus ingresos y vea su impuesto federal, estatal y municipal frente a la tasa de la Ley 60 de Puerto Rico."
+          : "Enter your home address and income to see your federal, state and city tax next to Puerto Rico's Act 60 rate."}
+      </p>
+      <ol className="mt-5 grid gap-2 text-[13.5px] text-bone/80">
+        {(es
+          ? ["Su dirección", "Su estado civil tributario", "Sus ingresos de un año", "Su tasa en Puerto Rico"]
+          : ["Your home address", "Your filing status", "Your income for a year", "Your Puerto Rico rate"]
+        ).map((step, k) => (
+          <li key={step} className="flex items-center gap-3">
+            <span
+              aria-hidden
+              className="grid size-6 shrink-0 place-items-center rounded-full bg-brass-light text-[12px] font-semibold text-basalt"
+            >
+              {k + 1}
+            </span>
+            {step}
+          </li>
+        ))}
+      </ol>
+      <Link
+        href="/act-60#calculator"
+        className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-brass-light px-6 text-[13px] font-semibold tracking-[0.08em] text-basalt transition-opacity hover:opacity-90"
+        data-track="cta_act60_calculator"
+      >
+        {es ? "Calcular mi ahorro" : "Calculate my savings"} <span aria-hidden>→</span>
+      </Link>
     </div>
   );
 }
 
-export function Bar({ label, value, pct, tone }: { label: string; value: string; pct: number; tone: "muted" | "brass" }) {
+export function Bar({
+  label,
+  value,
+  pct,
+  tone,
+}: {
+  label: string;
+  value: string;
+  pct: number;
+  tone: "muted" | "brass";
+}) {
   return (
     <div>
       <div className="flex justify-between gap-3">
@@ -146,7 +130,10 @@ export function Bar({ label, value, pct, tone }: { label: string; value: string;
       </div>
       <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-bone/10">
         <div
-          className={cn("h-full rounded-full transition-[width] duration-[900ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]", tone === "brass" ? "bg-brass-light" : "bg-bone/45")}
+          className={cn(
+            "h-full rounded-full transition-[width] duration-[900ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+            tone === "brass" ? "bg-brass-light" : "bg-bone/45",
+          )}
           style={{ width: `${Math.max(pct, pct > 0 ? 1.5 : 0)}%` }}
         />
       </div>
@@ -161,7 +148,9 @@ export function HealthCheck({ es, items }: { es: boolean; items: string[] }) {
   return (
     <div ref={ref} className={panel} data-widget="health" data-seen={seen ? "" : undefined}>
       <div className="flex items-center justify-between">
-        <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Chequeo ORA" : "ORA health check"}</p>
+        <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">
+          {es ? "Chequeo ORA" : "ORA health check"}
+        </p>
         <span className="flex items-center gap-2 text-[11px] text-bone/80">
           <span className="why-pulse size-2 rounded-full bg-brass-light" />
           {es ? "En curso" : "In progress"}
@@ -169,15 +158,40 @@ export function HealthCheck({ es, items }: { es: boolean; items: string[] }) {
       </div>
       {/* A heartbeat line that draws itself across the panel, again and again. */}
       <svg viewBox="0 0 300 60" className="mt-4 h-14 w-full" aria-hidden>
-        <path d="M0 32 H70 l8 -6 l8 6 H120 l6 -22 l8 44 l7 -30 l5 8 H190 l8 -5 l8 5 H300" fill="none" stroke="rgb(247 243 236 / 0.15)" strokeWidth="2" />
-        <path className="why-ecg" d="M0 32 H70 l8 -6 l8 6 H120 l6 -22 l8 44 l7 -30 l5 8 H190 l8 -5 l8 5 H300" fill="none" stroke="var(--color-brass-light)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" pathLength={100} />
+        <path
+          d="M0 32 H70 l8 -6 l8 6 H120 l6 -22 l8 44 l7 -30 l5 8 H190 l8 -5 l8 5 H300"
+          fill="none"
+          stroke="rgb(247 243 236 / 0.15)"
+          strokeWidth="2"
+        />
+        <path
+          className="why-ecg"
+          d="M0 32 H70 l8 -6 l8 6 H120 l6 -22 l8 44 l7 -30 l5 8 H190 l8 -5 l8 5 H300"
+          fill="none"
+          stroke="var(--color-brass-light)"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          pathLength={100}
+        />
       </svg>
       <ul className="mt-3 grid gap-2.5">
         {items.map((it, i) => (
-          <li key={it} className="why-tick flex items-center gap-3 text-[14px]" style={{ "--d": `${300 + i * 450}ms` } as React.CSSProperties}>
+          <li
+            key={it}
+            className="why-tick flex items-center gap-3 text-[14px]"
+            style={{ "--d": `${300 + i * 450}ms` } as React.CSSProperties}
+          >
             <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brass-light text-basalt">
               <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden>
-                <path d="M2.5 6.5 5 9l4.5-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2.5 6.5 5 9l4.5-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </span>
             {it}
@@ -222,12 +236,29 @@ export function TravelRoute({ es, items }: { es: boolean; items: string[] }) {
 
   return (
     <div ref={ref} className={panel} data-widget="travel">
-      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Su llegada" : "Your arrival"}</p>
+      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">
+        {es ? "Su llegada" : "Your arrival"}
+      </p>
       <svg viewBox="0 0 300 120" className="mt-3 h-28 w-full" aria-hidden>
-        <path ref={path} d="M24 30 C 110 -6, 210 20, 270 92" fill="none" stroke="rgb(247 243 236 / 0.35)" strokeWidth="1.5" strokeDasharray="3 6" />
+        <path
+          ref={path}
+          d="M24 30 C 110 -6, 210 20, 270 92"
+          fill="none"
+          stroke="rgb(247 243 236 / 0.35)"
+          strokeWidth="1.5"
+          strokeDasharray="3 6"
+        />
         <circle cx="24" cy="30" r="4" fill="var(--color-bone)" />
         <circle cx="270" cy="92" r="5" fill="var(--color-brass-light)" />
-        <circle className="why-ping" cx="270" cy="92" r="5" fill="none" stroke="var(--color-brass-light)" strokeWidth="1.5" />
+        <circle
+          className="why-ping"
+          cx="270"
+          cy="92"
+          r="5"
+          fill="none"
+          stroke="var(--color-brass-light)"
+          strokeWidth="1.5"
+        />
         <text x="24" y="52" fill="rgb(247 243 236 / 0.8)" fontSize="10" textAnchor="start">
           {es ? "EE. UU." : "US mainland"}
         </text>
@@ -235,15 +266,24 @@ export function TravelRoute({ es, items }: { es: boolean; items: string[] }) {
           Dorado, PR
         </text>
         <g ref={plane} transform="translate(24 30)">
-          <path d="M8 0 L-6 -5 L-3 0 L-6 5 Z M-1 0 L-5 -10 L-2 -10 L4 0 L-2 10 L-5 10 Z" fill="var(--color-bone)" />
+          <path
+            d="M8 0 L-6 -5 L-3 0 L-6 5 Z M-1 0 L-5 -10 L-2 -10 L4 0 L-2 10 L-5 10 Z"
+            fill="var(--color-bone)"
+          />
         </g>
       </svg>
       <ul className="mt-2 grid gap-2">
         {items.map((it, i) => (
-          <li key={it} className="flex items-center justify-between gap-3 rounded-xl bg-bone/[0.07] px-3.5 py-2.5 text-[14px] ring-1 ring-bone/10">
+          <li
+            key={it}
+            className="flex items-center justify-between gap-3 rounded-xl bg-bone/[0.07] px-3.5 py-2.5 text-[14px] ring-1 ring-bone/10"
+          >
             {it}
             <span className="flex items-center gap-2 text-[11px] text-bone/75">
-              <span className="why-pulse size-2 rounded-full bg-brass-light" style={{ animationDelay: `${i * 400}ms` }} />
+              <span
+                className="why-pulse size-2 rounded-full bg-brass-light"
+                style={{ animationDelay: `${i * 400}ms` }}
+              />
               {es ? "Listo" : "Ready"}
             </span>
           </li>
@@ -259,17 +299,25 @@ export function ResilienceGrid({ es, items }: { es: boolean; items: string[] }) 
   const [ref, seen] = useSeen<HTMLDivElement>();
   return (
     <div ref={ref} className={panel} data-widget="resilience" data-seen={seen ? "" : undefined}>
-      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Resiliente por diseño" : "Resilient by design"}</p>
+      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">
+        {es ? "Resiliente por diseño" : "Resilient by design"}
+      </p>
       <dl className="mt-4 grid grid-cols-2 gap-3 border-b border-bone/15 pb-4">
         <div>
           <dt className="sr-only">{es ? "Ingeniería para huracanes" : "Hurricane-rated engineering"}</dt>
-          <dd className="font-[family-name:var(--font-display)] text-[34px] leading-none text-bone">{es ? "Cat. 5" : "Cat. 5"}</dd>
-          <dd aria-hidden className="mt-1.5 text-[11px] tracking-[0.12em] text-bone/70 uppercase">{es ? "Ingeniería para huracanes" : "Hurricane-rated"}</dd>
+          <dd className="font-[family-name:var(--font-display)] text-[34px] leading-none text-bone">
+            {es ? "Cat. 5" : "Cat. 5"}
+          </dd>
+          <dd aria-hidden className="mt-1.5 text-[11px] tracking-[0.12em] text-bone/70 uppercase">
+            {es ? "Ingeniería para huracanes" : "Hurricane-rated"}
+          </dd>
         </div>
         <div>
           <dt className="sr-only">{es ? "Seguridad en el lugar" : "On-site security"}</dt>
           <dd className="font-[family-name:var(--font-display)] text-[34px] leading-none text-bone">24/7</dd>
-          <dd aria-hidden className="mt-1.5 text-[11px] tracking-[0.12em] text-bone/70 uppercase">{es ? "Seguridad en el lugar" : "On-site security"}</dd>
+          <dd aria-hidden className="mt-1.5 text-[11px] tracking-[0.12em] text-bone/70 uppercase">
+            {es ? "Seguridad en el lugar" : "On-site security"}
+          </dd>
         </div>
       </dl>
       <ul className="mt-4 grid grid-cols-3 gap-2">
@@ -283,7 +331,14 @@ export function ResilienceGrid({ es, items }: { es: boolean; items: string[] }) 
               {String(i + 1).padStart(2, "0")}
               <span className="grid size-4 place-items-center rounded-full bg-brass-light text-basalt">
                 <svg viewBox="0 0 12 12" width="8" height="8" aria-hidden>
-                  <path d="M2.5 6.5 5 9l4.5-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d="M2.5 6.5 5 9l4.5-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </span>
             </span>
@@ -299,7 +354,15 @@ export function ResilienceGrid({ es, items }: { es: boolean; items: string[] }) 
 
 export type Material = { name: string; kind: string; src?: string; color?: string };
 
-export function FinishesShowcase({ es, materials, brands }: { es: boolean; materials: Material[]; brands: string[] }) {
+export function FinishesShowcase({
+  es,
+  materials,
+  brands,
+}: {
+  es: boolean;
+  materials: Material[];
+  brands: string[];
+}) {
   const [ref, seen] = useSeen<HTMLDivElement>();
   const [i, setI] = useState(0);
   const [hold, setHold] = useState(false);
@@ -309,15 +372,28 @@ export function FinishesShowcase({ es, materials, brands }: { es: boolean; mater
     return () => window.clearInterval(id);
   }, [seen, hold, materials.length]);
   const cur = materials[i];
-  const bg = (m: Material) => (m.src ? { backgroundImage: `url(${m.src})`, backgroundSize: "cover", backgroundPosition: "center" } : { background: m.color });
+  const bg = (m: Material) =>
+    m.src
+      ? { backgroundImage: `url(${m.src})`, backgroundSize: "cover", backgroundPosition: "center" }
+      : { background: m.color };
   return (
     <div ref={ref} className={panel} data-widget="finishes" onMouseLeave={() => setHold(false)}>
-      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">{es ? "Sus acabados" : "Your finishes"}</p>
+      <p className="text-[11px] font-semibold tracking-[0.24em] text-brass-light uppercase">
+        {es ? "Sus acabados" : "Your finishes"}
+      </p>
       <div className="mt-4 flex items-center gap-4">
-        <div key={cur.name} className="why-swatch size-24 shrink-0 rounded-[14px] ring-2 ring-brass-light/80 md:size-28" style={bg(cur)} role="img" aria-label={cur.name} />
+        <div
+          key={cur.name}
+          className="why-swatch size-24 shrink-0 rounded-[14px] ring-2 ring-brass-light/80 md:size-28"
+          style={bg(cur)}
+          role="img"
+          aria-label={cur.name}
+        />
         <div aria-live="polite">
           <p className="text-[11px] tracking-[0.18em] text-bone/65 uppercase">{cur.kind}</p>
-          <p className="mt-1 font-[family-name:var(--font-display)] text-[26px] leading-tight text-bone">{cur.name}</p>
+          <p className="mt-1 font-[family-name:var(--font-display)] text-[26px] leading-tight text-bone">
+            {cur.name}
+          </p>
         </div>
       </div>
       <ul className="mt-5 grid grid-cols-6 gap-1.5">
@@ -336,13 +412,18 @@ export function FinishesShowcase({ es, materials, brands }: { es: boolean; mater
               onClick={() => setI(k)}
               aria-label={`${m.kind}: ${m.name}`}
               aria-pressed={k === i}
-              className={cn("block aspect-square w-full rounded-[8px] ring-1 transition-transform duration-300 hover:scale-110", k === i ? "scale-105 ring-2 ring-brass-light" : "ring-bone/15")}
+              className={cn(
+                "block aspect-square w-full rounded-[8px] ring-1 transition-transform duration-300 hover:scale-110",
+                k === i ? "scale-105 ring-2 ring-brass-light" : "ring-bone/15",
+              )}
               style={bg(m)}
             />
           </li>
         ))}
       </ul>
-      <p className="mt-5 border-t border-bone/15 pt-4 text-[11px] leading-relaxed tracking-[0.16em] text-bone/75 uppercase">{brands.join(" · ")}</p>
+      <p className="mt-5 border-t border-bone/15 pt-4 text-[11px] leading-relaxed tracking-[0.16em] text-bone/75 uppercase">
+        {brands.join(" · ")}
+      </p>
     </div>
   );
 }

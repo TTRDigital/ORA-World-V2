@@ -119,3 +119,12 @@ test("filing status and typed amounts", async ({ page }) => {
   await expect.poll(amount(page, "Total capital gains")).toBe(20_000_000);
   await expect.poll(amount(page, "Estimated Puerto Rico tax")).toBe(800_000);
 });
+
+// Client, 27 Nov: the homepage card has no calculator, just "Calculate your savings" and a link to the full one.
+test("homepage card links to the calculator", async ({ page }) => {
+  await page.goto("/en");
+  const card = page.locator('[data-widget="tax"]');
+  await expect(card).toContainText("Calculate your savings");
+  await expect(card.locator('input[type="range"]')).toHaveCount(0);
+  await expect(card.getByRole("link", { name: /calculate my savings/i })).toHaveAttribute("href", "/en/act-60#calculator");
+});
