@@ -19,9 +19,12 @@ export type LocalTables = {
   OR: {
     metroRate: number;
     metroThreshold: number;
+    /** Married filing jointly (Metro 2026 tables; Multnomah County Preschool for All). */
+    metroThresholdJoint: number;
     metroPlaces: string[];
     multnomahFips: string;
     multnomah: Bracket[];
+    multnomahJoint: Bracket[];
   };
   OH: Record<string, Rate & { base: "traditional" | "earned" }>;
   IA: Record<string, Rate>;
@@ -638,6 +641,7 @@ export const LOCAL: LocalTables = {
   OR: {
     metroRate: 0.01,
     metroThreshold: 128000,
+    metroThresholdJoint: 205000,
     metroPlaces: [
       "Beaverton city",
       "Cornelius city",
@@ -665,6 +669,10 @@ export const LOCAL: LocalTables = {
       "Wood Village city",
     ],
     multnomahFips: "41051",
+    multnomahJoint: [
+      [200000, 0.015],
+      [400000, 0.03],
+    ],
     multnomah: [
       [125000, 0.015],
       [250000, 0.03],

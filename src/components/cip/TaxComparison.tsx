@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { cn } from "@/lib/utils";
-import { compound, estimate, JURISDICTIONS, type LocalTax } from "@/lib/capitalGainsTax";
+import { compound, estimate, JURISDICTIONS, type LocalTax, type Status } from "@/lib/capitalGainsTax";
 import { panel, useSeen, useTween } from "./WhyWidgets";
 
 /**
@@ -20,6 +20,8 @@ export function TaxComparison({ es }: { es: boolean }) {
   const [growth, setGrowth] = useState<0.1 | 0.15 | 0.2>(0.1);
   const [years, setYears] = useState<10 | 20 | 30>(20);
   const [rate, setRate] = useState<0 | 0.04>(0.04);
+  // Client, 27 Nov: single or married filing jointly (married rates differ federally and in every state).
+  const [status, setStatus] = useState<Status>("single");
   // Client, 27 Nov: the address only, no state list ("it's going to be city taxes"). Until an address is found the
   // estimate is federal tax only. A city or ZIP without a street still finds the state (see /api/tax-place).
   const [address, setAddress] = useState("");
@@ -59,11 +61,11 @@ export function TaxComparison({ es }: { es: boolean }) {
     maximumFractionDigits: 0,
   });
   const pct = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "percent", maximumFractionDigits: 0 });
-  const e = estimate({ gain, ordinary }, code, rate, place?.locals ?? undefined);
+  const e = estimate({ gain, ordinary }, code, rate, place?.locals ?? undefined, status);
   const j = JURISDICTIONS.find((x) => x.code === code);
 
   const federal = useTween(e.federal, seen);
-  const stateLocal = useTween(e.stateLocal, seen);
+  const stateT = useTween(e.state, seen);
   const current = useTween(e.current, seen);
   const pr = useTween(e.pr, seen);
   const savings = useTween(e.savings, seen);
@@ -189,11 +191,45 @@ export function TaxComparison({ es }: { es: boolean }) {
             </div>
           </form>
 
+          <div className="mt-5">
+            <p id={`${addressId}-status`} className="text-[13px] text-bone/80">
+              {es ? "Estado civil tributario" : "Filing status"}
+            </p>
+            <div
+              role="radiogroup"
+              aria-labelledby={`${addressId}-status`}
+              className="mt-2 inline-flex rounded-full bg-bone/10 p-0.5 text-[12px] ring-1 ring-bone/15"
+            >
+              {(["single", "mfj"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  role="radio"
+                  aria-checked={status === v}
+                  onClick={() => setStatus(v)}
+                  className={cn(
+                    "min-h-9 rounded-full px-4 font-semibold transition-colors",
+                    status === v ? "bg-bone text-basalt" : "text-bone/80 hover:text-bone",
+                  )}
+                >
+                  {v === "single"
+                    ? es
+                      ? "Soltero"
+                      : "Single"
+                    : es
+                      ? "Casados, declaración conjunta"
+                      : "Married, filing jointly"}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <Slider
             label={es ? "Ganancias de capital a largo plazo" : "Long-term capital gains"}
             value={gain}
             min={100_000}
             max={10_000_000}
+            hardMax={500_000_000}
             step={50_000}
             onChange={setGain}
             format={money.format}
@@ -207,6 +243,7 @@ export function TaxComparison({ es }: { es: boolean }) {
             value={ordinary}
             min={0}
             max={5_000_000}
+            hardMax={500_000_000}
             step={25_000}
             onChange={setOrdinary}
             format={money.format}
@@ -283,10 +320,14 @@ export function TaxComparison({ es }: { es: boolean }) {
               label={es ? "Impuesto federal estimado" : "Estimated federal tax"}
               value={money.format(federal)}
             />
+            {/* Client, 24 Nov: "explain state, city and other taxes": the state, then each local tax on its own line. */}
             <Row
-              label={es ? "Impuestos estatales y locales estimados" : "Estimated state and local taxes"}
-              value={money.format(stateLocal)}
+              label={`${es ? "Impuesto estatal estimado" : "Estimated state tax"}${j ? ` (${es ? (j.nameEs ?? j.name) : j.name})` : ""}`}
+              value={money.format(stateT)}
             />
+            {e.locals.map((l) => (
+              <Row key={l.name} label={l.name} value={money.format(l.amount)} />
+            ))}
             <Row
               label={
                 es
@@ -342,8 +383,8 @@ export function TaxComparison({ es }: { es: boolean }) {
 
       <p className="mt-4 text-[10.5px] leading-snug text-bone/60 lg:mt-8">
         {es
-          ? "Estimaciones para 2026: contribuyente soltero, las ganancias y el ingreso ordinario indicados como único ingreso del año, intereses y dividendos gravados como ingreso ordinario, tasas federales a largo plazo de 0%, 15% y 20% más el impuesto de 3.8% sobre ingresos netos de inversión, y los tramos, deducciones y reglas de ganancias de capital publicados por cada estado."
-          : "2026 estimates: a single filer, the gains and ordinary income above as the only income for the year, interest and dividends taxed as ordinary income, federal long-term rates of 0%, 15% and 20% plus the 3.8% net investment income tax, and each state's published brackets, deductions and capital gains rules."}
+          ? `Estimaciones para 2026: ${status === "mfj" ? "matrimonio con declaración conjunta" : "contribuyente soltero"}, las ganancias y el ingreso ordinario indicados como único ingreso del año, intereses y dividendos gravados como ingreso ordinario, tasas federales a largo plazo de 0%, 15% y 20% más el impuesto de 3.8% sobre ingresos netos de inversión, y los tramos, deducciones y reglas de ganancias de capital publicados por cada estado.`
+          : `2026 estimates: ${status === "mfj" ? "a married couple filing jointly" : "a single filer"}, the gains and ordinary income above as the only income for the year, interest and dividends taxed as ordinary income, federal long-term rates of 0%, 15% and 20% plus the 3.8% net investment income tax, and each state's published brackets, deductions and capital gains rules.`}
         {j ? ` ${es ? (j.noteEs ?? j.note) : j.note}` : ""}
       </p>
       <p className="mt-2 text-[10.5px] leading-snug text-bone/60">
@@ -369,6 +410,7 @@ function Slider({
   value,
   min,
   max,
+  hardMax,
   step,
   onChange,
   format,
@@ -377,29 +419,49 @@ function Slider({
   value: number;
   min: number;
   max: number;
+  /** Typed amounts can go above the slider's range, up to this. */
+  hardMax: number;
   step: number;
   onChange: (v: number) => void;
   format: (v: number) => string;
 }) {
+  const id = useId();
+  const [draft, setDraft] = useState<string | null>(null);
+  const commit = () => {
+    if (draft == null) return;
+    const n = Number(draft.replace(/[^\d.]/g, ""));
+    if (Number.isFinite(n) && draft.trim() !== "") onChange(Math.min(hardMax, Math.max(0, Math.round(n))));
+    setDraft(null);
+  };
   return (
-    <label className="mt-5 block">
-      <span className="flex items-baseline justify-between gap-3 text-[13px] text-bone/80">
-        {label}
-        <b className="font-[family-name:var(--font-display)] text-[22px] font-normal text-bone tabular-nums">
-          {format(value)}
-        </b>
-      </span>
+    <div className="mt-5">
+      <div className="flex items-center justify-between gap-3">
+        <label htmlFor={id} className="text-[13px] text-bone/80">
+          {label}
+        </label>
+        <input
+          id={id}
+          inputMode="numeric"
+          value={draft ?? format(value)}
+          onFocus={(ev) => ev.target.select()}
+          onChange={(ev) => setDraft(ev.target.value)}
+          onBlur={commit}
+          onKeyDown={(ev) => ev.key === "Enter" && (ev.currentTarget as HTMLInputElement).blur()}
+          className="w-[14ch] shrink-0 rounded-lg bg-transparent px-2 py-1 text-right font-[family-name:var(--font-display)] text-[20px] md:text-[22px] text-bone tabular-nums ring-1 ring-bone/15 outline-none hover:ring-bone/30 focus-visible:ring-2 focus-visible:ring-brass-light"
+        />
+      </div>
       <input
         type="range"
         min={min}
         max={max}
         step={step}
-        value={value}
+        value={Math.min(value, max)}
         onChange={(ev) => onChange(Number(ev.target.value))}
+        aria-label={label}
         className="mt-2 w-full accent-[var(--color-brass)]"
         aria-valuetext={format(value)}
       />
-    </label>
+    </div>
   );
 }
 

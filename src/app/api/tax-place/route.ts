@@ -68,15 +68,22 @@ export async function GET(req: Request) {
     const m = LOCAL.MD[c];
     locals.push(
       m.brackets
-        ? { name: m.name, base: "taxable", brackets: m.brackets, band: m.mode === "band" }
-        : { name: m.name, base: "taxable", flat: m.rate },
+        ? { name: `${m.name} income tax`, base: "taxable", brackets: m.brackets, band: m.mode === "band" }
+        : { name: `${m.name} income tax`, base: "taxable", flat: m.rate },
     );
   }
   if (state === "IN" && LOCAL.IN[c])
-    locals.push({ name: LOCAL.IN[c].name, base: "taxable", flat: LOCAL.IN[c].rate });
+    locals.push({ name: `${LOCAL.IN[c].name} income tax`, base: "taxable", flat: LOCAL.IN[c].rate });
   if (state === "MI" && LOCAL.MI[placeName]) {
     const m = LOCAL.MI[placeName];
-    locals.push({ name: `${m.name} city income tax`, base: "gain", flat: m.rate, minus: m.exemption });
+    // The exemption is per person, so a married couple filing jointly has two.
+    locals.push({
+      name: `${m.name} city income tax`,
+      base: "gain",
+      flat: m.rate,
+      minus: m.exemption,
+      mfj: { minus: m.exemption * 2 },
+    });
   }
   if (code === "NYC") {
     const nyc = JURISDICTIONS.find((j) => j.code === "NYC")?.local;
@@ -93,12 +100,19 @@ export async function GET(req: Request) {
           [0, 0],
           [LOCAL.OR.metroThreshold, LOCAL.OR.metroRate],
         ],
+        mfj: {
+          brackets: [
+            [0, 0],
+            [LOCAL.OR.metroThresholdJoint, LOCAL.OR.metroRate],
+          ],
+        },
       });
     if (c === LOCAL.OR.multnomahFips)
       locals.push({
         name: "Multnomah County Preschool for All tax",
         base: "taxable",
         brackets: [[0, 0], ...LOCAL.OR.multnomah],
+        mfj: { brackets: [[0, 0], ...LOCAL.OR.multnomahJoint] },
       });
   }
   const sd = district?.GEOID ?? "";

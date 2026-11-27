@@ -30,16 +30,16 @@ for (const path of ["/en/act-60", "/en/b/act-60"]) {
     await expect(calc.getByLabel(/current home address/i)).toBeVisible();
     // Before an address: federal tax only.
     await expect.poll(amount(page, "Estimated federal tax")).toBeGreaterThan(150_000);
-    await expect.poll(amount(page, "Estimated state and local taxes")).toBe(0);
+    await expect.poll(amount(page, "Estimated state tax")).toBe(0);
     // The savings come first, in green.
     const savings = calc.locator("[data-savings]");
     await expect(savings).toContainText("Total potential tax savings");
     expect(await savings.locator("p").nth(2).evaluate((el) => getComputedStyle(el).color)).toBe("rgb(127, 214, 164)");
 
     await useAddress(page, { ok: true, code: "CA", matched: "1 TEST ST, LOS ANGELES, CA", areas: ["Los Angeles County"], locals: [] });
-    await expect.poll(amount(page, "Estimated state and local taxes")).toBeGreaterThan(80_000);
+    await expect.poll(amount(page, "Estimated state tax (California)")).toBeGreaterThan(80_000);
     await useAddress(page, { ok: true, code: "TX", matched: "1 TEST ST, AUSTIN, TX", areas: ["Travis County"], locals: [] });
-    await expect.poll(amount(page, "Estimated state and local taxes")).toBe(0);
+    await expect.poll(amount(page, "Estimated state tax (Texas)")).toBe(0);
     await expect(calc.locator("[data-place]")).toContainText("No local income tax on capital gains at this address.");
 
     // The 0% regime leaves no Puerto Rico tax.
@@ -56,9 +56,14 @@ test("an address adds the local taxes found there", async ({ page, request }) =>
   await page.goto("/en/act-60");
   await page.locator('[data-widget="tax-compare"]').scrollIntoViewIfNeeded();
   // Michigan 4.25% of the $1,000,000 gain less the $5,900 exemption, then Detroit's 2.4% less the $600 exemption.
-  await useAddress(page, { ok: true, code: "MI", matched: "2 WOODWARD AVE, DETROIT, MI, 48226", areas: ["Wayne County", "Detroit city"], locals: [{ name: "Detroit city income tax", base: "gain", flat: 0.024, minus: 600 }] });
+  await useAddress(page, { ok: true, code: "MI", matched: "2 WOODWARD AVE, DETROIT, MI, 48226", areas: ["Wayne County", "Detroit city"], locals: [{ name: "Detroit city income tax", base: "gain", flat: 0.024, minus: 600, mfj: { minus: 1200 } }] });
   await expect(page.locator("[data-place]")).toContainText("Detroit city income tax (2.4%)");
-  await expect.poll(amount(page, "Estimated state and local taxes")).toBe(42_249 + 23_986);
+  // Client, 24 Nov: "explain state, city and other taxes": the state and the city on separate lines.
+  await expect.poll(amount(page, "Estimated state tax (Michigan)")).toBe(42_249);
+  await expect.poll(amount(page, "Detroit city income tax")).toBe(23_986);
+  // A married couple filing jointly has two Detroit exemptions ($600 each).
+  await page.locator('[data-widget="tax-compare"]').getByRole("radio", { name: "Married, filing jointly" }).click();
+  await expect.poll(amount(page, "Detroit city income tax")).toBe(23_971);
 });
 
 test("a city or ZIP without a street still finds the state", async ({ page }) => {
@@ -66,7 +71,7 @@ test("a city or ZIP without a street still finds the state", async ({ page }) =>
   await page.locator('[data-widget="tax-compare"]').scrollIntoViewIfNeeded();
   await useAddress(page, { ok: true, code: "MI", matched: null, areas: [], locals: null, partial: true });
   await expect(page.locator("[data-place]")).toContainText("We found your state (Michigan) but not the exact address");
-  await expect.poll(amount(page, "Estimated state and local taxes")).toBe(42_249);
+  await expect.poll(amount(page, "Estimated state tax (Michigan)")).toBe(42_249);
 });
 
 // Client meeting, 24 Nov: a second line for qualified ordinary income, and the yearly savings compounded.
@@ -93,4 +98,21 @@ test("ordinary income and the compounded savings", async ({ page }) => {
   const grown = async () => Number((await box.locator("p").nth(2).textContent())!.replace(/[^\d]/g, ""));
   await expect.poll(grown).toBeGreaterThan(8_420_000);
   await expect.poll(grown).toBeLessThan(8_425_000);
+});
+
+// Client, 27 Nov: single or married filing jointly, and amounts typed in (his $10M-a-year example and larger).
+test("filing status and typed amounts", async ({ page }) => {
+  await page.goto("/en/act-60");
+  const calc = page.locator('[data-widget="tax-compare"]');
+  await calc.scrollIntoViewIfNeeded();
+  await expect.poll(amount(page, "Estimated federal tax")).toBe(192_488);
+  await calc.getByRole("radio", { name: "Married, filing jointly" }).click();
+  // Joint: $32,200 deduction, 15% from $98,900 and 20% from $613,700, NIIT over $250,000.
+  await expect.poll(amount(page, "Estimated federal tax")).toBe(176_540);
+  await expect(calc).toContainText("a married couple filing jointly");
+  const box = calc.getByLabel("Long-term capital gains", { exact: true }).first();
+  await box.fill("20000000");
+  await box.press("Enter");
+  await expect.poll(amount(page, "Total capital gains")).toBe(20_000_000);
+  await expect.poll(amount(page, "Estimated Puerto Rico tax")).toBe(800_000);
 });

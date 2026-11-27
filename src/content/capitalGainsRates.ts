@@ -20,6 +20,8 @@ export type LocalTax = {
   brackets?: Bracket[];
   band?: boolean;
   minus?: number;
+  /** Married filing jointly: thresholds or exemptions that differ (Oregon's Metro and Multnomah, Michigan cities). */
+  mfj?: { brackets?: Bracket[]; minus?: number };
 };
 export type Jurisdiction = {
   code: string;
@@ -33,7 +35,8 @@ export type Jurisdiction = {
   /** Deductions that shrink with income: full up to phase[0], down to `keep` of the amount at phase[1] (straight line). */
   phased?: { amount: number; phase: [number, number]; keep?: number }[];
   credit?: number;
-  exclusion?: { pct: number; cap?: number | null };
+  /** Share of long-term gains excluded (capped at `cap`); gains above `exemptAbove` are not taxed at all (Arkansas). */
+  exclusion?: { pct: number; cap?: number | null; exemptAbove?: number };
   brackets: Bracket[];
   /** base: "taxable" (default), "gain" (capital gains only) or "investment" (gains, interest and dividends);
    *  test "agi": the threshold is tested on total income; mode "all": the whole base is taxed once over it. */
@@ -57,6 +60,10 @@ export type Jurisdiction = {
     flatRate: number;
   };
   local?: LocalTax;
+  /** Married filing jointly (client, 27 Nov): only the fields that differ from the single filer. */
+  mfj?: Partial<
+    Omit<Jurisdiction, "code" | "name" | "nameEs" | "taxYear" | "note" | "noteEs" | "sources" | "mfj">
+  >;
   note: string;
   noteEs?: string;
   sources: string[];
@@ -85,6 +92,24 @@ export const FEDERAL = {
     "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
     "https://www.irs.gov/individuals/net-investment-income-tax",
   ],
+  mfj: {
+    standardDeduction: 32200,
+    ordinaryBrackets: [
+      [0, 0.1],
+      [24800, 0.12],
+      [100800, 0.22],
+      [211400, 0.24],
+      [403550, 0.32],
+      [512450, 0.35],
+      [768700, 0.37],
+    ] as Bracket[],
+    ltcgBrackets: [
+      [0, 0],
+      [98900, 0.15],
+      [613700, 0.2],
+    ] as Bracket[],
+    niit: { rate: 0.038, threshold: 250000 },
+  },
 };
 
 export const JURISDICTIONS: Jurisdiction[] = [
@@ -101,6 +126,14 @@ export const JURISDICTIONS: Jurisdiction[] = [
     ],
     sources: ["https://www.revenue.alabama.gov/wp-content/uploads/2026/01/25f40bk.pdf"],
     deductsFederalTax: true,
+    mfj: {
+      deduction: 8000,
+      brackets: [
+        [0, 0.02],
+        [1000, 0.04],
+        [6000, 0.05],
+      ],
+    },
     note: "Alabama: 2% to 5% by bracket, after deducting the federal income tax paid.",
     noteEs: "Alabama: de 2% a 5% según el tramo, tras deducir el impuesto federal pagado.",
   },
@@ -133,6 +166,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://azdor.gov/forms/individual-income-tax-highlights",
       "https://www.azleg.gov/legtext/57leg/2R/summary/S.4168-1861ATT_ASENACTED.DOCX.htm",
     ],
+    mfj: {
+      deduction: 32200,
+    },
     note: "Arizona: a flat 2.5%, with 25% of long-term gains on assets bought after 2011 subtracted.",
     noteEs:
       "Arizona: una tasa fija de 2.5%, con el 25% de las ganancias a largo plazo de activos comprados después de 2011 restado.",
@@ -147,6 +183,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
     exclusion: {
       pct: 0.5,
       cap: null,
+      exemptAbove: 10000000,
     },
     brackets: [
       [0, 0.02],
@@ -158,6 +195,10 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.dfa.arkansas.gov/wp-content/uploads/2025_AR1000F_and_AR1000NR_Instructions.pdf",
       "https://www.dfa.arkansas.gov/wp-content/uploads/whformula_2026.pdf",
     ],
+    mfj: {
+      deduction: 4940,
+      credit: 58,
+    },
     note: "Arkansas: up to 3.7% by bracket, with 50% of long-term gains excluded and gains above $10 million exempt.",
     noteEs:
       "Arkansas: hasta 3.7% según el tramo, con el 50% de las ganancias a largo plazo excluido y las ganancias de más de $10 millones exentas.",
@@ -190,6 +231,20 @@ export const JURISDICTIONS: Jurisdiction[] = [
         rate: 0.01,
       },
     ],
+    mfj: {
+      deduction: 11800,
+      brackets: [
+        [0, 0.01],
+        [22912, 0.02],
+        [54314, 0.04],
+        [85722, 0.06],
+        [118996, 0.08],
+        [150394, 0.093],
+        [768218, 0.103],
+        [921854, 0.113],
+        [1536426, 0.123],
+      ],
+    },
     note: "California: 1% to 12.3% by bracket, plus the 1% Behavioral Health Services Tax above $1 million. No lower rate for capital gains.",
     noteEs:
       "California: de 1% a 12.3% según el tramo, más el impuesto de 1% para servicios de salud conductual sobre $1 millón. Sin tasa reducida para ganancias de capital.",
@@ -199,7 +254,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
     name: "Colorado",
     nameEs: "Colorado",
     taxYear: 2026,
-    deduction: 16100,
+    deduction: 1000,
     brackets: [[0, 0.044]],
     sources: [
       "https://tax.colorado.gov/sites/tax/files/documents/Book104_2025.pdf",
@@ -207,10 +262,19 @@ export const JURISDICTIONS: Jurisdiction[] = [
     ],
     phased: [
       {
-        amount: 4100,
+        amount: 15100,
         phase: [300000, 300001],
       },
     ],
+    mfj: {
+      deduction: 2000,
+      phased: [
+        {
+          amount: 30200,
+          phase: [300000, 300001],
+        },
+      ],
+    },
     note: "Colorado: a flat 4.4%.",
     noteEs: "Colorado: una tasa fija de 4.4%.",
   },
@@ -235,6 +299,23 @@ export const JURISDICTIONS: Jurisdiction[] = [
       span: 50000,
       flatAbove: 540000,
       flatRate: 0.0699,
+    },
+    mfj: {
+      brackets: [
+        [0, 0.02],
+        [20000, 0.045],
+        [100000, 0.055],
+        [200000, 0.06],
+        [400000, 0.065],
+        [500000, 0.069],
+        [1000000, 0.0699],
+      ],
+      recapture: {
+        bands: [],
+        span: 100000,
+        flatAbove: 1080000,
+        flatRate: 0.0699,
+      },
     },
     note: "Connecticut: 2% to 6.99% by bracket; at higher incomes the 6.99% rate applies to all taxable income.",
     noteEs:
@@ -262,6 +343,10 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://legis.delaware.gov/BillDetail/141813",
       "https://legis.delaware.gov/BillDetail/142529",
     ],
+    mfj: {
+      deduction: 6500,
+      credit: 220,
+    },
     note: "Delaware: 2.2% to 6.6% by bracket.",
     noteEs: "Delaware: de 2.2% a 6.6% según el tramo.",
   },
@@ -285,6 +370,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://code.dccouncil.gov/us/dc/council/code/sections/47-1801.04",
       "https://www.govinfo.gov/content/pkg/PLAW-119publ78/html/PLAW-119publ78.htm",
     ],
+    mfj: {
+      deduction: 30000,
+    },
     note: "District of Columbia: 4% to 10.75% by bracket.",
     noteEs: "Distrito de Columbia: de 4% a 10.75% según el tramo.",
   },
@@ -311,6 +399,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.legis.ga.gov/api/legislation/document/20252026/249080",
       "https://gov.georgia.gov/press-releases/2026-05-11/gov-kemp-signs-legislation-lowering-taxes-and-supporting-economic-growth",
     ],
+    mfj: {
+      deduction: 30000,
+    },
     note: "Georgia: a flat 4.99%.",
     noteEs: "Georgia: una tasa fija de 4.99%.",
   },
@@ -349,6 +440,33 @@ export const JURISDICTIONS: Jurisdiction[] = [
       [275000, 0.1],
       [325000, 0.11],
     ],
+    mfj: {
+      deduction: 18288,
+      brackets: [
+        [0, 0.014],
+        [19200, 0.032],
+        [28800, 0.055],
+        [38400, 0.064],
+        [48000, 0.068],
+        [72000, 0.072],
+        [96000, 0.076],
+        [130286, 0.0725],
+      ],
+      ordinaryBrackets: [
+        [0, 0.014],
+        [19200, 0.032],
+        [28800, 0.055],
+        [38400, 0.064],
+        [48000, 0.068],
+        [72000, 0.072],
+        [96000, 0.076],
+        [250000, 0.079],
+        [350000, 0.0825],
+        [450000, 0.09],
+        [550000, 0.1],
+        [650000, 0.11],
+      ],
+    },
     note: "Hawaii: rates up to 11% on interest, dividends and other ordinary income, but long-term capital gains are taxed at no more than 7.25%.",
     noteEs:
       "Hawái: tasas de hasta 11% sobre intereses, dividendos y otros ingresos ordinarios, pero las ganancias de capital a largo plazo pagan como máximo 7.25%.",
@@ -368,6 +486,13 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://tax.idaho.gov/wp-content/uploads/pubs/EPB00744/EPB00744_07-23-2026.pdf",
       "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
     ],
+    mfj: {
+      deduction: 32200,
+      brackets: [
+        [0, 0],
+        [9622, 0.053],
+      ],
+    },
     note: "Idaho: 5.3% above a zero bracket. Idaho's 60% exclusion applies only to Idaho real property, so it is not applied here.",
     noteEs:
       "Idaho: 5.3% por encima de un tramo exento. La exclusión de 60% de Idaho aplica solo a bienes raíces en Idaho, por lo que no se aplica aquí.",
@@ -389,6 +514,14 @@ export const JURISDICTIONS: Jurisdiction[] = [
         phase: [250000, 250001],
       },
     ],
+    mfj: {
+      phased: [
+        {
+          amount: 5850,
+          phase: [500000, 500001],
+        },
+      ],
+    },
     note: "Illinois: a flat 4.95%.",
     noteEs: "Illinois: una tasa fija de 4.95%.",
   },
@@ -407,6 +540,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       name: "County income tax",
       base: "taxable",
       flat: 0.0202,
+    },
+    mfj: {
+      deduction: 2000,
     },
     note: "Indiana: a flat 2.95%, plus county income tax (2.02% in Marion County, Indianapolis; 0.5% to 3% statewide).",
     noteEs:
@@ -431,6 +567,10 @@ export const JURISDICTIONS: Jurisdiction[] = [
       base: "stateTax",
       flat: 0.05,
     },
+    mfj: {
+      deduction: 32200,
+      credit: 80,
+    },
     note: "Iowa: a flat 3.8%, plus a typical 5% school district surtax on the state tax.",
     noteEs: "Iowa: una tasa fija de 3.8%, más una sobretasa escolar típica de 5% sobre el impuesto estatal.",
   },
@@ -450,6 +590,13 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.ksrevenue.gov/taxnotices/notice26-11.pdf",
       "https://www.ksrevenue.gov/taxnotices/notice24-08.pdf",
     ],
+    mfj: {
+      deduction: 26560,
+      brackets: [
+        [0, 0.052],
+        [46000, 0.0558],
+      ],
+    },
     note: "Kansas: 5.2% to 5.58% by bracket.",
     noteEs: "Kansas: de 5.2% a 5.58% según el tramo.",
   },
@@ -480,6 +627,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://dam.ldr.la.gov/lawspolicies/RIB%2026-019.pdf",
       "https://dam.ldr.la.gov/lawspolicies/RIB%2026-005-Updated%20Withholding%20Tables.pdf",
     ],
+    mfj: {
+      deduction: 25676,
+    },
     note: "Louisiana: a flat 3%.",
     noteEs: "Luisiana: una tasa fija de 3%.",
   },
@@ -507,7 +657,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
       },
       {
         amount: 5300,
-        phase: [341000, 463500],
+        phase: [341000, 466000],
       },
     ],
     surtaxes: [
@@ -516,6 +666,29 @@ export const JURISDICTIONS: Jurisdiction[] = [
         rate: 0.02,
       },
     ],
+    mfj: {
+      brackets: [
+        [0, 0.058],
+        [54850, 0.0675],
+        [129750, 0.0715],
+      ],
+      phased: [
+        {
+          amount: 31400,
+          phase: [204550, 354550],
+        },
+        {
+          amount: 10600,
+          phase: [409150, 534150],
+        },
+      ],
+      surtaxes: [
+        {
+          threshold: 1500000,
+          rate: 0.02,
+        },
+      ],
+    },
     note: "Maine: 5.8% to 7.15% by bracket, plus 2% above $1,000,000.",
     noteEs: "Maine: de 5.8% a 7.15% según el tramo, más 2% sobre $1,000,000.",
   },
@@ -563,6 +736,27 @@ export const JURISDICTIONS: Jurisdiction[] = [
       base: "taxable",
       flat: 0.032,
     },
+    mfj: {
+      deduction: 6850,
+      brackets: [
+        [0, 0.02],
+        [1000, 0.03],
+        [2000, 0.04],
+        [3000, 0.0475],
+        [150000, 0.05],
+        [175000, 0.0525],
+        [225000, 0.055],
+        [300000, 0.0575],
+        [600000, 0.0625],
+        [1200000, 0.065],
+      ],
+      phased: [
+        {
+          amount: 6400,
+          phase: [150000, 200000],
+        },
+      ],
+    },
     note: "Maryland: 2% to 6.5% by bracket, plus 2% on the whole gain above $350,000 of income, plus a typical 3.2% county income tax.",
     noteEs:
       "Maryland: de 2% a 6.5% según el tramo, más 2% sobre toda la ganancia con ingresos de más de $350,000, más un impuesto del condado típico de 3.2%.",
@@ -585,6 +779,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
         rate: 0.04,
       },
     ],
+    mfj: {
+      deduction: 8800,
+    },
     note: "Massachusetts: a flat 5%, plus 4% above $1,107,750.",
     noteEs: "Massachusetts: una tasa fija de 5%, más 4% sobre $1,107,750.",
   },
@@ -601,6 +798,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://detroitmi.gov/departments/office-chief-financial-officer/ocfo-divisions/office-treasury/income-tax/income-tax-information",
       "https://www.michigan.gov/taxes/-/media/Project/Websites/taxes/Forms/City-Withholding/TY2026/5469_ty2026.pdf",
     ],
+    mfj: {
+      deduction: 11800,
+    },
     note: "Michigan: a flat 4.25%. About two dozen cities add their own income tax (Detroit 2.4%, most others 1%); enter your address to include yours.",
     noteEs:
       "Míchigan: una tasa fija de 4.25%. Unas dos docenas de ciudades añaden su propio impuesto (Detroit 2.4%, la mayoría 1%); escriba su dirección para incluir el suyo.",
@@ -610,7 +810,7 @@ export const JURISDICTIONS: Jurisdiction[] = [
     name: "Minnesota",
     nameEs: "Minnesota",
     taxYear: 2026,
-    deduction: 0,
+    deduction: 3060,
     brackets: [
       [0, 0.0535],
       [33310, 0.068],
@@ -625,9 +825,12 @@ export const JURISDICTIONS: Jurisdiction[] = [
     ],
     phased: [
       {
-        amount: 15300,
-        phase: [244400, 652400],
-        keep: 0.2,
+        amount: 2802,
+        phase: [244400, 337800],
+      },
+      {
+        amount: 9438,
+        phase: [337800, 432180],
       },
     ],
     surtaxes: [
@@ -637,6 +840,25 @@ export const JURISDICTIONS: Jurisdiction[] = [
         base: "investment",
       },
     ],
+    mfj: {
+      deduction: 6120,
+      brackets: [
+        [0, 0.0535],
+        [48700, 0.068],
+        [193480, 0.0785],
+        [337930, 0.0985],
+      ],
+      phased: [
+        {
+          amount: 2802,
+          phase: [244400, 337800],
+        },
+        {
+          amount: 21678,
+          phase: [337800, 554580],
+        },
+      ],
+    },
     note: "Minnesota: 5.35% to 9.85% by bracket, plus 1% above $1,000,000.",
     noteEs: "Minnesota: de 5.35% a 9.85% según el tramo, más 1% sobre $1,000,000.",
   },
@@ -654,6 +876,13 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.dor.ms.gov/individual/tax-rates",
       "https://www.dor.ms.gov/individual/individual-income-tax-frequently-asked-questions",
     ],
+    mfj: {
+      deduction: 16600,
+      brackets: [
+        [0, 0],
+        [20000, 0.04],
+      ],
+    },
     note: "Mississippi: a flat 4%.",
     noteEs: "Misisipi: una tasa fija de 4%.",
   },
@@ -683,6 +912,19 @@ export const JURISDICTIONS: Jurisdiction[] = [
       pct: 1,
       cap: null,
     },
+    mfj: {
+      deduction: 32200,
+      brackets: [
+        [0, 0],
+        [2696, 0.02],
+        [5392, 0.025],
+        [8088, 0.03],
+        [10784, 0.035],
+        [13480, 0.04],
+        [16176, 0.045],
+        [18872, 0.047],
+      ],
+    },
     note: "Missouri: no tax on capital gains since 2025; interest and dividends are taxed at up to 4.7%.",
     noteEs:
       "Misuri: sin impuesto sobre ganancias de capital desde 2025; los intereses y dividendos pagan hasta 4.7%.",
@@ -707,6 +949,17 @@ export const JURISDICTIONS: Jurisdiction[] = [
       [0, 0.047],
       [47500, 0.0565],
     ],
+    mfj: {
+      deduction: 32200,
+      brackets: [
+        [0, 0.03],
+        [95000, 0.041],
+      ],
+      ordinaryBrackets: [
+        [0, 0.047],
+        [95000, 0.0565],
+      ],
+    },
     note: "Montana: long-term gains at 3% or 4.1%; interest and dividends at 4.7% or 5.65%.",
     noteEs: "Montana: ganancias a largo plazo al 3% o 4.1%; intereses y dividendos al 4.7% o 5.65%.",
   },
@@ -727,6 +980,15 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://revenue.nebraska.gov/sites/default/files/doc/tax-forms/drafts/f_1040n.pdf",
       "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2715.03",
     ],
+    mfj: {
+      deduction: 17700,
+      credit: 352,
+      brackets: [
+        [0, 0.0246],
+        [8250, 0.0351],
+        [49530, 0.0455],
+      ],
+    },
     note: "Nebraska: 2.46% to 4.55% by bracket.",
     noteEs: "Nebraska: de 2.46% a 4.55% según el tramo.",
   },
@@ -778,6 +1040,19 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.nj.gov/treasury/taxation/pdf/current/1040.pdf",
       "https://www.nj.gov/treasury/taxation/njit10.shtml",
     ],
+    mfj: {
+      deduction: 2000,
+      brackets: [
+        [0, 0.014],
+        [20000, 0.0175],
+        [50000, 0.0245],
+        [70000, 0.035],
+        [80000, 0.05525],
+        [150000, 0.0637],
+        [500000, 0.0897],
+        [1000000, 0.1075],
+      ],
+    },
     note: "New Jersey: 1.4% to 10.75% by bracket.",
     noteEs: "Nueva Jersey: de 1.4% a 10.75% según el tramo.",
   },
@@ -805,6 +1080,17 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://realfile.tax.newmexico.gov/2025pit-1-ins.pdf",
       "https://www.tax.newmexico.gov/individuals/personal-income-tax-information-overview/",
     ],
+    mfj: {
+      deduction: 32200,
+      brackets: [
+        [0, 0.015],
+        [8000, 0.032],
+        [25000, 0.043],
+        [50000, 0.047],
+        [100000, 0.049],
+        [315000, 0.059],
+      ],
+    },
     note: "New Mexico: 1.5% to 5.9% by bracket, the first $2,500 of gains excluded.",
     noteEs: "Nuevo México: de 1.5% a 5.9% según el tramo, con los primeros $2,500 de ganancias excluidos.",
   },
@@ -860,6 +1146,57 @@ export const JURISDICTIONS: Jurisdiction[] = [
       span: 50000,
       flatAbove: 25000000,
       flatRate: 0.109,
+    },
+    mfj: {
+      deduction: 16050,
+      brackets: [
+        [0, 0.039],
+        [17150, 0.044],
+        [23600, 0.0515],
+        [27900, 0.054],
+        [161550, 0.059],
+        [323200, 0.0685],
+        [2155350, 0.0965],
+        [5000000, 0.103],
+        [25000000, 0.109],
+      ],
+      recapture: {
+        bands: [
+          {
+            over: 27900,
+            base: 0,
+            inc: 333,
+            start: 107650,
+          },
+          {
+            over: 161550,
+            base: 333,
+            inc: 807,
+            start: 161550,
+          },
+          {
+            over: 323200,
+            base: 1140,
+            inc: 3071,
+            start: 323200,
+          },
+          {
+            over: 2155350,
+            base: 4211,
+            inc: 60350,
+            start: 2155350,
+          },
+          {
+            over: 5000000,
+            base: 64561,
+            inc: 32500,
+            start: 5000000,
+          },
+        ],
+        span: 50000,
+        flatAbove: 25000000,
+        flatRate: 0.109,
+      },
     },
     note: "New York State: 3.9% to 10.9% by bracket; at higher incomes the top rate reached applies to all taxable income.",
     noteEs:
@@ -929,6 +1266,67 @@ export const JURISDICTIONS: Jurisdiction[] = [
         [50000, 0.03876],
       ],
     },
+    mfj: {
+      deduction: 16050,
+      brackets: [
+        [0, 0.039],
+        [17150, 0.044],
+        [23600, 0.0515],
+        [27900, 0.054],
+        [161550, 0.059],
+        [323200, 0.0685],
+        [2155350, 0.0965],
+        [5000000, 0.103],
+        [25000000, 0.109],
+      ],
+      recapture: {
+        bands: [
+          {
+            over: 27900,
+            base: 0,
+            inc: 333,
+            start: 107650,
+          },
+          {
+            over: 161550,
+            base: 333,
+            inc: 807,
+            start: 161550,
+          },
+          {
+            over: 323200,
+            base: 1140,
+            inc: 3071,
+            start: 323200,
+          },
+          {
+            over: 2155350,
+            base: 4211,
+            inc: 60350,
+            start: 2155350,
+          },
+          {
+            over: 5000000,
+            base: 64561,
+            inc: 32500,
+            start: 5000000,
+          },
+        ],
+        span: 50000,
+        flatAbove: 25000000,
+        flatRate: 0.109,
+      },
+      local: {
+        name: "New York City income tax",
+        base: "taxable",
+        brackets: [
+          [0, 0.03078],
+          [21600, 0.03762],
+          [45000, 0.03819],
+          [90000, 0.03876],
+        ],
+      },
+    },
     note: "New York City: New York State tax (3.9% to 10.9%, with the top rate reached applying to all taxable income at higher incomes) plus New York City income tax of 3.078% to 3.876%.",
     noteEs:
       "Ciudad de Nueva York: impuesto del estado de Nueva York (de 3.9% a 10.9%; con ingresos altos, la tasa más alta alcanzada se aplica a todo el ingreso tributable) más el impuesto de la ciudad de 3.078% a 3.876%.",
@@ -944,6 +1342,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.ncdor.gov/taxes-forms/individual-income-tax/tax-rate-schedules",
       "https://www.ncdor.gov/taxes-forms/individual-income-tax/north-carolina-standard-deduction-or-north-carolina-itemized-deductions",
     ],
+    mfj: {
+      deduction: 25500,
+    },
     note: "North Carolina: a flat 3.99%.",
     noteEs: "Carolina del Norte: una tasa fija de 3.99%.",
   },
@@ -967,6 +1368,14 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.tax.nd.gov/sites/www/files/documents/forms/individual/2025-iit/2025-individual-income-tax-booklet.pdf",
       "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
     ],
+    mfj: {
+      deduction: 32200,
+      brackets: [
+        [0, 0],
+        [82800, 0.0195],
+        [304850, 0.025],
+      ],
+    },
     note: "North Dakota: 1.95% to 2.5% by bracket, 40% of long-term gains excluded.",
     noteEs:
       "Dakota del Norte: de 1.95% a 2.5% según el tramo, con el 40% de las ganancias a largo plazo excluido.",
@@ -992,6 +1401,14 @@ export const JURISDICTIONS: Jurisdiction[] = [
         phase: [499999, 500000],
       },
     ],
+    mfj: {
+      phased: [
+        {
+          amount: 3800,
+          phase: [499999, 500000],
+        },
+      ],
+    },
     note: "Ohio: a flat 2.75%.",
     noteEs: "Ohio: una tasa fija de 2.75%.",
   },
@@ -1010,6 +1427,15 @@ export const JURISDICTIONS: Jurisdiction[] = [
     sources: [
       "https://oklahoma.gov/content/dam/ok/en/tax/documents/forms/software-developers/Dev511-Pkt-26.pdf",
     ],
+    mfj: {
+      deduction: 14700,
+      brackets: [
+        [0, 0],
+        [7500, 0.025],
+        [9800, 0.035],
+        [14400, 0.045],
+      ],
+    },
     note: "Oklahoma: up to 4.5% by bracket. Gains on Oklahoma real property held at least five years can be fully deductible; not applied here.",
     noteEs:
       "Oklahoma: hasta 4.5% según el tramo. Las ganancias por bienes raíces en Oklahoma con al menos cinco años de tenencia pueden deducirse por completo; no se aplica aquí.",
@@ -1032,6 +1458,21 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.portland.gov/revenue/personal-tax",
       "https://multco.us/news/news-release-multnomah-county-commissioners-unanimously-delay-preschool-all-income-tax",
     ],
+    mfj: {
+      deduction: 5800,
+      brackets: [
+        [0, 0.0475],
+        [9100, 0.0675],
+        [22800, 0.0875],
+        [250000, 0.099],
+      ],
+      phased: [
+        {
+          amount: 5942.86,
+          phase: [200000, 200001],
+        },
+      ],
+    },
     note: "Oregon: 4.75% to 9.9% by bracket. Portland Metro and Multnomah County add local taxes on higher incomes; enter your address to include them.",
     noteEs:
       "Oregón: de 4.75% a 9.9% según el tramo. Portland Metro y el condado de Multnomah añaden impuestos locales sobre ingresos altos; escriba su dirección para incluirlos.",
@@ -1072,6 +1513,14 @@ export const JURISDICTIONS: Jurisdiction[] = [
         phase: [261000, 290800],
       },
     ],
+    mfj: {
+      phased: [
+        {
+          amount: 32900,
+          phase: [261000, 290800],
+        },
+      ],
+    },
     note: "Rhode Island: 3.75% to 5.99% by bracket.",
     noteEs: "Rhode Island: de 3.75% a 5.99% según el tramo.",
   },
@@ -1094,6 +1543,14 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://dor.sc.gov/sites/dor/files/policies/IL26-23.pdf",
       "https://www.scstatehouse.gov/code/t12c006.php",
     ],
+    mfj: {
+      phased: [
+        {
+          amount: 30000,
+          phase: [80000, 190000],
+        },
+      ],
+    },
     note: "South Carolina: 1.99% to 5.21% by bracket, 44% of long-term gains excluded.",
     noteEs:
       "Carolina del Sur: de 1.99% a 5.21% según el tramo, con el 44% de las ganancias a largo plazo excluido.",
@@ -1148,6 +1605,14 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://le.utah.gov/Session/2026/bills/enrolled/SB0060.pdf",
       "https://tax.utah.gov/forms/current/tc-40inst.pdf",
     ],
+    mfj: {
+      phased: [
+        {
+          amount: 43416,
+          phase: [37392, 186007],
+        },
+      ],
+    },
     note: "Utah: a flat 4.45%.",
     noteEs: "Utah: una tasa fija de 4.45%.",
   },
@@ -1173,6 +1638,15 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://tax.vermont.gov/sites/tax/files/documents/IN-111-Instr-2025.pdf",
       "https://tax.vermont.gov/sites/tax/files/documents/TaxTables-2026.pdf",
     ],
+    mfj: {
+      deduction: 25900,
+      brackets: [
+        [0, 0.0335],
+        [82500, 0.066],
+        [199450, 0.076],
+        [304000, 0.0875],
+      ],
+    },
     note: "Vermont: 3.35% to 8.75% by bracket, the first $5,000 of gains excluded (2025 rates, the latest published).",
     noteEs:
       "Vermont: de 3.35% a 8.75% según el tramo, con los primeros $5,000 de ganancias excluidos (tasas de 2025, las últimas publicadas).",
@@ -1195,6 +1669,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://www.tax.virginia.gov/exemptions",
       "https://www.tax.virginia.gov/node/35195",
     ],
+    mfj: {
+      deduction: 19360,
+    },
     note: "Virginia: 2% to 5.75% by bracket.",
     noteEs: "Virginia: de 2% a 5.75% según el tramo.",
   },
@@ -1236,6 +1713,9 @@ export const JURISDICTIONS: Jurisdiction[] = [
       "https://tax.wv.gov/Individuals/Pages/PersonalIncomeTaxReductionBill.aspx",
       "https://tax.wv.gov/Documents/PIT/2025/it140.PersonalIncomeTaxFormsAndInstructions.2025.pdf",
     ],
+    mfj: {
+      deduction: 4000,
+    },
     note: "West Virginia: 2.11% to 4.58% by bracket.",
     noteEs: "Virginia Occidental: de 2.11% a 4.58% según el tramo.",
   },
@@ -1265,6 +1745,21 @@ export const JURISDICTIONS: Jurisdiction[] = [
         phase: [28743, 194933],
       },
     ],
+    mfj: {
+      deduction: 1400,
+      brackets: [
+        [0, 0.035],
+        [20150, 0.044],
+        [69260, 0.053],
+        [443630, 0.0765],
+      ],
+      phased: [
+        {
+          amount: 25840,
+          phase: [41486, 228129],
+        },
+      ],
+    },
     note: "Wisconsin: 3.5% to 7.65% by bracket, 30% of long-term gains excluded.",
     noteEs: "Wisconsin: de 3.5% a 7.65% según el tramo, con el 30% de las ganancias a largo plazo excluido.",
   },
