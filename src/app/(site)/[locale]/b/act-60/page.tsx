@@ -36,6 +36,21 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
     <>
       <BHero image={tdm.aerialCoast} locale={locale} eyebrow={es ? "Ley 60 · Puerto Rico" : "Act 60 · Puerto Rico"} title={es ? "Conserve más de lo que gana" : "Keep more of what you earn"} line={x(cip.why.short)} cue={es ? "Desplácese" : "Scroll to explore"} />
 
+      {/* Client, 27 Nov: the calculator first, right after the banner, bigger and in the middle. */}
+      <section id="calculator" aria-labelledby="b-calc-title" className="bg-basalt px-5 py-16 text-bone md:px-10 md:py-24">
+        <div className="mx-auto max-w-[760px] text-center">
+          <h2 id="b-calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-tight md:text-[52px]">{es ? "Una comparación ilustrativa" : "An illustrative comparison"}</h2>
+          <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/75">
+            {es
+              ? "Escriba su dirección, mueva el control y cambie de régimen: la calculadora compara el impuesto federal, estatal, municipal y local estimado donde vive hoy con la tasa de la Ley 60. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado."
+              : "Enter your home address, move the slider and switch the regime: the calculator compares estimated federal, state, city and other local tax where you live today with the Act 60 rate. These are illustrations, not your tax liability or guaranteed savings."}
+          </p>
+        </div>
+        <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">
+          <TaxComparison es={es} />
+        </div>
+      </section>
+
       <section className="bg-bone px-5 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[1100px] text-center">
           <Eyebrow>{es ? "El programa" : "The program"}</Eyebrow>
@@ -54,18 +69,6 @@ export default async function Page({ params }: { params: Promise<{ locale: Local
           ))}
         </dl>
         <p className="mt-6 max-w-[90ch] text-[12.5px] leading-relaxed text-bone/55">{x(cip.why.statsNote)}</p>
-        {/* Client, 27 Nov: the calculator bigger, in the middle of the screen. */}
-        <div className="mt-16">
-          <div className="mx-auto max-w-[760px] text-center">
-            <h3 className="font-[family-name:var(--font-display)] text-[34px] leading-tight md:text-[48px]">{es ? "Una comparación ilustrativa" : "An illustrative comparison"}</h3>
-            <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/75">
-              {es ? "Elija el estado donde vive hoy, mueva el control y cambie de régimen: la calculadora compara el impuesto federal, estatal y local estimado donde vive hoy con la tasa de la Ley 60. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado." : "Choose the state you live in now, move the slider and switch the regime: the calculator compares estimated federal, state and local tax where you live today with the Act 60 rate. These are illustrations, not your tax liability or guaranteed savings."}
-            </p>
-          </div>
-          <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">
-            <TaxComparison es={es} />
-          </div>
-        </div>
       </BChapter>
 
       <BChapter tone="light" eyebrow={es ? "Residencia" : "Residency"} title={es ? "Establezca residencia bona fide." : "Establish bona fide residency."} intro={es ? "El IRS generalmente exige las tres condiciones; pueden aplicar otras pruebas de presencia y reglas del año de la mudanza. Contar días no basta." : "The IRS generally requires all three; other presence tests and year-of-move rules may apply. Day counting alone is not enough."}>

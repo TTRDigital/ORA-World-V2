@@ -29,8 +29,8 @@ const COPY = {
   figuresLabel: { en: "The program", es: "El programa" },
   calcTitle: { en: "An illustrative comparison", es: "Una comparación ilustrativa" },
   calcText: {
-    en: "Choose the state you live in now, the size of the gain and the Puerto Rico regime. The calculator compares estimated federal, state and local tax on long-term capital gains where you live today with the Act 60 rate for qualifying post-residency gains. These figures are illustrations, not your tax liability or guaranteed savings.",
-    es: "Elija el estado donde vive hoy, el monto de la ganancia y el régimen de Puerto Rico. La calculadora compara el impuesto federal, estatal y local estimado sobre ganancias de capital a largo plazo donde vive hoy con la tasa de la Ley 60 para ganancias posteriores a la residencia que califiquen. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado.",
+    en: "Enter your home address, the size of the gain and the Puerto Rico regime. The calculator compares estimated federal, state, city and other local tax where you live today with the Act 60 rate for qualifying post-residency income. These figures are illustrations, not your tax liability or guaranteed savings.",
+    es: "Escriba su dirección, el monto de la ganancia y el régimen de Puerto Rico. La calculadora compara el impuesto federal, estatal, municipal y local estimado donde vive hoy con la tasa de la Ley 60 para ingresos posteriores a la residencia que califiquen. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado.",
   },
   resLabel: { en: "Residency", es: "Residencia" },
   resTitle: { en: "Establish bona fide Puerto Rico residency", es: "Establezca residencia bona fide en Puerto Rico" },
@@ -104,33 +104,32 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
       <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("act60"), path: "/act-60" }])} />
       <PageHero locale={locale} label={x(COPY.label)} headline={x(COPY.headline)} intro={x(cip.why.short)} image={tdm.aerialCoast} />
 
-      {/* The numbers and the calculator, on the dark band. */}
+      {/* Client, 27 Nov: the calculator first, right after the banner, bigger and in the middle; the figures after it. */}
       <section id="calculator" aria-labelledby="calc-title" data-tone="dark" className="on-dark bg-basalt px-5 py-16 text-bone md:px-10 md:py-24">
         <div className="mx-auto max-w-[1280px]">
-          <p className="eyebrow">
-            <span className="rule" aria-hidden />
-            {x(COPY.figuresLabel)}
-          </p>
-          <p className="mt-6 max-w-[72ch] text-[16px] leading-relaxed text-bone/85 md:text-[18px]">{x(cip.why.intro)}</p>
-          <dl className="mt-10 grid gap-8 sm:grid-cols-3 md:mt-12">
-            {cip.why.stats.map((st) => (
-              <div key={st.value}>
-                <dt className="sr-only">{x(st.label)}</dt>
-                <dd className="font-[family-name:var(--font-display)] text-[64px] leading-none text-brass-light [font-variant-numeric:lining-nums] md:text-[84px]">{st.value}</dd>
-                <dd aria-hidden className="mt-3 max-w-[30ch] text-[14px] leading-relaxed text-bone/75">{x(st.label)}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-8 max-w-[90ch] border-b border-bone/15 pb-12 text-[12.5px] leading-relaxed text-bone/65 md:pb-16">{x(cip.why.statsNote)}</p>
-          {/* Client, 27 Nov: the calculator bigger, in the middle of the screen. */}
-          <div className="mt-12 md:mt-16">
-            <div className="mx-auto max-w-[760px] text-center">
-              <h2 id="calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-bone md:text-[52px]">{x(COPY.calcTitle)}</h2>
-              <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/80 md:text-[17px]">{x(COPY.calcText)}</p>
-            </div>
-            <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">
-              <TaxComparison es={es} />
-            </div>
+          <div className="mx-auto max-w-[760px] text-center">
+            <h2 id="calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-bone md:text-[52px]">{x(COPY.calcTitle)}</h2>
+            <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/80 md:text-[17px]">{x(COPY.calcText)}</p>
+          </div>
+          <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">
+            <TaxComparison es={es} />
+          </div>
+          <div className="mt-16 border-t border-bone/15 pt-12 md:mt-20 md:pt-16">
+            <p className="eyebrow">
+              <span className="rule" aria-hidden />
+              {x(COPY.figuresLabel)}
+            </p>
+            <p className="mt-6 max-w-[72ch] text-[16px] leading-relaxed text-bone/85 md:text-[18px]">{x(cip.why.intro)}</p>
+            <dl className="mt-10 grid gap-8 sm:grid-cols-3 md:mt-12">
+              {cip.why.stats.map((st) => (
+                <div key={st.value}>
+                  <dt className="sr-only">{x(st.label)}</dt>
+                  <dd className="font-[family-name:var(--font-display)] text-[64px] leading-none text-brass-light [font-variant-numeric:lining-nums] md:text-[84px]">{st.value}</dd>
+                  <dd aria-hidden className="mt-3 max-w-[30ch] text-[14px] leading-relaxed text-bone/75">{x(st.label)}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-8 max-w-[90ch] text-[12.5px] leading-relaxed text-bone/65">{x(cip.why.statsNote)}</p>
           </div>
         </div>
       </section>

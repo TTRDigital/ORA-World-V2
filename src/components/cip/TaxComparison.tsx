@@ -20,28 +20,28 @@ export function TaxComparison({ es }: { es: boolean }) {
   const [growth, setGrowth] = useState<0.1 | 0.15 | 0.2>(0.1);
   const [years, setYears] = useState<10 | 20 | 30>(20);
   const [rate, setRate] = useState<0 | 0.04>(0.04);
-  const [code, setCode] = useState("US");
-  // Client meeting, 24 Nov: "put the address and it picks up state, city and other taxes".
+  // Client, 27 Nov: the address only, no state list ("it's going to be city taxes"). Until an address is found the
+  // estimate is federal tax only. A city or ZIP without a street still finds the state (see /api/tax-place).
   const [address, setAddress] = useState("");
   const [place, setPlace] = useState<{
     code: string;
-    matched: string;
+    matched: string | null;
     areas: string[];
-    locals: LocalTax[];
+    locals: LocalTax[] | null;
+    partial?: boolean;
   } | null>(null);
   const [lookup, setLookup] = useState<"idle" | "busy" | "not_found" | "error">("idle");
-  const selectId = useId();
+  const code = place?.code ?? "US";
   const addressId = useId();
   const findAddress = async (ev: React.FormEvent) => {
     ev.preventDefault();
-    if (address.trim().length < 8) return setLookup("not_found");
+    if (address.trim().length < 5) return setLookup("not_found");
     setLookup("busy");
     try {
       const res = await fetch(`/api/tax-place?q=${encodeURIComponent(address.trim())}`);
       const json = await res.json();
       if (!json.ok) return setLookup(res.status === 404 ? "not_found" : "error");
       setPlace(json);
-      setCode(json.code);
       setLookup("idle");
     } catch {
       setLookup("error");
@@ -59,7 +59,7 @@ export function TaxComparison({ es }: { es: boolean }) {
     maximumFractionDigits: 0,
   });
   const pct = new Intl.NumberFormat(es ? "es-PR" : "en-US", { style: "percent", maximumFractionDigits: 0 });
-  const e = estimate({ gain, ordinary }, code, rate, place?.code === code ? place.locals : undefined);
+  const e = estimate({ gain, ordinary }, code, rate, place?.locals ?? undefined);
   const j = JURISDICTIONS.find((x) => x.code === code);
 
   const federal = useTween(e.federal, seen);
@@ -111,75 +111,38 @@ export function TaxComparison({ es }: { es: boolean }) {
             </div>
           </div>
 
-          <label htmlFor={selectId} className="mt-5 block text-[13px] text-bone/80">
-            {es ? "Estado de residencia actual" : "Current State of Residence"}
-          </label>
-          <div className="relative mt-2">
-            <select
-              id={selectId}
-              value={code}
-              onChange={(ev) => {
-                setCode(ev.target.value);
-                setPlace(null);
-              }}
-              className="min-h-11 w-full appearance-none rounded-xl bg-bone/10 py-2 pr-10 pl-3.5 text-[15px] text-bone ring-1 ring-bone/20 outline-none focus-visible:ring-2 focus-visible:ring-brass-light"
-            >
-              <option value="US" className="bg-basalt text-bone">
-                {es ? "Solo impuesto federal de EE. UU." : "U.S. Federal Tax Only"}
-              </option>
-              {JURISDICTIONS.map((x) => (
-                <option key={x.code} value={x.code} className="bg-basalt text-bone">
-                  {es ? (x.nameEs ?? x.name) : x.name}
-                </option>
-              ))}
-            </select>
-            <svg
-              viewBox="0 0 12 12"
-              width="12"
-              height="12"
-              aria-hidden
-              className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-bone/70"
-            >
-              <path
-                d="M2 4.5 6 8.5l4-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-
           <form
             onSubmit={findAddress}
-            className="mt-4"
+            className="mt-6 rounded-2xl bg-bone/[0.08] p-4 ring-1 ring-brass-light/50 md:p-5"
             role="search"
-            aria-label={es ? "Buscar los impuestos locales por dirección" : "Find local taxes by address"}
+            aria-label={es ? "Calcular con su dirección" : "Calculate with your address"}
           >
-            <label htmlFor={addressId} className="block text-[13px] text-bone/80">
-              {es
-                ? "O escriba su dirección para incluir los impuestos de su condado, ciudad y distrito escolar"
-                : "Or enter your address to include county, city and school district taxes"}
+            <label htmlFor={addressId} className="block text-[16px] font-semibold text-bone md:text-[17px]">
+              {es ? "Su dirección actual" : "Your current home address"}
             </label>
-            <div className="mt-2 flex gap-2">
+            <p className="mt-1 text-[13px] leading-snug text-bone/75">
+              {es
+                ? "La usamos para incluir los impuestos de su estado, condado, ciudad y distrito escolar."
+                : "We use it to include your state, county, city and school district taxes."}
+            </p>
+            <div className="mt-3 flex gap-2">
               <input
                 id={addressId}
                 value={address}
                 onChange={(ev) => setAddress(ev.target.value)}
                 autoComplete="street-address"
                 placeholder={es ? "Calle, ciudad, estado y código postal" : "Street, city, state and ZIP"}
-                className="min-h-11 min-w-0 flex-1 rounded-xl bg-bone/10 px-3.5 text-[15px] text-bone ring-1 ring-bone/20 outline-none placeholder:text-bone/45 focus-visible:ring-2 focus-visible:ring-brass-light"
+                className="min-h-12 min-w-0 flex-1 rounded-xl bg-bone/10 px-4 text-[16px] text-bone ring-1 ring-bone/25 outline-none placeholder:text-bone/50 focus-visible:ring-2 focus-visible:ring-brass-light"
               />
               <button
                 type="submit"
                 disabled={lookup === "busy"}
-                className="min-h-11 shrink-0 rounded-xl bg-bone px-4 text-[12px] font-semibold tracking-[0.12em] text-basalt uppercase disabled:opacity-60"
+                className="min-h-12 shrink-0 rounded-xl bg-brass-light px-5 text-[12px] font-semibold tracking-[0.14em] text-basalt uppercase transition-opacity hover:opacity-90 disabled:opacity-60"
               >
-                {lookup === "busy" ? "…" : es ? "Buscar" : "Find"}
+                {lookup === "busy" ? "…" : es ? "Calcular" : "Calculate"}
               </button>
             </div>
-            <div aria-live="polite" className="mt-2 text-[12px] leading-snug text-bone/70">
+            <div aria-live="polite" className="mt-2 text-[12.5px] leading-snug text-bone/75">
               {lookup === "not_found" && (
                 <p>
                   {es
@@ -190,24 +153,35 @@ export function TaxComparison({ es }: { es: boolean }) {
               {lookup === "error" && (
                 <p>
                   {es
-                    ? "La búsqueda no está disponible ahora. Elija su estado arriba."
-                    : "The lookup is unavailable right now. Choose your state above."}
+                    ? "La búsqueda no está disponible ahora. Inténtelo de nuevo en un momento."
+                    : "The lookup is unavailable right now. Please try again in a moment."}
                 </p>
               )}
-              {place && place.code === code && (
+              {!place && lookup === "idle" && (
+                <p>
+                  {es
+                    ? "Hasta entonces, el cálculo muestra solo el impuesto federal."
+                    : "Until then, the estimate shows federal tax only."}
+                </p>
+              )}
+              {place && (
                 <div data-place>
-                  <p className="text-bone/85">{place.matched}</p>
-                  <p>{place.areas.join(" · ")}</p>
-                  <p className="mt-1 text-bone/85">
-                    {place.locals.length
-                      ? `${es ? "Impuestos locales incluidos" : "Local taxes included"}: ${place.locals.map((l) => `${l.name} (${rateText(l)})`).join(", ")}`
-                      : es
-                        ? "No hay impuesto local sobre ganancias de capital en esta dirección."
-                        : "No local income tax on capital gains at this address."}
+                  {place.matched && <p className="text-bone/90">{place.matched}</p>}
+                  {place.areas.length > 0 && <p>{place.areas.join(" · ")}</p>}
+                  <p className="mt-1 text-bone/90">
+                    {place.partial
+                      ? es
+                        ? `Encontramos su estado (${j?.nameEs ?? j?.name}) pero no la dirección exacta, así que se usan los impuestos locales típicos. Escriba la calle para incluir los suyos.`
+                        : `We found your state (${j?.name}) but not the exact address, so typical local taxes are used. Add the street to include yours.`
+                      : place.locals && place.locals.length
+                        ? `${es ? "Impuestos locales incluidos" : "Local taxes included"}: ${place.locals.map((l) => `${l.name} (${rateText(l)})`).join(", ")}`
+                        : es
+                          ? "No hay impuesto local sobre ganancias de capital en esta dirección."
+                          : "No local income tax on capital gains at this address."}
                   </p>
                 </div>
               )}
-              <p className="mt-1 text-bone/50">
+              <p className="mt-1 text-bone/65">
                 {es
                   ? "Su dirección se envía a la Oficina del Censo de EE. UU. solo para identificar sus áreas fiscales; no se guarda."
                   : "Your address is sent to the U.S. Census Bureau only to find your tax areas; it is not stored."}
@@ -239,8 +213,31 @@ export function TaxComparison({ es }: { es: boolean }) {
           />
         </div>
         <div className="lg:border-l lg:border-bone/15 lg:pl-12">
+          {/* Client, 27 Nov: the savings first and in green: "that's the data you want to see". */}
+          <div
+            className="mt-6 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-4 gap-y-1 rounded-2xl bg-[#7fd6a4]/[0.12] p-4 ring-1 ring-[#7fd6a4]/40 md:p-5 lg:mt-0"
+            aria-live="polite"
+            data-savings
+          >
+            <p className="text-[14px] font-semibold text-[#a6e6c1]">
+              {es ? "Ahorro fiscal potencial total" : "Total potential tax savings"}
+            </p>
+            <p className="text-right text-[14px] font-semibold text-[#a6e6c1]">
+              {es ? "Reducción" : "Reduction"}
+            </p>
+            <p className="font-[family-name:var(--font-display)] text-[44px] leading-none text-[#7fd6a4] tabular-nums md:text-[56px]">
+              {money.format(savings)}
+            </p>
+            <p className="text-right font-[family-name:var(--font-display)] text-[44px] leading-none text-[#7fd6a4] tabular-nums md:text-[56px]">
+              {pct.format(reduction)}
+            </p>
+            <p className="col-span-2 mt-2 text-[12.5px] text-bone/70">
+              {es ? "Al año, frente a su residencia actual" : "A year, compared with where you live now"}
+            </p>
+          </div>
+
           {/* Two bars on one scale: tax where you live now (federal, then state and local) and in Puerto Rico. */}
-          <div className="mt-5 grid gap-3 text-[13px] lg:mt-1" aria-hidden>
+          <div className="mt-5 grid gap-3 text-[13px]" aria-hidden>
             <div>
               <div className="flex justify-between gap-3">
                 <span className="text-bone/80">{es ? "Residencia actual" : "Current residence"}</span>
@@ -305,22 +302,6 @@ export function TaxComparison({ es }: { es: boolean }) {
             />
           </dl>
 
-          <div
-            className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-4 gap-y-1 border-t border-bone/15 pt-4"
-            aria-live="polite"
-          >
-            <p className="text-[13px] text-bone/80">
-              {es ? "Ahorro fiscal potencial total" : "Total potential tax savings"}
-            </p>
-            <p className="text-right text-[13px] text-bone/80">{es ? "Reducción" : "Reduction"}</p>
-            <p className="font-[family-name:var(--font-display)] text-[34px] leading-none text-brass-light tabular-nums md:text-[40px]">
-              {money.format(savings)}
-            </p>
-            <p className="text-right font-[family-name:var(--font-display)] text-[34px] leading-none text-bone tabular-nums md:text-[40px]">
-              {pct.format(reduction)}
-            </p>
-          </div>
-
           <div className="mt-5 rounded-2xl bg-bone/[0.07] p-4 ring-1 ring-bone/10" data-compound>
             <p className="text-[13px] text-bone/80">
               {es ? "Si invierte el ahorro de cada año" : "If you invest each year's savings"}
@@ -345,7 +326,7 @@ export function TaxComparison({ es }: { es: boolean }) {
               {es ? `Valor hipotético después de ${years} años` : `Hypothetical value after ${years} years`}
             </p>
             <p
-              className="mt-1 font-[family-name:var(--font-display)] text-[34px] leading-none text-brass-light tabular-nums md:text-[40px]"
+              className="mt-1 font-[family-name:var(--font-display)] text-[34px] leading-none text-[#7fd6a4] tabular-nums md:text-[40px]"
               aria-live="polite"
             >
               {money.format(grown)}

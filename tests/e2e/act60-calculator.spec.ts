@@ -1,62 +1,72 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 
-// Client, 24 Nov: the Act 60 calculator compares federal, state and local tax where the visitor lives with Act 60.
-test.describe("Act 60 calculator", () => {
-  for (const path of ["/en/act-60", "/en/b/act-60"]) {
-    test(`location changes the estimate on ${path}`, async ({ page }) => {
-      await page.goto(path);
-      const calc = page.locator('[data-widget="tax-compare"]');
-      await calc.scrollIntoViewIfNeeded();
-      const select = calc.getByLabel("Current State of Residence");
-      await expect(select).toHaveValue("US");
-      await expect(select.locator("option")).toHaveCount(53); // federal only, 50 states, DC and New York City
-      const row = (name: string) => calc.locator("dl > div").filter({ hasText: name }).locator("dd");
-      const amount = async (name: string) => Number((await row(name).textContent())!.replace(/[^\d]/g, ""));
+// Client, 24 and 27 Nov: the Act 60 calculator compares federal, state and local tax where the visitor lives (found
+// from their address; no state list) with Act 60, shows the savings first and in green, and sits right after the banner.
+// The address lookup (/api/tax-place, which calls the Census geocoder) is mocked here.
 
-      await expect.poll(() => amount("Estimated federal tax")).toBeGreaterThan(150_000);
-      await expect.poll(() => amount("Estimated state and local taxes")).toBe(0);
+const amount = (page: Page, name: string) => async () => {
+  const text = await page.locator('[data-widget="tax-compare"] dl > div').filter({ hasText: name }).locator("dd").first().textContent();
+  return Number(text!.replace(/[^\d]/g, ""));
+};
 
-      await select.selectOption("CA");
-      await expect.poll(() => amount("Estimated state and local taxes")).toBeGreaterThan(80_000);
-      await select.selectOption("NYC");
-      await expect.poll(() => amount("Estimated state and local taxes")).toBeGreaterThan(100_000);
-      await select.selectOption("TX");
-      await expect.poll(() => amount("Estimated state and local taxes")).toBe(0);
+async function useAddress(page: Page, json: object) {
+  await page.unroute("**/api/tax-place**");
+  await page.route("**/api/tax-place**", (route) => route.fulfill({ json }));
+  const calc = page.locator('[data-widget="tax-compare"]');
+  await calc.getByPlaceholder(/street/i).fill("1 Test St, Somewhere");
+  await calc.getByRole("button", { name: "Calculate" }).click();
+  await expect(calc.locator("[data-place]")).toBeVisible();
+}
 
-      // The 0% regime leaves no Puerto Rico tax.
-      await calc.getByRole("radio", { name: /^0%/ }).click();
-      await expect.poll(() => amount("Estimated Puerto Rico tax")).toBe(0);
-      await expect(calc).toContainText("100%");
-      await expect(calc).toContainText("Consult a qualified tax advisor before making financial or relocation decisions.");
-    });
-  }
-});
+for (const path of ["/en/act-60", "/en/b/act-60"]) {
+  test(`calculator right after the banner, address only, savings in green on ${path}`, async ({ page }) => {
+    await page.goto(path);
+    const calc = page.locator('[data-widget="tax-compare"]');
+    // The calculator is the first section after the banner.
+    const firstSection = page.locator("main section").nth(1);
+    await expect(firstSection.locator('[data-widget="tax-compare"]')).toHaveCount(1);
+    await calc.scrollIntoViewIfNeeded();
+    await expect(calc.locator("select")).toHaveCount(0);
+    await expect(calc.getByLabel(/current home address/i)).toBeVisible();
+    // Before an address: federal tax only.
+    await expect.poll(amount(page, "Estimated federal tax")).toBeGreaterThan(150_000);
+    await expect.poll(amount(page, "Estimated state and local taxes")).toBe(0);
+    // The savings come first, in green.
+    const savings = calc.locator("[data-savings]");
+    await expect(savings).toContainText("Total potential tax savings");
+    expect(await savings.locator("p").nth(2).evaluate((el) => getComputedStyle(el).color)).toBe("rgb(127, 214, 164)");
 
-// Client meeting, 24 Nov: an address adds county, city and school district taxes. The Census lookup is mocked here.
+    await useAddress(page, { ok: true, code: "CA", matched: "1 TEST ST, LOS ANGELES, CA", areas: ["Los Angeles County"], locals: [] });
+    await expect.poll(amount(page, "Estimated state and local taxes")).toBeGreaterThan(80_000);
+    await useAddress(page, { ok: true, code: "TX", matched: "1 TEST ST, AUSTIN, TX", areas: ["Travis County"], locals: [] });
+    await expect.poll(amount(page, "Estimated state and local taxes")).toBe(0);
+    await expect(calc.locator("[data-place]")).toContainText("No local income tax on capital gains at this address.");
+
+    // The 0% regime leaves no Puerto Rico tax.
+    await calc.getByRole("radio", { name: /^0%/ }).click();
+    await expect.poll(amount(page, "Estimated Puerto Rico tax")).toBe(0);
+    await expect(savings).toContainText("100%");
+    await expect(calc).toContainText("Consult a qualified tax advisor before making financial or relocation decisions.");
+  });
+}
+
 test("an address adds the local taxes found there", async ({ page, request }) => {
   const bad = await request.get("/api/tax-place?q=x");
   expect(bad.status()).toBe(400);
-  await page.route("**/api/tax-place**", (route) =>
-    route.fulfill({
-      json: { ok: true, code: "MI", matched: "2 WOODWARD AVE, DETROIT, MI, 48226", areas: ["Wayne County", "Detroit city"], locals: [{ name: "Detroit city income tax", base: "gain", flat: 0.024, minus: 600 }] },
-    }),
-  );
   await page.goto("/en/act-60");
-  const calc = page.locator('[data-widget="tax-compare"]');
-  await calc.scrollIntoViewIfNeeded();
-  const stateLocal = async () => Number((await calc.locator("dl > div").filter({ hasText: "Estimated state and local taxes" }).locator("dd").textContent())!.replace(/[^\d]/g, ""));
-  await calc.getByLabel("Current State of Residence").selectOption("MI");
-  // Michigan 4.25% of the $1,000,000 gain less the $5,900 exemption.
-  await expect.poll(stateLocal).toBe(42_249);
-  await calc.getByPlaceholder(/street/i).fill("2 Woodward Ave, Detroit, MI 48226");
-  await calc.getByRole("button", { name: "Find" }).click();
-  await expect(calc.locator("[data-place]")).toContainText("Detroit city income tax (2.4%)");
-  // 2.4% of the $1,000,000 gain less the $600 exemption.
-  await expect.poll(stateLocal).toBe(42_249 + 23_986);
-  // Choosing a state by hand drops the address.
-  await calc.getByLabel("Current State of Residence").selectOption("MI");
-  await calc.getByLabel("Current State of Residence").selectOption("OH");
-  await expect(calc.locator("[data-place]")).toHaveCount(0);
+  await page.locator('[data-widget="tax-compare"]').scrollIntoViewIfNeeded();
+  // Michigan 4.25% of the $1,000,000 gain less the $5,900 exemption, then Detroit's 2.4% less the $600 exemption.
+  await useAddress(page, { ok: true, code: "MI", matched: "2 WOODWARD AVE, DETROIT, MI, 48226", areas: ["Wayne County", "Detroit city"], locals: [{ name: "Detroit city income tax", base: "gain", flat: 0.024, minus: 600 }] });
+  await expect(page.locator("[data-place]")).toContainText("Detroit city income tax (2.4%)");
+  await expect.poll(amount(page, "Estimated state and local taxes")).toBe(42_249 + 23_986);
+});
+
+test("a city or ZIP without a street still finds the state", async ({ page }) => {
+  await page.goto("/en/act-60");
+  await page.locator('[data-widget="tax-compare"]').scrollIntoViewIfNeeded();
+  await useAddress(page, { ok: true, code: "MI", matched: null, areas: [], locals: null, partial: true });
+  await expect(page.locator("[data-place]")).toContainText("We found your state (Michigan) but not the exact address");
+  await expect.poll(amount(page, "Estimated state and local taxes")).toBe(42_249);
 });
 
 // Client meeting, 24 Nov: a second line for qualified ordinary income, and the yearly savings compounded.
@@ -64,8 +74,7 @@ test("ordinary income and the compounded savings", async ({ page }) => {
   await page.goto("/en/act-60");
   const calc = page.locator('[data-widget="tax-compare"]');
   await calc.scrollIntoViewIfNeeded();
-  const amount = async (name: string) => Number((await calc.locator("dl > div").filter({ hasText: name }).locator("dd").first().textContent())!.replace(/[^\d]/g, ""));
-  await expect.poll(() => amount("Estimated federal tax")).toBe(192_488);
+  await expect.poll(amount(page, "Estimated federal tax")).toBe(192_488);
   const ordinary = calc.getByRole("slider", { name: /qualified ordinary income/i });
   await ordinary.evaluate((el: HTMLInputElement) => {
     Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(el, "500000");
@@ -73,8 +82,8 @@ test("ordinary income and the compounded savings", async ({ page }) => {
   });
   await expect(calc.locator("dl")).toContainText("Qualified ordinary income");
   // $500,000 of interest and dividends on the ordinary brackets, the $1,000,000 gain stacked on top, 3.8% NIIT on both.
-  await expect.poll(() => amount("Estimated federal tax")).toBe(384_454);
-  await expect.poll(() => amount("Estimated Puerto Rico tax")).toBe(60_000);
+  await expect.poll(amount(page, "Estimated federal tax")).toBe(384_454);
+  await expect.poll(amount(page, "Estimated Puerto Rico tax")).toBe(60_000);
   const box = calc.locator("[data-compound]");
   await box.getByRole("radio", { name: "20%" }).click();
   await box.getByRole("radio", { name: "10 years" }).click();
