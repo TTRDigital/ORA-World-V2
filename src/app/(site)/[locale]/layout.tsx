@@ -5,13 +5,12 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { display, sans, script } from "@/lib/fonts";
 import { SITE_URL, IS_PROD } from "@/lib/utils";
-import { getFaqs, getPress, getSiteSettings } from "@/lib/content";
+import { getPress, getSiteSettings } from "@/lib/content";
 import { tdm, life } from "@/content/seed/images";
 import { ChromeGate } from "@/components/v2/ChromeGate";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
-import { AskOra } from "@/components/layout/AskOra";
 import { MotionInit } from "@/components/providers/MotionInit";
 import { ScrollFx } from "@/components/providers/ScrollFx";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -45,7 +44,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
-  const [settings, faqs, press] = await Promise.all([getSiteSettings(), getFaqs(), getPress()]);
+  const [settings, press] = await Promise.all([getSiteSettings(), getPress()]);
   const tiles = [
     { key: "residences" as const, href: "/residences", image: tdm.aptLiving },
     { key: "plans" as const, href: "/residences/plans", image: tdm.kitchenDining },
@@ -64,7 +63,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
             <PageTransition>{children}</PageTransition>
           </main>
           <ChromeGate><Footer settings={settings} showPress={press.length > 0} /></ChromeGate>
-          <ChromeGate><AskOra faqs={faqs} phone={settings.phone} whatsapp={settings.whatsapp} consentText={settings.consentText[locale as "en" | "es"]} /></ChromeGate>
+          {/* Client, 27 Nov: the Ask ORA chat removed from every version. */}
           <Consent />
           <MotionInit />
           <ScrollFx />

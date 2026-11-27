@@ -73,25 +73,17 @@ test.describe("shell", () => {
     });
   }
 
-  test("Ask ORA opens with searchable questions and keyboard tabs", async ({ page }) => {
-    await page.goto("/en");
-    await page.locator("html:not(.no-js)").waitFor();
-    // The button appears once the banner is scrolled past (one button on the first screen).
-    await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.2));
-    await page.getByRole("button", { name: "Ask ORA" }).click();
-    const dialog = page.getByRole("dialog", { name: "Ask ORA" });
-    await expect(dialog).toBeVisible();
-    await dialog.getByPlaceholder(/search/i).fill("hurricane");
-    await expect(dialog.getByRole("button", { name: /hurricanes and earthquakes/i })).toBeVisible();
-    await dialog.getByRole("tab", { name: "Quick questions" }).focus();
-    await page.keyboard.press("ArrowRight");
-    // Client, 24 Nov: no phone number on the sites, so there is no "Call" tab; the next tab is "Book a visit".
-    await expect(dialog.getByRole("tab").nth(1)).toHaveAttribute("aria-selected", "true");
-    await expect(dialog.getByRole("tab", { name: /call/i })).toHaveCount(0);
-    await expect(dialog.locator('a[href^="tel:"]')).toHaveCount(0);
-    await page.keyboard.press("Escape");
-    await expect(dialog).toBeHidden();
-  });
+  // Client, 27 Nov: the Ask ORA chat removed from every version.
+  for (const path of ["/en", "/en/act-60", "/en/b", "/en/d", "/es"]) {
+    test(`no Ask ORA chat on ${path}`, async ({ page }) => {
+      await page.goto(path);
+      await page.locator("html:not(.no-js)").waitFor();
+      await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.5));
+      await page.waitForTimeout(600);
+      await expect(page.getByRole("button", { name: /ask ora|pregunte a ora/i })).toHaveCount(0);
+      await expect(page.getByRole("dialog", { name: /ask ora/i })).toHaveCount(0);
+    });
+  }
 
   test("home stays at the top after load (no component scrolls the window)", async ({ page }) => {
     await page.goto("/en", { waitUntil: "load" });

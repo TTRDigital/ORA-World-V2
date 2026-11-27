@@ -8,7 +8,7 @@ import { Logo } from "@/components/layout/Logo";
 
 /**
  * The 360° virtual tour on its own link (client, 27 Nov: "the virtual tour on the homepage, on a link just showing
- * the tour"). Full screen, no site header, footer or Ask ORA (see ChromeGate); only a small logo back to the site.
+ * the tour"). Full screen, no site header or footer (see ChromeGate); only a small logo back to the site.
  * The tour is the same kuula.co collection as the homepage, loaded straight away since that is the page's purpose.
  */
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {

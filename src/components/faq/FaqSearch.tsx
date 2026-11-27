@@ -12,7 +12,7 @@ import { Accordion } from "./Accordion";
 const TOPICS = ["general", "residences", "resilience", "tax", "buying"] as const;
 const TOPIC_ICONS = { all: HelpCircle, general: Sparkles, residences: Building2, resilience: ShieldCheck, tax: Landmark, buying: KeyRound } as const;
 
-/** Search across every question with topic chips. Used on the homepage, the FAQ page and Ask ORA. */
+/** Search across every question with topic chips. Used on the homepage and the FAQ page. */
 export function FaqSearch({
   faqs,
   columns = 2,
@@ -32,7 +32,7 @@ export function FaqSearch({
   featured?: string[];
   /** Reveal the accordion items with a stagger (homepage). */
   stagger?: boolean;
-  /** "centre": a guided help centre with topic tiles and an Ask ORA empty state (homepage and /faq). */
+  /** "centre": a guided help centre with topic tiles and an empty state that points to the inquiry form (homepage and /faq). */
   variant?: "chips" | "centre";
 }) {
   const t = useTranslations("faq");
@@ -54,7 +54,6 @@ export function FaqSearch({
   }, [results, stagger]);
 
   const showingFeatured = !query.trim() && topic === "all" && Boolean(featured?.length);
-  const askOra = () => window.dispatchEvent(new CustomEvent("ora2:ask", { detail: "questions" }));
 
   if (variant === "centre") {
     const tiles = [{ key: "all", count: faqs.length }, ...TOPICS.map((k) => ({ key: k, count: counts[k] }))];
@@ -112,9 +111,6 @@ export function FaqSearch({
               <p className="small mt-1 text-charcoal-soft">{t("none")}</p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={askOra} className="pill pill-basalt">
-                <MessageCircle aria-hidden size={18} strokeWidth={1.75} className="text-brass-light" /> {t("askOra")}
-              </button>
               <Link href="/#inquire" className="pill pill-ghost">{t("bookVisit")}</Link>
             </div>
           </div>
@@ -124,9 +120,10 @@ export function FaqSearch({
         {results.length > 0 && (
           <div className="mt-6 flex flex-col items-start gap-3 rounded-[20px] bg-bone px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[15px] font-semibold">{t("stillCurious")}</p>
-            <button type="button" onClick={askOra} className="pill pill-ghost min-h-11">
+            {/* Client, 27 Nov: no chat; questions go to the team through the inquiry form. */}
+            <Link href="/#inquire" className="pill pill-ghost min-h-11">
               <MessageCircle aria-hidden size={18} strokeWidth={1.75} className="text-brass-ink" /> {t("askOra")}
-            </button>
+            </Link>
           </div>
         )}
       </div>

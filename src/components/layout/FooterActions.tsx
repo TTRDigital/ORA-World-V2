@@ -1,16 +1,8 @@
 "use client";
 
-import { MessageCircle, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
-/** Footer client actions: open Ask ORA, and go back to the top (smooth unless reduced motion). */
-export function FooterAsk({ label }: { label: string }) {
-  return (
-    <button type="button" className="pill pill-ghost min-h-12" onClick={() => window.dispatchEvent(new CustomEvent("ora2:ask", { detail: "questions" }))}>
-      <MessageCircle aria-hidden size={18} strokeWidth={1.75} className="text-brass-light" /> {label}
-    </button>
-  );
-}
-
+/** Footer client action: go back to the top (smooth unless reduced motion). */
 export function BackToTop({ label }: { label: string }) {
   return (
     <button
