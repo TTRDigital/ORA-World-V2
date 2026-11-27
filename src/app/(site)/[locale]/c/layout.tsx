@@ -3,20 +3,30 @@ import { getSiteSettings } from "@/lib/content";
 import { CHeader } from "@/components/v3/CHeader";
 import { CFooter } from "@/components/v3/CFooter";
 import { LinkRewriter } from "@/components/v2/LinkRewriter";
+import { withoutFinishes } from "@/lib/features";
 
 /** Version C frame (client, 19 Nov: a third version, in the manner of ciprianiresidences-brickell.com). */
-export default async function VersionCLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+export default async function VersionCLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
   const { locale: l } = await params;
   const locale = (l === "es" ? "es" : "en") as Locale;
   const es = locale === "es";
   const settings = await getSiteSettings();
-  const links = [
-    { href: "/c/floor-plans", label: es ? "Residencias" : "Residences" },
-    { href: "/c/longevity", label: es ? "Longevidad" : "Longevity" },
-    { href: "/c/act-60", label: es ? "Ley 60" : "Act 60" },
-    { href: "/c/finishes", label: es ? "Acabados" : "Finishes" },
-    { href: "/c/living", label: es ? "Vivir" : "Living" }, // client, 24 Nov: Living in place of Location
-  ];
+  const links = withoutFinishes(
+    [
+      { href: "/c/floor-plans", label: es ? "Residencias" : "Residences" },
+      { href: "/c/longevity", label: es ? "Longevidad" : "Longevity" },
+      { href: "/c/act-60", label: es ? "Ley 60" : "Act 60" },
+      { href: "/c/finishes", label: es ? "Acabados" : "Finishes" },
+      { href: "/c/living", label: es ? "Vivir" : "Living" }, // client, 24 Nov: Living in place of Location
+    ],
+    (l) => l.href,
+  );
   return (
     <div data-version-c id="top" className="bg-white text-charcoal">
       <CHeader

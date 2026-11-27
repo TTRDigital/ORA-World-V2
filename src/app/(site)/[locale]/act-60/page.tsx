@@ -18,10 +18,26 @@ import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
  * sources linked. Puerto Rico tax counsel to approve before promotion; Spanish to be reviewed separately.
  */
 const SOURCES = [
-  { en: "Puerto Rico Act 38-2026 (official text)", es: "Ley 38-2026 de Puerto Rico (texto oficial)", href: "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf" },
-  { en: "DDEC Informative Bulletin 2026-004", es: "Boletín Informativo del DDEC 2026-004", href: "https://docs.pr.gov/files/DDEC/Aviso%20Pu%CC%81blico/Informative%20Bulletin%20DDEC%20NO.%202026-004%20Final.pdf" },
-  { en: "IRS Publication 570: bona fide residence", es: "Publicación 570 del IRS: residencia bona fide", href: "https://www.irs.gov/publications/p570" },
-  { en: "DDEC Incentives Portal", es: "Portal de Incentivos del DDEC", href: "https://incentives.ddec.pr.gov/" },
+  {
+    en: "Puerto Rico Act 38-2026 (official text)",
+    es: "Ley 38-2026 de Puerto Rico (texto oficial)",
+    href: "https://bvirtualogp.pr.gov/ogp/Bvirtual/leyesreferencia/PDF/2020/0038-2026.pdf",
+  },
+  {
+    en: "DDEC Informative Bulletin 2026-004",
+    es: "Boletín Informativo del DDEC 2026-004",
+    href: "https://docs.pr.gov/files/DDEC/Aviso%20Pu%CC%81blico/Informative%20Bulletin%20DDEC%20NO.%202026-004%20Final.pdf",
+  },
+  {
+    en: "IRS Publication 570: bona fide residence",
+    es: "Publicación 570 del IRS: residencia bona fide",
+    href: "https://www.irs.gov/publications/p570",
+  },
+  {
+    en: "DDEC Incentives Portal",
+    es: "Portal de Incentivos del DDEC",
+    href: "https://incentives.ddec.pr.gov/",
+  },
 ];
 const COPY = {
   label: { en: "Act 60", es: "Ley 60" },
@@ -33,15 +49,36 @@ const COPY = {
     es: "En cuatro pasos: su dirección, su estado civil tributario, sus ganancias de capital e ingreso ordinario calificado, y su tasa en Puerto Rico. La calculadora compara el impuesto federal, estatal, municipal y local estimado donde vive hoy con la tasa de la Ley 60 sobre las ganancias de capital y el ingreso ordinario calificado posteriores a la residencia. Son ilustraciones, no su obligación fiscal ni un ahorro garantizado.",
   },
   resLabel: { en: "Residency", es: "Residencia" },
-  resTitle: { en: "Establish bona fide Puerto Rico residency", es: "Establezca residencia bona fide en Puerto Rico" },
+  resTitle: {
+    en: "Establish bona fide Puerto Rico residency",
+    es: "Establezca residencia bona fide en Puerto Rico",
+  },
   resIntro: {
     en: "The IRS generally requires all three of the following. Other presence tests and year-of-move rules may apply; day counting alone is not enough.",
     es: "El IRS generalmente exige las tres condiciones siguientes. Pueden aplicar otras pruebas de presencia y reglas del año de la mudanza; contar días no basta.",
   },
   resTests: [
-    { title: { en: "Presence", es: "Presencia" }, text: { en: "A qualifying presence test, often 183 days in Puerto Rico in the tax year.", es: "Una prueba de presencia que califique, a menudo 183 días en Puerto Rico en el año fiscal." } },
-    { title: { en: "Tax home", es: "Domicilio fiscal" }, text: { en: "Your tax home, your main place of work or business, is in Puerto Rico.", es: "Su domicilio fiscal, su lugar principal de trabajo o negocio, está en Puerto Rico." } },
-    { title: { en: "Closer connection", es: "Conexión más cercana" }, text: { en: "No closer connection to the United States or another foreign country.", es: "Sin una conexión más cercana con Estados Unidos u otro país extranjero." } },
+    {
+      title: { en: "Presence", es: "Presencia" },
+      text: {
+        en: "A qualifying presence test, often 183 days in Puerto Rico in the tax year.",
+        es: "Una prueba de presencia que califique, a menudo 183 días en Puerto Rico en el año fiscal.",
+      },
+    },
+    {
+      title: { en: "Tax home", es: "Domicilio fiscal" },
+      text: {
+        en: "Your tax home, your main place of work or business, is in Puerto Rico.",
+        es: "Su domicilio fiscal, su lugar principal de trabajo o negocio, está en Puerto Rico.",
+      },
+    },
+    {
+      title: { en: "Closer connection", es: "Conexión más cercana" },
+      text: {
+        en: "No closer connection to the United States or another foreign country.",
+        es: "Sin una conexión más cercana con Estados Unidos u otro país extranjero.",
+      },
+    },
   ],
   qualifyLabel: { en: "How to qualify", es: "Cómo calificar" },
   qualifyTitle: { en: "Four steps to a decree", es: "Cuatro pasos hacia un decreto" },
@@ -78,15 +115,25 @@ const COPY = {
   sourcesLabel: { en: "Official sources", es: "Fuentes oficiales" },
   faqLabel: { en: "Questions", es: "Preguntas" },
   faqTitle: { en: "Act 60, answered", es: "La Ley 60, respondida" },
-  closing: { en: "Talk to us about Act 60 and Tesoro del Mar", es: "Hable con nosotros sobre la Ley 60 y Tesoro del Mar" },
+  closing: {
+    en: "Talk to us about Act 60 and Tesoro del Mar",
+    es: "Hable con nosotros sobre la Ley 60 y Tesoro del Mar",
+  },
 } satisfies Record<string, unknown>;
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
   const { locale } = await params;
   return pageMetadata({
     locale,
     path: "/act-60",
-    title: locale === "es" ? "Ley 60: los beneficios fiscales de vivir en Puerto Rico" : "Act 60: the tax benefits of living in Puerto Rico",
+    title:
+      locale === "es"
+        ? "Ley 60: los beneficios fiscales de vivir en Puerto Rico"
+        : "Act 60: the tax benefits of living in Puerto Rico",
     description: t(cip.why.short, locale),
   });
 }
@@ -101,15 +148,38 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
   const inquire = es ? "Consultar" : "Inquire";
   return (
     <div className="flex flex-col">
-      <JsonLd data={breadcrumbLd(locale, [{ name: "ORA World", path: "/" }, { name: tn("act60"), path: "/act-60" }])} />
-      <PageHero locale={locale} label={x(COPY.label)} headline={x(COPY.headline)} intro={x(cip.why.short)} image={tdm.aerialCoast} />
+      <JsonLd
+        data={breadcrumbLd(locale, [
+          { name: "ORA World", path: "/" },
+          { name: tn("act60"), path: "/act-60" },
+        ])}
+      />
+      <PageHero
+        locale={locale}
+        label={x(COPY.label)}
+        headline={x(COPY.headline)}
+        intro={x(cip.why.short)}
+        image={tdm.aerialCoast}
+      />
 
       {/* Client, 27 Nov: the calculator first, right after the banner, bigger and in the middle; the figures after it. */}
-      <section id="calculator" aria-labelledby="calc-title" data-tone="dark" className="on-dark bg-basalt px-5 py-16 text-bone md:px-10 md:py-24">
+      <section
+        id="calculator"
+        aria-labelledby="calc-title"
+        data-tone="dark"
+        className="on-dark bg-basalt px-5 py-16 text-bone md:px-10 md:py-24"
+      >
         <div className="mx-auto max-w-[1280px]">
           <div className="mx-auto max-w-[760px] text-center">
-            <h2 id="calc-title" className="font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-bone md:text-[52px]">{x(COPY.calcTitle)}</h2>
-            <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/80 md:text-[17px]">{x(COPY.calcText)}</p>
+            <h2
+              id="calc-title"
+              className="font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-bone md:text-[52px]"
+            >
+              {x(COPY.calcTitle)}
+            </h2>
+            <p className="mx-auto mt-5 max-w-[62ch] text-[16px] leading-relaxed text-bone/80 md:text-[17px]">
+              {x(COPY.calcText)}
+            </p>
           </div>
           <div className="mx-auto mt-10 max-w-[1080px] lg:[zoom:1.1]">
             <TaxComparison es={es} />
@@ -119,23 +189,34 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
               <span className="rule" aria-hidden />
               {x(COPY.figuresLabel)}
             </p>
-            <p className="mt-6 max-w-[72ch] text-[16px] leading-relaxed text-bone/85 md:text-[18px]">{x(cip.why.intro)}</p>
+            <p className="mt-6 max-w-[72ch] text-[16px] leading-relaxed text-bone/85 md:text-[18px]">
+              {x(cip.why.intro)}
+            </p>
             <dl className="mt-10 grid gap-8 sm:grid-cols-3 md:mt-12">
               {cip.why.stats.map((st) => (
                 <div key={st.value}>
                   <dt className="sr-only">{x(st.label)}</dt>
-                  <dd className="font-[family-name:var(--font-display)] text-[64px] leading-none text-brass-light [font-variant-numeric:lining-nums] md:text-[84px]">{st.value}</dd>
-                  <dd aria-hidden className="mt-3 max-w-[30ch] text-[14px] leading-relaxed text-bone/75">{x(st.label)}</dd>
+                  <dd className="font-[family-name:var(--font-display)] text-[64px] leading-none text-brass-light [font-variant-numeric:lining-nums] md:text-[84px]">
+                    {st.value}
+                  </dd>
+                  <dd aria-hidden className="mt-3 max-w-[30ch] text-[14px] leading-relaxed text-bone/75">
+                    {x(st.label)}
+                  </dd>
                 </div>
               ))}
             </dl>
-            <p className="mt-8 max-w-[90ch] text-[12.5px] leading-relaxed text-bone/65">{x(cip.why.statsNote)}</p>
+            <p className="mt-8 max-w-[90ch] text-[12.5px] leading-relaxed text-bone/65">
+              {x(cip.why.statsNote)}
+            </p>
           </div>
         </div>
       </section>
 
       {/* Residency (Act 60 audit brief, 18 Nov: the "183 minus 30 days" graphic removed; bona fide residency explained). */}
-      <section aria-labelledby="residency-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+      <section
+        aria-labelledby="residency-title"
+        className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24"
+      >
         <div className="mx-auto max-w-[1280px]">
           <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-12">
             <div>
@@ -143,66 +224,129 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
                 <span className="rule" aria-hidden />
                 {x(COPY.resLabel)}
               </p>
-              <h2 id="residency-title" className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[52px]">
+              <h2
+                id="residency-title"
+                className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[52px]"
+              >
                 {x(COPY.resTitle)}
               </h2>
             </div>
-            <p className="max-w-[48ch] text-[16px] leading-relaxed text-charcoal-soft md:text-[17px]">{x(COPY.resIntro)}</p>
+            <p className="max-w-[48ch] text-[16px] leading-relaxed text-charcoal-soft md:text-[17px]">
+              {x(COPY.resIntro)}
+            </p>
           </div>
           <ol className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3">
             {COPY.resTests.map((r, k) => (
-              <li key={r.title.en} className="rounded-[20px] bg-white p-7 ring-1 ring-travertine-deep/70 md:p-8">
-                <span className="font-[family-name:var(--font-display)] text-[40px] leading-none text-brass [font-variant-numeric:lining-nums]">{String(k + 1).padStart(2, "0")}</span>
-                <h3 className="mt-6 font-[family-name:var(--font-display)] text-[26px] leading-tight text-charcoal">{x(r.title)}</h3>
+              <li
+                key={r.title.en}
+                className="rounded-[20px] bg-white p-7 ring-1 ring-travertine-deep/70 md:p-8"
+              >
+                <span className="font-[family-name:var(--font-display)] text-[40px] leading-none text-brass [font-variant-numeric:lining-nums]">
+                  {String(k + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-6 font-[family-name:var(--font-display)] text-[26px] leading-tight text-charcoal">
+                  {x(r.title)}
+                </h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-charcoal-soft">{x(r.text)}</p>
               </li>
             ))}
           </ol>
-          <a href="https://www.irs.gov/publications/p570" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal">
+          <a
+            href="https://www.irs.gov/publications/p570"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex min-h-11 items-center gap-2 text-[11px] font-semibold tracking-[0.22em] text-brass-ink uppercase hover:text-charcoal"
+          >
             {es ? "IRS Publicación 570" : "IRS Publication 570"} <ArrowUpRight width={13} height={13} />
           </a>
         </div>
       </section>
 
       {/* How to qualify. */}
-      <section aria-labelledby="qualify-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+      <section
+        aria-labelledby="qualify-title"
+        className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24"
+      >
         <div className="mx-auto max-w-[1280px]">
           <p className="eyebrow">
             <span className="rule" aria-hidden />
             {x(COPY.qualifyLabel)}
           </p>
-          <h2 id="qualify-title" className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[52px]">{x(COPY.qualifyTitle)}</h2>
+          <h2
+            id="qualify-title"
+            className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[52px]"
+          >
+            {x(COPY.qualifyTitle)}
+          </h2>
           <ol className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-12 lg:grid-cols-4">
             {cip.why.bullets.map((b, k) => (
-              <li key={k} className="flex flex-col rounded-[20px] bg-white p-6 ring-1 ring-travertine-deep/70">
-                <span className="font-[family-name:var(--font-display)] text-[34px] leading-none text-brass [font-variant-numeric:lining-nums]">{String(k + 1).padStart(2, "0")}</span>
+              <li
+                key={k}
+                className="flex flex-col rounded-[20px] bg-white p-6 ring-1 ring-travertine-deep/70"
+              >
+                <span className="font-[family-name:var(--font-display)] text-[34px] leading-none text-brass [font-variant-numeric:lining-nums]">
+                  {String(k + 1).padStart(2, "0")}
+                </span>
                 <p className="mt-6 text-[15.5px] leading-relaxed text-charcoal">{x(b)}</p>
               </li>
             ))}
           </ol>
-          <p className="mt-6 max-w-[90ch] text-[14px] leading-relaxed text-charcoal-soft">{x(COPY.homeNote)}</p>
+          <p className="mt-6 max-w-[90ch] text-[14px] leading-relaxed text-charcoal-soft">
+            {x(COPY.homeNote)}
+          </p>
         </div>
       </section>
 
       {/* Deadline, decree and advice (Act 60 audit brief, 18 Nov), with the official sources. */}
-      <section aria-labelledby="deadline-title" className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24">
+      <section
+        aria-labelledby="deadline-title"
+        className="border-b border-travertine-deep/60 bg-white px-5 py-16 md:px-10 md:py-24"
+      >
         <div className="mx-auto max-w-[1280px]">
-          <h2 id="deadline-title" className="sr-only">{es ? "Fecha límite, decreto y asesoría" : "Deadline, decree and advice"}</h2>
+          <h2 id="deadline-title" className="sr-only">
+            {es ? "Fecha límite, decreto y asesoría" : "Deadline, decree and advice"}
+          </h2>
           <ul className="grid gap-4 md:grid-cols-3">
             {COPY.features.map((f, k) => (
-              <li key={f.kicker.en} className={k === 0 ? "rounded-[20px] bg-basalt p-7 text-bone md:p-8" : "rounded-[20px] bg-bone p-7 ring-1 ring-travertine-deep/70 md:p-8"}>
-                <p className={`text-[11px] font-semibold tracking-[0.22em] uppercase ${k === 0 ? "text-brass-light" : "text-brass-ink"}`}>{x(f.kicker)}</p>
-                <h3 className={`mt-4 font-[family-name:var(--font-display)] leading-tight ${k === 0 ? "text-[40px] text-bone" : "text-[26px] text-charcoal"}`}>{x(f.title)}</h3>
-                <p className={`mt-3 text-[14.5px] leading-relaxed ${k === 0 ? "text-bone/80" : "text-charcoal-soft"}`}>{x(f.text)}</p>
+              <li
+                key={f.kicker.en}
+                className={
+                  k === 0
+                    ? "rounded-[20px] bg-basalt p-7 text-bone md:p-8"
+                    : "rounded-[20px] bg-bone p-7 ring-1 ring-travertine-deep/70 md:p-8"
+                }
+              >
+                <p
+                  className={`text-[11px] font-semibold tracking-[0.22em] uppercase ${k === 0 ? "text-brass-light" : "text-brass-ink"}`}
+                >
+                  {x(f.kicker)}
+                </p>
+                <h3
+                  className={`mt-4 font-[family-name:var(--font-display)] leading-tight ${k === 0 ? "text-[40px] text-bone" : "text-[26px] text-charcoal"}`}
+                >
+                  {x(f.title)}
+                </h3>
+                <p
+                  className={`mt-3 text-[14.5px] leading-relaxed ${k === 0 ? "text-bone/80" : "text-charcoal-soft"}`}
+                >
+                  {x(f.text)}
+                </p>
               </li>
             ))}
           </ul>
           <div className="mt-10 border-t border-travertine-deep pt-6">
-            <p className="text-[11px] font-semibold tracking-[0.24em] text-charcoal-soft uppercase">{x(COPY.sourcesLabel)}</p>
+            <p className="text-[11px] font-semibold tracking-[0.24em] text-charcoal-soft uppercase">
+              {x(COPY.sourcesLabel)}
+            </p>
             <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-1">
               {SOURCES.map((src) => (
                 <li key={src.href}>
-                  <a href={src.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-[14px] text-brass-ink underline-offset-4 hover:text-charcoal hover:underline">
+                  <a
+                    href={src.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center gap-2 text-[14px] text-brass-ink underline-offset-4 hover:text-charcoal hover:underline"
+                  >
                     {es ? src.es : src.en} <ArrowUpRight width={12} height={12} />
                   </a>
                 </li>
@@ -214,21 +358,34 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
 
       {/* The tax questions from the FAQ. */}
       {taxFaqs.length > 0 && (
-        <section aria-labelledby="act60-faq" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+        <section
+          aria-labelledby="act60-faq"
+          className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24"
+        >
           <div className="mx-auto grid max-w-[1280px] gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] lg:gap-16">
             <div>
               <p className="eyebrow">
                 <span className="rule" aria-hidden />
                 {x(COPY.faqLabel)}
               </p>
-              <h2 id="act60-faq" className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[48px]">{x(COPY.faqTitle)}</h2>
+              <h2
+                id="act60-faq"
+                className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[48px]"
+              >
+                {x(COPY.faqTitle)}
+              </h2>
             </div>
             <div className="border-t border-travertine-deep">
               {taxFaqs.map((f) => (
                 <details key={f.slug} className="group border-b border-travertine-deep">
                   <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-[17px] text-charcoal [&::-webkit-details-marker]:hidden">
                     {x(f.question)}
-                    <span aria-hidden className="text-[22px] leading-none text-brass transition-transform group-open:rotate-45">+</span>
+                    <span
+                      aria-hidden
+                      className="text-[22px] leading-none text-brass transition-transform group-open:rotate-45"
+                    >
+                      +
+                    </span>
                   </summary>
                   <div className="pb-5 text-[15px] leading-relaxed text-charcoal-soft">
                     {(f.answer[locale] || f.answer.en).map((para, k) => (
@@ -245,13 +402,29 @@ export default async function Act60Page({ params }: { params: Promise<{ locale: 
       )}
 
       {/* Closing: the note, and Inquire. */}
-      <section aria-labelledby="act60-close" data-tone="dark" className="on-dark bg-basalt px-5 py-16 text-center text-bone md:px-10 md:py-20">
+      <section
+        aria-labelledby="act60-close"
+        data-tone="dark"
+        className="on-dark bg-basalt px-5 py-16 text-center text-bone md:px-10 md:py-20"
+      >
         <div className="mx-auto max-w-[880px]">
-          <h2 id="act60-close" className="font-[family-name:var(--font-display)] text-[30px] leading-tight font-normal md:text-[42px]">{x(COPY.closing)}</h2>
-          <Link href="/#inquire" className="cta mt-8 inline-flex min-h-[52px] px-8" data-track="cta_inquire" data-track-label="act-60">
+          <h2
+            id="act60-close"
+            className="font-[family-name:var(--font-display)] text-[30px] leading-tight font-normal md:text-[42px]"
+          >
+            {x(COPY.closing)}
+          </h2>
+          <Link
+            href="/#inquire"
+            className="cta mt-8 inline-flex min-h-[52px] px-8"
+            data-track="cta_inquire"
+            data-track-label="act-60"
+          >
             {inquire} <ArrowRight width={14} height={14} />
           </Link>
-          <p className="mx-auto mt-8 max-w-[64ch] text-[12.5px] leading-relaxed text-bone/65">{x(cip.why.note)}</p>
+          <p className="mx-auto mt-8 max-w-[64ch] text-[12.5px] leading-relaxed text-bone/65">
+            {x(cip.why.note)}
+          </p>
         </div>
       </section>
     </div>

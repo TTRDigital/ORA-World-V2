@@ -17,9 +17,24 @@ import { ArrowUpRight } from "@/components/ui/Icons";
 import { HomeTourStage } from "./HomeTourStage";
 import { Explorer } from "./Explorer";
 import { Logo } from "@/components/layout/Logo";
+import { SHOW_FINISHES } from "@/lib/features";
 
 /** Numbered eyebrow + serif capitals heading, for the full-width sections. */
-function SectionHead({ eyebrow, title, id, intro, dark = false, children }: { eyebrow: string; title: string; id: string; intro?: string; dark?: boolean; children?: React.ReactNode }) {
+function SectionHead({
+  eyebrow,
+  title,
+  id,
+  intro,
+  dark = false,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  id: string;
+  intro?: string;
+  dark?: boolean;
+  children?: React.ReactNode;
+}) {
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-14">
       <div>
@@ -33,7 +48,10 @@ function SectionHead({ eyebrow, title, id, intro, dark = false, children }: { ey
       </div>
       <div>
         {intro && (
-          <p className={`max-w-[58ch] text-[16px] leading-relaxed ${dark ? "text-bone/80" : "text-charcoal-soft"}`} data-reveal>
+          <p
+            className={`max-w-[58ch] text-[16px] leading-relaxed ${dark ? "text-bone/80" : "text-charcoal-soft"}`}
+            data-reveal
+          >
             {intro}
           </p>
         )}
@@ -62,12 +80,6 @@ export async function CipHome({ locale }: { locale: Locale }) {
   // Client, 17 Nov: the new short films made from each render.
   const { jetArrival, whoCards } = storyCards(es);
 
-
-
-
-
-
-
   return (
     <div className="flex flex-col">
       {/* 01 Amenities & features (client, 16 Nov: "like Cipriani, talking about everything ORA World offers"): one line,
@@ -81,7 +93,10 @@ export async function CipHome({ locale }: { locale: Locale }) {
         // Client, 16 Nov: no Amenities / Features cards here ("too busy"); the line, the specs and the gallery say it.
         cards={[]}
         // Tesoro Del Mar property specs, as published on oraworld.com (the huddle's "property specs").
-        facts={home.hero.stats.map((st) => ({ value: st.value == null ? "" : st.value.toLocaleString("en-US"), label: x(st.label) }))}
+        facts={home.hero.stats.map((st) => ({
+          value: st.value == null ? "" : st.value.toLocaleString("en-US"),
+          label: x(st.label),
+        }))}
         cta={inquire}
       >
         {/* Client, 16 Nov: no numbered label and no "use arrows" hint in this section. */}
@@ -89,7 +104,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
       </CipShowcase>
 
       {/* 02 Why ORA World: how it is different */}
-      <section id="why-ora-world" aria-labelledby="why-ora-world-title" className="border-b border-travertine-deep/60 bg-bone px-5 pt-12 pb-16 md:px-10 md:pt-16 md:pb-24">
+      <section
+        id="why-ora-world"
+        aria-labelledby="why-ora-world-title"
+        className="border-b border-travertine-deep/60 bg-bone px-5 pt-12 pb-16 md:px-10 md:pt-16 md:pb-24"
+      >
         <div className="mx-auto max-w-[1280px]">
           {/* Client, 16 Nov: no eyebrow, title or intro here; the script line heads the section, then the cards. */}
           {/* Client, 17 Nov: one line on wide screens (wraps on tablets and phones). */}
@@ -105,8 +124,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
             const acc = es ? "en perfecta armonía." : "in perfect harmony.";
             const head = line.endsWith(acc) ? line.slice(0, -acc.length) : line;
             return (
-              <h2 id="why-ora-world-title" className="mx-auto max-w-[28ch] text-center font-[family-name:var(--font-display)] text-[22px] leading-[1.3] font-normal text-balance text-charcoal md:max-w-[40ch] md:text-[28px] md:leading-[1.28] xl:max-w-none xl:text-[27px] xl:whitespace-nowrap" data-reveal>
-                
+              <h2
+                id="why-ora-world-title"
+                className="mx-auto max-w-[28ch] text-center font-[family-name:var(--font-display)] text-[22px] leading-[1.3] font-normal text-balance text-charcoal md:max-w-[40ch] md:text-[28px] md:leading-[1.28] xl:max-w-none xl:text-[27px] xl:whitespace-nowrap"
+                data-reveal
+              >
                 {head}
                 {head !== line && <em className="text-brass-ink italic">{acc}</em>}
               </h2>
@@ -115,16 +137,24 @@ export async function CipHome({ locale }: { locale: Locale }) {
           {/* Client, 15 Nov: cards that stack on top of each other as you scroll, with more than plain text. */}
           <StackCards
             locale={locale}
-            cards={cip.different.items.map((item) => ({
-              title: x(item.title),
-              text: x(item.text),
-              tags: item.tags.map((tag) => x(tag)),
-              href: item.href,
-              // Client, 17 Nov: full-card pictures with their films: the ORA World jet arriving (the client's film, its
-              // first frame as the still); the gym; the aerial cove behind the Act 60 calculator; the towers (Built to endure).
-              image: { travel: jetArrival, health: tdm.gym, tax: tdm.aerialCoast, resilience: tdm.exteriorRoad, finishes: tdm.kitchenWine }[item.kind],
-              kind: item.kind,
-            }))}
+            cards={cip.different.items
+              .filter((item) => SHOW_FINISHES || item.kind !== "finishes")
+              .map((item) => ({
+                title: x(item.title),
+                text: x(item.text),
+                tags: item.tags.map((tag) => x(tag)),
+                href: item.href,
+                // Client, 17 Nov: full-card pictures with their films: the ORA World jet arriving (the client's film, its
+                // first frame as the still); the gym; the aerial cove behind the Act 60 calculator; the towers (Built to endure).
+                image: {
+                  travel: jetArrival,
+                  health: tdm.gym,
+                  tax: tdm.aerialCoast,
+                  resilience: tdm.exteriorRoad,
+                  finishes: tdm.kitchenWine,
+                }[item.kind],
+                kind: item.kind,
+              }))}
           />
         </div>
       </section>
@@ -132,7 +162,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
       {/* 03 Interiors (client, 16 Nov: copied from the ORA World · Tesoro del Mar presentation): heading and line on
           the left, a counter between round arrows on the right, wide 16:9 slides running off the right edge, then two
           feature lists. Living and kitchen play as films. */}
-      <section id="residences" aria-labelledby="residences-title" className="overflow-hidden border-b border-travertine-deep/60 bg-bone py-16 md:py-24">
+      <section
+        id="residences"
+        aria-labelledby="residences-title"
+        className="overflow-hidden border-b border-travertine-deep/60 bg-bone py-16 md:py-24"
+      >
         <div className="mx-auto grid max-w-[1280px] gap-x-8 gap-y-6 px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-10 xl:px-0">
           <div className="grid gap-4">
             {/* Client, 17 Nov: the label without a number, like Location. */}
@@ -140,7 +174,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
               <span className="rule" aria-hidden />
               {x(cip.interiors.eyebrow)}
             </p>
-            <h2 id="residences-title" className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]" data-reveal>
+            <h2
+              id="residences-title"
+              className="font-[family-name:var(--font-display)] text-[38px] leading-[1.08] font-semibold text-charcoal md:text-[54px]"
+              data-reveal
+            >
               {x(cip.interiors.title)}
             </h2>
             <p className="max-w-[60ch] text-[16px] leading-relaxed text-charcoal-soft" data-reveal>
@@ -160,13 +198,33 @@ export async function CipHome({ locale }: { locale: Locale }) {
 
       {/* 04 Step inside: the 360° tour and the film, full width so people can see it big */}
       {/* Client, 17 Nov: the tour wider on screen: the heading keeps the page column, the frame runs nearly edge to edge. */}
-      <section id="virtual-tour" aria-labelledby="virtual-tour-title" data-tone="dark" className="on-dark border-b border-basalt bg-basalt py-16 text-bone md:py-24">
+      <section
+        id="virtual-tour"
+        aria-labelledby="virtual-tour-title"
+        data-tone="dark"
+        className="on-dark border-b border-basalt bg-basalt py-16 text-bone md:py-24"
+      >
         <div className="mx-auto max-w-[1280px] px-5 md:px-10 xl:px-0">
-          <SectionHead id="virtual-tour-title" eyebrow={x(cip.tour.eyebrow)} title={x(cip.tour.title)} intro={x(cip.tour.intro)} dark />
+          <SectionHead
+            id="virtual-tour-title"
+            eyebrow={x(cip.tour.eyebrow)}
+            title={x(cip.tour.title)}
+            intro={x(cip.tour.intro)}
+            dark
+          />
         </div>
         <div className="mx-auto max-w-[1840px] px-3 md:px-6">
           <div className="mt-10 md:mt-12">
-            <HomeTourStage vrUrl={settings.vrTourUrl} filmId={null /* client, 17 Nov: the "Welcome to ORA World" film tab removed; the 360° tour only */} poster={tdm.penthouseDining} filmPoster={tdm.aerialCoast} locale={locale} wide />
+            <HomeTourStage
+              vrUrl={settings.vrTourUrl}
+              filmId={
+                null /* client, 17 Nov: the "Welcome to ORA World" film tab removed; the 360° tour only */
+              }
+              poster={tdm.penthouseDining}
+              filmPoster={tdm.aerialCoast}
+              locale={locale}
+              wide
+            />
           </div>
         </div>
       </section>
@@ -177,7 +235,11 @@ export async function CipHome({ locale }: { locale: Locale }) {
 
       {/* 07 Location (client, 17 Nov: like the other site's location, but short and clean): the title and one line,
           then the map with five places and their travel times. */}
-      <section id="location" aria-labelledby="location-title" className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+      <section
+        id="location"
+        aria-labelledby="location-title"
+        className="border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24"
+      >
         <div className="mx-auto max-w-[1280px]">
           <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end md:gap-12">
             <div>
@@ -185,13 +247,28 @@ export async function CipHome({ locale }: { locale: Locale }) {
                 <span className="rule" aria-hidden />
                 {x(cip.location.eyebrow)}
               </p>
-              <h2 id="location-title" className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[52px]" data-reveal>
+              <h2
+                id="location-title"
+                className="mt-5 font-[family-name:var(--font-display)] text-[36px] leading-[1.08] font-normal text-charcoal md:text-[52px]"
+                data-reveal
+              >
                 {x(cip.location.title)
                   .split("*")
-                  .map((part, k) => (k % 2 ? <em key={k} className="text-brass-ink italic">{part}</em> : <span key={k}>{part}</span>))}
+                  .map((part, k) =>
+                    k % 2 ? (
+                      <em key={k} className="text-brass-ink italic">
+                        {part}
+                      </em>
+                    ) : (
+                      <span key={k}>{part}</span>
+                    ),
+                  )}
               </h2>
             </div>
-            <p className="max-w-[46ch] text-[16px] leading-relaxed text-charcoal-soft md:text-[17px]" data-reveal>
+            <p
+              className="max-w-[46ch] text-[16px] leading-relaxed text-charcoal-soft md:text-[17px]"
+              data-reveal
+            >
               {x(cip.location.intro)}
             </p>
           </div>
@@ -230,29 +307,68 @@ export async function CipHome({ locale }: { locale: Locale }) {
       {/* Our mission (client, 17 Nov: at the end, before the form; "do better with the design, add our logo icon"): the
           gold tree with its moving leaves, the label between hairlines, the statement in the display serif with one
           brass italic phrase, the three commitments as numbered pillars, and the closing line; a faint tree behind. */}
-      <section id="mission" aria-labelledby="mission-title" className="relative isolate overflow-hidden border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24">
+      <section
+        id="mission"
+        aria-labelledby="mission-title"
+        className="relative isolate overflow-hidden border-b border-travertine-deep/60 bg-bone px-5 py-16 md:px-10 md:py-24"
+      >
         {/* eslint-disable-next-line @next/next/no-img-element -- decorative watermark, the animated SVG as is */}
-        <img src="/brand/ora-world-tree-leaves.svg" alt="" aria-hidden width={252} height={248} className="pointer-events-none absolute top-1/2 -right-24 -z-10 w-[520px] max-w-none -translate-y-1/2 opacity-[0.06] md:-right-16 md:w-[680px]" />
+        <img
+          src="/brand/ora-world-tree-leaves.svg"
+          alt=""
+          aria-hidden
+          width={252}
+          height={248}
+          className="pointer-events-none absolute top-1/2 -right-24 -z-10 w-[520px] max-w-none -translate-y-1/2 opacity-[0.06] md:-right-16 md:w-[680px]"
+        />
         <div className="mx-auto max-w-[980px] text-center">
           <picture>
             <source media="(prefers-reduced-motion: reduce)" srcSet="/brand/ora-world-tree.png" />
-            <img src="/brand/ora-world-tree-leaves.svg" alt="ORA World" width={252} height={248} className="mx-auto h-[84px] w-auto md:h-[104px]" data-reveal />
+            <img
+              src="/brand/ora-world-tree-leaves.svg"
+              alt="ORA World"
+              width={252}
+              height={248}
+              className="mx-auto h-[84px] w-auto md:h-[104px]"
+              data-reveal
+            />
           </picture>
-          <p className="mt-8 flex items-center justify-center gap-4 text-[11px] font-semibold tracking-[0.3em] text-brass-ink uppercase" data-reveal>
+          <p
+            className="mt-8 flex items-center justify-center gap-4 text-[11px] font-semibold tracking-[0.3em] text-brass-ink uppercase"
+            data-reveal
+          >
             <span aria-hidden className="h-px w-10 bg-brass/70" />
             {x(cip.mission.label)}
             <span aria-hidden className="h-px w-10 bg-brass/70" />
           </p>
-          <h2 id="mission-title" className="mx-auto mt-8 max-w-[22ch] font-[family-name:var(--font-display)] text-[34px] leading-[1.12] font-normal text-balance text-charcoal md:text-[56px] md:leading-[1.06]" data-reveal>
+          <h2
+            id="mission-title"
+            className="mx-auto mt-8 max-w-[22ch] font-[family-name:var(--font-display)] text-[34px] leading-[1.12] font-normal text-balance text-charcoal md:text-[56px] md:leading-[1.06]"
+            data-reveal
+          >
             {x(cip.mission.lead)
               .split("*")
-              .map((part, k) => (k % 2 ? <em key={k} className="text-brass-ink italic">{part}</em> : <span key={k}>{part}</span>))}
+              .map((part, k) =>
+                k % 2 ? (
+                  <em key={k} className="text-brass-ink italic">
+                    {part}
+                  </em>
+                ) : (
+                  <span key={k}>{part}</span>
+                ),
+              )}
           </h2>
-          <p className="mx-auto mt-8 max-w-[58ch] text-[17px] leading-8 text-charcoal md:mt-10 md:text-[19px]" data-reveal>
+          <p
+            className="mx-auto mt-8 max-w-[58ch] text-[17px] leading-8 text-charcoal md:mt-10 md:text-[19px]"
+            data-reveal
+          >
             {x(cip.mission.body)}
           </p>
           <span aria-hidden className="mx-auto mt-8 block h-px w-14 bg-brass md:mt-10" />
-          <p className="mx-auto mt-8 max-w-[52ch] font-[family-name:var(--font-display)] text-[21px] leading-snug text-charcoal-soft italic md:mt-10 md:text-[25px]" data-reveal>
+          <p
+            className="mx-auto mt-8 max-w-[52ch] font-[family-name:var(--font-display)] text-[21px] leading-snug text-charcoal-soft italic md:mt-10 md:text-[25px]"
+            data-reveal
+          >
             {x(cip.mission.close)}
           </p>
         </div>
@@ -270,17 +386,27 @@ export async function CipHome({ locale }: { locale: Locale }) {
         wideVisual={false}
         cta={
           settings.phone ? (
-            <a href={`tel:${settings.phone.replace(/[^\d+]/g, "")}`} className="text-[15px] font-semibold tracking-[0.08em] text-bone hover:text-brass-light">
+            <a
+              href={`tel:${settings.phone.replace(/[^\d+]/g, "")}`}
+              className="text-[15px] font-semibold tracking-[0.08em] text-bone hover:text-brass-light"
+            >
               {settings.phone}
             </a>
           ) : undefined
         }
       >
-        <div data-tone="light" className="light-card rounded-[22px] bg-white p-6 text-charcoal shadow-lift md:p-8">
+        <div
+          data-tone="light"
+          className="light-card rounded-[22px] bg-white p-6 text-charcoal shadow-lift md:p-8"
+        >
           <div className="mb-6 border-b border-travertine-deep/60 pb-5">
             <Logo variant="header" height={64} className="h-[56px]" />
           </div>
-          <LeadFormLazy variant="full" consentText={settings.consentText[locale]} submitLabel={es ? "Consultar" : "Inquire"} />
+          <LeadFormLazy
+            variant="full"
+            consentText={settings.consentText[locale]}
+            submitLabel={es ? "Consultar" : "Inquire"}
+          />
         </div>
       </CipSection>
     </div>

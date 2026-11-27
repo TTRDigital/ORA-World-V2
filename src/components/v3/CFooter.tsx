@@ -3,9 +3,18 @@ import { Logo } from "@/components/layout/Logo";
 import type { L, Locale, SiteSettings } from "@/content/types";
 import { t } from "@/lib/localize";
 import { cip } from "@/content/seed/homeCip";
+import { SHOW_FINISHES } from "@/lib/features";
 
 /** Version C footer: Deep Earth, four columns (address, explore, versions, the number), then the notice. */
-export function CFooter({ locale, settings, v = "c" }: { locale: Locale; settings: SiteSettings; v?: "c" | "d" }) {
+export function CFooter({
+  locale,
+  settings,
+  v = "c",
+}: {
+  locale: Locale;
+  settings: SiteSettings;
+  v?: "c" | "d";
+}) {
   const es = locale === "es";
   const x = (l: L) => t(l, locale);
   const head = "text-[11px] font-semibold tracking-[0.3em] text-brass-light uppercase";
@@ -16,7 +25,12 @@ export function CFooter({ locale, settings, v = "c" }: { locale: Locale; setting
         <div>
           <Logo variant="white" height={110} responsive className="h-[96px] w-auto" />
           <p className="mt-6 text-[14.5px] leading-relaxed text-bone/85">{x(cip.location.address)}</p>
-          <a href={`https://www.google.com/maps/search/?api=1&query=${settings.siteLat},${settings.siteLng}`} target="_blank" rel="noopener noreferrer" className={`${link} underline`}>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${settings.siteLat},${settings.siteLng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${link} underline`}
+          >
             {es ? "Ver en Google Maps" : "View on Google Maps"}
           </a>
         </div>
@@ -27,7 +41,7 @@ export function CFooter({ locale, settings, v = "c" }: { locale: Locale; setting
               ["/c/floor-plans", es ? "Residencias" : "Residences"],
               ["/c/longevity", es ? "Longevidad" : "Longevity"],
               ["/c/act-60", es ? "Ley 60" : "Act 60"],
-              ["/c/finishes", es ? "Acabados" : "Finishes"],
+              ...(SHOW_FINISHES ? [["/c/finishes", es ? "Acabados" : "Finishes"]] : []),
               [`/${v}/living`, es ? "Vivir" : "Living"],
             ].map(([h, l]) => (
               <li key={h}>

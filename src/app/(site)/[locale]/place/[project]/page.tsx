@@ -22,56 +22,148 @@ export async function generateStaticParams() {
   return routing.locales.flatMap((locale) => projects.map((p) => ({ locale, project: p.slug })));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale; project: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale; project: string }>;
+}): Promise<Metadata> {
   const { locale, project } = await params;
   const p = await getProject(project);
   if (!p) return {};
-  return pageMetadata({ locale, path: `/place/${project}`, title: t(p.name, locale), description: t(p.tagline, locale), image: `${SITE_URL}${p.hero.src}` });
+  return pageMetadata({
+    locale,
+    path: `/place/${project}`,
+    title: t(p.name, locale),
+    description: t(p.tagline, locale),
+    image: `${SITE_URL}${p.hero.src}`,
+  });
 }
 
-export default async function ProjectPage({ params }: { params: Promise<{ locale: Locale; project: string }> }) {
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale; project: string }>;
+}) {
   const { locale, project: slug } = await params;
   setRequestLocale(locale);
   const project = await getProject(slug);
   if (!project) notFound();
-  const [tn, tc, pois] = await Promise.all([getTranslations({ locale, namespace: "nav" }), getTranslations({ locale, namespace: "common" }), getPois()]);
-  const poiList: RailPoi[] = pois.map((p) => ({ slug: p.slug, name: t(p.name, locale), category: p.category, lat: p.lat, lng: p.lng, minutes: p.walkMinutes ?? p.driveMinutes, mode: p.walkMinutes ? "walk" : "drive", confirmed: p.confirmed, note: p.note ? t(p.note, locale) : null }));
-  const crumbs = [{ name: "ORA World", path: "/" }, { name: tn("living"), path: "/living" }, { name: t(project.name, locale), path: `/place/${project.slug}` }];
+  const [tn, tc, pois] = await Promise.all([
+    getTranslations({ locale, namespace: "nav" }),
+    getTranslations({ locale, namespace: "common" }),
+    getPois(),
+  ]);
+  const poiList: RailPoi[] = pois.map((p) => ({
+    slug: p.slug,
+    name: t(p.name, locale),
+    category: p.category,
+    lat: p.lat,
+    lng: p.lng,
+    minutes: p.walkMinutes ?? p.driveMinutes,
+    mode: p.walkMinutes ? "walk" : "drive",
+    confirmed: p.confirmed,
+    note: p.note ? t(p.note, locale) : null,
+  }));
+  const crumbs = [
+    { name: "ORA World", path: "/" },
+    { name: tn("living"), path: "/living" },
+    { name: t(project.name, locale), path: `/place/${project.slug}` },
+  ];
   return (
     <div className="flex flex-col">
-      <JsonLd data={[breadcrumbLd(locale, crumbs), placeLd(locale, t(project.name, locale), t(project.tagline, locale), `/place/${project.slug}`, `${SITE_URL}${project.hero.src}`, project.lat, project.lng)]} />
-      <PageHero locale={locale} label={t(project.location, locale)} headline={t(project.name, locale)} intro={t(project.tagline, locale)} image={project.hero}>
-        <Link href="/#inquire" className="pill pill-brass">{tc("bookVisit")}</Link>
+      <JsonLd
+        data={[
+          breadcrumbLd(locale, crumbs),
+          placeLd(
+            locale,
+            t(project.name, locale),
+            t(project.tagline, locale),
+            `/place/${project.slug}`,
+            `${SITE_URL}${project.hero.src}`,
+            project.lat,
+            project.lng,
+          ),
+        ]}
+      />
+      <PageHero
+        locale={locale}
+        label={t(project.location, locale)}
+        headline={t(project.name, locale)}
+        intro={t(project.tagline, locale)}
+        image={project.hero}
+      >
+        <Link href="/#inquire" className="pill pill-brass">
+          {tc("bookVisit")}
+        </Link>
       </PageHero>
-      <section className="panel panel-travertine container-x section-y" aria-label={locale === "es" ? "Datos" : "Facts"}>
+      <section
+        className="panel panel-travertine container-x section-y"
+        aria-label={locale === "es" ? "Datos" : "Facts"}
+      >
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {tp(project.summary, locale).map((p, i) => (
-            <p key={i} className="statement md:col-span-2 lg:col-span-4" data-reveal>{p}</p>
+            <p key={i} className="statement md:col-span-2 lg:col-span-4" data-reveal>
+              {p}
+            </p>
           ))}
           {project.facts.map((f, i) => (
-            <div key={f.label.en} className="card lift p-5" data-reveal style={{ "--reveal-delay": `${i * 50}ms` } as React.CSSProperties}>
+            <div
+              key={f.label.en}
+              className="card lift p-5"
+              data-reveal
+              style={{ "--reveal-delay": `${i * 50}ms` } as React.CSSProperties}
+            >
               <p className="label mb-2">{t(f.label, locale)}</p>
               <p className="text-[17px] font-semibold">{f.value ? t(f.value, locale) : <Tbc />}</p>
-              {f.confirmed && f.value && <span className="small mt-2 inline-flex items-center gap-1 text-palm"><Check width={14} height={14} />{tc("published")}</span>}
+              {f.confirmed && f.value && (
+                <span className="small mt-2 inline-flex items-center gap-1 text-palm">
+                  <Check width={14} height={14} />
+                  {tc("published")}
+                </span>
+              )}
             </div>
           ))}
         </div>
       </section>
-      <section className="panel panel-bone container-x section-y" aria-label={locale === "es" ? "Renders" : "Renders"}>
+      <section
+        className="panel panel-bone container-x section-y"
+        aria-label={locale === "es" ? "Renders" : "Renders"}
+      >
         <RenderCarousel images={project.gallery} locale={locale} label={t(project.name, locale)} />
       </section>
       {project.sections.map((s, i) => (
-        <section key={s.title.en} className={`panel container-x section-y ${i % 2 === 0 ? "panel-travertine" : "panel-bone"}`} aria-labelledby={`sec-${i}`}>
-          <div className={`grid gap-8 lg:grid-cols-12 lg:items-center ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
+        <section
+          key={s.title.en}
+          className={`panel container-x section-y ${i % 2 === 0 ? "panel-travertine" : "panel-bone"}`}
+          aria-labelledby={`sec-${i}`}
+        >
+          <div
+            className={`grid gap-8 lg:grid-cols-12 lg:items-center ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}
+          >
             {s.image && (
               <div className="lg:col-span-6">
-                <Picture image={s.image} locale={locale} ratio="16/10" rounded="lg" sizes="(max-width: 1024px) 92vw, 46vw" />
+                <Picture
+                  image={s.image}
+                  locale={locale}
+                  ratio="16/10"
+                  rounded="lg"
+                  sizes="(max-width: 1024px) 92vw, 46vw"
+                />
               </div>
             )}
             <div className={s.image ? "lg:col-span-6" : "lg:col-span-8"}>
-              <div data-reveal><Headline id={`sec-${i}`} text={t(s.title, locale)} size="m" /></div>
+              <div data-reveal>
+                <Headline id={`sec-${i}`} text={t(s.title, locale)} size="m" />
+              </div>
               {tp(s.body, locale).map((p, j) => (
-                <p key={j} className="body mt-4 text-charcoal-soft" data-reveal style={{ "--reveal-delay": `${(j + 1) * 80}ms` } as React.CSSProperties}>{p}</p>
+                <p
+                  key={j}
+                  className="body mt-4 text-charcoal-soft"
+                  data-reveal
+                  style={{ "--reveal-delay": `${(j + 1) * 80}ms` } as React.CSSProperties}
+                >
+                  {p}
+                </p>
               ))}
             </div>
           </div>
@@ -80,7 +172,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ locale
       {project.lat && project.lng && (
         <section className="panel panel-travertine container-x section-y" aria-label={tn("place")}>
           <p className="label mb-3">{t(project.location, locale)}</p>
-          <MapLoader site={{ lat: project.lat, lng: project.lng, name: t(project.name, locale) }} pois={poiList} />
+          <MapLoader
+            site={{ lat: project.lat, lng: project.lng, name: t(project.name, locale) }}
+            pois={poiList}
+          />
         </section>
       )}
     </div>

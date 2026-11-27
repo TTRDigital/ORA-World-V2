@@ -116,3 +116,16 @@ test.describe("shell", () => {
     expect(honey.status()).toBe(200);
   });
 });
+
+// Client, 27 Nov: Finishes hidden on every version for now (src/lib/features.ts).
+test.describe("finishes hidden", () => {
+  for (const [home, page] of [["/en", "/en/finishes"], ["/en/b", "/en/b/finishes"], ["/en/d", "/en/d/finishes"]] as const) {
+    test(`no Finishes links on ${home}, and ${page} goes to the homepage`, async ({ page: p, request }) => {
+      await p.goto(home);
+      await expect(p.locator('header a[href*="/finishes"], footer a[href*="/finishes"], main a[href*="/finishes"]')).toHaveCount(0);
+      const res = await request.get(page, { maxRedirects: 0 });
+      expect([307, 308]).toContain(res.status());
+      expect(res.headers()["location"]).toMatch(new RegExp(`${home}$`));
+    });
+  }
+});

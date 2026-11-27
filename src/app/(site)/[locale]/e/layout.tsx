@@ -5,7 +5,13 @@ import { EFooter } from "@/components/v5/EFooter";
 import { LinkRewriter } from "@/components/v2/LinkRewriter";
 
 /** Version E frame (client, 23 Nov: "another version like ciprianiresidencesmiami.com, the same layout"). */
-export default async function VersionELayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+export default async function VersionELayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
   const { locale: l } = await params;
   const locale = (l === "es" ? "es" : "en") as Locale;
   const es = locale === "es";

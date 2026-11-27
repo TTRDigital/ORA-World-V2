@@ -21,12 +21,17 @@ import { AttributionCapture } from "@/components/providers/AttributionCapture";
 import { PageTransition } from "@/components/providers/PageTransition";
 import { TtrTracker } from "@/components/providers/TtrTracker";
 import "@/styles/globals.css";
+import { SHOW_FINISHES } from "@/lib/features";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
@@ -38,9 +43,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export const viewport: Viewport = { themeColor: "#F7F3EC", width: "device-width", initialScale: 1, viewportFit: "cover" };
+export const viewport: Viewport = {
+  themeColor: "#F7F3EC",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
-export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
@@ -48,21 +64,30 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const tiles = [
     { key: "residences" as const, href: "/residences", image: tdm.aptLiving },
     { key: "plans" as const, href: "/residences/plans", image: tdm.kitchenDining },
-    { key: "finishes" as const, href: "/finishes", image: tdm.kitchenWine },
+    ...(SHOW_FINISHES ? [{ key: "finishes" as const, href: "/finishes", image: tdm.kitchenWine }] : []),
     { key: "longevity" as const, href: "/longevity", image: tdm.gym },
     { key: "act60" as const, href: "/act-60", image: tdm.aerialCoast },
     { key: "living" as const, href: "/living", image: life.poolTerrace },
   ];
   return (
-    <html lang={locale} data-scroll-behavior="smooth" className={`${display.variable} ${sans.variable} ${script.variable} no-js`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      data-scroll-behavior="smooth"
+      className={`${display.variable} ${sans.variable} ${script.variable} no-js`}
+      suppressHydrationWarning
+    >
       <body>
         <NextIntlClientProvider>
           <SkipLink />
-          <ChromeGate><Header tiles={tiles} /></ChromeGate>
+          <ChromeGate>
+            <Header tiles={tiles} />
+          </ChromeGate>
           <main id="main" className="pt-[80px] lg:pt-[96px]">
             <PageTransition>{children}</PageTransition>
           </main>
-          <ChromeGate><Footer settings={settings} showPress={press.length > 0} /></ChromeGate>
+          <ChromeGate>
+            <Footer settings={settings} showPress={press.length > 0} />
+          </ChromeGate>
           {/* Client, 27 Nov: the Ask ORA chat removed from every version. */}
           <Consent />
           <MotionInit />

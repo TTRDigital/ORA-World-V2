@@ -1,11 +1,37 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/utils";
 import { getCollections, getFloorPlans, getPress, getProjects } from "@/lib/content";
+import { SHOW_FINISHES } from "@/lib/features";
 
-const staticPaths = ["", "/residences", "/residences/plans", "/residences/compare", "/longevity", "/act-60", "/reserve", "/virtual-tour", "/finishes", "/living", "/place/tour", "/brokers", "/careers", "/hotel-development", "/faq", "/privacy", "/terms", "/accessibility", "/legal-disclaimer"];
+const staticPaths = [
+  "",
+  "/residences",
+  "/residences/plans",
+  "/residences/compare",
+  "/longevity",
+  "/act-60",
+  "/reserve",
+  "/virtual-tour",
+  ...(SHOW_FINISHES ? ["/finishes"] : []),
+  "/living",
+  "/place/tour",
+  "/brokers",
+  "/careers",
+  "/hotel-development",
+  "/faq",
+  "/privacy",
+  "/terms",
+  "/accessibility",
+  "/legal-disclaimer",
+];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [collections, plans, projects, press] = await Promise.all([getCollections(), getFloorPlans(), getProjects(), getPress()]);
+  const [collections, plans, projects, press] = await Promise.all([
+    getCollections(),
+    getFloorPlans(),
+    getProjects(),
+    getPress(),
+  ]);
   const paths = [
     ...staticPaths,
     ...collections.map((c) => `/residences/${c.slug}`),
